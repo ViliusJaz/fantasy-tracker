@@ -5,11 +5,11 @@
 Writes the page plus every answer the page asks the API for as plain JSON files
 (site/api/<path>[.r<round>].<lang>.json), so the site works without a running
 server. Like the server's background thread it also records lineups and injury
-changes in ./data. The GitHub Actions workflow in .github/workflows runs this on a
-schedule, commits ./data and publishes ./site.
+changes in ./data. publish.sh runs this every 15 minutes on the Mac (BasketNews
+refuses GitHub's servers), commits ./data and publishes ./site to GitHub Pages.
 
-Exits with an error (and the workflow keeps the previous site online) when
-BasketNews could not be reached for most of the pages.
+Exits with an error (and the previous site stays online) when BasketNews could
+not be reached for most of the pages.
 """
 import contextvars
 import json

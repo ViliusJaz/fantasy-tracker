@@ -1,0 +1,42 @@
+#!/bin/bash
+# Rebuilds the public site on this Mac and uploads it to GitHub Pages.
+#
+#   ./publish.sh        (a launch agent runs this every 15 minutes, see below)
+#
+# BasketNews refuses requests from GitHub's servers, so the data has to be fetched
+# here. Steps: take any edits made on GitHub (e.g. leagues.json), run export.py,
+# commit the recorded lineups / injury log to main, and publish ./site as a single
+# fresh commit on the gh-pages branch, which GitHub Pages serves.
+#
+# Background job:
+#   install:  launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.viliusjaz.fantasy-tracker.plist
+#   remove:   launchctl bootout gui/$(id -u)/com.viliusjaz.fantasy-tracker
+#   log:      ~/Library/Logs/fantasy-tracker.log
+set -euo pipefail
+cd "$(dirname "$0")"
+export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+echo "=== $(date '+%Y-%m-%d %H:%M:%S')"
+git pull -q --rebase --autostash origin main
+
+python3 export.py
+
+git add data leagues.json
+if ! git diff --cached --quiet; then
+  git commit -q -m "Record lineups and injuries"
+fi
+git push -q origin main
+
+# site/ -> gh-pages without touching the working tree: build the commit from a
+# throwaway index. Keeping the previous commit as a local ref lets git upload
+# only the files that changed.
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+export GIT_INDEX_FILE="$tmp/index"
+git --work-tree=site add -A
+tree="$(git write-tree)"
+unset GIT_INDEX_FILE
+commit="$(git commit-tree "$tree" -m "Site $(date '+%Y-%m-%d %H:%M')")"
+git push -q -f origin "$commit:refs/heads/gh-pages"
+git update-ref refs/heads/gh-pages "$commit"
+echo "published $commit"
