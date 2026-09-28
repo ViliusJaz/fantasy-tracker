@@ -8,6 +8,7 @@ Tracked leagues live in ./leagues.json. Things the public API does not keep --
 past-round lineups and injury history -- are recorded under ./data while the
 server runs.
 """
+import bisect
 import contextvars
 import itertools
 import json
@@ -26,6 +27,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import urllib.parse
 from urllib.parse import parse_qs, urlparse
+
+import injury_lt
 
 ROOT = Path(__file__).resolve().parent
 STATIC_DIR = ROOT / "static"
@@ -628,18 +631,26 @@ def _quartiles(values):
 
 
 def advanced_context(table):
-    """League average and quartiles per metric, from regular-rotation players."""
+    """League average, quartiles and the sorted values per metric, from regular-rotation players."""
     rows = [r for r in table.values() if (adv_value(r, "time_played") or 0) >= ADV_MIN_SECONDS]
-    out = {}
+    out, dist = {}, {}
     for _, _, items in ADV_GROUPS:
         for key, *_ in items:
-            vals = [v for v in (adv_value(r, key) for r in rows) if v is not None]
+            vals = sorted(v for v in (adv_value(r, key) for r in rows) if v is not None)
             if len(vals) < 8:
                 continue
             p25, p75 = _quartiles(vals)
             out[key] = {"avg": round(sum(vals) / len(vals), 1), "low": round(p25, 1), "high": round(p75, 1),
                         "n": len(vals), "better": "lower" if key in LOWER_IS_BETTER else "higher"}
-    return out
+            dist[key] = vals
+    return out, dist
+
+
+def _percentile(vals, v):
+    """Share of the league with a smaller value (ties count half), 0-100."""
+    below = bisect.bisect_left(vals, v)
+    same = bisect.bisect_right(vals, v) - below
+    return round(100 * (below + same / 2) / len(vals))
 
 
 def advanced_profile(meta, bn_id):
@@ -647,7 +658,7 @@ def advanced_profile(meta, bn_id):
     row = table.get(str(bn_id)) if bn_id else None
     if not row:
         return None
-    context = advanced_context(table)
+    context, dist = advanced_context(table)
     groups = []
     for gid, (lt, en), items in ADV_GROUPS:
         stats = []
@@ -660,7 +671,10 @@ def advanced_profile(meta, bn_id):
             if ctx:
                 level = "high" if cell["value"] >= ctx["high"] else "low" if cell["value"] <= ctx["low"] else "avg"
             stats.append({"key": key, "short": short, "title": L(title_lt, title_en), "desc": L(desc_lt, desc_en),
-                          "value": cell["value"], "rank": cell.get("rank"), "pct": cell.get("pct"),
+                          # BasketNews' own "pct" runs in different directions per metric, so the
+                          # bar uses the same league sample as the high/low level instead.
+                          "value": cell["value"], "rank": cell.get("rank"),
+                          "pct": _percentile(dist[key], cell["value"]) if key in dist else None,
                           "context": ctx, "level": level})
         groups.append({"id": gid, "title": L(lt, en), "stats": stats})
     return {"groups": groups, "ranked": len(table), "games": row.get("games_played"),
@@ -835,11 +849,11 @@ def score_lineup(lineup_players):
 # The report marks each status with a class id; the ids are the same on the .com and .lt sites.
 STATUS_BY_ID = {"1": "ready", "2": "expected", "3": "questionable", "4": "game-time",
                 "5": "doubtful", "6": "out", "7": "uncertain"}
-# Wording used by the BasketNews.com injury report (shown as-is in both languages).
+# Wording of the BasketNews.com injury report (English) and of BasketNews.lt (Lithuanian).
 SITE_LABELS = {"ready": "Ready", "expected": "Expected", "questionable": "Questionable", "game-time": "Game-time",
                "doubtful": "Doubtful", "out": "Out", "uncertain": "Uncertain"}
-LT_LABELS = {"ready": "Pasiruošęs", "expected": "Tikėtina, kad žais", "questionable": "Abejojama",
-             "game-time": "Sprendžiama prieš rungtynes", "doubtful": "Abejotinas", "out": "Nežaidžia",
+LT_LABELS = {"ready": "Pasiruošęs", "expected": "Tikėtina", "questionable": "Abejojama",
+             "game-time": "Prieš rungtynes", "doubtful": "Mažai tikėtina", "out": "Nežaidžia",
              "uncertain": "Neaišku"}
 REMOVED_NOTE = "Išbrauktas iš traumų sąrašo"  # stored in the log when a player leaves the report
 
@@ -854,56 +868,35 @@ NOT_INJURY = re.compile(
     re.I,
 )
 
-REASON_LT = {
-    "coach's decision": "trenerio sprendimas",
-    "coaches decision": "trenerio sprendimas",
-    "knee injury": "kelio trauma",
-    "ankle injury": "čiurnos trauma",
-    "minor injury": "lengva trauma",
-    "muscle issue": "raumenų problema",
-    "muscle injury": "raumens trauma",
-    "undisclosed injury": "neatskleista trauma",
-    "illness": "liga",
-    "personal reasons": "asmeninės priežastys",
-    "rehab after surgery": "reabilitacija po operacijos",
-    "quad injury": "keturgalvio raumens trauma",
-    "back injury": "nugaros trauma",
-    "back problems": "nugaros problemos",
-    "calf injury": "blauzdos trauma",
-    "hamstring injury": "šlaunies raumens trauma",
-    "shoulder injury": "peties trauma",
-    "foot injury": "pėdos trauma",
-    "hand injury": "plaštakos trauma",
-    "wrist injury": "riešo trauma",
-    "hip injury": "klubo trauma",
-    "groin injury": "kirkšnies trauma",
-    "achilles injury": "Achilo sausgyslės trauma",
-    "concussion": "smegenų sukrėtimas",
-    "acl injury": "kelio kryžminio raiščio trauma",
-    "left knee acl injury": "kairio kelio kryžminio raiščio trauma",
-    "right knee acl injury": "dešinio kelio kryžminio raiščio trauma",
-    "minor undisclosed injury": "lengva neatskleista trauma",
-    "continues rehab after achilles injury": "tęsia reabilitaciją po Achilo sausgyslės traumos",
-    "ankle sprain": "čiurnos patempimas",
-    "tendinitis": "sausgyslės uždegimas",
-    "hamstring strain": "šlaunies raumens patempimas",
-    "calf strain": "blauzdos raumens patempimas",
-    "not included in the euroleague roster": "neįtrauktas į Eurolygos sudėtį",
-}
-
 DNP_RE = re.compile(r"DNP in Round\s*(\d+)\s*(?:\(([^)]*)\))?", re.I)
+_untranslated = set()
 
 
-def reason_local(text):
-    """Lithuanian wording of a common report reason; None when not known or in English mode."""
-    if LANG.get() == "en":
-        return None
-    key = (text or "").strip().rstrip(".").strip().lower()
-    return REASON_LT.get(key)
+def _lt(text, translate):
+    """Lithuanian wording from injury_lt, the first injury phrase in it, or the original."""
+    lt = translate(text) or injury_lt.gist(text)
+    if lt is None and text not in _untranslated:
+        _untranslated.add(text)
+        print(f"Traumos komentaras neišverstas: {text}")
+    return lt or text
 
 
-def comment_local(text):
-    return L(REMOVED_NOTE, "Removed from the injury report") if text == REMOVED_NOTE else text
+def loc_reason(text):
+    """A short report reason ('knee injury', "coach's decision") in the UI language."""
+    text = _clean(text).rstrip(".")
+    if LANG.get() == "en" or not text:
+        return text
+    return _lt(text, lambda t: injury_lt.reason(t) or injury_lt.translate(t))
+
+
+def loc_comment(text):
+    """A whole report comment in the UI language."""
+    if text == REMOVED_NOTE:
+        return L(REMOVED_NOTE, "Removed from the injury report")
+    text = _clean(text)
+    if LANG.get() == "en" or not text:
+        return text
+    return _lt(text, injury_lt.translate)
 
 
 def is_injury(text):
@@ -1072,27 +1065,20 @@ def _add_update(episode, update):
 def injury_view(entry, health=None):
     """Compact current status for lists: None when the player is fine."""
     if entry and entry["status"] != "ready":
+        key = entry["status"]
         return {
-            "status": entry["status"], "label": entry.get("siteLabel") or SITE_LABELS.get(entry["status"]),
-            "labelLocal": L(LT_LABELS.get(entry["status"]), None),
-            "return": return_local(entry["return"]), "comment": entry["comment"],
-            "reasonLocal": reason_local(dnp_reason(entry["comment"])[1]),
+            "status": key,
+            "label": L(LT_LABELS.get(key, key), entry.get("siteLabel") or SITE_LABELS.get(key, key)),
+            "return": return_local(entry["return"]), "comment": loc_comment(entry["comment"]),
         }
     if health and health != "ready":
-        return {"status": health, "label": SITE_LABELS.get(health, health), "labelLocal": L(LT_LABELS.get(health), None),
-                "return": "", "comment": "", "reasonLocal": None}
+        return {"status": health, "label": health_label(health), "return": "", "comment": ""}
     return None
 
 
 def return_local(text):
     t = _clean(text)
-    if LANG.get() == "en":
-        return t
-    m = re.fullmatch(r"Round\s*(\d+)(?:\s*[-–]\s*(\d+))?", t, re.I)
-    if m:
-        return f"{m.group(1)}-{m.group(2)} turas" if m.group(2) else f"{m.group(1)} turas"
-    return {"indefinitely": "neribotam laikui", "season": "sezono pabaiga",
-            "end of season": "sezono pabaiga"}.get(t.lower(), t)
+    return t if LANG.get() == "en" or not t else injury_lt.return_text(t)
 
 
 def dnp_reason(comment):
@@ -1417,8 +1403,7 @@ def build_injury_history(bn_id, game_log):
                      if g.get("date") and start <= g["date"] <= (end or today.isoformat())]
         episodes.append({
             "kind": kind,
-            "reason": reason,
-            "reasonLocal": reason_local(reason),
+            "reason": loc_reason(reason),
             "start": start,
             "end": end,
             "days": max((until - date.fromisoformat(start)).days, 0),
@@ -1429,7 +1414,7 @@ def build_injury_history(bn_id, game_log):
             "missedRounds": ep_missed,
             "updates": [
                 {"date": u["date"], "statusLabel": health_label(u["status"]),
-                 "return": return_local(u.get("return")), "comment": comment_local(u.get("comment"))}
+                 "return": return_local(u.get("return")), "comment": loc_comment(u.get("comment"))}
                 for u in ep["updates"]
             ],
         })
@@ -1466,7 +1451,7 @@ def injury_summary(episodes, missed, game_log):
     else:
         parts.append(L("Šį sezoną nepraleido nė vieno turo.", "Has not missed a round this season."))
     for e in injuries:
-        what = e["reasonLocal"] or e["reason"] or L("trauma", "injury")
+        what = e["reason"] or L("trauma", "injury")
         if e["end"]:
             span = L(f"nuo {e['start'][5:]} iki {e['end'][5:]}", f"from {e['start'][5:]} to {e['end'][5:]}")
         else:
@@ -1474,7 +1459,7 @@ def injury_summary(episodes, missed, game_log):
         parts.append(f"{what[:1].upper() + what[1:]}: {span} ({e['days']} {L('d.', 'days')}).")
     others = [e for e in episodes if e["kind"] == "other"]
     if others and not injuries:
-        reason = others[0]["reasonLocal"] or others[0]["reason"]
+        reason = others[0]["reason"]
         if reason and missed:
             parts.append(L(f"Traumų nebuvo. Priežastis: {reason}.", f"No injuries. Reason: {reason}."))
         else:
@@ -1672,13 +1657,13 @@ def player_payload(fid, player_id):
         for u in ep["updates"]:
             rnd_no, why = dnp_reason(u["comment"])
             if rnd_no:
-                reasons[rnd_no - 1] = reason_local(why) or why
+                reasons[rnd_no - 1] = loc_reason(why)
         for r in ep["missedRounds"]:
-            reasons.setdefault(r, ep["reasonLocal"] or ep["reason"])
+            reasons.setdefault(r, ep["reason"])
     if current:  # recovered players keep a "DNP in Round N (...)" note in the report
         rnd_no, why = dnp_reason(current["comment"])
         if rnd_no:
-            reasons.setdefault(rnd_no - 1, reason_local(why) or why or current["comment"])
+            reasons.setdefault(rnd_no - 1, loc_reason(why) or loc_comment(current["comment"]))
     for row in game_log:
         if row["status"] == "dnp":
             row["reason"] = reasons.get(row["round"])
@@ -1729,13 +1714,14 @@ def teams_word(n):
     return f"{n} komandų"
 
 
-def award(title, name, value, sub="", icon="", team_id=None, player_id=None):
+def award(title, name, value, sub="", icon="", team_id=None, player_id=None, info=None):
+    """One award card; `info` explains how a less obvious award is worked out."""
     return {"title": title, "icon": icon, "name": name, "value": value, "sub": sub,
-            "teamId": team_id, "playerId": player_id}
+            "teamId": team_id, "playerId": player_id, "info": info}
 
 
-def no_award(title, sub, icon=""):
-    return award(title, L("Dar nėra", "None yet"), "", sub, icon)
+def no_award(title, sub, icon="", info=None):
+    return award(title, L("Dar nėra", "None yet"), "", sub, icon, info=info)
 
 
 def round_breakdown(meta, rnd):
@@ -1898,12 +1884,24 @@ def best_transfer(with_lineups, team_names):
                 key = (p["id"], tid)
                 pname, total = gained.get(key, (p["name"], 0))
                 gained[key] = (pname, total + p["contrib"])
+    first = rnd_word(with_lineups[0]["round"])
+    info = L(
+        f"Žaidėjas, kurio komanda neturėjo {first.replace('turas', 'ture')}, t. y. vėliau paimtas iš laisvųjų "
+        "agentų arba gautas mainais. Skaičiuojami tik taškai, kuriuos jis atnešė naujajai komandai nuo "
+        "įsigijimo, su sudėties koeficientais: startinis penketas ir 6-as žaidėjas ×1, kapitonas ×2, "
+        "atsarginiai ×0,5, neregistruoti 0. Sumuojami tik turai, kurių sudėtys išsaugotos. "
+        "Laimi daugiausia taškų atnešęs įsigijimas.",
+        f"A player who was not on the team's roster in {first}, i.e. picked up later from free agency or "
+        "via a trade. Only the points earned for the new team since the move count, with lineup "
+        "multipliers: starters and 6th man ×1, captain ×2, bench ×0.5, not registered 0. Only rounds "
+        "with a saved lineup are added up. The acquisition with the most points wins.")
     if not gained:
-        return no_award(L("Sezono sandoris", "Deal of the season"), L("atsiras po pirmųjų perėjimų", "appears after the first transfers"), "🤝")
+        return no_award(L("Sezono sandoris", "Deal of the season"), L("atsiras po pirmųjų perėjimų", "appears after the first transfers"),
+                        "🤝", info=info)
     (pid, tid), (pname, total) = max(gained.items(), key=lambda kv: kv[1][1])
     return award(L("Sezono sandoris", "Deal of the season"), pname, num(total),
                  f"{team_names.get(tid, '')} · {L('taškai nuo įsigijimo', 'points since acquired')}", "🤝",
-                 player_id=pid)
+                 player_id=pid, info=info)
 
 
 def season_records(meta, breakdowns, team_names, streaks, totals):

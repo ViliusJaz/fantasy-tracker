@@ -19,6 +19,8 @@ const I18N = {
   lt: {
     brand: "Fantasy trackeris",
     skip: "Pereiti prie turinio",
+    themeLight: "Šviesi tema",
+    themeDark: "Tamsi tema",
     allLeagues: "Visos lygos",
     myLeagues: "Mano lygos",
     pickLeague: "Pasirink lygą, kad matytum turnyrinę lentelę.",
@@ -70,6 +72,9 @@ const I18N = {
     ctxHigh: "Aukštas nuo",
     ctxLow: "Žemas iki",
     ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
+    lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
+    awardInfo: "Kaip skaičiuojama?",
+    rankTip: "Vieta tarp {n} žaidėjų, 1 yra geriausias",
     proballers: "Karjera Proballers",
     proballersTitle: "Atidaro žaidėjo karjeros statistiką Proballers svetainėje",
     partialLineups: "{r} turo sudėčių neturime komandoms: {teams}. Jų kapitonų, MVP ir „prarasta dėl sudėties“ šiame ture neskaičiuojame.",
@@ -195,7 +200,6 @@ const I18N = {
     daysShort: "d.",
     ongoing: "(tęsiasi)",
     missed: "praleido: {r}",
-    source: "Šaltinis",
     historyNote: "Istorija kaupiama automatiškai iš {link} kol veikia programa, o praleisti turai nustatomi iš rungtynių statistikos.",
     rounds: "Turai",
     didNotPlay: "Nežaidė",
@@ -204,7 +208,6 @@ const I18N = {
     loading: "Kraunama…",
     close: "Uždaryti",
     error: "Klaida {s}",
-    returnWord: "grįžimas",
     pos: { guard: "Gynėjas", forward: "Puolėjas", center: "Centras" },
     tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", eff: "NB" },
     resShort: { W: "P", L: "Pr", T: "L" },
@@ -212,6 +215,8 @@ const I18N = {
   en: {
     brand: "Fantasy tracker",
     skip: "Skip to content",
+    themeLight: "Light theme",
+    themeDark: "Dark theme",
     allLeagues: "All leagues",
     myLeagues: "My leagues",
     pickLeague: "Pick a league to see its standings.",
@@ -264,6 +269,9 @@ const I18N = {
     ctxHigh: "High from",
     ctxLow: "Low up to",
     ctxNote: "Compared with players averaging at least {m} minutes.",
+    lowerBetter: "For this metric a lower value is better.",
+    awardInfo: "How is it worked out?",
+    rankTip: "Rank among {n} players, 1 is the best",
     proballers: "Career on Proballers",
     proballersTitle: "Opens the player's career stats on Proballers",
     partialLineups: "Round {r} lineups are missing for: {teams}. Their captain, MVP and points-lost numbers are left out for that round.",
@@ -389,7 +397,6 @@ const I18N = {
     daysShort: "days",
     ongoing: "(ongoing)",
     missed: "missed: {r}",
-    source: "Source",
     historyNote: "The history is built automatically from the {link} while the app runs; missed rounds come from game stats.",
     rounds: "Rounds",
     didNotPlay: "Did not play",
@@ -398,7 +405,6 @@ const I18N = {
     loading: "Loading…",
     close: "Close",
     error: "Error {s}",
-    returnWord: "return",
     pos: { guard: "Guard", forward: "Forward", center: "Center" },
     tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", eff: "PIR" },
     resShort: { W: "W", L: "L", T: "T" },
@@ -443,6 +449,7 @@ function applyLangChrome() {
   document.documentElement.lang = LANG;
   document.title = t("brand");
   document.getElementById("brand-text").textContent = t("brand");
+  applyTheme(currentTheme());
   langSwitch.innerHTML = ["lt", "en"].map((l) =>
     `<button type="button" class="lang${l === LANG ? " active" : ""}" data-lang="${l}" aria-pressed="${l === LANG}">${l.toUpperCase()}</button>`).join("");
 }
@@ -455,6 +462,32 @@ langSwitch.addEventListener("click", (e) => {
   applyLangChrome();
   if (modal.open) modal.close();
   route(true);
+});
+
+// ------------------------------------------------------------------ theme (dark / beige light)
+
+const themeBtn = document.getElementById("theme-toggle");
+const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+
+function currentTheme() {
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+}
+
+function applyTheme(theme) {
+  if (theme === "light") document.documentElement.dataset.theme = "light";
+  else delete document.documentElement.dataset.theme;
+  document.querySelector('meta[name="theme-color"]').content = theme === "light" ? "#ece4d3" : "#0c0f14";
+  const label = theme === "light" ? t("themeDark") : t("themeLight");
+  themeBtn.innerHTML = theme === "light" ? MOON : SUN;
+  themeBtn.setAttribute("aria-label", label);
+  themeBtn.dataset.tip = label;
+}
+
+themeBtn.addEventListener("click", () => {
+  const next = currentTheme() === "light" ? "dark" : "light";
+  try { localStorage.setItem("ft-theme", next); } catch { /* per-browser preference only */ }
+  applyTheme(next);
 });
 
 // ------------------------------------------------------------------ tooltips
@@ -571,12 +604,11 @@ function stamp() {
   return t("updated", { t: `${pad(d.getHours())}:${pad(d.getMinutes())}` });
 }
 
-// Injury status exactly as the BasketNews report words it ("Out", "Game-time", ...).
+// Injury status in BasketNews' own words: "Out" on .com, "Nežaidžia" on .lt.
 function injuryBadge(injury) {
   if (!injury) return "";
   const cls = SEVERITY[injury.status] || "mild";
-  const title = [injury.labelLocal, injury.return && `${t("returnWord")}: ${injury.return}`, injury.reasonLocal || injury.comment]
-    .filter(Boolean).join(" · ");
+  const title = [injury.return && t("expectedReturn", { r: injury.return }), injury.comment].filter(Boolean).join(". ");
   return `<span class="inj ${cls}" title="${esc(title)}">${esc(injury.label)}</span>`;
 }
 
@@ -619,8 +651,9 @@ function gameCell(games) {
 
 // ------------------------------------------------------------------ line chart (inline SVG)
 
-const CHART_TEAM = "#3987e5";
-const CHART_AVG = "#d95926";
+// Theme-aware: the values live in style.css (--chart-team / --chart-avg per theme).
+const CHART_TEAM = "var(--chart-team)";
+const CHART_AVG = "var(--chart-avg)";
 
 function niceStep(range, target) {
   const raw = range / target;
@@ -652,8 +685,8 @@ function lineChart(id, { xs, series, invert = false, yMin, yMax, integer = false
     const pts = s.values.map((v, i) => (v.y === null || v.y === undefined ? null : [x(i), y(v.y)]));
     let d = "", pen = false;
     pts.forEach((p) => { if (!p) { pen = false; return; } d += `${pen ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`; pen = true; });
-    const dots = pts.map((p) => (p ? `<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="${s.color}" class="dot"/>` : "")).join("");
-    return `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${dots}`;
+    const dots = pts.map((p) => (p ? `<circle cx="${p[0]}" cy="${p[1]}" r="4.5" style="fill:${s.color}" class="dot"/>` : "")).join("");
+    return `<path d="${d}" fill="none" style="stroke:${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${dots}`;
   }).join("");
   const bands = xs.map((_, i) => {
     const x0 = xs.length === 1 ? L : Math.max(L, x(i) - plotW / (2 * (xs.length - 1)));
@@ -989,9 +1022,11 @@ function awardCards(cards) {
   return `<div class="awards">${cards.map((c) => {
     const target = c.playerId ? `data-player="${c.playerId}"` : c.teamId ? `data-team="${c.teamId}"` : "";
     return `<div class="award${target ? " clickable" : ""}" ${target}>
-      <div class="award-title">${c.icon ? `<span aria-hidden="true">${c.icon}</span> ` : ""}${esc(c.title)}</div>
+      <div class="award-title"><span>${c.icon ? `<span aria-hidden="true">${c.icon}</span> ` : ""}${esc(c.title)}</span>${c.info
+        ? `<button type="button" class="info-btn" data-award-info aria-expanded="false" aria-label="${esc(t("awardInfo"))}" data-tip="${esc(t("awardInfo"))}">i</button>` : ""}</div>
       <div class="award-main"><span class="award-name">${esc(c.name)}</span>${c.value !== "" ? `<span class="award-value">${esc(c.value)}</span>` : ""}</div>
       ${c.sub ? `<div class="award-sub">${esc(c.sub)}</div>` : ""}
+      ${c.info ? `<p class="award-info" hidden>${esc(c.info)}</p>` : ""}
     </div>`;
   }).join("")}</div>`;
 }
@@ -1057,7 +1092,9 @@ async function renderRecords(fid, params, token, silent) {
     <p class="note">${esc(t("recordsNote"))}</p>`);
   bindRoundSelect(`#/l/${fid}/records`);
   app.querySelectorAll("[data-team]").forEach((el) =>
-    el.addEventListener("click", () => (location.hash = `#/l/${fid}/t/${el.dataset.team}`)));
+    el.addEventListener("click", (e) => {
+      if (!e.target.closest("[data-award-info], .award-info")) location.hash = `#/l/${fid}/t/${el.dataset.team}`;
+    }));
 }
 
 // ------------------------------------------------------------------ player lists (free agents / all players)
@@ -1637,13 +1674,6 @@ async function openPlayer(pid) {
   modalBody.innerHTML = playerView(fid, data);
 }
 
-// A metric's level is good or bad depending on which direction is better for it.
-function levelTone(x) {
-  if (!x.level || x.level === "avg" || !x.context) return "avg";
-  const up = x.context.better !== "lower";
-  return (x.level === "high") === up ? "good" : "bad";
-}
-
 function advContext(x, minutes) {
   if (!x.context) return "";
   const c = x.context;
@@ -1652,7 +1682,7 @@ function advContext(x, minutes) {
       <span>${t("ctxHigh")} <b>${fmt1(c.high)}</b></span>
       <span>${t("ctxLow")} <b>${fmt1(c.low)}</b></span>
     </div>
-    <div class="adv-ctx-note">${t("ctxNote", { m: minutes })}</div>`;
+    <div class="adv-ctx-note">${c.better === "lower" ? `${t("lowerBetter")} ` : ""}${t("ctxNote", { m: minutes })}</div>`;
 }
 
 function advancedSection(adv) {
@@ -1662,11 +1692,10 @@ function advancedSection(adv) {
     <div class="adv-group">
       <h4>${esc(g.title)}</h4>
       ${g.stats.map((x) => `<div class="adv-row">
-        <span class="adv-label"><strong data-tip="${esc(x.title)}">${esc(x.short)}</strong>
-          <button type="button" class="info-btn" data-info aria-expanded="false" aria-label="${esc(t("advInfo"))}" data-tip="${esc(t("advInfo"))}">i</button>
-          <span class="dim adv-name">${esc(x.title)}</span></span>
-        <span class="adv-value">${fmt1(x.value)}${x.level ? `<span class="lvl ${levelTone(x)}">${t("lvl")[x.level]}</span>` : ""}</span>
-        <span class="adv-rank dim">${x.rank ? `#${x.rank}` : ""}</span>
+        <span class="adv-label"><abbr data-tip="${esc(x.title)}" aria-label="${esc(x.title)}">${esc(x.short)}</abbr>${x.context?.better === "lower" ? `<span class="adv-dir" data-tip="${esc(t("lowerBetter"))}" aria-label="${esc(t("lowerBetter"))}">↓</span>` : ""}
+          <button type="button" class="info-btn" data-info aria-expanded="false" aria-label="${esc(t("advInfo"))}" data-tip="${esc(t("advInfo"))}">i</button></span>
+        <span class="adv-value">${fmt1(x.value)}${x.level ? `<span class="lvl ${x.level}">${t("lvl")[x.level]}</span>` : ""}</span>
+        <span class="adv-rank dim" data-tip="${esc(t("rankTip", { n: adv.ranked }))}">${x.rank ? `#${x.rank}` : ""}</span>
         <span class="adv-bar"><i style="width:${Math.max(0, Math.min(100, x.pct ?? 0))}%"></i></span>
         <div class="adv-desc" hidden><p>${esc(x.desc || "")}</p>${advContext(x, adv.contextMinutes || 10)}</div>
       </div>`).join("")}
@@ -1685,8 +1714,8 @@ function playerView(fid, data) {
 
   const status = cur
     ? `<div class="status-box ${SEVERITY[cur.status] || "mild"}">
-        <div class="status-top"><strong>${esc(cur.label)}</strong>${cur.labelLocal ? `<span class="dim">${esc(cur.labelLocal)}</span>` : ""}${cur.return ? `<span>${esc(t("expectedReturn", { r: cur.return }))}</span>` : ""}</div>
-        ${cur.comment ? `<div class="status-comment">${cur.reasonLocal ? `${esc(cur.reasonLocal)} · ` : ""}<span class="dim">„${esc(cur.comment)}“</span></div>` : ""}
+        <div class="status-top"><strong>${esc(cur.label)}</strong>${cur.return ? `<span>${esc(t("expectedReturn", { r: cur.return }))}</span>` : ""}</div>
+        ${cur.comment ? `<div class="status-comment">${esc(cur.comment)}</div>` : ""}
       </div>`
     : `<div class="status-box ok"><strong>${t("healthy")}</strong><span class="dim">${t("notOnReport")}</span></div>`;
 
@@ -1698,14 +1727,13 @@ function playerView(fid, data) {
   ];
 
   const episodes = injury.episodes.map((e) => {
-    const reason = e.reasonLocal || e.reason || t("noReason");
+    const reason = e.reason || t("noReason");
     const span = `${shortDay(e.start)} → ${e.ongoing ? t("now") : shortDay(e.end)}`;
     const missed = e.missedRounds.length ? ` · ${t("missed", { r: e.missedRounds.map((r) => t("roundShort", { n: r + 1 })).join(", ") })}` : "";
     const updates = e.updates.map((u) => `<li><span class="dim">${shortDay(u.date)}</span> ${esc(u.statusLabel)}${u.return ? ` (${esc(u.return)})` : ""}${u.comment ? `: ${esc(u.comment)}` : ""}</li>`).join("");
     return `<li class="episode ${e.kind}">
       <div class="ep-head"><span class="ep-kind">${e.kind === "injury" ? t("kindInjury") : t("kindOther")}</span><strong>${esc(reason[0].toUpperCase() + reason.slice(1))}</strong></div>
       <div class="ep-meta">${span} · ${e.days} ${t("daysShort")}${e.ongoing ? ` ${t("ongoing")}` : ""}${missed}</div>
-      ${e.reasonLocal && e.reason ? `<div class="ep-orig dim">${t("source")}: „${esc(e.reason)}“</div>` : ""}
       <ul class="ep-updates">${updates}</ul>
     </li>`;
   }).join("");
@@ -1764,6 +1792,15 @@ modal.addEventListener("click", (e) => {
 });
 
 app.addEventListener("click", (e) => {
+  const info = e.target.closest("[data-award-info]");
+  if (info) {
+    const text = info.closest(".award").querySelector(".award-info");
+    text.hidden = !text.hidden;
+    info.setAttribute("aria-expanded", String(!text.hidden));
+    info.classList.toggle("on", !text.hidden);
+    return;
+  }
+  if (e.target.closest(".award-info")) return;
   const row = e.target.closest("[data-player]");
   if (row && !e.target.closest("a")) openPlayer(row.dataset.player);
 });

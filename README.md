@@ -9,8 +9,9 @@ python3 fantasy-tracker/server.py
 ```
 
 Atsidaryk http://127.0.0.1:8124. Papildomų bibliotekų nereikia (tik Python 3 standartinė biblioteka).
-Kalbą (LT / EN) gali perjungti viršuje dešinėje – pasirinkimas įsimenamas naršyklėje, o serveris
-tekstus (apdovanojimus, traumų istoriją, klaidas) grąžina pagal `?lang=`.
+Kalbą (LT / EN) ir temą (tamsi / šviesi, smėlio spalvos) gali perjungti viršuje dešinėje –
+pasirinkimai įsimenami naršyklėje, o serveris tekstus (apdovanojimus, traumų istoriją, klaidas)
+grąžina pagal `?lang=`.
 
 - Lygos saugomos `leagues.json`. Naują lygą pridėk pagrindiniame puslapyje įklijavęs jos
   nuorodą (`https://fantasy.basketnews.com/fantasy-leagues/<id>/...`).
@@ -33,8 +34,11 @@ tekstus (apdovanojimus, traumų istoriją, klaidas) grąžina pagal `?lang=`.
   Wikidata neturi, atidaroma paieška tik tarp Proballers žaidėjų puslapių.
 - Atkovoti kamuoliai = `s_orb + s_drb` (API laukas `s_rbs` – gauti blokai, ne atkovoti kamuoliai).
 - Traumos – iš BasketNews traumų sąrašo (Eurolygai
-  https://basketnews.com/news-212393-euroleague-injury-report-updated.html), su tuo pačiu
-  užrašu kaip sąraše („Out“, „Game-time“, „Uncertain“ ...).
+  https://basketnews.com/news-212393-euroleague-injury-report-updated.html). EN versijoje
+  rodoma sąrašo formuluotė („Out“, „Game-time“ ...), LT versijoje – basketnews.lt žodžiai
+  („Nežaidžia“, „Prieš rungtynes“ ...), o komentarus išverčia `injury_lt.py` (kūno dalis +
+  pusė + traumos tipas su teisingais linksniais). Ko vertėjas nesupranta, serverio konsolėje
+  pažymi „Traumos komentaras neišverstas“ ir rodo originalą.
 - Taškai pagal sudėtį: penketas ×1, kapitonas ×2, 6-as žaidėjas (b-1) ×1, B2–B5 ×0.5,
   neaktyvūs („Out“) ×0. Leidžiamos formacijos (C-F-G): 1-2-2, 2-1-2, 2-2-1, 1-3-1, 1-1-3.
   „Optimali sudėtis“ – geriausias tų pačių aktyvių žaidėjų išdėstymas; skirtumas –
