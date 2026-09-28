@@ -9,6 +9,8 @@ python3 fantasy-tracker/server.py
 ```
 
 Atsidaryk http://127.0.0.1:8124. Papildomų bibliotekų nereikia (tik Python 3 standartinė biblioteka).
+Kalbą (LT / EN) gali perjungti viršuje dešinėje – pasirinkimas įsimenamas naršyklėje, o serveris
+tekstus (apdovanojimus, traumų istoriją, klaidas) grąžina pagal `?lang=`.
 
 - Lygos saugomos `leagues.json`. Naują lygą pridėk pagrindiniame puslapyje įklijavęs jos
   nuorodą (`https://fantasy.basketnews.com/fantasy-leagues/<id>/...`).
@@ -17,7 +19,19 @@ Atsidaryk http://127.0.0.1:8124. Papildomų bibliotekų nereikia (tik Python 3 s
 - „Liko“ – kiek pagrindinio penketo žaidėjų dar nesužaidė vykstančio turo rungtynių.
   Kai turas vyksta, puslapis atsinaujina kas minutę.
 - Laisvieji agentai – visi varžybų žaidėjai (`playersSearchRecordsFromClient`), kurių nėra
-  nė vienos lygos komandos sudėtyje.
+  nė vienos lygos komandos sudėtyje. Rikiuojama paspaudus bet kurio stulpelio pavadinimą,
+  statistikos filtrai – intervalo slankiklis su įvedamomis ribomis.
+- „Rungtynių statistika“ – kiekvienų realių turo rungtynių lentelė (suskleista, atsidaro paspaudus)
+  su kiekvieno žaidėjo statistika ir jo savininku lygoje. „Visi žaidėjai“ – kaip laisvieji
+  agentai, bet su visais žaidėjais ir savininko stulpeliu.
+- Pažangi statistika (USG%, TS%, reitingai, procentiliai) – iš BasketNews
+  `advanced-stats/team-profile/players.json` (sezono ir kiekvieno turo, `sequence_from/to`).
+  Turui, kurio BasketNews dar nepaskelbė, USG% apskaičiuojamas iš rungtynių statistikos.
+- „Karjera Proballers“ – `/go/proballers/<lyga>/<žaidėjas>` nukreipia tiesiai į žaidėjo Proballers
+  puslapį. Proballers ID imamas iš Wikidata (savybė P8548); bendrapavardžiai atskiriami pagal
+  gimimo datą iš BasketNews profilio. Rasti adresai saugomi `data/proballers.json`. Jei žaidėjo
+  Wikidata neturi, atidaroma paieška tik tarp Proballers žaidėjų puslapių.
+- Atkovoti kamuoliai = `s_orb + s_drb` (API laukas `s_rbs` – gauti blokai, ne atkovoti kamuoliai).
 - Traumos – iš BasketNews traumų sąrašo (Eurolygai
   https://basketnews.com/news-212393-euroleague-injury-report-updated.html), su tuo pačiu
   užrašu kaip sąraše („Out“, „Game-time“, „Uncertain“ ...).

@@ -8,8 +8,10 @@ Tracked leagues live in ./leagues.json. Things the public API does not keep --
 past-round lineups and injury history -- are recorded under ./data while the
 server runs.
 """
+import contextvars
 import itertools
 import json
+import unicodedata
 import os
 import re
 import ssl
@@ -22,6 +24,7 @@ from datetime import date, datetime, timedelta
 from html.parser import HTMLParser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+import urllib.parse
 from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parent
@@ -59,6 +62,19 @@ def _ssl_context():
 
 SSL_CTX = _ssl_context()
 POOL = ThreadPoolExecutor(max_workers=8)
+
+# UI language of the current request ("lt" | "en"); every user-facing text goes through L().
+LANG = contextvars.ContextVar("lang", default="lt")
+
+
+def L(lt, en):
+    return en if LANG.get() == "en" else lt
+
+
+def pool_map(fn, items):
+    """POOL.map that keeps the request's language in the worker threads."""
+    futures = [POOL.submit(contextvars.copy_context().run, fn, item) for item in items]
+    return [f.result() for f in futures]
 
 
 class UpstreamError(Exception):
@@ -106,9 +122,9 @@ def gql(query, variables, ttl=LIVE_TTL):
         with urllib.request.urlopen(req, context=SSL_CTX, timeout=25) as resp:
             payload = json.load(resp)
     except urllib.error.URLError as exc:
-        raise UpstreamError(f"BasketNews nepasiekiamas: {exc}") from exc
+        raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
     if payload.get("errors"):
-        raise UpstreamError(payload["errors"][0].get("message", "GraphQL klaida"))
+        raise UpstreamError(payload["errors"][0].get("message", L("GraphQL klaida", "GraphQL error")))
     data = payload["data"]
     with _cache_lock:
         _cache[key] = (now + ttl, data)
@@ -119,9 +135,9 @@ Q_COMPETITIONS = """
 query($locale: String!) {
   allLeagueRecordsFromClient(locale: $locale, game: "fantasy") {
     id currentFantasyRound roundStarted scoreRoundsAvailable totalRounds startingFantasyRound
-    injury_report_url
+    basketnewsApiLeagueId seasonYear injury_report_url
     translation(locale: $locale) { name shortName injuryReportUrl }
-    en: translation(locale: "en") { injuryReportUrl }
+    en: translation(locale: "en") { name injuryReportUrl }
   }
 }"""
 
@@ -183,12 +199,12 @@ query($id: String!) {
 
 GAME_FIELDS = """
   originalGameAt live completed canceled delayed
-  team1 { points team { id abbreviation } }
-  team2 { points team { id abbreviation } }
+  team1 { points team { id abbreviation logo } }
+  team2 { points team { id abbreviation logo } }
 """
 
 STAT_FIELDS = ("s_gp s_time s_pts s_rbs s_orb s_drb s_ast s_stl s_blk s_tov "
-               "s_2pm s_2pa s_3pm s_3pa s_ftm s_fta s_pf s_eff")
+               "s_2pm s_2pa s_3pm s_3pa s_ftm s_fta s_pf s_rf s_pm s_eff")
 
 PLAYER_FIELDS = """
   id basketnewsApiPlayerId firstName lastName health photo
@@ -197,6 +213,7 @@ PLAYER_FIELDS = """
     team {
       id abbreviation logo
       translation(locale: $locale) { name shortName }
+      en: translation(locale: "en") { name }
       games(fantasyRound: $gamesRound, currentRound: false) { %s }
     }
   }
@@ -246,10 +263,10 @@ def competitions():
 def league_meta(fid):
     rec = gql(Q_FANTASY_LEAGUE, {"id": fid}, ttl=SETTLED_TTL)["fantasyLeagueRecordFromClient"]
     if not rec:
-        raise NotFound("Lyga nerasta")
+        raise NotFound(L("Lyga nerasta", "League not found"))
     comp = competitions().get(rec["leagueId"])
     if not comp:
-        raise UpstreamError("Nerasta lygos varžybų informacija")
+        raise UpstreamError(L("Nerasta lygos varžybų informacija", "Competition info not found"))
     current = comp["currentFantasyRound"]
     first = comp.get("startingFantasyRound") or 0
     # Round whose results are shown by default: the live one, or the last finished one.
@@ -264,13 +281,15 @@ def league_meta(fid):
         "pointCalcSystem": rec.get("pointCalcSystem") or "modern",
         "teamsCount": rec.get("fantasyTeamsCount"),
         "commissioner": owner_name(rec.get("publicUser")),
-        "competition": comp["translation"]["name"],
+        "competition": L(comp["translation"]["name"], (comp.get("en") or {}).get("name") or comp["translation"]["name"]),
         "currentRound": current,
         "roundStarted": comp["roundStarted"],
         "firstRound": first,
         "latestRound": latest,
         "totalRounds": comp["totalRounds"],
         "injuryReportUrl": injury_url,
+        "bnLeagueId": comp.get("basketnewsApiLeagueId"),
+        "seasonYear": comp.get("seasonYear"),
         "url": f"https://fantasy.basketnews.com/fantasy-leagues/{fid}/leaderboards",
     }
 
@@ -366,6 +385,7 @@ def game_view(game, club_id):
         "at": game["originalGameAt"],
         "home": home,
         "opponent": opp["team"]["abbreviation"],
+        "opponentLogo": LOGO_URL + opp["team"]["logo"] if opp["team"].get("logo") else None,
         "score": [me["points"], opp["points"]] if (game["completed"] or game["live"]) else None,
         "live": game["live"] and not game["completed"],  # upstream sometimes leaves finished games "live"
         "completed": game["completed"],
@@ -384,11 +404,13 @@ def stat_line(st):
         return None
     get = lambda k: st.get(k) or 0  # noqa: E731
     return {
-        "min": round(get("s_time") / 60, 1), "pts": get("s_pts"), "reb": get("s_rbs"),
+        # s_rbs is blocks *received*; rebounds are offensive + defensive
+        "min": round(get("s_time") / 60, 1), "pts": get("s_pts"), "reb": get("s_orb") + get("s_drb"),
         "oreb": get("s_orb"), "dreb": get("s_drb"), "ast": get("s_ast"), "stl": get("s_stl"),
         "blk": get("s_blk"), "tov": get("s_tov"), "pf": get("s_pf"), "eff": get("s_eff"),
         "p2m": get("s_2pm"), "p2a": get("s_2pa"), "p3m": get("s_3pm"), "p3a": get("s_3pa"),
         "ftm": get("s_ftm"), "fta": get("s_fta"),
+        "sec": get("s_time"), "ba": get("s_rbs"), "fd": get("s_rf"), "pm": get("s_pm"),
     }
 
 
@@ -411,6 +433,7 @@ def player_view(p):
             "abbr": club.get("abbreviation"),
             "name": (club.get("translation") or {}).get("shortName"),
             "fullName": (club.get("translation") or {}).get("name"),
+            "nameEn": (club.get("en") or {}).get("name"),
             "logo": LOGO_URL + club["logo"] if club.get("logo") else None,
         } if club else None,
         "games": games,
@@ -430,7 +453,183 @@ def players(meta, stats_round, games_round):
         "leagueId": meta["leagueId"], "locale": LOCALE, "statsRound": stats_round,
         "gamesRound": games_round, "pcs": meta["pointCalcSystem"],
     }, round_ttl(meta, min(stats_round, games_round)))
-    return {p["id"]: player_view(p) for p in data["playersSearchRecordsFromClient"]["records"]}
+    views = {p["id"]: player_view(p) for p in data["playersSearchRecordsFromClient"]["records"]}
+    attach_usage(meta, views, stats_round)
+    return views
+
+
+# --------------------------------------------------------------------------- advanced stats (BasketNews)
+
+ADV_URL = "https://basketnews.com/advanced-stats/team-profile/players.json"
+_adv_cache = {}
+_adv_lock = threading.Lock()
+
+
+def advanced_stats(meta, rnd=None):
+    """BasketNews advanced player stats, {bnPlayerId: row}: the whole season, or one round
+    (each club's game number rnd + 1). Empty when BasketNews has no data for it yet."""
+    league, season = meta.get("bnLeagueId"), meta.get("seasonYear")
+    if not league or not season:
+        return {}
+    key = (league, season, rnd)
+    with _adv_lock:
+        hit = _adv_cache.get(key)
+        if hit and hit[0] > time.time():
+            return hit[1]
+    form = {"league_id": league, "season": season}
+    if rnd is not None:
+        form.update(sequence_from=rnd + 1, sequence_to=rnd + 1)
+    req = urllib.request.Request(
+        ADV_URL, data=urllib.parse.urlencode(form).encode(),
+        headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
+                 "Content-Type": "application/x-www-form-urlencoded",
+                 "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
+    try:
+        with urllib.request.urlopen(req, context=SSL_CTX, timeout=30) as resp:
+            payload = json.load(resp)
+        data = payload.get("data") or {}
+        max_seq = (data.get("extra") or {}).get("max_sequence") or 0
+        if rnd is not None and max_seq < rnd + 1:
+            result = {}  # BasketNews clamps to its last game; that round isn't there yet
+        else:
+            result = {str(r["player_id"]): r for r in data.get("stats") or []}
+    except (urllib.error.URLError, TimeoutError, ValueError) as exc:
+        print(f"Pažangi statistika nepasiekiama: {exc}")
+        return hit[1] if hit else {}
+    ttl = 3600 if rnd is None else (12 * 3600 if rnd < meta["currentRound"] else 300)
+    with _adv_lock:
+        _adv_cache[key] = (time.time() + ttl, result)
+    return result
+
+
+def adv_value(row, key):
+    if not row:
+        return None
+    v = row.get(key)
+    return v.get("value") if isinstance(v, dict) else v
+
+
+def attach_usage(meta, views, stats_round):
+    """Usage %: BasketNews' own numbers, or a box-score estimate for a round they have not published."""
+    season_adv = advanced_stats(meta)
+    round_adv = advanced_stats(meta, stats_round) if stats_round is not None else {}
+    teams = {}
+    for v in views.values():
+        line, club = v["roundLine"], (v["club"] or {}).get("abbr")
+        if line and club:
+            t = teams.setdefault(club, [0.0, 0.0, 0.0, 0.0])
+            t[0] += line["sec"] / 60
+            t[1] += line["p2a"] + line["p3a"]
+            t[2] += line["fta"]
+            t[3] += line["tov"]
+    for v in views.values():
+        if v["season"]:
+            v["season"]["usg"] = adv_value(season_adv.get(v["bnId"]), "usage_percentage")
+        line = v["roundLine"]
+        if not line:
+            continue
+        usg = adv_value(round_adv.get(v["bnId"]), "usage_percentage")
+        team = teams.get((v["club"] or {}).get("abbr"))
+        mins = line["sec"] / 60
+        if usg is None and team and mins > 0:
+            team_poss = team[1] + 0.44 * team[2] + team[3]
+            if team_poss:
+                usg = round(100 * (line["p2a"] + line["p3a"] + 0.44 * line["fta"] + line["tov"]) * (team[0] / 5)
+                            / (mins * team_poss), 1)
+        line["usg"] = usg
+
+
+# (key, short, LT title, EN title, LT explanation, EN explanation)
+ADV_GROUPS = [
+    ("offense", ("Puolimas", "Offense"), [
+        ("usage_percentage", "USG%", "Naudojimo dažnis", "Usage %",
+         "Kokią dalį komandos atakų žaidėjas užbaigia pats (metimu, baudomis ar klaida), kol yra aikštėje. ~20 % – vidutinis, 30 %+ – pagrindinis puolimo variklis.",
+         "Share of team possessions a player finishes himself (shot, free throws or turnover) while on court. ~20% is average, 30%+ is a primary option."),
+        ("ts_percentage", "TS%", "Tikrasis metimų taiklumas", "True shooting %",
+         "Metimų efektyvumas, įskaitant tritaškių vertę ir baudas: TŠK ÷ (2 × (metimai + 0.44 × baudų metimai)). Geriau nei paprastas taiklumas.",
+         "Shooting efficiency that credits threes and free throws: PTS ÷ (2 × (FGA + 0.44 × FTA)). Better than plain FG%."),
+        ("offensive_rating_ind", "IORTG", "Individualus puolimo reitingas", "Individual offensive rating",
+         "Kiek taškų žaidėjas sukuria per 100 atakų, kurias jis naudoja (savo taškai, rez. perdavimai, atkovoti kamuoliai puolime).",
+         "Points a player produces per 100 possessions he uses (own scoring, assists, offensive rebounds)."),
+        ("assist_percentage", "AST%", "Rez. perdavimų dalis", "Assist %",
+         "Kokia dalis žaidėjo atakų baigiasi rezultatyviu perdavimu, o ne metimu ar klaida.",
+         "Share of the player's plays that end with an assist rather than a shot or turnover."),
+        ("turnover_percentage", "TOV%", "Klaidų dalis", "Turnover %",
+         "Kokia dalis žaidėjo atakų baigiasi klaida. Mažiau – geriau.",
+         "Share of the player's plays that end in a turnover. Lower is better."),
+        ("3p_attempted_rate", "3PAR", "Tritaškių dalis metimuose", "3PA rate",
+         "Kiek procentų visų žaidėjo metimų iš žaidimo yra tritaškiai.",
+         "Share of the player's field-goal attempts taken from three."),
+        ("created_points", "PTS+AST", "Sukurti taškai", "Created points",
+         "Paties pelnyti taškai plius taškai, kuriuos komandos draugai pelnė po jo rezultatyvių perdavimų.",
+         "Points scored himself plus points teammates scored from his assists."),
+        ("fouls_received", "FD", "Išprovokuotos pražangos", "Fouls drawn",
+         "Vidutiniškai per rungtynes prieš jį padarytos pražangos. Duoda taškų ir naudingumo balui.",
+         "Fouls drawn per game. They add to PIR."),
+        ("offensive_rebound_percentage", "OREB%", "Atk. kamuolių puolime dalis", "Offensive rebound %",
+         "Kokią dalį galimų atkovoti kamuolių po komandos nepataikytų metimų jis atkovoja, kol yra aikštėje.",
+         "Share of available offensive rebounds (after team misses) he grabs while on court."),
+    ]),
+    ("defense", ("Gynyba", "Defense"), [
+        ("defensive_rating_ind", "IDRTG", "Individualus gynybos reitingas", "Individual defensive rating",
+         "Kiek taškų varžovai pelno per 100 atakų, vertinant žaidėjo indėlį gynyboje. Mažiau – geriau.",
+         "Points allowed per 100 opponent possessions, based on the player's defensive contribution. Lower is better."),
+        ("defensive_rebound_percentage", "DREB%", "Atk. kamuolių gynyboje dalis", "Defensive rebound %",
+         "Kokią dalį galimų atkovoti kamuolių po varžovų nepataikytų metimų jis atkovoja, kol yra aikštėje.",
+         "Share of available defensive rebounds (after opponent misses) he grabs while on court."),
+        ("steal_percentage", "STL%", "Perimtų kamuolių dalis", "Steal %",
+         "Kokią dalį varžovų atakų, kol jis aikštėje, jis užbaigia perimdamas kamuolį.",
+         "Share of opponent possessions, while he is on court, that end with his steal."),
+        ("block_percentage", "BLK%", "Blokų dalis", "Block %",
+         "Kokią dalį varžovų metimų, kol jis aikštėje, jis užblokuoja.",
+         "Share of opponent shot attempts he blocks while on court."),
+        ("stops", "STP", "Sustabdytos atakos", "Stops",
+         "Vidutiniškai kiek varžovų atakų per rungtynes jis užbaigia gynyboje (perimtas, blokas, atkovotas kamuolys, priverstas nepataikymas).",
+         "Opponent possessions per game he ends on defense (steal, block, defensive rebound, forced miss)."),
+        ("stop_percentage", "STP%", "Sustabdytų atakų dalis", "Stop %",
+         "Kokią dalį varžovų atakų, kol jis aikštėje, jis sustabdo.",
+         "Share of opponent possessions he stops while on court."),
+    ]),
+    ("overall", ("Bendra", "Overall"), [
+        ("net_rating_ind", "INRTG", "Individualus balansas", "Individual net rating",
+         "Individualus puolimo reitingas minus gynybos reitingas: kiek taškų per 100 atakų žaidėjas „prideda“ komandai.",
+         "Individual offensive minus defensive rating: points per 100 possessions the player adds."),
+        ("offensive_rating_lineup", "ORTG", "Komandos puolimo reitingas jam žaidžiant", "Team ORtg with him on court",
+         "Kiek taškų komanda pelno per 100 atakų, kai jis yra aikštėje.",
+         "Team points scored per 100 possessions while he is on court."),
+        ("defensive_rating_lineup", "DRTG", "Komandos gynybos reitingas jam žaidžiant", "Team DRtg with him on court",
+         "Kiek taškų varžovai pelno per 100 atakų, kai jis yra aikštėje. Mažiau – geriau.",
+         "Opponent points per 100 possessions while he is on court. Lower is better."),
+        ("assist_turnover_ratio", "AST/TO", "Rez. perdavimai / klaidos", "Assists / turnovers",
+         "Kiek rezultatyvių perdavimų tenka vienai klaidai.",
+         "Assists per turnover."),
+        ("possessions", "POSS", "Atakos per rungtynes", "Possessions per game",
+         "Kiek atakų vidutiniškai per rungtynes sužaidžiama, kol jis aikštėje – rodo žaidimo laiką ir tempą.",
+         "Possessions played per game while he is on court – reflects minutes and pace."),
+        ("pir", "PIR", "Naudingumo balas", "Performance index rating",
+         "TŠK + atk. kamuoliai + rez. perdavimai + perimti + blokai + išprovokuotos pražangos − nepataikyti metimai − klaidos − gauti blokai − pražangos.",
+         "PTS + REB + AST + STL + BLK + fouls drawn − missed shots − turnovers − blocks against − fouls."),
+    ]),
+]
+
+
+def advanced_profile(meta, bn_id):
+    table = advanced_stats(meta)
+    row = table.get(str(bn_id)) if bn_id else None
+    if not row:
+        return None
+    groups = []
+    for gid, (lt, en), items in ADV_GROUPS:
+        stats = []
+        for key, short, title_lt, title_en, desc_lt, desc_en in items:
+            cell = row.get(key)
+            if not isinstance(cell, dict) or cell.get("value") is None:
+                continue
+            stats.append({"key": key, "short": short, "title": L(title_lt, title_en), "desc": L(desc_lt, desc_en),
+                          "value": cell["value"], "rank": cell.get("rank"), "pct": cell.get("pct")})
+        groups.append({"id": gid, "title": L(lt, en), "stats": stats})
+    return {"groups": groups, "ranked": len(table), "games": row.get("games_played"),
+            "url": f"https://basketnews.com/advanced-stats/{meta['bnLeagueId']}/{meta['seasonYear']}"}
 
 
 def players_by_ids(meta, ids, stats_round, games_round):
@@ -597,19 +796,20 @@ def score_lineup(lineup_players):
 
 # --------------------------------------------------------------------------- injuries
 
-STATUS_BY_ID = {
-    "1": ("ready", "Pasiruošęs"),
-    "2": ("expected", "Tikėtina, kad žais"),
-    "3": ("questionable", "Abejojama"),
-    "4": ("game-time", "Sprendžiama prieš rungtynes"),
-    "5": ("doubtful", "Abejotinas"),
-    "6": ("out", "Nežaidžia"),
-    "7": ("uncertain", "Neaišku"),
-}
-HEALTH_LABELS = {key: label for key, label in STATUS_BY_ID.values()}
-# Wording used by the BasketNews.com injury report, for when only the API health flag is known.
+# The report marks each status with a class id; the ids are the same on the .com and .lt sites.
+STATUS_BY_ID = {"1": "ready", "2": "expected", "3": "questionable", "4": "game-time",
+                "5": "doubtful", "6": "out", "7": "uncertain"}
+# Wording used by the BasketNews.com injury report (shown as-is in both languages).
 SITE_LABELS = {"ready": "Ready", "expected": "Expected", "questionable": "Questionable", "game-time": "Game-time",
                "doubtful": "Doubtful", "out": "Out", "uncertain": "Uncertain"}
+LT_LABELS = {"ready": "Pasiruošęs", "expected": "Tikėtina, kad žais", "questionable": "Abejojama",
+             "game-time": "Sprendžiama prieš rungtynes", "doubtful": "Abejotinas", "out": "Nežaidžia",
+             "uncertain": "Neaišku"}
+REMOVED_NOTE = "Išbrauktas iš traumų sąrašo"  # stored in the log when a player leaves the report
+
+
+def health_label(key):
+    return L(LT_LABELS.get(key, key), SITE_LABELS.get(key, key))
 
 # Report entries that are about availability rather than health.
 NOT_INJURY = re.compile(
@@ -658,9 +858,16 @@ REASON_LT = {
 DNP_RE = re.compile(r"DNP in Round\s*(\d+)\s*(?:\(([^)]*)\))?", re.I)
 
 
-def reason_lt(text):
+def reason_local(text):
+    """Lithuanian wording of a common report reason; None when not known or in English mode."""
+    if LANG.get() == "en":
+        return None
     key = (text or "").strip().rstrip(".").strip().lower()
     return REASON_LT.get(key)
+
+
+def comment_local(text):
+    return L(REMOVED_NOTE, "Removed from the injury report") if text == REMOVED_NOTE else text
 
 
 def is_injury(text):
@@ -732,15 +939,14 @@ def parse_injury_report(page):
         if len(cells) < 5:
             continue
         m = re.search(r"/(\d+)-[^/]*\.html", cells[1]["href"] or "")
-        key, label = STATUS_BY_ID.get(cells[2]["status"], ("other", _clean(cells[2]["text"])))
+        key = STATUS_BY_ID.get(cells[2]["status"], "other")
         entries.append({
             "bnId": m.group(1) if m else None,
             "name": _clean(cells[1]["text"]),
             "club": club,
             "pos": _clean(cells[0]["text"]),
             "status": key,
-            "statusLabel": label,
-            "siteLabel": _clean(cells[2]["text"]) or label,  # the report's own wording ("Out", "Game-time", ...)
+            "siteLabel": _clean(cells[2]["text"]) or SITE_LABELS.get(key, key),  # "Out", "Game-time", ...
             "return": _clean(cells[3]["text"]),
             "comment": _clean(cells[4]["text"]),
         })
@@ -816,7 +1022,7 @@ def update_injury_log(entries):
             gap = (date.fromisoformat(today) - date.fromisoformat(ep["lastSeen"])).days
             ep["end"] = today if gap <= 1 else ep["lastSeen"]
             _add_update(ep, {"date": ep["end"], "status": "ready", "return": "",
-                             "comment": "Išbrauktas iš traumų sąrašo"})
+                             "comment": REMOVED_NOTE})
         log["updatedAt"] = datetime.now().isoformat(timespec="seconds")
         write_json(INJURY_LOG_FILE, log)
 
@@ -831,19 +1037,21 @@ def injury_view(entry, health=None):
     """Compact current status for lists: None when the player is fine."""
     if entry and entry["status"] != "ready":
         return {
-            "status": entry["status"], "label": entry.get("siteLabel") or entry["statusLabel"],
-            "labelLt": entry["statusLabel"],
-            "return": return_lt(entry["return"]), "comment": entry["comment"],
-            "reasonLt": reason_lt(dnp_reason(entry["comment"])[1]),
+            "status": entry["status"], "label": entry.get("siteLabel") or SITE_LABELS.get(entry["status"]),
+            "labelLocal": L(LT_LABELS.get(entry["status"]), None),
+            "return": return_local(entry["return"]), "comment": entry["comment"],
+            "reasonLocal": reason_local(dnp_reason(entry["comment"])[1]),
         }
     if health and health != "ready":
-        return {"status": health, "label": SITE_LABELS.get(health, health), "labelLt": HEALTH_LABELS.get(health, health),
-                "return": "", "comment": "", "reasonLt": None}
+        return {"status": health, "label": SITE_LABELS.get(health, health), "labelLocal": L(LT_LABELS.get(health), None),
+                "return": "", "comment": "", "reasonLocal": None}
     return None
 
 
-def return_lt(text):
+def return_local(text):
     t = _clean(text)
+    if LANG.get() == "en":
+        return t
     m = re.fullmatch(r"Round\s*(\d+)(?:\s*[-–]\s*(\d+))?", t, re.I)
     if m:
         return f"{m.group(1)}–{m.group(2)} turas" if m.group(2) else f"{m.group(1)} turas"
@@ -942,7 +1150,7 @@ def team_history(meta, team_id, last_round):
                 res["leagueAvg"] = round(sum(x["pointsRound"] for x in table) / len(table), 2)
         return r, res
 
-    return [{"round": r, **res} for r, res in POOL.map(one, rounds) if len(res) > 1 or res["state"] == "upcoming"]
+    return [{"round": r, **res} for r, res in pool_map(one, rounds) if len(res) > 1 or res["state"] == "upcoming"]
 
 
 def team_payload(fid, team_id, rnd=None):
@@ -952,7 +1160,7 @@ def team_payload(fid, team_id, rnd=None):
     shown, rows = standings(meta)
     row = next((r for r in rows if r["team"]["id"] == team_id), None)
     if not row:
-        raise NotFound("Komanda šioje lygoje nerasta")
+        raise NotFound(L("Komanda šioje lygoje nerasta", "Team not found in this league"))
 
     current_lineups = lineups(meta)
     now_lineup = current_lineups.get(team_id)
@@ -966,12 +1174,15 @@ def team_payload(fid, team_id, rnd=None):
             if snap.get("source") == "import":
                 lineup_note = None
             elif not snap["locked"]:
-                lineup_note = "Sudėtis išsaugota prieš turui prasidedant – vėlesni pakeitimai galėjo būti nematyti."
+                lineup_note = L("Sudėtis išsaugota prieš turui prasidedant – vėlesni pakeitimai galėjo būti nematyti.",
+                                "Lineup saved before the round started – later changes may be missing.")
         else:
             # The API only exposes the current lineup; for earlier rounds show today's roster.
             lineup, source = now_lineup, "roster"
-            lineup_note = ("Šio turo sudėtis nebuvo išsaugota (programa dar neveikė), todėl rodomas dabartinis "
-                           "komandos sąrašas su to turo taškais. Tikslus to turo penketas ir kapitonas nežinomi.")
+            lineup_note = L("Šio turo sudėtis nebuvo išsaugota (programa dar neveikė), todėl rodomas dabartinis "
+                            "komandos sąrašas su to turo taškais. Tikslus to turo penketas ir kapitonas nežinomi.",
+                            "This round's lineup was not saved (the app was not running), so the current roster is "
+                            "shown with that round's points. The exact starting five and captain are unknown.")
 
     lineup_players = []
     formation = None
@@ -1024,26 +1235,101 @@ def team_payload(fid, team_id, rnd=None):
     }
 
 
-def free_agents_payload(fid):
+def owners(meta, rnd):
+    """Who holds each player in round `rnd`: {playerId: {"team": {...}, "slotLabel": "G" | "6th" | ... | None}}.
+    Uses that round's saved lineup; falls back to today's rosters (slot unknown)."""
+    names = {r["team"]["id"]: r["team"] for r in standings(meta)[1]}
+    current = lineups(meta)
+    by_team, exact = None, True
+    if any(lu["round"] == rnd for lu in current.values()):
+        by_team = {tid: lu["players"] for tid, lu in current.items()}
+    else:
+        snap = read_json(LINEUPS_DIR / f"{meta['id']}.json", {"rounds": {}})["rounds"].get(str(rnd))
+        if snap:
+            by_team = {tid: lu["players"] for tid, lu in snap["teams"].items()}
+        else:
+            by_team, exact = {tid: lu["players"] for tid, lu in current.items()}, False
+    out = {}
+    for tid, plist in by_team.items():
+        for p in plist:
+            out[p["id"]] = {"team": names.get(tid, {"id": tid, "title": ""}),
+                            "slotLabel": slot_label(p["card"]) if exact else None,
+                            "slot": p["slot"] if exact else None}
+    return out
+
+
+def players_payload(fid, scope="free"):
+    """Player list with season stats: only free agents, or everybody (scope="all") with their owner."""
     meta = league_meta(fid)
-    owned = {p["id"] for lu in lineups(meta).values() for p in lu["players"]}
+    own = owners(meta, meta["currentRound"])
     stats_round = meta["latestRound"]
     pmap = players(meta, stats_round, meta["currentRound"])
     report = injury_report(meta)
-    agents = []
+    rows = []
     for p in pmap.values():
-        if p["id"] in owned:
+        owner = own.get(p["id"])
+        if scope == "free" and owner:
             continue
-        agents.append({**p, "injury": injury_view(report.get(p["bnId"]), p["health"])})
-    agents.sort(key=lambda p: (p["avgPts"] is None, -(p["avgPts"] or 0), p["name"]))
+        rows.append({**p, "injury": injury_view(report.get(p["bnId"]), p["health"]), "owner": owner})
+    rows.sort(key=lambda p: (p["avgPts"] is None, -(p["avgPts"] or 0), p["name"]))
     return {
         "league": meta,
+        "scope": scope,
         "statsRound": stats_round,
-        "players": agents,
+        "players": rows,
         "totalPlayers": len(pmap),
-        "rosteredPlayers": len(owned),
+        "rosteredPlayers": len(own),
         "injuryReportUrl": meta["injuryReportUrl"],
     }
+
+
+def games_payload(fid, rnd=None):
+    """Every real game of a round with each player's box score and fantasy owner."""
+    meta = league_meta(fid)
+    rnd = meta["latestRound"] if rnd is None else max(meta["firstRound"], min(rnd, meta["currentRound"]))
+    pmap = players(meta, rnd, rnd)
+    own = owners(meta, rnd)
+    clubs, games = {}, {}
+    for p in pmap.values():
+        club = p["club"]
+        if not club:
+            continue
+        c = clubs.setdefault(club["abbr"], {"abbr": club["abbr"], "name": club.get("fullName") or club.get("name"),
+                                            "logo": club["logo"], "players": [], "gameCount": len(p["games"])})
+        if p["roundLine"]:
+            c["players"].append({"id": p["id"], "name": p["name"], "photo": p["photo"], "fp": p["roundPts"],
+                                 "line": p["roundLine"], "owner": own.get(p["id"]), "position": p["position"]})
+        for g in p["games"]:
+            home, away = (club["abbr"], g["opponent"]) if g["home"] else (g["opponent"], club["abbr"])
+            key = (g["at"], home, away)
+            if key in games:
+                continue
+            score = g["score"]
+            games[key] = {
+                "id": f"{home}-{away}-{g['at'][:10]}", "at": g["at"], "home": home, "away": away,
+                "homeScore": (score[0] if g["home"] else score[1]) if score else None,
+                "awayScore": (score[1] if g["home"] else score[0]) if score else None,
+                "live": g["live"], "completed": g["completed"], "canceled": g["canceled"],
+                "opponentLogo": {away if g["home"] else home: g.get("opponentLogo")},
+            }
+    out = []
+    for key in sorted(games, key=lambda k: (k[0], k[1])):
+        g = games[key]
+        sides = {}
+        for side in ("home", "away"):
+            c = clubs.get(g[side]) or {"abbr": g[side], "name": g[side], "logo": g["opponentLogo"].get(g[side]),
+                                       "players": [], "gameCount": 1}
+            plist = sorted(c["players"], key=lambda x: -(x["fp"] if x["fp"] is not None else -99))
+            sides[side] = {"abbr": c["abbr"], "name": c["name"], "logo": c["logo"] or g["opponentLogo"].get(g[side]),
+                           "players": plist, "combined": c["gameCount"] > 1}
+        g.pop("opponentLogo")
+        g.update(sides)
+        g["owned"] = sum(1 for s_ in ("home", "away") for x in sides[s_]["players"] if x["owner"])
+        top = max((x for s_ in ("home", "away") for x in sides[s_]["players"]),
+                  key=lambda x: x["fp"] if x["fp"] is not None else -99, default=None)
+        g["top"] = {"name": top["name"], "fp": top["fp"]} if top else None
+        out.append(g)
+    return {"league": meta, "round": rnd, "state": round_state(meta, rnd), "games": out}
 
 
 def _player_rounds_query(rounds):
@@ -1096,18 +1382,18 @@ def build_injury_history(bn_id, game_log):
         episodes.append({
             "kind": kind,
             "reason": reason,
-            "reasonLt": reason_lt(reason),
+            "reasonLocal": reason_local(reason),
             "start": start,
             "end": end,
             "days": max((until - date.fromisoformat(start)).days, 0),
             "ongoing": end is None,
             "status": last_real["status"],
-            "statusLabel": HEALTH_LABELS.get(last_real["status"], last_real["status"]),
-            "return": return_lt(last_real.get("return")),
+            "statusLabel": health_label(last_real["status"]),
+            "return": return_local(last_real.get("return")),
             "missedRounds": ep_missed,
             "updates": [
-                {"date": u["date"], "statusLabel": HEALTH_LABELS.get(u["status"], u["status"]),
-                 "return": return_lt(u.get("return")), "comment": u.get("comment")}
+                {"date": u["date"], "statusLabel": health_label(u["status"]),
+                 "return": return_local(u.get("return")), "comment": comment_local(u.get("comment"))}
                 for u in ep["updates"]
             ],
         })
@@ -1117,6 +1403,8 @@ def build_injury_history(bn_id, game_log):
 
 
 def _plural_rounds(n):
+    if LANG.get() == "en":
+        return f"{n} round" if n == 1 else f"{n} rounds"
     if n % 10 == 1 and n % 100 != 11:
         return f"{n} turą"
     if 2 <= n % 10 <= 9 and not 12 <= n % 100 <= 19:
@@ -1131,22 +1419,182 @@ def injury_summary(episodes, missed, game_log):
     injuries = [e for e in episodes if e["kind"] == "injury"]
     if not missed and not episodes:
         if team_games:
-            return f"Šį sezoną nepraleido nė vieno turo – sužaidė {len(played)} iš {len(team_games)}."
-        return "Šį sezoną dar nežaidė ir traumų sąraše nebuvo."
+            return L(f"Šį sezoną nepraleido nė vieno turo – sužaidė {len(played)} iš {len(team_games)}.",
+                     f"Has not missed a round this season – played {len(played)} of {len(team_games)}.")
+        return L("Šį sezoną dar nežaidė ir traumų sąraše nebuvo.",
+                 "Has not played yet this season and has not been on the injury report.")
     if missed:
         rounds = ", ".join(str(g["round"] + 1) for g in missed)
-        parts.append(f"Šį sezoną praleido {_plural_rounds(len(missed))} (turai: {rounds}).")
+        parts.append(L(f"Šį sezoną praleido {_plural_rounds(len(missed))} (turai: {rounds}).",
+                       f"Missed {_plural_rounds(len(missed))} this season (rounds: {rounds})."))
     else:
-        parts.append("Šį sezoną nepraleido nė vieno turo.")
+        parts.append(L("Šį sezoną nepraleido nė vieno turo.", "Has not missed a round this season."))
     for e in injuries:
-        what = e["reasonLt"] or e["reason"] or "trauma"
-        span = f"nuo {e['start'][5:]}" + (f" iki {e['end'][5:]}" if e["end"] else ", tęsiasi")
-        parts.append(f"{what[:1].upper() + what[1:]}: {span} ({e['days']} d.).")
+        what = e["reasonLocal"] or e["reason"] or L("trauma", "injury")
+        if e["end"]:
+            span = L(f"nuo {e['start'][5:]} iki {e['end'][5:]}", f"from {e['start'][5:]} to {e['end'][5:]}")
+        else:
+            span = L(f"nuo {e['start'][5:]}, tęsiasi", f"since {e['start'][5:]}, ongoing")
+        parts.append(f"{what[:1].upper() + what[1:]}: {span} ({e['days']} {L('d.', 'days')}).")
     others = [e for e in episodes if e["kind"] == "other"]
     if others and not injuries:
-        reason = others[0]["reasonLt"] or others[0]["reason"]
-        parts.append(f"Traumų nebuvo{f' – priežastis: {reason}' if reason and missed else ''}.")
+        reason = others[0]["reasonLocal"] or others[0]["reason"]
+        if reason and missed:
+            parts.append(L(f"Traumų nebuvo – priežastis: {reason}.", f"No injuries – reason: {reason}."))
+        else:
+            parts.append(L("Traumų nebuvo.", "No injuries."))
     return " ".join(parts)
+
+
+# --------------------------------------------------------------------------- Proballers links
+# Proballers is bot-protected and has no public search, but Wikidata stores each player's
+# Proballers ID (P8548). Namesakes are told apart by birth date from the BasketNews profile.
+
+PROBALLERS_FILE = DATA_DIR / "proballers.json"
+WIKIDATA_SPARQL = "https://query.wikidata.org/sparql"
+WIKIDATA_UA = "fantasy-tracker/1.0 (personal basketball fantasy tracker; local app)"
+_proballers_lock = threading.Lock()
+MONTHS = {m: i for i, m in enumerate(["january", "february", "march", "april", "may", "june", "july", "august",
+                                      "september", "october", "november", "december"], 1)}
+
+
+def ascii_slug(text):
+    return re.sub(r"[^a-z0-9]+", "-", unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode().lower()).strip("-")
+
+
+def name_variants(name):
+    base = re.sub(r"\s+(Jr\.?|Sr\.?|II|III|IV)$", "", name.strip())
+    out = {name.strip(), base}
+    m = re.match(r"^([A-Z])\.?\s?([A-Z])\.?\s+(.+)$", base)  # TJ / T.J. / T. J.
+    if m:
+        a, b, rest = m.groups()
+        out |= {f"{a}{b} {rest}", f"{a}.{b}. {rest}", f"{a}. {b}. {rest}"}
+    out |= {unicodedata.normalize("NFKD", v).encode("ascii", "ignore").decode() for v in list(out)}
+    return sorted(out)
+
+
+_wikidata_clock = threading.Lock()
+_wikidata_last = [0.0]
+
+
+def _wikidata_get(url, data=None):
+    """Polite Wikidata request: at most one per second (their API rate-limits bursts)."""
+    with _wikidata_clock:
+        wait = 1.0 - (time.time() - _wikidata_last[0])
+        if wait > 0:
+            time.sleep(wait)
+        _wikidata_last[0] = time.time()
+    headers = {"User-Agent": WIKIDATA_UA, "Accept": "application/json"}
+    if data is not None:
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
+    req = urllib.request.Request(url, data=data, headers=headers)
+    with urllib.request.urlopen(req, context=SSL_CTX, timeout=30) as resp:
+        return json.load(resp)
+
+
+def wikidata_search(text, limit=10):
+    """Full-text Wikidata search (ignores diacritics, covers aliases) among items with a Proballers ID."""
+    api = "https://www.wikidata.org/w/api.php?"
+    hits = _wikidata_get(api + urllib.parse.urlencode({
+        "action": "query", "list": "search", "srsearch": f"{text} haswbstatement:P8548",
+        "srlimit": limit, "format": "json"}))["query"]["search"]
+    ids = [h["title"] for h in hits]
+    if not ids:
+        return []
+    ents = _wikidata_get(api + urllib.parse.urlencode({
+        "action": "wbgetentities", "ids": "|".join(ids), "props": "labels|claims", "languages": "en",
+        "format": "json"}))["entities"]
+    out = []
+    for qid in ids:
+        claims = ents.get(qid, {}).get("claims", {})
+        pb = ((claims.get("P8548") or [{}])[0].get("mainsnak", {}).get("datavalue") or {}).get("value")
+        dob = (((claims.get("P569") or [{}])[0].get("mainsnak", {}).get("datavalue") or {}).get("value") or {}).get("time", "")
+        label = ents.get(qid, {}).get("labels", {}).get("en", {}).get("value") or text
+        if pb:
+            out.append({"pb": pb, "dob": dob[1:11] or None, "label": label})
+    return out
+
+
+def wikidata_candidates(name):
+    values = " ".join(f'"{v}"@{lang}' for v in name_variants(name) for lang in ("en", "mul")).replace("\\", "")
+    query = f"""SELECT DISTINCT ?pb ?dob ?label WHERE {{
+      VALUES ?name {{ {values} }}
+      {{ ?item rdfs:label ?name }} UNION {{ ?item skos:altLabel ?name }}
+      ?item wdt:P8548 ?pb.
+      OPTIONAL {{ ?item wdt:P569 ?dob }}
+      OPTIONAL {{ ?item rdfs:label ?label FILTER(LANG(?label) = "en") }}
+    }}"""
+    rows = _wikidata_get(WIKIDATA_SPARQL, urllib.parse.urlencode({"query": query, "format": "json"}).encode()
+                         )["results"]["bindings"]
+    found = {}
+    for r in rows:
+        pb = r["pb"]["value"]
+        found.setdefault(pb, {"pb": pb, "dob": (r.get("dob") or {}).get("value", "")[:10] or None,
+                              "label": (r.get("label") or {}).get("value") or name})
+    return list(found.values())
+
+
+def basketnews_birth_date(bn_id, name):
+    """'Age: 33 (1993 April 10)' on the BasketNews player page -> '1993-04-10'."""
+    url = f"https://basketnews.com/players/{bn_id}-{ascii_slug(name)}.html"
+    req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA})
+    with urllib.request.urlopen(req, context=SSL_CTX, timeout=20) as resp:
+        page = resp.read().decode("utf-8", errors="replace")
+    m = re.search(r"\((\d{4})\s+([A-Za-z]+)\s+(\d{1,2})\)", page)
+    if not m or m.group(2).lower() not in MONTHS:
+        return None
+    return f"{m.group(1)}-{MONTHS[m.group(2).lower()]:02d}-{int(m.group(3)):02d}"
+
+
+def proballers_link(info):
+    """Direct Proballers profile URL for a player, or None when it cannot be pinned down."""
+    key = info["bnId"] or info["id"]
+    with _proballers_lock:
+        cache = read_json(PROBALLERS_FILE, {})
+    hit = cache.get(key)
+    if hit and (hit.get("url") or hit.get("checked", "") >= (date.today() - timedelta(days=7)).isoformat()):
+        return hit.get("url")
+    url = None
+    try:
+        # 1) exact name / alias, 2) diacritic-insensitive search, 3) surname only (needs a birth-date match)
+        cands, strict = wikidata_candidates(info["name"]), False
+        if not cands:
+            cands = wikidata_search(info["name"])
+        if not cands:
+            surname = re.sub(r"\s+(Jr\.?|Sr\.?|II|III|IV)$", "", info["name"]).split()[-1]
+            cands, strict = wikidata_search(surname, limit=20), True
+        if (len(cands) > 1 or strict) and info.get("bnId"):
+            dob = basketnews_birth_date(info["bnId"], info["name"])
+            cands = [c for c in cands if dob and c["dob"] == dob]
+        if len(cands) == 1:
+            c = cands[0]
+            url = f"https://www.proballers.com/basketball/player/{c['pb']}/{ascii_slug(c['label'])}"
+    except (urllib.error.URLError, TimeoutError, ValueError, KeyError) as exc:
+        print(f"Proballers paieška nepavyko ({info['name']}): {exc}")
+        return None
+    with _proballers_lock:
+        cache = read_json(PROBALLERS_FILE, {})
+        cache[key] = {"name": info["name"], "url": url, "checked": date.today().isoformat()}
+        write_json(PROBALLERS_FILE, cache)
+    return url
+
+
+def proballers_redirect(fid, player_id):
+    meta = league_meta(fid)
+    info = players(meta, meta["latestRound"], meta["currentRound"]).get(player_id)
+    if not info:
+        data = gql(_player_rounds_query([]), {"id": player_id, "leagueId": meta["leagueId"], "locale": LOCALE,
+                                              "pcs": meta["pointCalcSystem"], "statsRound": meta["latestRound"],
+                                              "gamesRound": meta["currentRound"]})["playerRecordFromClient"]
+        if not data:
+            raise NotFound(L("Žaidėjas nerastas", "Player not found"))
+        info = player_view(data)
+    url = proballers_link(info)
+    if url:
+        return url
+    # Not on Wikidata (or an unresolved namesake): fall back to a search limited to Proballers players.
+    query = f"site:proballers.com/basketball/player {info['name']} {((info.get('club') or {}).get('nameEn') or '')}"
+    return "https://duckduckgo.com/?q=" + urllib.parse.quote_plus(query.strip())
 
 
 def player_payload(fid, player_id):
@@ -1158,7 +1606,7 @@ def player_payload(fid, player_id):
         "statsRound": last, "gamesRound": meta["currentRound"],
     })["playerRecordFromClient"]
     if not data:
-        raise NotFound("Žaidėjas nerastas")
+        raise NotFound(L("Žaidėjas nerastas", "Player not found"))
     info = player_view(data)
 
     game_log = []
@@ -1188,13 +1636,13 @@ def player_payload(fid, player_id):
         for u in ep["updates"]:
             rnd_no, why = dnp_reason(u["comment"])
             if rnd_no:
-                reasons[rnd_no - 1] = reason_lt(why) or why
+                reasons[rnd_no - 1] = reason_local(why) or why
         for r in ep["missedRounds"]:
-            reasons.setdefault(r, ep["reasonLt"] or ep["reason"])
+            reasons.setdefault(r, ep["reasonLocal"] or ep["reason"])
     if current:  # recovered players keep a "DNP in Round N (...)" note in the report
         rnd_no, why = dnp_reason(current["comment"])
         if rnd_no:
-            reasons.setdefault(rnd_no - 1, reason_lt(why) or why or current["comment"])
+            reasons.setdefault(rnd_no - 1, reason_local(why) or why or current["comment"])
     for row in game_log:
         if row["status"] == "dnp":
             row["reason"] = reasons.get(row["round"])
@@ -1209,6 +1657,8 @@ def player_payload(fid, player_id):
         "league": {"id": meta["id"], "title": meta["title"], "currentRound": meta["currentRound"]},
         "player": info,
         "owner": owner,
+        "advanced": advanced_profile(meta, info["bnId"]),
+        "proballers": f"/go/proballers/{fid}/{player_id}",
         "injury": {
             "current": injury_view(current, info["health"]),
             "reportUrl": meta["injuryReportUrl"],
@@ -1228,7 +1678,14 @@ def num(v):
     return "0" if text in ("-0", "") else text
 
 
+def rnd_word(r):
+    """'3 turas' / 'Round 3' for a 0-based round."""
+    return L(f"{r + 1} turas", f"Round {r + 1}")
+
+
 def teams_word(n):
+    if LANG.get() == "en":
+        return f"{n} teams"
     if n % 10 == 1 and n % 100 != 11:
         return f"{n} komanda"
     if 2 <= n % 10 <= 9 and not 12 <= n % 100 <= 19:
@@ -1242,7 +1699,7 @@ def award(title, name, value, sub="", icon="", team_id=None, player_id=None):
 
 
 def no_award(title, sub, icon=""):
-    return award(title, "Dar nėra", "", sub, icon)
+    return award(title, L("Dar nėra", "None yet"), "", sub, icon)
 
 
 def round_breakdown(meta, rnd):
@@ -1291,8 +1748,8 @@ def round_awards(meta, bd):
     if scores:
         hi = max(scores, key=scores.get)
         lo = min(scores, key=scores.get)
-        cards.append(award("Daugiausiai surinko", teams[hi]["title"], num(scores[hi]), team_id=hi))
-        cards.append(award("Mažiausiai surinko", teams[lo]["title"], num(scores[lo]), team_id=lo))
+        cards.append(award(L("Daugiausiai surinko", "Most points"), teams[hi]["title"], num(scores[hi]), team_id=hi))
+        cards.append(award(L("Mažiausiai surinko", "Fewest points"), teams[lo]["title"], num(scores[lo]), team_id=lo))
     decided = [g for g in bd["games"] if not g["tie"]]
     if decided:
         big = max(decided, key=lambda g: g["margin"])
@@ -1300,37 +1757,43 @@ def round_awards(meta, bd):
         unlucky = max(decided, key=lambda g: g["ls"])
         lucky = min(decided, key=lambda g: g["ws"])
         cards += [
-            award("Didžiausia pergalė", big["winner"]["title"], f"+{num(big['margin'])}",
-                  f"{num(big['ws'])} : {num(big['ls'])} prieš {big['loser']['title']}", team_id=big["winner"]["id"]),
-            award("Mažiausias skirtumas", small["winner"]["title"], f"+{num(small['margin'])}",
-                  f"{num(small['ws'])} : {num(small['ls'])} prieš {small['loser']['title']}", team_id=small["winner"]["id"]),
-            award("Nelaimingiausias pralaimėjimas", unlucky["loser"]["title"], num(unlucky["ls"]),
-                  f"Daugiausia taškų pralaimėjus (prieš {unlucky['winner']['title']})", team_id=unlucky["loser"]["id"]),
-            award("Laimingiausia pergalė", lucky["winner"]["title"], num(lucky["ws"]),
-                  f"Mažiausiai taškų laimėjus (prieš {lucky['loser']['title']})", team_id=lucky["winner"]["id"]),
+            award(L("Didžiausia pergalė", "Biggest win"), big["winner"]["title"], f"+{num(big['margin'])}",
+                  f"{num(big['ws'])} : {num(big['ls'])} {L('prieš', 'vs')} {big['loser']['title']}",
+                  team_id=big["winner"]["id"]),
+            award(L("Mažiausias skirtumas", "Closest win"), small["winner"]["title"], f"+{num(small['margin'])}",
+                  f"{num(small['ws'])} : {num(small['ls'])} {L('prieš', 'vs')} {small['loser']['title']}",
+                  team_id=small["winner"]["id"]),
+            award(L("Nelaimingiausias pralaimėjimas", "Unluckiest loss"), unlucky["loser"]["title"], num(unlucky["ls"]),
+                  L(f"Daugiausia taškų pralaimėjus (prieš {unlucky['winner']['title']})",
+                    f"Most points in a loss (vs {unlucky['winner']['title']})"), team_id=unlucky["loser"]["id"]),
+            award(L("Laimingiausia pergalė", "Luckiest win"), lucky["winner"]["title"], num(lucky["ws"]),
+                  L(f"Mažiausiai taškų laimėjus (prieš {lucky['loser']['title']})",
+                    f"Fewest points in a win (vs {lucky['loser']['title']})"), team_id=lucky["winner"]["id"]),
         ]
     lus = bd["lineups"]
     if not lus:
-        cards.append(award("Sudėčių apdovanojimai", "Nėra duomenų", "",
-                           f"{rnd + 1} turo sudėtys nebuvo išsaugotos, todėl MVP, kapitonų ir prarastų taškų "
-                           "apdovanojimų apskaičiuoti negalima."))
+        cards.append(award(L("Sudėčių apdovanojimai", "Lineup awards"), L("Nėra duomenų", "No data"), "",
+                           L(f"{rnd + 1} turo sudėtys nebuvo išsaugotos, todėl MVP, kapitonų ir prarastų taškų "
+                             "apdovanojimų apskaičiuoti negalima.",
+                             f"Round {rnd + 1} lineups were not saved, so MVP, captain and points-lost awards "
+                             "cannot be calculated.")))
         return cards
     active = [(tid, p) for tid, lu in lus.items() for p in lu["players"] if p["slot"] != "inactive"]
     mvp_tid, mvp = max(active, key=lambda x: x[1].get("roundPts") or -999)
     caps = [(tid, p) for tid, lu in lus.items() for p in lu["players"] if p["captain"]]
     lost_tid = max(lus, key=lambda t: lus[t]["lost"])
-    cards.append(award("Turo MVP žaidėjas", mvp["name"], num(mvp.get("roundPts")),
+    cards.append(award(L("Turo MVP žaidėjas", "Round MVP"), mvp["name"], num(mvp.get("roundPts")),
                        teams.get(mvp_tid, {}).get("title", ""), player_id=mvp["id"]))
     if caps:
         best_tid, best_cap = max(caps, key=lambda x: x[1]["contrib"])
         worst_tid, worst_cap = min(caps, key=lambda x: x[1]["contrib"])
-        cards.append(award("Geriausias kapitonas", best_cap["name"], num(best_cap["contrib"]),
+        cards.append(award(L("Geriausias kapitonas", "Best captain"), best_cap["name"], num(best_cap["contrib"]),
                            teams.get(best_tid, {}).get("title", ""), player_id=best_cap["id"]))
-        cards.append(award("Nesėkmingiausias kapitonas", worst_cap["name"], num(worst_cap["contrib"]),
+        cards.append(award(L("Nesėkmingiausias kapitonas", "Worst captain"), worst_cap["name"], num(worst_cap["contrib"]),
                            teams.get(worst_tid, {}).get("title", ""), player_id=worst_cap["id"]))
-    cards.append(award("Daugiausiai prarado dėl sudėties", teams.get(lost_tid, {}).get("title", ""),
+    cards.append(award(L("Daugiausiai prarado dėl sudėties", "Most points lost to lineup"), teams.get(lost_tid, {}).get("title", ""),
                        f"−{num(lus[lost_tid]['lost'])}" if lus[lost_tid]["lost"] else "0",
-                       f"Su optimalia sudėtimi būtų {num(lus[lost_tid]['optimal'])}", team_id=lost_tid))
+                       L(f"Su optimalia sudėtimi būtų {num(lus[lost_tid]['optimal'])}", f"Optimal lineup: {num(lus[lost_tid]['optimal'])}"), team_id=lost_tid))
     return cards
 
 
@@ -1357,32 +1820,33 @@ def season_oscars(meta, breakdowns, team_names):
         if cap_total:
             king = max(cap_total, key=cap_total.get)
             flop = min(cap_total, key=cap_total.get)
-            cards.append(award("Kapitonų karalius", name(king), num(cap_total[king]),
-                               "daugiausia kapitonų taškų per sezoną", "🏆", team_id=king))
+            cards.append(award(L("Kapitonų karalius", "Captain king"), name(king), num(cap_total[king]),
+                               L("daugiausia kapitonų taškų per sezoną", "most captain points this season"), "🏆", team_id=king))
         if best_pick:
             r, tid, p = best_pick
-            cards.append(award("Geriausias kapitono pasirinkimas", p["name"], num(p["contrib"]),
-                               f"{name(tid)}, {r + 1} turas", "🎯", player_id=p["id"]))
+            cards.append(award(L("Geriausias kapitono pasirinkimas", "Best captain pick"), p["name"], num(p["contrib"]),
+                               f"{name(tid)}, {rnd_word(r)}", "🎯", player_id=p["id"]))
         if cap_total:
-            cards.append(award("Kapitonų nesėkmė", name(flop), num(cap_total[flop]),
-                               "mažiausiai kapitonų taškų", "🙈", team_id=flop))
+            cards.append(award(L("Kapitonų nesėkmė", "Captain flop"), name(flop), num(cap_total[flop]),
+                               L("mažiausiai kapitonų taškų", "fewest captain points"), "🙈", team_id=flop))
         bench = max(lost_total, key=lost_total.get)
         sharp = min(lost_total, key=lost_total.get)
-        cards.append(award("Suolo karalius", name(bench), f"−{num(lost_total[bench])}" if lost_total[bench] else "0",
-                           "daugiausia taškų paliko ant suolo", "🪑", team_id=bench))
-        cards.append(award("Tiksliausias treneris", name(sharp), num(lost_total[sharp]),
-                           "mažiausiai prarado dėl sudėties", "🧠", team_id=sharp))
+        cards.append(award(L("Suolo karalius", "Bench king"), name(bench), f"−{num(lost_total[bench])}" if lost_total[bench] else "0",
+                           L("daugiausia taškų paliko ant suolo", "most points left on the bench"), "🪑", team_id=bench))
+        cards.append(award(L("Tiksliausias treneris", "Sharpest coach"), name(sharp), num(lost_total[sharp]),
+                           L("mažiausiai prarado dėl sudėties", "fewest points lost to lineup"), "🧠", team_id=sharp))
         if contrib:
             (pid, tid), (pname, total, rounds) = max(contrib.items(), key=lambda kv: kv[1][1])
-            cards.append(award("Sezono MVP", pname, num(total), f"{name(tid)} · {len(rounds)} tur.", "⭐",
+            cards.append(award(L("Sezono MVP", "Season MVP"), pname, num(total), f"{name(tid)} · {len(rounds)} {L('tur.', 'rd' if len(rounds) == 1 else 'rds')}", "⭐",
                                player_id=pid))
         cards.append(best_transfer(with_lineups, team_names))
     else:
-        cards.append(award("Sudėčių apdovanojimai", "Nėra duomenų", "", "Nėra išsaugotų turų sudėčių."))
+        cards.append(award(L("Sudėčių apdovanojimai", "Lineup awards"), L("Nėra duomenų", "No data"), "",
+                           L("Nėra išsaugotų turų sudėčių.", "No saved round lineups.")))
     best_round = max(((bd["scores"][t], t, bd["round"]) for bd in breakdowns for t in bd["scores"]), default=None)
     if best_round:
         pts, tid, r = best_round
-        cards.append(award("Sezono turas", name(tid), num(pts), f"{r + 1} turas", "🔥", team_id=tid))
+        cards.append(award(L("Sezono turas", "Round of the season"), name(tid), num(pts), rnd_word(r), "🔥", team_id=tid))
     return cards
 
 
@@ -1399,9 +1863,10 @@ def best_transfer(with_lineups, team_names):
                 pname, total = gained.get(key, (p["name"], 0))
                 gained[key] = (pname, total + p["contrib"])
     if not gained:
-        return no_award("Sezono sandoris", "atsiras po pirmųjų perėjimų", "🤝")
+        return no_award(L("Sezono sandoris", "Deal of the season"), L("atsiras po pirmųjų perėjimų", "appears after the first transfers"), "🤝")
     (pid, tid), (pname, total) = max(gained.items(), key=lambda kv: kv[1][1])
-    return award("Sezono sandoris", pname, num(total), f"{team_names.get(tid, '')} · taškai nuo įsigijimo", "🤝",
+    return award(L("Sezono sandoris", "Deal of the season"), pname, num(total),
+                 f"{team_names.get(tid, '')} · {L('taškai nuo įsigijimo', 'points since acquired')}", "🤝",
                  player_id=pid)
 
 
@@ -1413,13 +1878,13 @@ def season_records(meta, breakdowns, team_names, streaks, totals):
         for g in bd["games"]:
             opponent[(g["winner"]["id"], bd["round"])] = g["loser"]["title"]
             opponent[(g["loser"]["id"], bd["round"])] = g["winner"]["title"]
-    vs = lambda t, r: f", prieš {opponent[(t, r)]}" if (t, r) in opponent else ""  # noqa: E731
+    vs = lambda t, r: f", {L('prieš', 'vs')} {opponent[(t, r)]}" if (t, r) in opponent else ""  # noqa: E731
     if rows:
         hi, lo = max(rows), min(rows)
-        cards.append(award("Daugiausia taškų per turą", team_names.get(hi[1], ""), num(hi[0]),
-                           f"{hi[2] + 1} turas{vs(hi[1], hi[2])}", team_id=hi[1]))
-        cards.append(award("Mažiausiai taškų per turą", team_names.get(lo[1], ""), num(lo[0]),
-                           f"{lo[2] + 1} turas{vs(lo[1], lo[2])}", team_id=lo[1]))
+        cards.append(award(L("Daugiausia taškų per turą", "Most points in a round"), team_names.get(hi[1], ""), num(hi[0]),
+                           f"{rnd_word(hi[2])}{vs(hi[1], hi[2])}", team_id=hi[1]))
+        cards.append(award(L("Mažiausiai taškų per turą", "Fewest points in a round"), team_names.get(lo[1], ""), num(lo[0]),
+                           f"{rnd_word(lo[2])}{vs(lo[1], lo[2])}", team_id=lo[1]))
     games = [(g, bd["round"]) for bd in breakdowns for g in bd["games"] if not g["tie"]]
     if games:
         big = max(games, key=lambda x: x[0]["margin"])
@@ -1427,19 +1892,25 @@ def season_records(meta, breakdowns, team_names, streaks, totals):
         unlucky = max(games, key=lambda x: x[0]["ls"])
         lucky = min(games, key=lambda x: x[0]["ws"])
         cards += [
-            award("Didžiausia pergalė", big[0]["winner"]["title"], f"+{num(big[0]['margin'])}",
-                  f"{num(big[0]['ws'])} : {num(big[0]['ls'])} prieš {big[0]['loser']['title']}, {big[1] + 1} turas",
+            award(L("Didžiausia pergalė", "Biggest win"), big[0]["winner"]["title"], f"+{num(big[0]['margin'])}",
+                  f"{num(big[0]['ws'])} : {num(big[0]['ls'])} {L('prieš', 'vs')} {big[0]['loser']['title']}, "
+                  f"{rnd_word(big[1])}",
                   team_id=big[0]["winner"]["id"]),
-            award("Mažiausias skirtumas", small[0]["winner"]["title"], f"+{num(small[0]['margin'])}",
-                  f"{num(small[0]['ws'])} : {num(small[0]['ls'])} prieš {small[0]['loser']['title']}, {small[1] + 1} turas",
+            award(L("Mažiausias skirtumas", "Closest win"), small[0]["winner"]["title"], f"+{num(small[0]['margin'])}",
+                  f"{num(small[0]['ws'])} : {num(small[0]['ls'])} {L('prieš', 'vs')} {small[0]['loser']['title']}, "
+                  f"{rnd_word(small[1])}",
                   team_id=small[0]["winner"]["id"]),
-            award("Nelaimingiausias pralaimėjimas", unlucky[0]["loser"]["title"], num(unlucky[0]["ls"]),
-                  f"Pralaimėjo {unlucky[0]['winner']['title']}, {unlucky[1] + 1} turas", team_id=unlucky[0]["loser"]["id"]),
-            award("Laimingiausia pergalė", lucky[0]["winner"]["title"], num(lucky[0]["ws"]),
-                  f"Laimėjo prieš {lucky[0]['loser']['title']}, {lucky[1] + 1} turas", team_id=lucky[0]["winner"]["id"]),
+            award(L("Nelaimingiausias pralaimėjimas", "Unluckiest loss"), unlucky[0]["loser"]["title"], num(unlucky[0]["ls"]),
+                  L(f"Pralaimėjo {unlucky[0]['winner']['title']}", f"Lost to {unlucky[0]['winner']['title']}")
+                  + f", {rnd_word(unlucky[1])}", team_id=unlucky[0]["loser"]["id"]),
+            award(L("Laimingiausia pergalė", "Luckiest win"), lucky[0]["winner"]["title"], num(lucky[0]["ws"]),
+                  L(f"Laimėjo prieš {lucky[0]['loser']['title']}", f"Beat {lucky[0]['loser']['title']}")
+                  + f", {rnd_word(lucky[1])}", team_id=lucky[0]["winner"]["id"]),
         ]
-        for idx, title, sub in ((0, "Ilgiausia pergalių serija", "pergalės iš eilės"),
-                                (1, "Ilgiausia pralaimėjimų serija", "pralaimėjimai iš eilės")):
+        for idx, title, sub in ((0, L("Ilgiausia pergalių serija", "Longest winning streak"),
+                                 L("pergalės iš eilės", "wins in a row")),
+                                (1, L("Ilgiausia pralaimėjimų serija", "Longest losing streak"),
+                                 L("pralaimėjimai iš eilės", "losses in a row"))):
             longest = {t: s[idx] for t, s in streaks.items()}
             top = max(longest.values(), default=0)
             holders = [t for t, v in longest.items() if v == top and top > 0]
@@ -1448,15 +1919,15 @@ def season_records(meta, breakdowns, team_names, streaks, totals):
             elif len(holders) == 1:
                 cards.append(award(title, team_names.get(holders[0], ""), str(top), sub, team_id=holders[0]))
             else:
-                cards.append(award(title, teams_word(len(holders)), str(top), f"{sub} (žr. lentelę)"))
+                cards.append(award(title, teams_word(len(holders)), str(top), f"{sub} ({L('žr. lentelę', 'see table')})"))
     if totals:
         played = len(breakdowns)
         most = max(totals, key=totals.get)
         least = min(totals, key=totals.get)
-        cards.append(award("Daugiausia taškų per sezoną", team_names.get(most, ""), num(totals[most]),
-                           f"Vidurkis {num(totals[most] / played)} per turą", team_id=most))
-        cards.append(award("Mažiausiai taškų per sezoną", team_names.get(least, ""), num(totals[least]),
-                           f"Vidurkis {num(totals[least] / played)} per turą", team_id=least))
+        cards.append(award(L("Daugiausia taškų per sezoną", "Most season points"), team_names.get(most, ""), num(totals[most]),
+                           L(f"Vidurkis {num(totals[most] / played)} per turą", f"Average {num(totals[most] / played)} per round"), team_id=most))
+        cards.append(award(L("Mažiausiai taškų per sezoną", "Fewest season points"), team_names.get(least, ""), num(totals[least]),
+                           L(f"Vidurkis {num(totals[least] / played)} per turą", f"Average {num(totals[least] / played)} per round"), team_id=least))
     return cards
 
 
@@ -1470,7 +1941,7 @@ def records_payload(fid, rnd=None):
     if not finished:
         return base
     rnd = finished[-1] if rnd not in finished else rnd
-    breakdowns = list(POOL.map(lambda r: round_breakdown(meta, r), finished))
+    breakdowns = pool_map(lambda r: round_breakdown(meta, r), finished)
     h2h = meta["format"] == "head_to_head"
 
     results, totals, per_round = {}, {}, {}
@@ -1511,6 +1982,9 @@ def records_payload(fid, rnd=None):
         "records": season_records(meta, breakdowns, team_names, streaks, totals),
         "form": form,
         "missingLineups": [bd["round"] for bd in breakdowns if not bd["lineups"]],
+        "partialLineups": [{"round": bd["round"],
+                            "teams": sorted(team_names.get(t, t) for t in bd["scores"] if t not in bd["lineups"])}
+                           for bd in breakdowns if bd["lineups"] and set(bd["scores"]) - set(bd["lineups"])],
     }
 
 
@@ -1524,7 +1998,7 @@ def leagues_payload():
                     "mine": mine, "teams": len(rows)}
         except (UpstreamError, NotFound) as exc:
             return {"league": {"id": entry["id"], "title": entry.get("title") or entry["id"]}, "error": str(exc)}
-    return {"leagues": list(POOL.map(card, load_config()))}
+    return {"leagues": pool_map(card, load_config())}
 
 
 LEAGUE_ID_RE = re.compile(r"([0-9a-f]{24})")
@@ -1533,13 +2007,13 @@ LEAGUE_ID_RE = re.compile(r"([0-9a-f]{24})")
 def add_league(text):
     m = LEAGUE_ID_RE.search(text or "")
     if not m:
-        raise ValueError("Nuorodoje nerastas lygos ID")
+        raise ValueError(L("Nuorodoje nerastas lygos ID", "No league ID found in the link"))
     fid = m.group(1)
     meta = league_meta(fid)  # validates the league exists
     with _config_lock:
         entries = load_config()
         if any(e["id"] == fid for e in entries):
-            raise ValueError("Ši lyga jau pridėta")
+            raise ValueError(L("Ši lyga jau pridėta", "This league is already added"))
         entries.append({"id": fid, "title": meta["title"]})
         write_json(LEAGUES_FILE, entries)
     return meta
@@ -1561,7 +2035,7 @@ def set_my_team(fid, team_id):
                     e.pop("myTeamId", None)
                 break
         else:
-            raise NotFound("Lyga nesekama")
+            raise NotFound(L("Lyga nesekama", "League is not tracked"))
         write_json(LEAGUES_FILE, entries)
 
 
@@ -1630,6 +2104,7 @@ class Handler(BaseHTTPRequestHandler):
     def _dispatch(self, routes):
         url = urlparse(self.path)
         query = parse_qs(url.query)
+        LANG.set("en" if query.get("lang", [""])[0] == "en" else "lt")
         for pattern, fn in routes:
             m = re.fullmatch(pattern, url.path)
             if m:
@@ -1644,12 +2119,28 @@ class Handler(BaseHTTPRequestHandler):
                 return True
         return False
 
+    def _redirect(self, url):
+        self.send_response(302)
+        self.send_header("Location", url)
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
     def do_GET(self):
+        m = re.fullmatch(rf"/go/proballers/{ID}/{ID}", urlparse(self.path).path)
+        if m:
+            try:
+                self._redirect(proballers_redirect(m[1], m[2]))
+            except (NotFound, UpstreamError) as exc:
+                self._send(404, {"error": str(exc)})
+            return
         routes = [
             (r"/api/leagues", lambda m, q: leagues_payload()),
             (rf"/api/league/{ID}/standings", lambda m, q: standings_payload(m[1], _round_param(q))),
             (rf"/api/league/{ID}/rounds", lambda m, q: rounds_payload(m[1], _round_param(q))),
-            (rf"/api/league/{ID}/free-agents", lambda m, q: free_agents_payload(m[1])),
+            (rf"/api/league/{ID}/free-agents", lambda m, q: players_payload(m[1], "free")),
+            (rf"/api/league/{ID}/players", lambda m, q: players_payload(m[1], "all")),
+            (rf"/api/league/{ID}/games", lambda m, q: games_payload(m[1], _round_param(q))),
             (rf"/api/league/{ID}/records", lambda m, q: records_payload(m[1], _round_param(q))),
             (rf"/api/league/{ID}/team/{ID}", lambda m, q: team_payload(m[1], m[2], _round_param(q))),
             (rf"/api/league/{ID}/player/{ID}", lambda m, q: player_payload(m[1], m[2])),
@@ -1658,7 +2149,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         path = urlparse(self.path).path
         if path.startswith("/api/"):
-            self._send(404, {"error": "Nežinomas adresas"})
+            self._send(404, {"error": L("Nežinomas adresas", "Unknown address")})
             return
         self._serve_static(path)
 
@@ -1669,12 +2160,12 @@ class Handler(BaseHTTPRequestHandler):
              lambda m, q: set_my_team(m[1], self._json_body().get("teamId")) or {"ok": True}),
         ]
         if not self._dispatch(routes):
-            self._send(404, {"error": "Nežinomas adresas"})
+            self._send(404, {"error": L("Nežinomas adresas", "Unknown address")})
 
     def do_DELETE(self):
         routes = [(rf"/api/leagues/{ID}", lambda m, q: remove_league(m[1]) or {"ok": True})]
         if not self._dispatch(routes):
-            self._send(404, {"error": "Nežinomas adresas"})
+            self._send(404, {"error": L("Nežinomas adresas", "Unknown address")})
 
     def _serve_static(self, path):
         rel = "index.html" if path in ("", "/") else path.lstrip("/")
