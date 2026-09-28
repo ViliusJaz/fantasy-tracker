@@ -1,0 +1,1501 @@
+{
+  "players": {
+    "23741": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "DNP in Round 1 (rehab after surgery)"
+            }
+          ]
+        }
+      ],
+      "name": "Isaia Cordinier",
+      "club": "Anadolu Efes Istanbul"
+    },
+    "14714": {
+      "episodes": [],
+      "name": "Burak Can Yildizli",
+      "club": "Anadolu Efes Istanbul"
+    },
+    "35489": {
+      "episodes": [],
+      "name": "David Mutaf",
+      "club": "Anadolu Efes Istanbul"
+    },
+    "18433": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Left knee ACL injury"
+            }
+          ]
+        }
+      ],
+      "name": "Georgios Papagiannis",
+      "club": "Anadolu Efes Istanbul"
+    },
+    "24341": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (Muscle issue)"
+            }
+          ]
+        }
+      ],
+      "name": "Garrison Mathews",
+      "club": "Armani Olimpia Milan"
+    },
+    "35269": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (Coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Yagiz Aksu",
+      "club": "Besiktas Istanbul"
+    },
+    "24391": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Suffered left wrist fracture in Round 1 vs. Valencia"
+            }
+          ]
+        }
+      ],
+      "name": "DaQuan Jeffries",
+      "club": "Besiktas Istanbul"
+    },
+    "36296": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (minor injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Patrick Baldwin Jr.",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "39633": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1(coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Jovan Bikic",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "40274": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Andrej Bjelic",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "21890": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Dejan Davidovac",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "37590": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (quad injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Nikola Djurisic",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "39021": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Vojin Medarevic",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "35325": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "Undisclosed injury"
+            }
+          ]
+        }
+      ],
+      "name": "Chima Moneke",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "40277": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (knee injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Aleksej Nedeljkovic",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "40278": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Ognjen Simjanovski",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "12276": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Not included in the EuroLeague roster."
+            }
+          ]
+        }
+      ],
+      "name": "Awudu Abass",
+      "club": "Dubai Basketball"
+    },
+    "18820": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Justin Anderson",
+      "club": "Dubai Basketball"
+    },
+    "16636": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Nemanja Dangubic",
+      "club": "Dubai Basketball"
+    },
+    "14688": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Continues rehab after Achilles injury."
+            }
+          ]
+        }
+      ],
+      "name": "Mouhammadou Jaiteh",
+      "club": "Dubai Basketball"
+    },
+    "35913": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Kenan Kamenjas",
+      "club": "Dubai Basketball"
+    },
+    "18643": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (knee injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Dzanan Musa",
+      "club": "Dubai Basketball"
+    },
+    "12229": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Klemen Prepelic",
+      "club": "Dubai Basketball"
+    },
+    "40316": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Tomislav Vuckovic",
+      "club": "Dubai Basketball"
+    },
+    "34625": {
+      "episodes": [],
+      "name": "Kamar Baldwin",
+      "club": "FC Bayern Munich"
+    },
+    "39698": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Kilian Fischer",
+      "club": "FC Bayern Munich"
+    },
+    "14073": {
+      "episodes": [],
+      "name": "Niels Giffey",
+      "club": "FC Bayern Munich"
+    },
+    "35461": {
+      "episodes": [],
+      "name": "Duane Washington Jr.",
+      "club": "FC Bayern Munich"
+    },
+    "37414": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Left shoulder injury"
+            }
+          ]
+        }
+      ],
+      "name": "Tosan Evbuomwan",
+      "club": "FC Barcelona"
+    },
+    "40765": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "doubtful",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Abdu Kone",
+      "club": "FC Barcelona"
+    },
+    "34749": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 1-6",
+              "comment": "Left knee injury"
+            }
+          ]
+        }
+      ],
+      "name": "Yoan Makoundou",
+      "club": "FC Barcelona"
+    },
+    "34954": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 1-5",
+              "comment": "Right calf injury"
+            }
+          ]
+        }
+      ],
+      "name": "Josh Nebo",
+      "club": "FC Barcelona"
+    },
+    "37782": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (Undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Marcus Bingham Jr.",
+      "club": "Fenerbahce Beko Istanbul"
+    },
+    "14015": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (Undisclosed injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Shane Larkin",
+      "club": "Fenerbahce Beko Istanbul"
+    },
+    "20883": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": "2026-09-28",
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "DNP in Round 1, played in the domestic cup (09.26)"
+            }
+          ]
+        }
+      ],
+      "name": "Oz Blayzer",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "21168": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Out of the squad"
+            }
+          ]
+        }
+      ],
+      "name": "Tamir Blatt",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "24348": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": "2026-09-28",
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "DNP in Round 1, played in the domestic cup (09.26)"
+            }
+          ]
+        }
+      ],
+      "name": "Frederic Bourdillon",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "22708": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": "2026-09-28",
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "DNP in Round 1, played in the domestic cup (09.26)"
+            }
+          ]
+        }
+      ],
+      "name": "Khadeen Carrington",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "24343": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (undisclosed injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Amir Coffey",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "17091": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Long-term",
+              "comment": "Torn Achilles"
+            }
+          ]
+        }
+      ],
+      "name": "Tyler Ennis",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "24758": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Tomer Ginat",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "35310": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": "2026-09-28",
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "DNP in Round 1, played in the domestic cup (09.26)"
+            }
+          ]
+        }
+      ],
+      "name": "Max Heidegger",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "23364": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": "2026-09-28",
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "DNP in Round 1, played in the domestic cup (09.26)"
+            }
+          ]
+        }
+      ],
+      "name": "Guy Palatin",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "12194": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": "2026-09-28",
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "DNP in Round 1, played in the domestic cup (09.26)"
+            }
+          ]
+        }
+      ],
+      "name": "Itay Segev",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "35088": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Yiftach Ziv",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "38886": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Pedro Souza",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "38493": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 1-9",
+              "comment": "Adductor muscle injury (out until November)"
+            }
+          ]
+        }
+      ],
+      "name": "Mathis Dossou-Yovo",
+      "club": "LDLC ASVEL Villeurbanne"
+    },
+    "6913": {
+      "episodes": [],
+      "name": "Edwin Jackson",
+      "club": "LDLC ASVEL Villeurbanne"
+    },
+    "36311": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (ankle injury)"
+            }
+          ]
+        }
+      ],
+      "name": "TyTy Washington Jr.",
+      "club": "LDLC ASVEL Villeurbanne"
+    },
+    "37392": {
+      "episodes": [],
+      "name": "Amit Ebo",
+      "club": "Maccabi Rapyd Tel Aviv"
+    },
+    "38648": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Shane Hunter",
+      "club": "Maccabi Rapyd Tel Aviv"
+    },
+    "38534": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Gur Lavi",
+      "club": "Maccabi Rapyd Tel Aviv"
+    },
+    "20827": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": "2026-09-28",
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "DNP in Round 1. Played in the domestic cup (09.27)"
+            }
+          ]
+        }
+      ],
+      "name": "T.J. Leaf",
+      "club": "Maccabi Rapyd Tel Aviv"
+    },
+    "39835": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Georgios Bourneles",
+      "club": "Olympiacos Piraeus"
+    },
+    "14020": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "Traveled with the team to Kaunas"
+            }
+          ]
+        }
+      ],
+      "name": "Bryant Dunston",
+      "club": "Olympiacos Piraeus"
+    },
+    "35250": {
+      "episodes": [],
+      "name": "Antonios Karagiannidis",
+      "club": "Olympiacos Piraeus"
+    },
+    "12245": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2-3",
+              "comment": "Tendinitis"
+            }
+          ]
+        }
+      ],
+      "name": "Nikola Milutinov",
+      "club": "Olympiacos Piraeus"
+    },
+    "37246": {
+      "episodes": [],
+      "name": "Omiros Netzipoglou",
+      "club": "Olympiacos Piraeus"
+    },
+    "35869": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "doubtful",
+              "return": "Round 2",
+              "comment": "Not expected to play in Round 2 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "George Papas",
+      "club": "Olympiacos Piraeus"
+    },
+    "35494": {
+      "episodes": [],
+      "name": "Nikolaos Plotas",
+      "club": "Olympiacos Piraeus"
+    },
+    "22666": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (hamstring injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Moustapha Fall",
+      "club": "Panathinaikos AKTOR Athens"
+    },
+    "22353": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2-4",
+              "comment": "Fractured fourth metacarpal in his left hand"
+            }
+          ]
+        }
+      ],
+      "name": "Nigel Hayes-Davis",
+      "club": "Panathinaikos AKTOR Athens"
+    },
+    "19143": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "Discomfort in his groin (muscle spasm) suffered during Greek SuperCup semifinal"
+            }
+          ]
+        }
+      ],
+      "name": "Juan Hernangomez",
+      "club": "Panathinaikos AKTOR Athens"
+    },
+    "16597": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Ioannis Kouzeloglou",
+      "club": "Panathinaikos AKTOR Athens"
+    },
+    "24328": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2-4",
+              "comment": "Medial right meniscus tear"
+            }
+          ]
+        }
+      ],
+      "name": "Kendrick Nunn",
+      "club": "Panathinaikos AKTOR Athens"
+    },
+    "6641": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2-4",
+              "comment": "Rehab after leg injury"
+            }
+          ]
+        }
+      ],
+      "name": "Kostas Sloukas",
+      "club": "Panathinaikos AKTOR Athens"
+    },
+    "40772": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Iason Varvaritis",
+      "club": "Panathinaikos AKTOR Athens"
+    },
+    "35591": {
+      "episodes": [],
+      "name": "Joel Ayayi",
+      "club": "Paris Basketball"
+    },
+    "16649": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Nobel Boungou-Colo",
+      "club": "Paris Basketball"
+    },
+    "21386": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Amath M'Baye",
+      "club": "Paris Basketball"
+    },
+    "18387": {
+      "episodes": [],
+      "name": "Frank Ntilikina",
+      "club": "Paris Basketball"
+    },
+    "37456": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Maozinha Pereira",
+      "club": "Paris Basketball"
+    },
+    "36943": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Enzo Shahrvin",
+      "club": "Paris Basketball"
+    },
+    "12225": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Undisclosed injury, could return for Round 3."
+            }
+          ]
+        }
+      ],
+      "name": "Joffrey Lauvergne",
+      "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "16598": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Working back from Achilles surgery"
+            }
+          ]
+        }
+      ],
+      "name": "Vanja Marinkovic",
+      "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "15928": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Out of the squad"
+            }
+          ]
+        }
+      ],
+      "name": "Jabari Parker",
+      "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "23786": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2-6",
+              "comment": "The club announced that Willis will be sidelined for several weeks with an ankle injury suffered in Round 1. His status will be reassessed in three to four weeks."
+            }
+          ]
+        }
+      ],
+      "name": "Derek Willis",
+      "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "23792": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Long-term",
+              "comment": "Torn ACL"
+            }
+          ]
+        }
+      ],
+      "name": "Usman Garuba",
+      "club": "Real Madrid"
+    },
+    "35271": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in domestic league, will travel to Istanbul (minor undisclosed injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Mikael Jantunen",
+      "club": "Real Madrid"
+    },
+    "4913": {
+      "episodes": [],
+      "name": "Sergio Llull",
+      "club": "Real Madrid"
+    },
+    "34860": {
+      "episodes": [],
+      "name": "Chuma Okeke",
+      "club": "Real Madrid"
+    },
+    "39042": {
+      "episodes": [],
+      "name": "Max Shulga",
+      "club": "Real Madrid"
+    },
+    "37291": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 and domestic league, not registered yet (not injured)."
+            }
+          ]
+        }
+      ],
+      "name": "Nick Smith Jr.",
+      "club": "Real Madrid"
+    },
+    "35781": {
+      "episodes": [],
+      "name": "Gonzalo Corbalan",
+      "club": "Valencia Basket"
+    },
+    "36464": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": "2026-09-28",
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "Didn't travel with the team in Round 1"
+            }
+          ]
+        }
+      ],
+      "name": "Lucas Mari",
+      "club": "Valencia Basket"
+    },
+    "24744": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "Illness"
+            }
+          ]
+        }
+      ],
+      "name": "Dylan Osetkowski",
+      "club": "Valencia Basket"
+    },
+    "24259": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": "2026-09-28",
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "Didn't travel with the team in Round 1"
+            }
+          ]
+        }
+      ],
+      "name": "Yankuba Sima",
+      "club": "Valencia Basket"
+    },
+    "36261": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Tear right thigh biceps."
+            }
+          ]
+        }
+      ],
+      "name": "Kevin Kokila",
+      "club": "Virtus Bologna"
+    },
+    "38970": {
+      "episodes": [],
+      "name": "Kaodirichi Akobundu-Ehiogu",
+      "club": "Zalgiris Kaunas"
+    },
+    "34872": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in Round 1+DNP in the domestic league (hamstring strain)"
+            }
+          ]
+        }
+      ],
+      "name": "Saben Lee",
+      "club": "Zalgiris Kaunas"
+    },
+    "18673": {
+      "episodes": [],
+      "name": "Deividas Sirvydis",
+      "club": "Zalgiris Kaunas"
+    },
+    "21320": {
+      "episodes": [
+        {
+          "start": "2026-09-28",
+          "end": null,
+          "lastSeen": "2026-09-28",
+          "updates": [
+            {
+              "date": "2026-09-28",
+              "status": "out",
+              "return": "Rounds 2-4",
+              "comment": "Suffered hamstring injury in Round 1 game"
+            }
+          ]
+        }
+      ],
+      "name": "Nigel Williams-Goss",
+      "club": "Zalgiris Kaunas"
+    }
+  },
+  "updatedAt": "2026-09-28T19:45:54"
+}
