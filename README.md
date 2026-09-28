@@ -59,19 +59,4 @@ serveris, kas 10 min. išsaugoma:
   komentarų pokyčiai, kada pasveiko). Kartu su praleistais turais iš statistikos iš to
   sudaroma žaidėjo traumų istorija.
 
-## Viešas puslapis (GitHub Pages)
 
-`export.py` sugeneruoja visą svetainę į `site/`: puslapį ir kiekvieną API atsakymą kaip
-JSON failą (`site/api/<kelias>[.r<turas>].<kalba>.json`). Tokią svetainę gali rodyti bet
-koks statinis hostingas, be veikiančio serverio.
-
-`.github/workflows/pages.yml` tai daro GitHub'e kas ~15 min.: paleidžia `export.py`,
-įrašo `data/` pokyčius (sudėtis, traumų žurnalą) atgal į repozitoriją ir paskelbia `site/`
-per GitHub Pages. Viešoje versijoje:
-
-- lygos pridedamos redaguojant `leagues.json` (`{"id": "<lygos id>", "title": "..."}`);
-- „Mano komanda“ saugoma kiekvieno lankytojo naršyklėje;
-- duomenys gali vėluoti iki ~15 min. (GitHub kartais paleidžia vėliau).
-
-Lokaliai patikrinti: `python3 export.py`, tada `python3 -m http.server -d site` ir
-atsidaryk http://127.0.0.1:8000.
