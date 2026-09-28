@@ -16,6 +16,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
+LOG="$HOME/Library/Logs/fantasy-tracker.log"
+if [ -f "$LOG" ] && [ "$(wc -c < "$LOG")" -gt 1000000 ]; then : > "$LOG"; fi  # keep the log small
 echo "=== $(date '+%Y-%m-%d %H:%M:%S')"
 git pull -q --rebase --autostash origin main
 
