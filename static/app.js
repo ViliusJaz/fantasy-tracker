@@ -5,13 +5,17 @@ const switcher = document.getElementById("league-switch");
 const langSwitch = document.getElementById("lang-switch");
 const modal = document.getElementById("player-modal");
 const modalBody = document.getElementById("player-modal-body");
-const REFRESH_LIVE_MS = 60_000;
+// The GitHub Pages copy (export.py) has no server: pages come from pre-built JSON files
+// that a scheduled job refreshes every ~15 minutes.
+const STATIC = !!document.querySelector('meta[name="ft-static"]');
+const REFRESH_LIVE_MS = STATIC ? 5 * 60_000 : 60_000;
 
 let leaguesCache = null;
 let refreshTimer = null;
 let renderToken = 0;
 let modalToken = 0;
 let animateView = false;
+let dataTime = null;  // when the static files were generated
 
 // ------------------------------------------------------------------ i18n
 
@@ -208,6 +212,7 @@ const I18N = {
     loading: "Kraunama…",
     close: "Uždaryti",
     error: "Klaida {s}",
+    staticMissing: "Šių duomenų dar nėra. Svetainė atsinaujina kas 15 minučių.",
     pos: { guard: "Gynėjas", forward: "Puolėjas", center: "Centras" },
     tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", eff: "NB" },
     resShort: { W: "P", L: "Pr", T: "L" },
@@ -405,6 +410,7 @@ const I18N = {
     loading: "Loading…",
     close: "Close",
     error: "Error {s}",
+    staticMissing: "This data is not available yet. The site refreshes every 15 minutes.",
     pos: { guard: "Guard", forward: "Forward", center: "Center" },
     tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", eff: "PIR" },
     resShort: { W: "W", L: "L", T: "T" },
@@ -565,7 +571,21 @@ function statCells(line, mode) {
   return cols.map((c) => `<td class="num stat">${val(c.key)}</td>`).join("");
 }
 
+// "/api/league/X/team/Y?round=3" -> "api/league/X/team/Y.r3.lt.json" (the names export.py writes).
+function staticUrl(path) {
+  const [p, qs] = path.split("?");
+  const round = new URLSearchParams(qs || "").get("round");
+  return `${p.replace(/^\/api\//, "api/")}${round !== null ? `.r${round}` : ""}.${LANG}.json`;
+}
+
 async function api(path, opts = {}) {
+  if (STATIC) {
+    const res = await fetch(staticUrl(path), { cache: "no-cache" });
+    if (!res.ok) throw new Error(res.status === 404 ? t("staticMissing") : t("error", { s: res.status }));
+    const data = await res.json();
+    if (data.generatedAt) dataTime = data.generatedAt;
+    return data;
+  }
   const url = `${path}${path.includes("?") ? "&" : "?"}lang=${LANG}`;
   const res = await fetch(url, {
     ...opts,
@@ -574,6 +594,20 @@ async function api(path, opts = {}) {
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || t("error", { s: res.status }));
   return data;
+}
+
+// "My team": in the server version it lives in leagues.json; online every visitor keeps
+// their own choice in the browser.
+function myTeamOf(fid, serverValue) {
+  if (!STATIC) return serverValue || null;
+  try { return localStorage.getItem(`ft-mine-${fid}`); } catch { return null; }
+}
+
+function setMyTeam(fid, tid) {
+  try {
+    if (tid) localStorage.setItem(`ft-mine-${fid}`, tid);
+    else localStorage.removeItem(`ft-mine-${fid}`);
+  } catch { /* private window: the choice just is not kept */ }
 }
 
 function parseHash() {
@@ -600,7 +634,7 @@ function skeletonTable(rows = 8) {
 }
 
 function stamp() {
-  const d = new Date();
+  const d = STATIC && dataTime ? new Date(dataTime) : new Date();
   return t("updated", { t: `${pad(d.getHours())}:${pad(d.getMinutes())}` });
 }
 
@@ -835,8 +869,10 @@ async function renderHome(token) {
     const leader = l.leader
       ? `${esc(l.leader.team.title)} · ${lg.format === "head_to_head" ? `${l.leader.wins}-${l.leader.losses}` : `${fmt(l.leader.pointsTotal)} ${t("ptsShort")}`}`
       : "-";
-    const mine = l.mine
-      ? `<div><div class="stat-label">${t("myPlace")}</div><div class="stat-value">${l.mine.position} / ${l.teams}</div></div>`
+    const myId = myTeamOf(lg.id, l.mine?.team.id);
+    const myRow = (l.table || []).find((r) => r.team.id === myId) || (STATIC ? null : l.mine);
+    const mine = myRow
+      ? `<div><div class="stat-label">${t("myPlace")}</div><div class="stat-value">${myRow.position} / ${l.teams}</div></div>`
       : "";
     return `
       <a class="league-card" href="#/l/${lg.id}">
@@ -852,11 +888,11 @@ async function renderHome(token) {
           ${mine}
         </div>
         <div class="meta-line">${t("teamsN", { n: l.teams })} · ${l.round === null ? t("seasonNotStartedShort") : (l.round === 0 && I18N[LANG].playedOne ? t("playedOne") : t("playedN", { n: l.round + 1 }))}</div>
-        <button class="remove" data-remove="${lg.id}" title="${t("removeLeague")}">×</button>
+        ${STATIC ? "" : `<button class="remove" data-remove="${lg.id}" title="${t("removeLeague")}">×</button>`}
       </a>`;
   });
 
-  cards.push(`
+  if (!STATIC) cards.push(`
     <div class="league-card add-card">
       <form class="add-form" id="add-form">
         <label for="add-url" style="font-weight:600">${t("addLeague")}</label>
@@ -867,6 +903,7 @@ async function renderHome(token) {
     </div>`);
 
   setView(`${head}<div class="league-grid">${cards.join("")}</div>`);
+  if (STATIC) return;
 
   document.getElementById("add-form").addEventListener("submit", async (ev) => {
     ev.preventDefault();
@@ -930,6 +967,7 @@ async function renderStandings(fid, params, token, silent) {
   let data;
   try {
     data = await api(`/api/league/${fid}/standings${round !== null ? `?round=${round}` : ""}`);
+    data.myTeamId = myTeamOf(fid, data.myTeamId);
   } catch (e) {
     if (token === renderToken) setView(stateBox(e.message, true));
     return;
@@ -968,7 +1006,7 @@ async function renderRounds(fid, params, token, silent) {
   }
   if (token !== renderToken) return;
   const { league } = data;
-  const myTeamId = (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id;
+  const myTeamId = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
   const played = data.round < league.currentRound || data.live;
   let content;
 
@@ -1603,6 +1641,7 @@ async function renderTeam(fid, tid, params, token, silent) {
   const base = `#/l/${fid}/t/${tid}`;
 
   const tracked = (leaguesCache || []).some((l) => l.league.id === fid);
+  if (STATIC) data.isMine = myTeamOf(fid) === tid;
   const star = tracked
     ? `<button class="btn star${data.isMine ? " on" : ""}" id="my-team">${data.isMine ? t("myTeam") : t("markMine")}</button>` : "";
   const seasonLine = [
@@ -1642,7 +1681,8 @@ async function renderTeam(fid, tid, params, token, silent) {
   const btn = document.getElementById("my-team");
   if (btn) {
     btn.addEventListener("click", async () => {
-      await api(`/api/league/${fid}/my-team`, { method: "POST", body: JSON.stringify({ teamId: data.isMine ? null : tid }) });
+      if (STATIC) setMyTeam(fid, data.isMine ? null : tid);
+      else await api(`/api/league/${fid}/my-team`, { method: "POST", body: JSON.stringify({ teamId: data.isMine ? null : tid }) });
       await loadLeagues(true);
       route(true);
     });

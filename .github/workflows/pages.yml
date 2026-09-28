@@ -1,0 +1,56 @@
+# Rebuilds the public site every 15 minutes: export.py fetches BasketNews, writes ./site,
+# the recorded lineups / injury log in ./data are committed back, and ./site goes to Pages.
+name: Update site
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # GitHub may start scheduled runs a few minutes late
+  workflow_dispatch:          # "Run workflow" button in the Actions tab
+  push:
+    branches: [main]
+
+permissions:
+  contents: write   # commit ./data
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build the site
+        run: python3 export.py
+
+      - name: Save recorded lineups and injuries
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if ! git diff --cached --quiet; then
+            git commit -m "Record lineups and injuries"
+            git pull --rebase -X theirs origin main
+            git push origin HEAD:main
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

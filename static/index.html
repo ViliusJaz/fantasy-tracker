@@ -11,10 +11,10 @@
     // Apply the saved theme before the first paint so the page never flashes the other one.
     try { if (localStorage.getItem("ft-theme") === "light") document.documentElement.dataset.theme = "light"; } catch (e) {}
   </script>
-  <link rel="preload" href="/fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="preload" href="fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <button type="button" class="skip" id="skip">Pereiti prie turinio</button>
@@ -33,6 +33,6 @@
   <dialog id="player-modal" class="modal">
     <div id="player-modal-body" class="modal-body"></div>
   </dialog>
-  <script src="/app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

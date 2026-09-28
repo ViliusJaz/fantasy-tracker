@@ -1019,6 +1019,7 @@ def update_injury_log(entries):
     today = date.today().isoformat()
     with _log_lock:
         log = read_json(INJURY_LOG_FILE, {"players": {}})
+        before = json.dumps(log["players"], sort_keys=True)
         known = log["players"]
         seen = set()
         for e in entries:
@@ -1052,8 +1053,10 @@ def update_injury_log(entries):
             ep["end"] = today if gap <= 1 else ep["lastSeen"]
             _add_update(ep, {"date": ep["end"], "status": "ready", "return": "",
                              "comment": REMOVED_NOTE})
-        log["updatedAt"] = datetime.now().isoformat(timespec="seconds")
-        write_json(INJURY_LOG_FILE, log)
+        # Only touch the file when something changed, so the GitHub copy is not re-committed every run.
+        if json.dumps(known, sort_keys=True) != before or not INJURY_LOG_FILE.exists():
+            log["updatedAt"] = datetime.now().isoformat(timespec="seconds")
+            write_json(INJURY_LOG_FILE, log)
 
 
 def _add_update(episode, update):
@@ -1610,10 +1613,15 @@ def proballers_redirect(fid, player_id):
         if not data:
             raise NotFound(L("Žaidėjas nerastas", "Player not found"))
         info = player_view(data)
-    url = proballers_link(info)
-    if url:
-        return url
-    # Not on Wikidata (or an unresolved namesake): fall back to a search limited to Proballers players.
+    return proballers_target(info)
+
+
+def proballers_target(info):
+    """Player's Proballers page, or a search limited to Proballers player pages when Wikidata has none."""
+    return proballers_link(info) or proballers_search(info)
+
+
+def proballers_search(info):
     query = f"site:proballers.com/basketball/player {info['name']} {((info.get('club') or {}).get('nameEn') or '')}"
     return "https://duckduckgo.com/?q=" + urllib.parse.quote_plus(query.strip())
 
@@ -2029,7 +2037,7 @@ def leagues_payload():
             shown, rows = standings(meta)
             mine = next((r for r in rows if r["team"]["id"] == entry.get("myTeamId")), None)
             return {"league": meta, "round": shown, "leader": rows[0] if rows else None,
-                    "mine": mine, "teams": len(rows)}
+                    "mine": mine, "teams": len(rows), "table": rows}
         except (UpstreamError, NotFound) as exc:
             return {"league": {"id": entry["id"], "title": entry.get("title") or entry["id"]}, "error": str(exc)}
     return {"leagues": pool_map(card, load_config())}
