@@ -119,7 +119,11 @@ def gql(query, variables, ttl=LIVE_TTL):
     req = urllib.request.Request(
         GRAPHQL_URL,
         data=body,
-        headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0 (fantasy-tracker)"},
+        # Same headers as the fantasy site's own page: Cloudflare in front of the API turns
+        # away requests that do not look like they come from a browser on that site.
+        headers={"Content-Type": "application/json", "Accept": "application/json, */*",
+                 "User-Agent": BROWSER_UA, "Origin": "https://fantasy.basketnews.com",
+                 "Referer": "https://fantasy.basketnews.com/", "Accept-Language": "lt,en;q=0.8"},
     )
     try:
         with urllib.request.urlopen(req, context=SSL_CTX, timeout=25) as resp:
