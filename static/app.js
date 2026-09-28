@@ -11,12 +11,14 @@ let leaguesCache = null;
 let refreshTimer = null;
 let renderToken = 0;
 let modalToken = 0;
+let animateView = false;
 
 // ------------------------------------------------------------------ i18n
 
 const I18N = {
   lt: {
     brand: "Fantasy trackeris",
+    skip: "Pereiti prie turinio",
     allLeagues: "Visos lygos",
     myLeagues: "Mano lygos",
     pickLeague: "Pasirink lygą, kad matytum turnyrinę lentelę.",
@@ -47,8 +49,8 @@ const I18N = {
     ownerOwned: "Tik užimti",
     ownerFree: "Tik laisvi",
     statusSortTitle: "Rikiuoti pagal traumos sunkumą",
-    allNote: "Statistika – sezono vidurkiai (metimai – taiklumo %). Paspausk ant stulpelio pavadinimo, kad surikiuotum. Traumos – iš ",
-    combinedNote: "komanda šį turą žaidė dukart – statistika sudėta",
+    allNote: "Statistika: sezono vidurkiai (metimai: taiklumo %). Paspausk ant stulpelio pavadinimo, kad surikiuotum. Traumos iš ",
+    combinedNote: "komanda šį turą žaidė dukart, statistika sudėta",
     noBoxYet: "Statistikos dar nėra.",
     gameCanceled: "Atšauktos",
     gameFinal: "Baigtos",
@@ -57,12 +59,17 @@ const I18N = {
     expandAll: "Išskleisti visas",
     collapseAll: "Suskleisti",
     noGames: "Šį turą rungtynių nėra.",
-    gamesNote: "Paspausk ant rungtynių, kad pamatytum kiekvieno žaidėjo statistiką. Pilki žaidėjai – laisvieji agentai.",
+    gamesNote: "Paspausk ant rungtynių, kad pamatytum kiekvieno žaidėjo statistiką. Pilkai pažymėti laisvieji agentai.",
     advTitle: "Pažangi statistika",
-    advNote: "Šaltinis – {link}. Skaičius #N – vieta tarp {n} žaidėjų, juosta – procentilis.",
+    advNote: "Šaltinis: {link}. #N yra vieta tarp {n} žaidėjų, o juosta rodo procentilį.",
     advLink: "BasketNews advanced stats",
     advNone: "Pažangios statistikos šiam žaidėjui dar nėra.",
     advInfo: "Kas tai?",
+    lvl: { high: "Aukštas", avg: "Vidutinis", low: "Žemas" },
+    ctxAvg: "Lygos vidurkis",
+    ctxHigh: "Aukštas nuo",
+    ctxLow: "Žemas iki",
+    ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
     proballers: "Karjera Proballers",
     proballersTitle: "Atidaro žaidėjo karjeros statistiką Proballers svetainėje",
     partialLineups: "{r} turo sudėčių neturime komandoms: {teams}. Jų kapitonų, MVP ir „prarasta dėl sudėties“ šiame ture neskaičiuojame.",
@@ -105,9 +112,9 @@ const I18N = {
     avg: "Vid.",
     best: "Geriausias",
     worst: "Blogiausias",
-    noRoundsYet: "Dar nesužaistas nė vienas turas – apdovanojimai atsiras po pirmojo turo.",
+    noRoundsYet: "Dar nesužaistas nė vienas turas. Apdovanojimai atsiras po pirmojo turo.",
     missingLineups: "Neturime {r} turo sudėčių, todėl kapitonų, MVP ir „prarasta dėl sudėties“ skaičiavimuose tie turai neįtraukti.",
-    recordsNote: "Rodomi tik jau pasibaigę turai. „Prarasta dėl sudėties“ – kiek taškų komanda būtų surinkusi daugiau, jei tų pačių aktyvių žaidėjų penketą, kapitoną ir 6-ą žaidėją būtų išdėsčiusi optimaliai.",
+    recordsNote: "Rodomi tik jau pasibaigę turai. „Prarasta dėl sudėties“ rodo, kiek taškų komanda būtų surinkusi daugiau, jei tų pačių aktyvių žaidėjų penketą, kapitoną ir 6-ą žaidėją būtų išdėsčiusi optimaliai.",
     search: "Ieškoti žaidėjo…",
     allPositions: "Visos pozicijos",
     guards: "Gynėjai",
@@ -123,7 +130,7 @@ const I18N = {
     lastFpTitle: "Fantasy taškai paskutiniame ture",
     gp: "RUNG",
     gpTitle: "Sužaistos rungtynės",
-    faNote: "Statistika – sezono vidurkiai (metimai – taiklumo %). Paspausk ant stulpelio pavadinimo, kad surikiuotum. Laisvieji agentai – visi {total} {comp} žaidėjai, išskyrus {owned} esančius lygos komandų sudėtyse. Traumos – iš ",
+    faNote: "Statistika: sezono vidurkiai (metimai: taiklumo %). Paspausk ant stulpelio pavadinimo, kad surikiuotum. Laisvieji agentai yra visi {total} {comp} žaidėjai, išskyrus {owned} esančius lygos komandų sudėtyse. Traumos iš ",
     injuryReport: "BasketNews traumų sąrašo",
     faNoteEnd: ". Paspausk ant žaidėjo, kad matytum daugiau.",
     noPlayers: "Nėra žaidėjų pagal filtrus",
@@ -154,9 +161,9 @@ const I18N = {
     lineupTitle: "Sudėtis · {r}",
     formation: "formacija {f}",
     lineupNA: "Sudėtis nepasiekiama.",
-    statsAvgNote: "Statistika – sezono vidurkiai (metimai – taiklumo %).",
-    statsRoundNote: "Statistika – {n} turo (metimai – pataikyta/mesta).",
-    multNote: "Geltonai – taškai komandai: penketas ×1, kapitonas ×2, 6-as žaidėjas ×1, B2–B5 ×0.5, neregistruoti ×0.",
+    statsAvgNote: "Statistika: sezono vidurkiai (metimai: taiklumo %).",
+    statsRoundNote: "Statistika: {n} turo (metimai: pataikyta/mesta).",
+    multNote: "Geltonai pažymėti taškai komandai: penketas ×1, kapitonas ×2, 6-as žaidėjas ×1, B2-B5 ×0.5, neregistruoti ×0.",
     notRegistered: "Neregistruoti",
     teamPts: "Tšk",
     teamPtsTitle: "Taškai komandai",
@@ -189,7 +196,7 @@ const I18N = {
     ongoing: "(tęsiasi)",
     missed: "praleido: {r}",
     source: "Šaltinis",
-    historyNote: "Istorija kaupiama automatiškai iš {link} kol veikia programa, o praleisti turai – iš rungtynių statistikos.",
+    historyNote: "Istorija kaupiama automatiškai iš {link} kol veikia programa, o praleisti turai nustatomi iš rungtynių statistikos.",
     rounds: "Turai",
     didNotPlay: "Nežaidė",
     teamNoGame: "Komanda nežaidė",
@@ -204,6 +211,7 @@ const I18N = {
   },
   en: {
     brand: "Fantasy tracker",
+    skip: "Skip to content",
     allLeagues: "All leagues",
     myLeagues: "My leagues",
     pickLeague: "Pick a league to see its standings.",
@@ -212,6 +220,7 @@ const I18N = {
     teamsN: "{n} teams",
     seasonNotStartedShort: "season not started",
     playedN: "{n} rounds played",
+    playedOne: "1 round played",
     addLeague: "Add league",
     add: "Add",
     checking: "Checking…",
@@ -235,7 +244,7 @@ const I18N = {
     ownerFree: "Free only",
     statusSortTitle: "Sort by injury severity",
     allNote: "Stats are season averages (shooting as %). Click a column name to sort. Injuries come from the ",
-    combinedNote: "played twice this round – stats combined",
+    combinedNote: "played twice this round, stats combined",
     noBoxYet: "No stats yet.",
     gameCanceled: "Canceled",
     gameFinal: "Final",
@@ -250,6 +259,11 @@ const I18N = {
     advLink: "BasketNews advanced stats",
     advNone: "No advanced stats for this player yet.",
     advInfo: "What is this?",
+    lvl: { high: "High", avg: "Average", low: "Low" },
+    ctxAvg: "League average",
+    ctxHigh: "High from",
+    ctxLow: "Low up to",
+    ctxNote: "Compared with players averaging at least {m} minutes.",
     proballers: "Career on Proballers",
     proballersTitle: "Opens the player's career stats on Proballers",
     partialLineups: "Round {r} lineups are missing for: {teams}. Their captain, MVP and points-lost numbers are left out for that round.",
@@ -292,7 +306,7 @@ const I18N = {
     avg: "Avg",
     best: "Best",
     worst: "Worst",
-    noRoundsYet: "No round finished yet – awards appear after the first round.",
+    noRoundsYet: "No round finished yet. Awards appear after the first round.",
     missingLineups: "Lineups for round {r} are missing, so captain, MVP and points-lost stats skip those rounds.",
     recordsNote: "Only finished rounds are shown. “Lost to lineup” is how many more points the team would have scored with the best arrangement of the same active players (starting five, captain and 6th man).",
     search: "Search player…",
@@ -343,7 +357,7 @@ const I18N = {
     lineupNA: "Lineup not available.",
     statsAvgNote: "Stats are season averages (shooting as %).",
     statsRoundNote: "Stats are for round {n} (shots made/attempted).",
-    multNote: "Yellow = points for the team: starting five ×1, captain ×2, 6th man ×1, B2–B5 ×0.5, not registered ×0.",
+    multNote: "Yellow = points for the team: starting five ×1, captain ×2, 6th man ×1, B2-B5 ×0.5, not registered ×0.",
     notRegistered: "Not registered",
     teamPts: "Pts",
     teamPtsTitle: "Points for the team",
@@ -421,7 +435,11 @@ function statCols() {
   return STAT_DEFS.map(([key, lta, ltt, ena, ent]) => ({ key, abbr: LANG === "en" ? ena : lta, title: LANG === "en" ? ent : ltt }));
 }
 
+const skipBtn = document.getElementById("skip");
+skipBtn.addEventListener("click", () => app.focus());
+
 function applyLangChrome() {
+  skipBtn.textContent = t("skip");
   document.documentElement.lang = LANG;
   document.title = t("brand");
   document.getElementById("brand-text").textContent = t("brand");
@@ -474,8 +492,8 @@ document.addEventListener("scroll", () => { tip.hidden = true; }, true);
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-const fmt = (n) => (n === null || n === undefined ? "–" : Number(n).toFixed(2).replace(/\.?0+$/, ""));
-const fmt1 = (n) => (n === null || n === undefined ? "–" : Number(n).toFixed(1).replace(/\.0$/, ""));
+const fmt = (n) => (n === null || n === undefined ? "-" : Number(n).toFixed(2).replace(/\.?0+$/, ""));
+const fmt1 = (n) => (n === null || n === undefined ? "-" : Number(n).toFixed(1).replace(/\.0$/, ""));
 
 const roundLabel = (r) => t("round", { n: r + 1 });
 
@@ -498,10 +516,10 @@ function statHeads(sortable = false) {
 // mode "round": totals of one round (made/attempted); mode "avg": season averages (shooting as %).
 function statCells(line, mode) {
   const cols = statCols();
-  if (!line) return cols.map(() => '<td class="num stat dim">–</td>').join("");
+  if (!line) return cols.map(() => '<td class="num stat dim">-</td>').join("");
   const shot = (m, a) => {
     if (mode === "round") return `${m}/${a}`;
-    return a ? `${Math.round((m / a) * 100)}%` : "–";
+    return a ? `${Math.round((m / a) * 100)}%` : "-";
   };
   const val = (key) => {
     if (key === "p2") return shot(line.p2m, line.p2a);
@@ -533,6 +551,11 @@ function parseHash() {
 
 function setView(html) {
   app.innerHTML = html;
+  if (animateView && !html.includes('class="skeleton"')) {
+    app.classList.remove("enter");
+    void app.offsetWidth;  // restart the entrance animation
+    app.classList.add("enter");
+  }
 }
 
 function stateBox(msg, isError = false) {
@@ -575,7 +598,7 @@ function clubTag(club) {
 }
 
 function clubCell(club) {
-  if (!club) return "–";
+  if (!club) return "-";
   const logo = club.logo ? `<img src="${esc(club.logo)}" alt="" loading="lazy" onerror="this.remove()">` : "";
   return `<div class="club">${logo}${esc(club.abbr)}</div>`;
 }
@@ -662,7 +685,7 @@ function lineChart(id, { xs, series, invert = false, yMin, yMax, integer = false
         const row = document.createElement("div");
         row.className = "tip-row";
         const key = document.createElement("i"); key.style.background = s.color;
-        const val = document.createElement("strong"); val.textContent = v === null || v === undefined ? "–" : format(v);
+        const val = document.createElement("strong"); val.textContent = v === null || v === undefined ? "-" : format(v);
         const name = document.createElement("span"); name.textContent = s.name;
         row.append(key, val, name);
         tip.append(row);
@@ -715,10 +738,10 @@ function leagueHeader(league, tab) {
     <div class="league-head">
       <div>
         <h1 class="page-title">${esc(league.title)}</h1>
-        <div class="meta-line">
+        <div class="meta-line divided">
           <span class="badge format">${esc(formatLabel(league.format))}</span>
-          <span>${esc(league.competition)}</span><span>·</span>
-          <span>${t("teamsN", { n: league.teamsCount ?? "" })}</span><span>·</span>
+          <span>${esc(league.competition)}</span>
+          <span>${t("teamsN", { n: league.teamsCount ?? "" })}</span>
           ${status}
         </div>
       </div>
@@ -778,7 +801,7 @@ async function renderHome(token) {
     }
     const leader = l.leader
       ? `${esc(l.leader.team.title)} · ${lg.format === "head_to_head" ? `${l.leader.wins}-${l.leader.losses}` : `${fmt(l.leader.pointsTotal)} ${t("ptsShort")}`}`
-      : "–";
+      : "-";
     const mine = l.mine
       ? `<div><div class="stat-label">${t("myPlace")}</div><div class="stat-value">${l.mine.position} / ${l.teams}</div></div>`
       : "";
@@ -795,7 +818,7 @@ async function renderHome(token) {
           <div><div class="stat-label">${t("leader")}</div><div class="stat-value">${leader}</div></div>
           ${mine}
         </div>
-        <div class="meta-line">${t("teamsN", { n: l.teams })} · ${l.round === null ? t("seasonNotStartedShort") : t("playedN", { n: l.round + 1 })}</div>
+        <div class="meta-line">${t("teamsN", { n: l.teams })} · ${l.round === null ? t("seasonNotStartedShort") : (l.round === 0 && I18N[LANG].playedOne ? t("playedOne") : t("playedN", { n: l.round + 1 }))}</div>
         <button class="remove" data-remove="${lg.id}" title="${t("removeLeague")}">×</button>
       </a>`;
   });
@@ -921,8 +944,8 @@ async function renderRounds(fid, params, token, silent) {
       const side = (tm, cls) => tm
         ? `<div class="side ${cls}"><a href="#/l/${fid}/t/${tm.id}?r=${data.round}">${esc(tm.title)}</a><span class="owner">${esc(tm.owner)}</span></div>`
         : `<div class="side ${cls}"><span class="dim">${t("leagueAvg")}</span></div>`;
-      const s1 = played ? fmt(m.score1) : "–";
-      const s2 = played ? fmt(m.score2) : "–";
+      const s1 = played ? fmt(m.score1) : "-";
+      const s2 = played ? fmt(m.score2) : "-";
       const w1 = played && !data.live && m.score1 > m.score2;
       const w2 = played && !data.live && m.score2 > m.score1;
       const mine = [m.team1?.id, m.team2?.id].includes(myTeamId);
@@ -980,11 +1003,11 @@ function formTable(data) {
     const chips = h2h
       ? f.last.map((x) => `<span class="res ${x.result}" title="${esc(`${roundLabel(x.round)}: ${fmt(x.points)} : ${fmt(x.against)} · ${x.opponent}`)}">${res[x.result]}</span>`).join("")
       : f.last.map((x) => `<span class="pts-chip" title="${roundLabel(x.round)}">${fmt(x.points)}</span>`).join("");
-    const streak = h2h && f.streak.kind ? `${res[f.streak.kind]}${f.streak.length}` : "–";
+    const streak = h2h && f.streak.kind ? `${res[f.streak.kind]}${f.streak.length}` : "-";
     return `<tr>
       <td class="rank">${f.position}</td>
       <td><a class="team-name" href="#/l/${data.league.id}/t/${f.team.id}">${esc(f.team.title)}</a></td>
-      <td><div class="chips">${chips || '<span class="dim">–</span>'}</div></td>
+      <td><div class="chips">${chips || '<span class="dim">-</span>'}</div></td>
       ${h2h ? `<td class="num">${streak}</td><td class="num">${f.longestWin}</td><td class="num">${f.longestLoss}</td>` : ""}
       <td class="num">${fmt(f.avg)}</td><td class="num">${fmt(f.best)}</td><td class="num">${fmt(f.worst)}</td>
     </tr>`;
@@ -1184,7 +1207,7 @@ async function renderPlayerList(fid, scope, token, silent) {
           <span class="player-name">${esc(p.name)}</span>
           <div class="sub">${POS[p.position] || ""} · ${clubTag(p.club)}</div></div></div></td>
         ${all ? `<td>${ownerCell(p.owner)}</td>` : ""}
-        <td>${p.injury ? injuryBadge(p.injury) : '<span class="dim">–</span>'}</td>
+        <td>${p.injury ? injuryBadge(p.injury) : '<span class="dim">-</span>'}</td>
         <td>${gameCell(p.games)}</td>
         <td class="num pts-strong">${fmt1(p.avgPts)}</td>
         <td class="num">${fmt(p.roundPts)}</td>
@@ -1335,8 +1358,8 @@ function gameCardHead(g) {
   else if (g.completed) status = `<span class="badge">${t("gameFinal")}</span>`;
   else status = `<span class="badge">${when(g.at)}</span>`;
   const score = g.homeScore !== null && g.homeScore !== undefined
-    ? `<span class="${g.completed && g.homeScore > g.awayScore ? "win" : ""}">${g.homeScore}</span><span class="sep">–</span><span class="${g.completed && g.awayScore > g.homeScore ? "win" : ""}">${g.awayScore}</span>`
-    : '<span class="dim">–</span>';
+    ? `<span class="${g.completed && g.homeScore > g.awayScore ? "win" : ""}">${g.homeScore}</span><span class="sep">:</span><span class="${g.completed && g.awayScore > g.homeScore ? "win" : ""}">${g.awayScore}</span>`
+    : '<span class="dim">-</span>';
   const meta = [
     g.owned ? t("ownedInGame", { n: g.owned }) : null,
     g.top && g.top.fp !== null ? `${t("topFp")}: ${esc(g.top.name)} ${fmt(g.top.fp)}` : null,
@@ -1408,7 +1431,7 @@ function lineupTable(lineup, state) {
     const finishedGames = p.games.length && p.games.every((g) => g.completed || g.canceled);
     const dnp = !upcoming && finishedGames && !p.roundPlayed;
     let pts;
-    if (upcoming) pts = '<span class="dim">–</span>';
+    if (upcoming) pts = '<span class="dim">-</span>';
     else if (!scored) pts = `<span title="${t("fp")}">${fmt(p.roundPts)}</span>`;
     else if (p.slot === "inactive") pts = '<span class="dim">0</span>';
     else if (dnp) pts = `<span class="dim" title="${t("dnpTitle")}">DNP</span>`;
@@ -1417,7 +1440,7 @@ function lineupTable(lineup, state) {
       ? `<tr class="band-row"><td class="sticky" colspan="1">${t("notRegistered")}</td><td colspan="${colspan - 1}"></td></tr>` : "";
     if (p.slot === "inactive") bandShown = true;
 
-    const pill = scored ? `<span class="slot ${p.slot}">${esc(p.slotLabel)}</span>` : `<span class="slot bench">${POS[p.position] || "–"}</span>`;
+    const pill = scored ? `<span class="slot ${p.slot}">${esc(p.slotLabel)}</span>` : `<span class="slot bench">${POS[p.position] || "-"}</span>`;
     return `${band}<tr class="${p.slot}${half ? " half" : ""} clickable" data-player="${p.id}">
       <td class="sticky"><div class="player">${pill}${avatar(p)}<div>
         <span class="player-name">${esc(p.name)}</span>${p.captain ? `<span class="cap" title="${t("captain")}">C</span>` : ""}
@@ -1448,7 +1471,7 @@ function roundSummary(data) {
     const opp = res.opponent
       ? `<a href="#/l/${league.id}/t/${res.opponent.id}?r=${data.round}">${esc(res.opponent.title)}</a>`
       : `<span class="dim">${t("leagueAvg")}</span>`;
-    const score = state === "upcoming" ? '<span class="dim">– : –</span>'
+    const score = state === "upcoming" ? '<span class="dim">- : -</span>'
       : `<span class="${res.result === "W" ? "win" : ""}">${fmt(res.points)}</span><span class="sep">:</span><span class="${res.result === "L" ? "win" : ""}">${fmt(res.opponentPoints)}</span>`;
     const verdict = { W: `<span class="res W">${t("won")}</span>`, L: `<span class="res L">${t("lost")}</span>`, T: `<span class="res T">${t("tie")}</span>` }[res.result] || "";
     main = `<div class="versus">
@@ -1459,7 +1482,7 @@ function roundSummary(data) {
   }
   const tiles = [];
   if (league.format !== "head_to_head" && state !== "upcoming") {
-    tiles.push([t("roundPoints"), fmt(res.points)], [t("roundRank"), res.roundPosition ?? "–"]);
+    tiles.push([t("roundPoints"), fmt(res.points)], [t("roundRank"), res.roundPosition ?? "-"]);
   }
   if (after) {
     tiles.push([t("posAfter"), `${after.position}<small> / ${league.teamsCount || ""}</small>`]);
@@ -1514,10 +1537,10 @@ function historyTable(data) {
       const opp = h.opponent ? esc(h.opponent.title) : `<span class="dim">${t("leagueAvg")}</span>`;
       const res = h.result ? `<span class="res ${h.result}">${resShort[h.result]}</span>`
         : h.state === "live" ? `<span class="badge live">${t("live")}</span>` : `<span class="dim">${t("next")}</span>`;
-      const score = h.state === "upcoming" ? '<span class="dim">–</span>' : `${fmt(h.points)} : ${fmt(h.opponentPoints)}`;
-      return `<tr class="clickable${sel}" data-href="${base}?r=${h.round}"><td>${roundLabel(h.round)}</td><td>${opp}</td><td class="num">${score}</td><td class="num">${h.position ?? "–"}</td><td class="num">${res}</td></tr>`;
+      const score = h.state === "upcoming" ? '<span class="dim">-</span>' : `${fmt(h.points)} : ${fmt(h.opponentPoints)}`;
+      return `<tr class="clickable${sel}" data-href="${base}?r=${h.round}"><td>${roundLabel(h.round)}</td><td>${opp}</td><td class="num">${score}</td><td class="num">${h.position ?? "-"}</td><td class="num">${res}</td></tr>`;
     }
-    return `<tr class="clickable${sel}" data-href="${base}?r=${h.round}"><td>${roundLabel(h.round)}</td><td class="num pts-strong">${fmt(h.points)}</td><td class="num">${h.roundPosition ?? "–"}</td><td class="num">${h.position ?? "–"}</td></tr>`;
+    return `<tr class="clickable${sel}" data-href="${base}?r=${h.round}"><td>${roundLabel(h.round)}</td><td class="num pts-strong">${fmt(h.points)}</td><td class="num">${h.roundPosition ?? "-"}</td><td class="num">${h.position ?? "-"}</td></tr>`;
   }).join("");
   const head = h2h
     ? `<tr><th>${t("rounds")}</th><th>${t("opponent")}</th><th class="num">${t("score")}</th><th class="num">${t("position")}</th><th class="num"></th></tr>`
@@ -1550,7 +1573,7 @@ async function renderTeam(fid, tid, params, token, silent) {
     t("placeOf", { p: s.position, n: league.teamsCount || "" }),
     h2h ? `${s.wins}-${s.losses}${s.ties ? `-${s.ties}` : ""}` : null,
     `${fmt(s.pointsTotal)} ${t("ptsShort")}`,
-  ].filter(Boolean).map((x) => `<span>${x}</span>`).join("<span>·</span>");
+  ].filter(Boolean).map((x) => `<span>${x}</span>`).join("");
   const label = (x) => `${roundLabel(x)}${x === league.currentRound ? ` ${t("current")}` : ""}`;
   const charts = teamCharts(data);
   const statsNote = data.roundState === "upcoming" ? t("statsAvgNote") : t("statsRoundNote", { n: r + 1 });
@@ -1560,7 +1583,7 @@ async function renderTeam(fid, tid, params, token, silent) {
     <div class="team-head">
       <div>
         <h1 class="page-title">${esc(data.team.title)}</h1>
-        <div class="meta-line">${seasonLine}</div>
+        <div class="meta-line divided">${seasonLine}</div>
       </div>
       ${star}
     </div>
@@ -1614,6 +1637,24 @@ async function openPlayer(pid) {
   modalBody.innerHTML = playerView(fid, data);
 }
 
+// A metric's level is good or bad depending on which direction is better for it.
+function levelTone(x) {
+  if (!x.level || x.level === "avg" || !x.context) return "avg";
+  const up = x.context.better !== "lower";
+  return (x.level === "high") === up ? "good" : "bad";
+}
+
+function advContext(x, minutes) {
+  if (!x.context) return "";
+  const c = x.context;
+  return `<div class="adv-ctx">
+      <span>${t("ctxAvg")} <b>${fmt1(c.avg)}</b></span>
+      <span>${t("ctxHigh")} <b>${fmt1(c.high)}</b></span>
+      <span>${t("ctxLow")} <b>${fmt1(c.low)}</b></span>
+    </div>
+    <div class="adv-ctx-note">${t("ctxNote", { m: minutes })}</div>`;
+}
+
 function advancedSection(adv) {
   if (!adv) return `<h3 class="section-title">${t("advTitle")}</h3><p class="note">${t("advNone")}</p>`;
   const link = `<a class="link" href="${esc(adv.url)}" target="_blank" rel="noopener">${t("advLink")}</a>`;
@@ -1624,10 +1665,10 @@ function advancedSection(adv) {
         <span class="adv-label"><strong data-tip="${esc(x.title)}">${esc(x.short)}</strong>
           <button type="button" class="info-btn" data-info aria-expanded="false" aria-label="${esc(t("advInfo"))}" data-tip="${esc(t("advInfo"))}">i</button>
           <span class="dim adv-name">${esc(x.title)}</span></span>
-        <span class="adv-value">${fmt1(x.value)}</span>
+        <span class="adv-value">${fmt1(x.value)}${x.level ? `<span class="lvl ${levelTone(x)}">${t("lvl")[x.level]}</span>` : ""}</span>
         <span class="adv-rank dim">${x.rank ? `#${x.rank}` : ""}</span>
         <span class="adv-bar"><i style="width:${Math.max(0, Math.min(100, x.pct ?? 0))}%"></i></span>
-        <p class="adv-desc" hidden>${esc(x.desc || "")}</p>
+        <div class="adv-desc" hidden><p>${esc(x.desc || "")}</p>${advContext(x, adv.contextMinutes || 10)}</div>
       </div>`).join("")}
     </div>`).join("");
   return `<h3 class="section-title">${t("advTitle")}</h3>
@@ -1660,7 +1701,7 @@ function playerView(fid, data) {
     const reason = e.reasonLocal || e.reason || t("noReason");
     const span = `${shortDay(e.start)} → ${e.ongoing ? t("now") : shortDay(e.end)}`;
     const missed = e.missedRounds.length ? ` · ${t("missed", { r: e.missedRounds.map((r) => t("roundShort", { n: r + 1 })).join(", ") })}` : "";
-    const updates = e.updates.map((u) => `<li><span class="dim">${shortDay(u.date)}</span> ${esc(u.statusLabel)}${u.return ? ` (${esc(u.return)})` : ""}${u.comment ? ` – ${esc(u.comment)}` : ""}</li>`).join("");
+    const updates = e.updates.map((u) => `<li><span class="dim">${shortDay(u.date)}</span> ${esc(u.statusLabel)}${u.return ? ` (${esc(u.return)})` : ""}${u.comment ? `: ${esc(u.comment)}` : ""}</li>`).join("");
     return `<li class="episode ${e.kind}">
       <div class="ep-head"><span class="ep-kind">${e.kind === "injury" ? t("kindInjury") : t("kindOther")}</span><strong>${esc(reason[0].toUpperCase() + reason.slice(1))}</strong></div>
       <div class="ep-meta">${span} · ${e.days} ${t("daysShort")}${e.ongoing ? ` ${t("ongoing")}` : ""}${missed}</div>
@@ -1670,11 +1711,11 @@ function playerView(fid, data) {
   }).join("");
 
   const log = data.gameLog.map((g) => {
-    const games = g.games.map((x) => `${x.home ? "vs" : "@"} ${esc(x.opponent)}${x.score ? ` ${x.score[0] > x.score[1] ? "W" : "L"} ${x.score[0]}:${x.score[1]}` : ""}`).join(", ") || '<span class="dim">–</span>';
+    const games = g.games.map((x) => `${x.home ? "vs" : "@"} ${esc(x.opponent)}${x.score ? ` ${x.score[0] > x.score[1] ? "W" : "L"} ${x.score[0]}:${x.score[1]}` : ""}`).join(", ") || '<span class="dim">-</span>';
     if (g.status === "played") {
       return `<tr><td class="sticky">${roundLabel(g.round)}</td><td>${games}</td><td class="num pts-strong">${fmt(g.fp)}</td>${statCells(g.line, "round")}</tr>`;
     }
-    const why = { dnp: `${t("didNotPlay")}${g.reason ? ` – ${esc(g.reason)}` : ""}`, "no-game": t("teamNoGame"), pending: t("notPlayedYet") }[g.status];
+    const why = { dnp: `${t("didNotPlay")}${g.reason ? `: ${esc(g.reason)}` : ""}`, "no-game": t("teamNoGame"), pending: t("notPlayedYet") }[g.status];
     return `<tr><td class="sticky">${roundLabel(g.round)}</td><td>${games}</td><td colspan="${STAT_DEFS.length + 1}" class="${g.status === "dnp" ? "dnp" : "dim"}">${why}</td></tr>`;
   }).join("");
 
@@ -1688,7 +1729,7 @@ function playerView(fid, data) {
       ${avatar(p, "lg")}
       <div class="pm-title">
         <h2>${esc(p.name)}</h2>
-        <div class="meta-line">${clubCell(p.club)}<span>·</span><span>${t("pos")[p.position] || ""}</span>${p.number != null ? `<span>·</span><span>#${p.number}</span>` : ""}</div>
+        <div class="meta-line divided">${clubCell(p.club)}<span>${t("pos")[p.position] || ""}</span>${p.number != null ? `<span>#${p.number}</span>` : ""}</div>
         <div class="meta-line" style="margin-top:8px">${ownerHtml}
           ${data.proballers ? `<a class="badge ext" href="${esc(data.proballers)}" target="_blank" rel="noopener" data-tip="${esc(t("proballersTitle"))}">${t("proballers")} ↗</a>` : ""}
           ${next ? `<span class="dim small">${next}</span>` : ""}</div>
@@ -1732,6 +1773,7 @@ app.addEventListener("click", (e) => {
 async function route(silent = false) {
   const token = ++renderToken;
   clearTimeout(refreshTimer);
+  animateView = !silent;
   if (!silent) window.scrollTo(0, 0);
   const { parts, params } = parseHash();
 

@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Fantasy trackeris</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Lygos lentelės, sudėtys, rungtynių statistika ir traumos BasketNews Fantasy draft lygoms.">
+  <meta name="theme-color" content="#0c0f14">
+  <link rel="preload" href="/fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+  <button type="button" class="skip" id="skip">Pereiti prie turinio</button>
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="#/">
@@ -21,7 +24,7 @@
       <div class="lang-switch" id="lang-switch" role="group" aria-label="Kalba / Language"></div>
     </div>
   </header>
-  <main id="app" class="container"></main>
+  <main id="app" class="container" tabindex="-1"></main>
   <dialog id="player-modal" class="modal">
     <div id="player-modal-body" class="modal-body"></div>
   </dialog>

@@ -543,8 +543,8 @@ def attach_usage(meta, views, stats_round):
 ADV_GROUPS = [
     ("offense", ("Puolimas", "Offense"), [
         ("usage_percentage", "USG%", "Naudojimo dažnis", "Usage %",
-         "Kokią dalį komandos atakų žaidėjas užbaigia pats (metimu, baudomis ar klaida), kol yra aikštėje. ~20 % – vidutinis, 30 %+ – pagrindinis puolimo variklis.",
-         "Share of team possessions a player finishes himself (shot, free throws or turnover) while on court. ~20% is average, 30%+ is a primary option."),
+         "Kokią dalį komandos atakų žaidėjas užbaigia pats (metimu, baudomis ar klaida), kol yra aikštėje. Kuo jis didesnis, tuo daugiau puolimo eina per jį.",
+         "Share of team possessions a player finishes himself (shot, free throws or turnover) while on court. The higher, the more the offense runs through him."),
         ("ts_percentage", "TS%", "Tikrasis metimų taiklumas", "True shooting %",
          "Metimų efektyvumas, įskaitant tritaškių vertę ir baudas: TŠK ÷ (2 × (metimai + 0.44 × baudų metimai)). Geriau nei paprastas taiklumas.",
          "Shooting efficiency that credits threes and free throws: PTS ÷ (2 × (FGA + 0.44 × FTA)). Better than plain FG%."),
@@ -555,7 +555,7 @@ ADV_GROUPS = [
          "Kokia dalis žaidėjo atakų baigiasi rezultatyviu perdavimu, o ne metimu ar klaida.",
          "Share of the player's plays that end with an assist rather than a shot or turnover."),
         ("turnover_percentage", "TOV%", "Klaidų dalis", "Turnover %",
-         "Kokia dalis žaidėjo atakų baigiasi klaida. Mažiau – geriau.",
+         "Kokia dalis žaidėjo atakų baigiasi klaida. Mažiau yra geriau.",
          "Share of the player's plays that end in a turnover. Lower is better."),
         ("3p_attempted_rate", "3PAR", "Tritaškių dalis metimuose", "3PA rate",
          "Kiek procentų visų žaidėjo metimų iš žaidimo yra tritaškiai.",
@@ -572,7 +572,7 @@ ADV_GROUPS = [
     ]),
     ("defense", ("Gynyba", "Defense"), [
         ("defensive_rating_ind", "IDRTG", "Individualus gynybos reitingas", "Individual defensive rating",
-         "Kiek taškų varžovai pelno per 100 atakų, vertinant žaidėjo indėlį gynyboje. Mažiau – geriau.",
+         "Kiek taškų varžovai pelno per 100 atakų, vertinant žaidėjo indėlį gynyboje. Mažiau yra geriau.",
          "Points allowed per 100 opponent possessions, based on the player's defensive contribution. Lower is better."),
         ("defensive_rebound_percentage", "DREB%", "Atk. kamuolių gynyboje dalis", "Defensive rebound %",
          "Kokią dalį galimų atkovoti kamuolių po varžovų nepataikytų metimų jis atkovoja, kol yra aikštėje.",
@@ -598,14 +598,14 @@ ADV_GROUPS = [
          "Kiek taškų komanda pelno per 100 atakų, kai jis yra aikštėje.",
          "Team points scored per 100 possessions while he is on court."),
         ("defensive_rating_lineup", "DRTG", "Komandos gynybos reitingas jam žaidžiant", "Team DRtg with him on court",
-         "Kiek taškų varžovai pelno per 100 atakų, kai jis yra aikštėje. Mažiau – geriau.",
+         "Kiek taškų varžovai pelno per 100 atakų, kai jis yra aikštėje. Mažiau yra geriau.",
          "Opponent points per 100 possessions while he is on court. Lower is better."),
         ("assist_turnover_ratio", "AST/TO", "Rez. perdavimai / klaidos", "Assists / turnovers",
          "Kiek rezultatyvių perdavimų tenka vienai klaidai.",
          "Assists per turnover."),
         ("possessions", "POSS", "Atakos per rungtynes", "Possessions per game",
-         "Kiek atakų vidutiniškai per rungtynes sužaidžiama, kol jis aikštėje – rodo žaidimo laiką ir tempą.",
-         "Possessions played per game while he is on court – reflects minutes and pace."),
+         "Kiek atakų vidutiniškai per rungtynes sužaidžiama, kol jis aikštėje. Rodo žaidimo laiką ir tempą.",
+         "Possessions played per game while he is on court. Reflects minutes and pace."),
         ("pir", "PIR", "Naudingumo balas", "Performance index rating",
          "TŠK + atk. kamuoliai + rez. perdavimai + perimti + blokai + išprovokuotos pražangos − nepataikyti metimai − klaidos − gauti blokai − pražangos.",
          "PTS + REB + AST + STL + BLK + fouls drawn − missed shots − turnovers − blocks against − fouls."),
@@ -613,11 +613,41 @@ ADV_GROUPS = [
 ]
 
 
+# Metrics where a smaller number is the better one.
+LOWER_IS_BETTER = {"turnover_percentage", "defensive_rating_ind", "defensive_rating_lineup"}
+ADV_MIN_SECONDS = 600  # league context only counts players averaging 10+ minutes
+
+
+def _quartiles(values):
+    vals = sorted(values)
+    def at(q):
+        pos = (len(vals) - 1) * q
+        lo, hi = int(pos), min(int(pos) + 1, len(vals) - 1)
+        return vals[lo] + (vals[hi] - vals[lo]) * (pos - lo)
+    return at(0.25), at(0.75)
+
+
+def advanced_context(table):
+    """League average and quartiles per metric, from regular-rotation players."""
+    rows = [r for r in table.values() if (adv_value(r, "time_played") or 0) >= ADV_MIN_SECONDS]
+    out = {}
+    for _, _, items in ADV_GROUPS:
+        for key, *_ in items:
+            vals = [v for v in (adv_value(r, key) for r in rows) if v is not None]
+            if len(vals) < 8:
+                continue
+            p25, p75 = _quartiles(vals)
+            out[key] = {"avg": round(sum(vals) / len(vals), 1), "low": round(p25, 1), "high": round(p75, 1),
+                        "n": len(vals), "better": "lower" if key in LOWER_IS_BETTER else "higher"}
+    return out
+
+
 def advanced_profile(meta, bn_id):
     table = advanced_stats(meta)
     row = table.get(str(bn_id)) if bn_id else None
     if not row:
         return None
+    context = advanced_context(table)
     groups = []
     for gid, (lt, en), items in ADV_GROUPS:
         stats = []
@@ -625,10 +655,16 @@ def advanced_profile(meta, bn_id):
             cell = row.get(key)
             if not isinstance(cell, dict) or cell.get("value") is None:
                 continue
+            ctx = context.get(key)
+            level = None
+            if ctx:
+                level = "high" if cell["value"] >= ctx["high"] else "low" if cell["value"] <= ctx["low"] else "avg"
             stats.append({"key": key, "short": short, "title": L(title_lt, title_en), "desc": L(desc_lt, desc_en),
-                          "value": cell["value"], "rank": cell.get("rank"), "pct": cell.get("pct")})
+                          "value": cell["value"], "rank": cell.get("rank"), "pct": cell.get("pct"),
+                          "context": ctx, "level": level})
         groups.append({"id": gid, "title": L(lt, en), "stats": stats})
     return {"groups": groups, "ranked": len(table), "games": row.get("games_played"),
+            "contextMinutes": ADV_MIN_SECONDS // 60,
             "url": f"https://basketnews.com/advanced-stats/{meta['bnLeagueId']}/{meta['seasonYear']}"}
 
 
@@ -1054,7 +1090,7 @@ def return_local(text):
         return t
     m = re.fullmatch(r"Round\s*(\d+)(?:\s*[-–]\s*(\d+))?", t, re.I)
     if m:
-        return f"{m.group(1)}–{m.group(2)} turas" if m.group(2) else f"{m.group(1)} turas"
+        return f"{m.group(1)}-{m.group(2)} turas" if m.group(2) else f"{m.group(1)} turas"
     return {"indefinitely": "neribotam laikui", "season": "sezono pabaiga",
             "end of season": "sezono pabaiga"}.get(t.lower(), t)
 
@@ -1174,8 +1210,8 @@ def team_payload(fid, team_id, rnd=None):
             if snap.get("source") == "import":
                 lineup_note = None
             elif not snap["locked"]:
-                lineup_note = L("Sudėtis išsaugota prieš turui prasidedant – vėlesni pakeitimai galėjo būti nematyti.",
-                                "Lineup saved before the round started – later changes may be missing.")
+                lineup_note = L("Sudėtis išsaugota prieš turui prasidedant, todėl vėlesni pakeitimai galėjo būti nematyti.",
+                                "Lineup saved before the round started, so later changes may be missing.")
         else:
             # The API only exposes the current lineup; for earlier rounds show today's roster.
             lineup, source = now_lineup, "roster"
@@ -1419,8 +1455,8 @@ def injury_summary(episodes, missed, game_log):
     injuries = [e for e in episodes if e["kind"] == "injury"]
     if not missed and not episodes:
         if team_games:
-            return L(f"Šį sezoną nepraleido nė vieno turo – sužaidė {len(played)} iš {len(team_games)}.",
-                     f"Has not missed a round this season – played {len(played)} of {len(team_games)}.")
+            return L(f"Šį sezoną nepraleido nė vieno turo: sužaidė {len(played)} iš {len(team_games)}.",
+                     f"Has not missed a round this season: played {len(played)} of {len(team_games)}.")
         return L("Šį sezoną dar nežaidė ir traumų sąraše nebuvo.",
                  "Has not played yet this season and has not been on the injury report.")
     if missed:
@@ -1440,7 +1476,7 @@ def injury_summary(episodes, missed, game_log):
     if others and not injuries:
         reason = others[0]["reasonLocal"] or others[0]["reason"]
         if reason and missed:
-            parts.append(L(f"Traumų nebuvo – priežastis: {reason}.", f"No injuries – reason: {reason}."))
+            parts.append(L(f"Traumų nebuvo. Priežastis: {reason}.", f"No injuries. Reason: {reason}."))
         else:
             parts.append(L("Traumų nebuvo.", "No injuries."))
     return " ".join(parts)
@@ -1673,7 +1709,7 @@ def player_payload(fid, player_id):
 
 def num(v):
     if v is None:
-        return "–"
+        return "-"
     text = f"{v:.2f}".rstrip("0").rstrip(".")
     return "0" if text in ("-0", "") else text
 
@@ -2070,6 +2106,7 @@ CONTENT_TYPES = {
     ".svg": "image/svg+xml",
     ".png": "image/png",
     ".ico": "image/x-icon",
+    ".woff2": "font/woff2",
 }
 
 
