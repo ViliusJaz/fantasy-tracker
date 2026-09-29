@@ -710,6 +710,8 @@ themeBtn.addEventListener("click", () => {
 // A native <select> opens the system's grey menu, which cannot be styled. Each
 // select.select gets a themed button + listbox; the select stays (hidden) and keeps
 // its value and change listeners, so the page code does not change.
+let closeOpenMenu = null;  // the open dropdown's close(), so a page change can close it
+
 function enhanceSelect(sel) {
   sel.dataset.dd = "1";
   const wrap = document.createElement("div");
@@ -743,6 +745,7 @@ function enhanceSelect(sel) {
     if (menu.hidden) return;
     menu.hidden = true;
     menu.remove();
+    closeOpenMenu = null;
     btn.setAttribute("aria-expanded", "false");
     document.removeEventListener("pointerdown", outside, true);
     document.removeEventListener("scroll", onScroll, true);
@@ -770,6 +773,8 @@ function enhanceSelect(sel) {
     document.addEventListener("pointerdown", outside, true);
     document.addEventListener("scroll", onScroll, true);
     window.addEventListener("resize", onScroll);
+    closeOpenMenu?.();
+    closeOpenMenu = () => close(false);
   };
   const choose = (i) => {
     close(true);
@@ -898,6 +903,17 @@ function statCells(line, mode) {
   return cols.map((c) => `<td class="num stat">${val(c.key)}</td>`).join("");
 }
 
+// When the static files were built (api/meta.json); checked at most every 30 seconds.
+let dataTimeChecked = 0;
+async function loadDataTime() {
+  if (Date.now() - dataTimeChecked < 30_000) return;
+  dataTimeChecked = Date.now();
+  try {
+    const meta = await (await fetch("api/meta.json", { cache: "no-cache" })).json();
+    dataTime = meta.generatedAt || dataTime;
+  } catch { /* the stamp falls back to the time of loading */ }
+}
+
 // "/api/league/X/team/Y?round=3" -> "api/league/X/team/Y.r3.lt.json" (the names export.py writes).
 function staticUrl(path) {
   const [p, qs] = path.split("?");
@@ -907,10 +923,9 @@ function staticUrl(path) {
 
 async function api(path, opts = {}) {
   if (STATIC) {
-    const res = await fetch(staticUrl(path), { cache: "no-cache" });
+    const [res] = await Promise.all([fetch(staticUrl(path), { cache: "no-cache" }), loadDataTime()]);
     if (!res.ok) throw new Error(res.status === 404 ? t("staticMissing") : t("error", { s: res.status }));
     const data = await res.json();
-    if (data.generatedAt) dataTime = data.generatedAt;
     if (data.leagueAvg) LEAGUE_AVG = data.leagueAvg;
     return data;
   }
@@ -2104,7 +2119,8 @@ async function renderGames(fid, params, token, silent) {
   setView(`
     ${leagueHeader(league, "games")}
     <div class="toolbar">
-      <div class="toolbar-left round-nav inline">${roundArrows(`#/l/${fid}/games`, data.round, league.firstRound, league.currentRound)}
+      <div class="toolbar-left round-nav inline">${roundArrows(`#/l/${fid}/games`, data.round, league.firstRound, (league.totalRounds || league.currentRound + 1) - 1,
+        (x) => `${roundLabel(x)}${x === league.currentRound ? ` ${t("current")}` : ""}`)}
         ${data.state === "live" ? `<span class="badge live">${t("live")}</span>` : ""}</div>
       <div class="toolbar-left">
         <button class="btn" type="button" id="games-open">${t("expandAll")}</button>
@@ -2547,6 +2563,7 @@ app.addEventListener("click", (e) => {
 
 async function route(silent = false) {
   const token = ++renderToken;
+  closeOpenMenu?.();
   clearTimeout(refreshTimer);
   animateView = !silent;
   if (!silent) window.scrollTo(0, 0);

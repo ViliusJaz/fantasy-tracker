@@ -461,8 +461,14 @@ CLAUSES = [
     (r"^dnp in round\s*(\d+)(?: and (?:the )?domestic (league|cup))?$", _dnp),
     (r"^dnp in (?:the )?(?:round\s*(\d+) and )?(?:the )?domestic (league|cup)$", _dnp),
     (r"^(?:he )?(?:also )?played in (?:the )?(.+)$", _played),
-    (r"^did ?n[o']?t travel with the team(?: (?:in|for|to) round\s*(\d+))?$",
-     lambda m, _: "nekeliavo su komanda" + (f" į {m.group(1)} turo rungtynes" if m.group(1) else "")),
+    (r"^(but )?did ?n[o']?t travel with (?:the )?team(?: (?:in|for|to) round\s*(\d+))?(?: to ([^()]+))?$",
+     lambda m, o: ("bet " if m.group(1) else "") + "nekeliavo su komanda"
+     + (f" į {_city(o[m.start(3):m.end(3)])}" if m.group(3) else "")
+     + (f" ({m.group(2)} turas)" if m.group(2) and m.group(3) else f" į {m.group(2)} turo rungtynes" if m.group(2) else "")),
+    (r"^(?:has been|was|is now|got) registered(?: for round\s*(\d+))?(?: and (.+))?$",
+     lambda m, o: (lambda rest: None if m.group(2) and not rest else
+                   "užregistruotas" + (f" {m.group(1)} turui" if m.group(1) else "") + (f" ir {_lower_first(rest)}" if rest else ""))
+     (clause(o[m.start(2):m.end(2)]) if m.group(2) else None)),
     (r"^(?:traveled|travelled) with (?:the )?team(?: to ([^()]+))?$",
      lambda m, o: "išvyko su komanda" + (f" į {_city(o[m.start(1):m.end(1)])}" if m.group(1) else "")),
     (r"^(?:travels|travelling|traveling|is travelling|is traveling) with (?:the )?team(?: to ([^()]+))?$",
@@ -535,6 +541,11 @@ def clause(text):
     k = t.lower()
     if not k:
         return ""
+    # "... after (a) DNP in Round 1 (and domestic league)": translate the head, add the DNP note
+    m = re.match(r"^(.*\S)\s+after (?:a )?dnp in round\s*(\d+)( and (?:the )?domestic league)?$", k)
+    if m:
+        head = clause(t[:m.end(1)])
+        return f"{head} ({m.group(2)} ture{' ir šalies lygoje' if m.group(3) else ''} nežaidė)" if head else None
     if k in WHOLE:
         return WHOLE[k]
     for pattern, build in CLAUSES:

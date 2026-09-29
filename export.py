@@ -63,7 +63,8 @@ def job(rel, build):
         return
     path = OUT / "api" / rel
     path.parent.mkdir(parents=True, exist_ok=True)
-    payload = {**payload, "generatedAt": GENERATED}
+    # No timestamp inside: a file whose data did not change stays byte-identical, so the
+    # upload only carries what changed. The run time goes to api/meta.json.
     path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     with _write_lock:
         written += 1
@@ -147,7 +148,7 @@ def export_league(entry):
             jobs.append((file_name(f"{base}/standings", r, lang), lambda r=r: s.standings_payload(fid, r)))
         for r in range(first, (meta["totalRounds"] if h2h else latest + 1)):
             jobs.append((file_name(f"{base}/rounds", r, lang), lambda r=r: s.rounds_payload(fid, r)))
-        for r in range(first, cur + 1):
+        for r in range(first, meta["totalRounds"]):  # the whole schedule, not just played rounds
             jobs.append((file_name(f"{base}/games", r, lang), lambda r=r: s.games_payload(fid, r)))
         for r in finished:
             jobs.append((file_name(f"{base}/records", r, lang), lambda r=r: s.records_payload(fid, r)))
@@ -192,6 +193,7 @@ def main():
     for lang in LANGS:
         s.LANG.set(lang)
         job(file_name("leagues", None, lang), s.leagues_payload)
+    (OUT / "api" / "meta.json").write_text(json.dumps({"generatedAt": GENERATED}), encoding="utf-8")
     print(f"Done in {time.time() - started:.0f}s: {written} files, {len(failures)} failed")
     if not written or len(failures) > 0.2 * (written + len(failures)):
         sys.exit("Too many pages failed; keeping the previous site.")

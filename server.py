@@ -1371,9 +1371,11 @@ def league_averages(meta):
 
 
 def games_payload(fid, rnd=None):
-    """Every real game of a round with each player's box score and fantasy owner."""
+    """Every real game of a round with each player's box score and fantasy owner; future
+    rounds list their scheduled games with previews."""
     meta = league_meta(fid)
-    rnd = meta["latestRound"] if rnd is None else max(meta["firstRound"], min(rnd, meta["currentRound"]))
+    last = (meta.get("totalRounds") or meta["currentRound"] + 1) - 1
+    rnd = meta["latestRound"] if rnd is None else max(meta["firstRound"], min(rnd, last))
     pmap = players(meta, rnd, rnd)
     own = owners(meta, rnd)
     clubs, games = {}, {}
@@ -1527,10 +1529,13 @@ def preview_context(meta, rnd, pmap, own):
         if p["club"]:
             roster.setdefault(p["club"]["abbr"], []).append(p)
             clubs[p["club"]["abbr"]] = p["club"]
-    results = club_results(meta, rnd)
+    # only rounds that can have results (future rounds have none yet)
+    results = club_results(meta, min(rnd, meta["currentRound"] + 1))
     allowed = [g["against"] for games in results.values() for g in games]
     teams = team_advanced(meta)
     return {"roster": roster, "results": results, "own": own, "report": report,
+            # a game two or more rounds away: today's injury list says little about it
+            "farAhead": rnd - meta["currentRound"] >= 2,
             "leagueAllowed": sum(allowed) / len(allowed) if allowed else None,
             "teamStats": {abbr: teams[tid] for abbr, tid in club_team_ids(clubs, teams).items()},
             "teamCount": len(teams)}
@@ -1607,7 +1612,7 @@ def preview_notes(g, sides, ctx):
     for side, other in (("home", "away"), ("away", "home")):
         abbr, opp = g[side]["abbr"], g[other]["abbr"]
         info = sides[side]
-        for v in info["injuries"]:
+        for v in ([] if ctx["farAhead"] else info["injuries"]):
             status, avg = v["injury"]["status"], v["avgPts"] or 0
             if status == "out" and avg >= 8:
                 notes.append(L(f"{abbr} žais be {v['name']} (vid. {num(avg)} FP).",
