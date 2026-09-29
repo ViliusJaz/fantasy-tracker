@@ -1501,7 +1501,26 @@
       ],
       "name": "Nigel Williams-Goss",
       "club": "Zalgiris Kaunas"
+    },
+    "17113": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "status": "expected",
+              "return": "Round 2",
+              "comment": "New signing, travels with team to Paris"
+            }
+          ]
+        }
+      ],
+      "name": "Bandja Sy",
+      "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-09-29T05:34:02"
+  "updatedAt": "2026-09-29T08:41:04"
 }
