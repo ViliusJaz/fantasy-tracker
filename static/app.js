@@ -112,6 +112,14 @@ const I18N = {
     ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
     tabDraft: "Draftas",
+    splitLabel: "Rodyti statistiką",
+    splitAll: "Viso",
+    splitHome: "Namuose",
+    splitAway: "Išvykoje",
+    splitNoHome: "Namuose šį sezoną dar nežaidė.",
+    splitNoAway: "Išvykoje šį sezoną dar nežaidė.",
+    lastTip: "Vidutiniai FP per paskutinius {n} sužaistus turus",
+    draftAwardsTitle: "Draftas ir perėjimai",
     rebSplitHead: "G/P",
     rebSplitTip: "Mažesni skaičiai: gynyboje / puolime",
     dayShort: "{n} diena",
@@ -319,7 +327,7 @@ const I18N = {
     error: "Klaida {s}",
     staticMissing: "Šių duomenų dar nėra. Svetainė atsinaujina kas 15 minučių.",
     pos: { guard: "Gynėjas", forward: "Puolėjas", center: "Centras" },
-    tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", blk: "Blokai", eff: "NB" },
+    tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", blk: "Blokai", eff: "NB", last3: "Pask. 3 FP", last5: "Pask. 5 FP" },
     resShort: { W: "P", L: "Pr", T: "L" },
   },
   en: {
@@ -414,6 +422,14 @@ const I18N = {
     ctxNote: "Compared with players averaging at least {m} minutes.",
     lowerBetter: "For this metric a lower value is better.",
     tabDraft: "Draft",
+    splitLabel: "Show stats for",
+    splitAll: "Total",
+    splitHome: "Home",
+    splitAway: "Away",
+    splitNoHome: "Has not played at home yet this season.",
+    splitNoAway: "Has not played away yet this season.",
+    lastTip: "Average FP over the last {n} rounds played",
+    draftAwardsTitle: "Draft and moves",
     rebSplitHead: "D/O",
     rebSplitTip: "Small numbers: defensive / offensive",
     dayShort: "Day {n}",
@@ -621,7 +637,7 @@ const I18N = {
     error: "Error {s}",
     staticMissing: "This data is not available yet. The site refreshes every 15 minutes.",
     pos: { guard: "Guard", forward: "Forward", center: "Center" },
-    tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", blk: "BLK", eff: "PIR" },
+    tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", blk: "BLK", eff: "PIR", last3: "Last 3 FP", last5: "Last 5 FP" },
     resShort: { W: "W", L: "L", T: "T" },
   },
 };
@@ -1480,6 +1496,7 @@ async function renderRecords(fid, params, token, silent) {
     ${awardCards(data.roundAwards)}
     <h2 class="section-title">${t("oscars")} <span class="dim small">${t("afterDone", { n: done })}</span></h2>
     ${awardCards(data.oscars)}
+    ${data.draftAwards?.length ? `<h2 class="section-title">${t("draftAwardsTitle")}</h2>${awardCards(data.draftAwards)}` : ""}
     <h2 class="section-title">${t("seasonRecords")} <span class="dim small">${t("upTo", { n: done })}</span></h2>
     ${awardCards(data.records)}
     <h2 class="section-title">${t("formTitle")}</h2>
@@ -2418,6 +2435,64 @@ function advContext(x, minutes) {
     <div class="adv-ctx-note">${c.better === "lower" ? `${t("lowerBetter")} ` : ""}${t("ctxNote", { m: minutes })}</div>`;
 }
 
+// ---- player card: whole season / home / away
+
+let currentPlayer = null;  // data of the open player card (the split buttons re-render from it)
+
+// Rounds the player played, newest first; home / away keeps rounds where every game was at home / away.
+function playedRounds(data, which) {
+  return data.gameLog.filter((g) => g.status === "played" && g.line
+    && (which === "all" || (g.games.length && g.games.every((x) => x.home === (which === "home")))));
+}
+
+function splitStats(data, which) {
+  const rows = playedRounds(data, which);
+  const n = rows.length;
+  const sum = (f) => rows.reduce((acc, g) => acc + (f(g) ?? 0), 0);
+  const mean = (k) => (n ? sum((g) => g.line[k]) / n : null);
+  const fpAvg = (list) => (list.length ? list.reduce((acc, g) => acc + (g.fp ?? 0), 0) / list.length : null);
+  const pctOf = (made, att) => ({ made, att, pct: att ? Math.round((1000 * made) / att) / 10 : null });
+  const shot = (m, a) => pctOf(sum((g) => g.line[m]), sum((g) => g.line[a]));
+  const two = shot("p2m", "p2a"), three = shot("p3m", "p3a"), ft = shot("ftm", "fta");
+  return {
+    games: n, fp: fpAvg(rows), last3: fpAvg(rows.slice(0, 3)), last5: fpAvg(rows.slice(0, 5)),
+    line: Object.fromEntries(["min", "pts", "reb", "dreb", "oreb", "ast", "stl", "blk", "eff"].map((k) => [k, mean(k)])),
+    shooting: { fg: pctOf(two.made + three.made, two.att + three.att), two, three, ft, games: n },
+  };
+}
+
+function splitButtons(data) {
+  const opts = [["all", t("splitAll")], ["home", t("splitHome")], ["away", t("splitAway")]];
+  return `<div class="seg" role="group" aria-label="${esc(t("splitLabel"))}">${opts.map(([w, label]) =>
+    `<button type="button" class="seg-btn${w === "all" ? " on" : ""}" data-split="${w}" aria-pressed="${w === "all"}">${label}${
+      w === "all" ? "" : ` <span class="seg-n">${playedRounds(data, w).length}</span>`}</button>`).join("")}</div>`;
+}
+
+function splitBody(data, which) {
+  const p = data.player, tl = t("tiles");
+  const st = splitStats(data, which);
+  // Whole season: BasketNews' own averages (the same as in the lists); home / away: from the game log.
+  const all = which === "all";
+  const line = all ? p.season || {} : st.line;
+  const tiles = [
+    [tl.avgFp, fmt1(all ? p.avgPts : st.fp), "fp"],
+    [tl.last3, fmt1(st.last3), null, t("lastTip", { n: 3 })],
+    [tl.last5, fmt1(st.last5), null, t("lastTip", { n: 5 })],
+    [tl.gp, all ? p.gamesPlayed : st.games],
+    [tl.min, fmt1(line.min), "min"], [tl.pts, fmt1(line.pts), "pts"],
+    [`${tl.reb} <span class="split-head">${t("rebSplitHead")}</span>`,
+      line.reb == null ? "-" : `${fmt1(line.reb)}<small class="split">${fmt1(line.dreb)}/${fmt1(line.oreb)}</small>`, "reb"],
+    [tl.ast, fmt1(line.ast), "ast"], [tl.stl, fmt1(line.stl), "stl"], [tl.blk, fmt1(line.blk), "blk"], [tl.eff, fmt1(line.eff), "eff"],
+  ];
+  const html = tiles.map(([l, v, key, own]) => {
+    const name = l.replace(/<[^>]+>/g, "").trim();
+    const tip = own ? `\n${own}` : key ? (key === "reb" ? `\n${t("rebSplitTip")}` : "") + avgTip(key) : "";
+    return `<div class="tile"${tip ? ` data-tip="${esc(name + tip)}"` : ""}><div class="label">${l}</div><div class="value">${v}</div></div>`;
+  }).join("");
+  const none = !all && !st.games ? `<p class="note">${t(which === "home" ? "splitNoHome" : "splitNoAway")}</p>` : "";
+  return `${none}<div class="tiles compact">${html}</div>${shootingSection(all ? data.shooting : st.shooting)}`;
+}
+
 // Season shooting: made / attempted totals summed from the round box scores.
 function shootingSection(sh) {
   if (!sh || !sh.games) return "";
@@ -2467,13 +2542,7 @@ function playerView(fid, data) {
       </div>`
     : `<div class="status-box ok"><strong>${t("healthy")}</strong><span class="dim">${t("notOnReport")}</span></div>`;
 
-  const season = p.season || {};
-  const tl = t("tiles");
-  const tiles = [
-    [tl.avgFp, fmt1(p.avgPts), "fp"], [tl.gp, p.gamesPlayed], [tl.min, fmt1(season.min), "min"], [tl.pts, fmt1(season.pts), "pts"],
-    [`${tl.reb} <span class="split-head">${t("rebSplitHead")}</span>`,
-      season.reb == null ? "-" : `${fmt1(season.reb)}<small class="split">${fmt1(season.dreb)}/${fmt1(season.oreb)}</small>`, "reb"], [tl.ast, fmt1(season.ast), "ast"], [tl.stl, fmt1(season.stl), "stl"], [tl.blk, fmt1(season.blk), "blk"], [tl.eff, fmt1(season.eff), "eff"],
-  ];
+  currentPlayer = data;
 
   const episodes = injury.episodes.map((e) => {
     const reason = e.reason || t("noReason");
@@ -2514,12 +2583,8 @@ function playerView(fid, data) {
       <button class="close" type="button" data-close aria-label="${t("close")}">×</button>
     </div>
     ${status}
-    <div class="tiles compact">${tiles.map(([l, v, key]) => {
-      const name = l.replace(/<[^>]+>/g, "").trim();
-      const tip = key ? (key === "reb" ? `\n${t("rebSplitTip")}` : "") + avgTip(key) : "";
-      return `<div class="tile"${tip ? ` data-tip="${esc(name + tip)}"` : ""}><div class="label">${l}</div><div class="value">${v}</div></div>`;
-    }).join("")}</div>
-    ${shootingSection(data.shooting)}
+    ${splitButtons(data)}
+    <div id="pv-split">${splitBody(data, "all")}</div>
     ${advancedSection(data.advanced)}
     <h3 class="section-title">${t("injuryHistory")}</h3>
     <p class="summary">${esc(injury.summary)}</p>
@@ -2533,6 +2598,15 @@ function playerView(fid, data) {
 }
 
 modal.addEventListener("click", (e) => {
+  const split = e.target.closest("[data-split]");
+  if (split && currentPlayer) {
+    document.getElementById("pv-split").innerHTML = splitBody(currentPlayer, split.dataset.split);
+    modal.querySelectorAll("[data-split]").forEach((b) => {
+      b.classList.toggle("on", b === split);
+      b.setAttribute("aria-pressed", String(b === split));
+    });
+    return;
+  }
   const info = e.target.closest("[data-info]");
   if (info) {
     const desc = info.closest(".adv-row").querySelector(".adv-desc");

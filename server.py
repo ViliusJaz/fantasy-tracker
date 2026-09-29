@@ -2117,6 +2117,23 @@ def draft_payload(fid):
     return {"league": meta, "picks": rows, "teams": list(teams.values())}
 
 
+def raw_transfers(meta):
+    """[(round, transfer)] as BasketNews lists them, oldest round first."""
+    cur = meta["currentRound"]
+
+    def fetch(r):
+        ttl = LIVE_TTL if r >= cur else SETTLED_TTL
+        return r, gql(Q_TRANSFERS, {"fantasyLeagueId": meta["id"], "fantasyRound": r}, ttl=ttl)["draftTransfersFromClient"] or []
+
+    return pool_map(fetch, list(range(meta["firstRound"], cur + 1)))
+
+
+def moved_players(item):
+    """Player ids that actually changed hands on one side of a transfer."""
+    listed = (item or {}).get("players") or []
+    return [x["player"]["id"] for x in ([x for x in listed if x.get("traded")] or listed) if x.get("player")]
+
+
 def _transfer_side(item, teams, pmap):
     team = (item or {}).get("fantasyTeam") or {}
     listed = (item or {}).get("players") or []
@@ -2135,13 +2152,7 @@ def transfers_payload(fid):
     public bid counts for the coming round."""
     meta = league_meta(fid)
     cur = meta["currentRound"]
-    rounds = list(range(meta["firstRound"], cur + 1))
-
-    def fetch(r):
-        ttl = LIVE_TTL if r >= cur else SETTLED_TTL
-        return r, gql(Q_TRANSFERS, {"fantasyLeagueId": fid, "fantasyRound": r}, ttl=ttl)["draftTransfersFromClient"] or []
-
-    raw = pool_map(fetch, rounds)
+    raw = raw_transfers(meta)
     try:
         bids = gql(Q_BID_SUMMARY, {"fantasyLeagueId": fid, "fantasyRound": cur})["draftFreeAgentBidsSummaryFromClient"] or []
     except UpstreamError:
@@ -2404,6 +2415,129 @@ def best_transfer(with_lineups, team_names):
                  player_id=pid, info=info)
 
 
+def draft_awards(meta, finished, team_names):
+    """Awards about the draft and the moves since: busts, steals, drops and roster value."""
+    rec = gql(Q_DRAFT, {"id": meta["id"]}, ttl=SETTLED_TTL)["fantasyLeagueRecordFromClient"] or {}
+    picks = [p for p in sorted(((rec.get("draft") or {}).get("picks") or []), key=lambda p: p["id"]) if p.get("player")]
+    if not picks or not finished:
+        return []
+    per_round = len(team_names) or 8
+    drafted = {p["player"]["id"]: (i + 1, p["fantasyTeamId"]) for i, p in enumerate(picks)}
+    pmap = players_by_ids(meta, list(drafted), meta["latestRound"], meta["currentRound"])
+    avg = lambda pid: (pmap.get(pid) or {}).get("avgPts") or 0  # noqa: E731
+    games = lambda pid: (pmap.get(pid) or {}).get("gamesPlayed") or 0  # noqa: E731
+    name = lambda pid: (pmap.get(pid) or {}).get("name") or "?"  # noqa: E731
+    team = lambda tid: team_names.get(tid, "?")  # noqa: E731
+    pick_word = lambda n: L(f"{n}-as pasirinkimas", f"pick #{n}")  # noqa: E731
+    own = owners(meta, meta["currentRound"])
+    holder = lambda pid: ((own.get(pid) or {}).get("team") or {}).get("title") or L("laisvasis agentas", "free agent")  # noqa: E731
+    cards = []
+
+    # Biggest bust: early pick furthest below the average of its own draft round.
+    early = picks[:3 * per_round]
+    round_avg = {}
+    for i, p in enumerate(early):
+        round_avg.setdefault(i // per_round, []).append(avg(p["player"]["id"]))
+    busts = [(sum(round_avg[i // per_round]) / len(round_avg[i // per_round]) - avg(p["player"]["id"]), i, p)
+             for i, p in enumerate(early)]
+    gap, i, p = max(busts, key=lambda x: x[0])
+    pid = p["player"]["id"]
+    expected = gap + avg(pid)
+    cards.append(award(
+        L("Didžiausias nusivylimas", "Biggest bust"), name(pid), f"{num(avg(pid))} FP",
+        f"{pick_word(i + 1)} ({team(p['fantasyTeamId'])}) · {L('rato vidurkis', 'round average')} {num(round(expected, 1))}",
+        "📉", player_id=pid,
+        info=L("Iš pirmųjų trijų drafto ratų: žaidėjas, kurio vidutiniai FP labiausiai atsilieka nuo to paties "
+               "drafto rato pasirinkimų vidurkio. Dar nežaidę skaičiuojami kaip 0.",
+               "From the first three draft rounds: the player whose average FP is furthest below the "
+               "average of the picks in the same draft round. Players who have not played count as 0.")))
+
+    # Best undrafted player (a regular: at least half of the finished rounds played).
+    min_games = max(1, (len(finished) + 1) // 2)
+    pool = players(meta, meta["latestRound"], meta["currentRound"])
+    undrafted = [v for v in pool.values() if v["id"] not in drafted and (v["gamesPlayed"] or 0) >= min_games and v["avgPts"]]
+    info = L(f"Žaidėjas, kurio drafte niekas nepasirinko. Didžiausi vidutiniai FP tarp sužaidusių bent {min_games} rungt.",
+             f"A player nobody picked in the draft. Highest average FP among players with at least {min_games} games.")
+    if undrafted:
+        best = max(undrafted, key=lambda v: (v["avgPts"], v["gamesPlayed"]))
+        cards.append(award(L("Geriausias nedraftuotas", "Best undrafted player"), best["name"], f"{num(best['avgPts'])} FP",
+                           f"{L('dabar', 'now')}: {holder(best['id'])}", "💎", player_id=best["id"], info=info))
+    else:
+        cards.append(no_award(L("Geriausias nedraftuotas", "Best undrafted player"), L("dar nėra", "none yet"), "💎", info=info))
+
+    # Drops: players a team let go in a free-agent move.
+    drops = []
+    for rnd, ts in raw_transfers(meta):
+        for t in ts:
+            tid = ((t.get("offer") or {}).get("fantasyTeam") or {}).get("id")
+            if t.get("type") != "team" and tid:
+                drops += [(rnd, t.get("updatedAt") or "", tid, pid) for pid in moved_players(t.get("offer"))]
+    none_yet = L("atsiras po pirmųjų išmetimų", "appears after the first drops")
+    before = lambda r: L(f"prieš {r + 1} turą", f"before round {r + 1}")  # noqa: E731
+    drop_titles = (L("Pirmas išmestas", "Earliest player dropped"), L("Geriausias išmestas", "Best player who was dropped"),
+                   L("Labiausiai gailimas išmetimas", "Most regrettable drop"))
+    drop_info = (
+        L("Pirmasis žaidėjas, kurį kuri nors komanda paleido į laisvuosius agentus.",
+          "The first player any team released to free agency."),
+        L("Iš visų išmestų žaidėjų: didžiausi šio sezono vidutiniai FP.",
+          "Of all dropped players: the highest average FP this season."),
+        L("Kiek FP žaidėjas surinko baigtuose turuose po to, kai komanda jį išmetė. Laimi daugiausia surinkęs.",
+          "FP the player scored in finished rounds after the team let the player go. The most wins."))
+    if not drops:
+        cards += [no_award(title, none_yet, icon, info=info) for title, icon, info in zip(drop_titles, ("🚪", "🗑️", "😬"), drop_info)]
+    else:
+        rnd, _, tid, pid = min(drops)
+        extra = f" · {L('drafte', 'drafted')} {pick_word(drafted[pid][0])}" if pid in drafted else ""
+        cards.append(award(drop_titles[0], name(pid), rnd_word(rnd), f"{L('išmetė', 'dropped by')} {team(tid)} {before(rnd)}{extra}",
+                           "🚪", player_id=pid, info=drop_info[0]))
+        rnd, _, tid, pid = max(drops, key=lambda d: avg(d[3]))
+        cards.append(award(drop_titles[1], name(pid), f"{num(avg(pid))} FP",
+                           f"{L('išmetė', 'dropped by')} {team(tid)} {before(rnd)} · {L('dabar', 'now')}: {holder(pid)}",
+                           "🗑️", player_id=pid, info=drop_info[1]))
+        after = {}
+        for r in finished:
+            round_pts = {v["id"]: v.get("roundPts") or 0 for v in players(meta, r, r).values()}
+            for d in drops:
+                if r >= d[0]:
+                    after[d] = after.get(d, 0) + round_pts.get(d[3], 0)
+        rnd, _, tid, pid = max(drops, key=lambda d: after.get(d, 0))
+        cards.append(award(drop_titles[2], team(tid), f"{num(after.get((rnd, _, tid, pid), 0))} FP",
+                           f"{L('išmetė', 'dropped')} {name(pid)} {before(rnd)}", "😬", team_id=tid, info=drop_info[2]))
+
+    # Best draft-day roster: season FP of everyone a team drafted, wherever they play now.
+    by_team = {}
+    for pid, (_, tid) in drafted.items():
+        by_team[tid] = by_team.get(tid, 0) + avg(pid) * games(pid)
+    tid, total = max(by_team.items(), key=lambda kv: kv[1])
+    cards.append(award(L("Geriausia drafto sudėtis", "Best draft-day roster"), team(tid), f"{num(round(total, 2))} FP",
+                       L("drafte pasirinktų žaidėjų taškai šį sezoną", "season FP of the players drafted"), "📋",
+                       team_id=tid,
+                       info=L("Visų komandos drafte pasirinktų žaidėjų šio sezono fantasy taškų suma, nesvarbu, "
+                              "ar jie vis dar komandoje.",
+                              "Season fantasy points of every player the team drafted, whether or not they are "
+                              "still on the team.")))
+
+    # Best current roster versus the draft-day one (sum of average FP).
+    current = {t: sum(avg(p["id"]) for p in lu["players"]) for t, lu in lineups(meta).items()}
+    original = {t: sum(avg(pid) for pid, (_, owner) in drafted.items() if owner == t) for t in current}
+    diff = {t: current[t] - original.get(t, 0) for t in current}
+    info = L("Dabartinės sudėties žaidėjų vidutinių FP suma minus drafto sudėties suma: kiek komandai padėjo "
+             "perėjimai ir mainai.",
+             "Sum of average FP of the current roster minus that of the draft-day roster: how much the "
+             "moves and trades helped.")
+    if any(abs(v) > 0.01 for v in diff.values()):
+        tid = max(diff, key=diff.get)
+        cards.append(award(L("Labiausiai pagerėjusi sudėtis", "Best current vs original roster"), team(tid),
+                           f"{'+' if diff[tid] >= 0 else ''}{num(round(diff[tid], 1))} FP",
+                           L(f"dabar {num(round(current[tid], 1))}, drafte {num(round(original[tid], 1))}",
+                             f"now {num(round(current[tid], 1))}, at the draft {num(round(original[tid], 1))}"),
+                           "📈", team_id=tid, info=info))
+    else:
+        cards.append(no_award(L("Labiausiai pagerėjusi sudėtis", "Best current vs original roster"),
+                              L("atsiras po pirmųjų perėjimų", "appears after the first transfers"), "📈", info=info))
+    return cards
+
+
 def season_records(meta, breakdowns, team_names, streaks, totals):
     cards = []
     rows = [(bd["scores"][t], t, bd["round"]) for bd in breakdowns for t in bd["scores"]]
@@ -2513,6 +2647,7 @@ def records_payload(fid, rnd=None):
         "round": rnd,
         "roundAwards": round_awards(meta, selected),
         "oscars": season_oscars(meta, breakdowns, team_names),
+        "draftAwards": draft_awards(meta, finished, team_names),
         "records": season_records(meta, breakdowns, team_names, streaks, totals),
         "form": form,
         "missingLineups": [bd["round"] for bd in breakdowns if not bd["lineups"]],
