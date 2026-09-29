@@ -816,7 +816,6 @@ table.box { min-width: 1100px; }
 .pv-num b { font-family: var(--font-display); font-size: 17px; }
 .pv-num .dim { font-size: 12px; white-space: nowrap; }
 .free-tag { color: var(--win); }
-.pv-more { padding: 4px 0; }
 .pv-notes { margin-top: 12px; padding: 10px 16px; border-radius: var(--r-md); background: var(--accent-soft); border: 1px solid var(--accent-line); }
 .pv-notes .pv-h { margin-top: 0; color: var(--accent); }
 .pv-notes ul { margin: 0; padding-left: 18px; }

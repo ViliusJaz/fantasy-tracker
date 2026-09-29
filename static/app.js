@@ -69,7 +69,6 @@ const I18N = {
     pvInjuries: "Traumos",
     pvNoInjuries: "Traumų sąraše nėra.",
     pvNoStats: "Šį sezoną dar nežaidė.",
-    pvMore: "ir dar {n}",
     pvNotes: "Į ką atkreipti dėmesį",
     pvMine: "Tavo žaidėjai šiose rungtynėse: {p}.",
     pvTeamStats: "Komandų statistika (vieta tarp {n})",
@@ -381,7 +380,6 @@ const I18N = {
     pvInjuries: "Injuries",
     pvNoInjuries: "Nobody on the injury report.",
     pvNoStats: "Has not played yet this season.",
-    pvMore: "and {n} more",
     pvNotes: "Things to watch",
     pvMine: "Your players in this game: {p}.",
     pvTeamStats: "Team stats (rank among {n})",
@@ -2063,9 +2061,7 @@ function previewSide(fid, side, pv, mine) {
       <span class="sub">${POS[v.position] || ""}${v.owner ? ` · ${esc(v.owner.title)}` : ` · <span class="free-tag">${t("draftReleased")}</span>`}</span></span>
       ${extra}</li>`;
   const key = pv.key.slice(0, 3).map((v) => player(v, `<span class="pv-num"><b>${fmt1(v.avgPts)}</b><span class="dim">${t("pvLine", { p: fmt1(v.line.pts), r: fmt1(v.line.reb), a: fmt1(v.line.ast) })}</span></span>`)).join("");
-  const shown = pv.injuries.slice(0, 3);
-  const inj = shown.map((v) => player(v, `<span class="pv-num">${injuryBadge(v.injury)}</span>`)).join("");
-  const more = pv.injuries.length > shown.length ? `<li class="dim small pv-more">${t("pvMore", { n: pv.injuries.length - shown.length })}</li>` : "";
+  const inj = pv.injuries.map((v) => player(v, `<span class="pv-num">${injuryBadge(v.injury)}</span>`)).join("");
   return `<div class="pv-side">
     <div class="pv-team">${clubMini(side, "md")}<strong>${esc(side.name || side.abbr)}</strong></div>
     <div class="pv-stats">
@@ -2076,7 +2072,7 @@ function previewSide(fid, side, pv, mine) {
     <h5 class="pv-h">${t("pvKey")}</h5>
     <ul class="pv-list">${key || `<li class="dim small">${t("pvNoStats")}</li>`}</ul>
     <h5 class="pv-h">${t("pvInjuries")}</h5>
-    <ul class="pv-list">${inj || `<li class="dim small">${t("pvNoInjuries")}</li>`}${more}</ul>
+    <ul class="pv-list">${inj || `<li class="dim small">${t("pvNoInjuries")}</li>`}</ul>
     ${pv.team?.strengths.length || pv.team?.weaknesses.length ? `<details class="pv-more-box">
       <summary>${t("pvStrWeak")}</summary>
       ${pv.team.strengths.length ? `<h5 class="pv-h">${t("pvStrengths")}</h5><ul class="pv-bullets good">${pv.team.strengths.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
