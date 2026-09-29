@@ -73,8 +73,8 @@ const I18N = {
     pvNotes: "Į ką atkreipti dėmesį",
     pvMine: "Tavo žaidėjai šiose rungtynėse: {p}.",
     pvTeamStats: "Komandų statistika (vieta tarp {n})",
-    pvStrengths: "Stiprybės (BasketNews)",
-    pvWeaknesses: "Silpnybės (BasketNews)",
+    pvStrengths: "Stiprybės",
+    pvWeaknesses: "Silpnybės",
     teamStat: {
       ortg: ["Puolimo reitingas", "Įmesti taškai per 100 atakų"],
       drtg: ["Gynybos reitingas", "Praleisti taškai per 100 atakų; mažiau yra geriau"],
@@ -375,8 +375,8 @@ const I18N = {
     pvNotes: "Things to watch",
     pvMine: "Your players in this game: {p}.",
     pvTeamStats: "Team stats (rank among {n})",
-    pvStrengths: "Strengths (BasketNews)",
-    pvWeaknesses: "Weaknesses (BasketNews)",
+    pvStrengths: "Strengths",
+    pvWeaknesses: "Weaknesses",
     teamStat: {
       ortg: ["Offensive rating", "Points scored per 100 possessions"],
       drtg: ["Defensive rating", "Points allowed per 100 possessions; lower is better"],
