@@ -143,6 +143,7 @@ query($locale: String!) {
   allLeagueRecordsFromClient(locale: $locale, game: "fantasy") {
     id currentFantasyRound roundStarted scoreRoundsAvailable totalRounds startingFantasyRound
     basketnewsApiLeagueId seasonYear injury_report_url
+    activeDraftTradeLock { locked nextChange }
     translation(locale: $locale) { name shortName injuryReportUrl }
     en: translation(locale: "en") { name injuryReportUrl }
   }
@@ -152,6 +153,7 @@ Q_FANTASY_LEAGUE = """
 query($id: String!) {
   fantasyLeagueRecordFromClient(id: $id) {
     id title type format leagueId pointCalcSystem fantasyTeamsCount draftDate
+    draftOrder pickOrder draftTradingMethod draftStartingCredits
     publicUser { firstName lastNameInitial }
   }
 }"""
@@ -295,6 +297,10 @@ def league_meta(fid):
         "latestRound": latest,
         "totalRounds": comp["totalRounds"],
         "injuryReportUrl": injury_url,
+        # Free-agent bids and trades are processed when this lock next changes (3 h before a round).
+        "transferLock": comp.get("activeDraftTradeLock"),
+        "draft": {"date": rec.get("draftDate"), "order": rec.get("draftOrder"), "pickOrder": rec.get("pickOrder"),
+                  "tradingMethod": rec.get("draftTradingMethod"), "startingCredits": rec.get("draftStartingCredits")},
         "bnLeagueId": comp.get("basketnewsApiLeagueId"),
         "seasonYear": comp.get("seasonYear"),
         "url": f"https://fantasy.basketnews.com/fantasy-leagues/{fid}/leaderboards",
@@ -1679,6 +1685,7 @@ def player_payload(fid, player_id):
     for row in game_log:
         if row["status"] == "dnp":
             row["reason"] = reasons.get(row["round"])
+    shooting = season_shooting([row["line"] for row in game_log if row["status"] == "played"])
 
     owner = None
     for team_id, lu in lineups(meta).items():
@@ -1699,6 +1706,147 @@ def player_payload(fid, player_id):
         },
         "gameLog": list(reversed(game_log)),
         "nextGames": info["games"],
+        "shooting": shooting,
+    }
+
+
+def season_shooting(lines):
+    """Made / attempted / % for the season, summed from the round box scores."""
+    def split(made, att):
+        m, a = sum(x[made] for x in lines), sum(x[att] for x in lines)
+        return {"made": m, "att": a, "pct": round(100 * m / a, 1) if a else None}
+    two, three, ft = split("p2m", "p2a"), split("p3m", "p3a"), split("ftm", "fta")
+    fg = {"made": two["made"] + three["made"], "att": two["att"] + three["att"]}
+    fg["pct"] = round(100 * fg["made"] / fg["att"], 1) if fg["att"] else None
+    return {"fg": fg, "two": two, "three": three, "ft": ft, "games": len(lines)}
+
+
+# --------------------------------------------------------------------------- draft & transfers
+
+Q_DRAFT = """
+query($id: String!) {
+  fantasyLeagueRecordFromClient(id: $id) {
+    draft { picks { id fantasyTeamId player { id } } }
+  }
+}"""
+
+_TRANSFER_SIDE = "fantasyTeam { id title } players { player { id firstName lastName } traded } credits"
+Q_TRANSFERS = """
+query($fantasyLeagueId: String!, $fantasyRound: Int!) {
+  draftTransfersFromClient(fantasyLeagueId: $fantasyLeagueId, fantasyRound: $fantasyRound) {
+    id type updatedAt
+    offer { %s }
+    request { %s }
+  }
+}""" % (_TRANSFER_SIDE, _TRANSFER_SIDE)
+
+# Public count / top bid per free agent for the coming round (who bid stays private).
+Q_BID_SUMMARY = """
+query($fantasyLeagueId: String!, $fantasyRound: Int!) {
+  draftFreeAgentBidsSummaryFromClient(fantasyLeagueId: $fantasyLeagueId, fantasyRound: $fantasyRound) {
+    player { id } highestBid totalBids
+  }
+}"""
+
+
+def player_brief(p, pid=None, name=None):
+    if not p:
+        return {"id": pid, "name": name or "?", "photo": None, "position": None, "club": None, "avgPts": None}
+    return {k: p.get(k) for k in ("id", "name", "photo", "position", "club", "avgPts", "gamesPlayed")}
+
+
+def draft_payload(fid):
+    """Every pick of the league's draft in order, with where the player is now."""
+    meta = league_meta(fid)
+    rec = gql(Q_DRAFT, {"id": fid}, ttl=SETTLED_TTL)["fantasyLeagueRecordFromClient"] or {}
+    picks = sorted(((rec.get("draft") or {}).get("picks") or []), key=lambda p: p["id"])
+    teams = {r["team"]["id"]: r["team"] for r in standings(meta)[1]}
+    per_round = len(teams) or 1
+    ids = [p["player"]["id"] for p in picks if p.get("player")]
+    pmap = players_by_ids(meta, ids, meta["latestRound"], meta["currentRound"])
+    own = owners(meta, meta["currentRound"])
+    rows = []
+    for i, pick in enumerate(picks):
+        pid = (pick.get("player") or {}).get("id")
+        rows.append({
+            "overall": i + 1, "round": i // per_round + 1, "pick": i % per_round + 1,
+            "team": teams.get(pick["fantasyTeamId"]) or {"id": pick["fantasyTeamId"], "title": "?"},
+            "player": player_brief(pmap.get(pid), pid),
+            "owner": (own.get(pid) or {}).get("team"),
+        })
+    return {"league": meta, "picks": rows, "teams": list(teams.values())}
+
+
+def _transfer_side(item, teams, pmap):
+    team = (item or {}).get("fantasyTeam") or {}
+    listed = (item or {}).get("players") or []
+    moved = [x for x in listed if x.get("traded")] or listed
+    return {
+        "team": (teams.get(team["id"]) or {"id": team["id"], "title": team.get("title")}) if team.get("id") else None,
+        "players": [player_brief(pmap.get(x["player"]["id"]), x["player"]["id"],
+                                 f"{x['player'].get('firstName', '')} {x['player'].get('lastName', '')}".strip())
+                    for x in moved if x.get("player")],
+        "credits": (item or {}).get("credits") or 0,
+    }
+
+
+def transfers_payload(fid):
+    """Processed free-agent signings and trades per round, credits left per team, and the
+    public bid counts for the coming round."""
+    meta = league_meta(fid)
+    cur = meta["currentRound"]
+    rounds = list(range(meta["firstRound"], cur + 1))
+
+    def fetch(r):
+        ttl = LIVE_TTL if r >= cur else SETTLED_TTL
+        return r, gql(Q_TRANSFERS, {"fantasyLeagueId": fid, "fantasyRound": r}, ttl=ttl)["draftTransfersFromClient"] or []
+
+    raw = pool_map(fetch, rounds)
+    try:
+        bids = gql(Q_BID_SUMMARY, {"fantasyLeagueId": fid, "fantasyRound": cur})["draftFreeAgentBidsSummaryFromClient"] or []
+    except UpstreamError:
+        bids = []
+
+    table = standings(meta)[1]
+    teams = {r["team"]["id"]: r["team"] for r in table}
+    ids = {x["player"]["id"] for _, ts in raw for t in ts for side in ("offer", "request")
+           for x in ((t.get(side) or {}).get("players") or []) if x.get("player")}
+    ids |= {b["player"]["id"] for b in bids if b.get("player")}
+    pmap = players_by_ids(meta, sorted(ids), meta["latestRound"], cur) if ids else {}
+
+    start = meta["draft"].get("startingCredits") or 0
+    summary = {tid: {"team": team, "credits": start, "signings": 0, "trades": 0, "spent": 0}
+               for tid, team in teams.items()}
+    moves = []
+    for rnd, ts in raw:
+        for t in ts:
+            offer, request = _transfer_side(t.get("offer"), teams, pmap), _transfer_side(t.get("request"), teams, pmap)
+            change = request["credits"] - offer["credits"]  # for the offering team; the other side gets -change
+            kind = "trade" if t.get("type") == "team" else "free_agent"
+            moves.append({"id": t["id"], "type": kind, "round": rnd, "at": t.get("updatedAt"),
+                          "offer": offer, "request": request, "creditChange": change})
+            for side, delta in ((offer, change), (request, -change)):
+                row = summary.get((side["team"] or {}).get("id"))
+                if not row:
+                    continue
+                row["credits"] += delta
+                row["spent"] += max(-delta, 0)
+                row["trades" if kind == "trade" else "signings"] += 1
+    moves.sort(key=lambda m: (m["round"], m["at"] or ""), reverse=True)
+
+    upcoming = [{"player": player_brief(pmap.get(b["player"]["id"]), b["player"]["id"]),
+                 "highestBid": b.get("highestBid"), "totalBids": b.get("totalBids") or 0}
+                for b in bids if b.get("player")]
+    upcoming.sort(key=lambda b: (-b["totalBids"], -(b["highestBid"] or 0)))
+    order = {r["team"]["id"]: r["position"] for r in table}
+    return {
+        "league": meta,
+        "moves": moves,
+        "teams": sorted(summary.values(), key=lambda r: order.get(r["team"]["id"], 99)),
+        "upcoming": upcoming,
+        "lock": meta.get("transferLock"),
+        "usesCredits": meta["draft"].get("tradingMethod") == "credits",
+        "startingCredits": start,
     }
 
 
@@ -2189,6 +2337,8 @@ class Handler(BaseHTTPRequestHandler):
             (rf"/api/league/{ID}/players", lambda m, q: players_payload(m[1], "all")),
             (rf"/api/league/{ID}/games", lambda m, q: games_payload(m[1], _round_param(q))),
             (rf"/api/league/{ID}/records", lambda m, q: records_payload(m[1], _round_param(q))),
+            (rf"/api/league/{ID}/draft", lambda m, q: draft_payload(m[1])),
+            (rf"/api/league/{ID}/transfers", lambda m, q: transfers_payload(m[1])),
             (rf"/api/league/{ID}/team/{ID}", lambda m, q: team_payload(m[1], m[2], _round_param(q))),
             (rf"/api/league/{ID}/player/{ID}", lambda m, q: player_payload(m[1], m[2])),
         ]

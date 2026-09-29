@@ -138,6 +138,8 @@ def export_league(entry):
             (file_name(f"{base}/records", None, lang), lambda: s.records_payload(fid)),
             (file_name(f"{base}/free-agents", None, lang), lambda: s.players_payload(fid, "free")),
             (file_name(f"{base}/players", None, lang), lambda: s.players_payload(fid, "all")),
+            (file_name(f"{base}/draft", None, lang), lambda: s.draft_payload(fid)),
+            (file_name(f"{base}/transfers", None, lang), lambda: s.transfers_payload(fid)),
         ]
         for r in range(first, latest + 1):
             jobs.append((file_name(f"{base}/standings", r, lang), lambda r=r: s.standings_payload(fid, r)))

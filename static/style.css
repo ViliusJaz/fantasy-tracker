@@ -39,7 +39,6 @@
   --mild-soft: rgba(226, 193, 78, 0.12);
   --accent-hover: #efb452;
   --accent-chip: #d9b36a;
-  --ball: #e7a83c;
 
   /* Surfaces that are not plain cards. */
   --topbar-bg: rgba(12, 15, 20, 0.86);
@@ -106,7 +105,6 @@
   --accent-muted: #9b7a45;
   --accent-hover: #874e06;
   --accent-chip: #7f4c08;
-  --ball: #e39a2d;
 
   --win: #1b7a4b;
   --loss: #b93836;
@@ -199,16 +197,8 @@ button, input, select { font: inherit; color: inherit; }
   display: flex; align-items: center; gap: 10px; white-space: nowrap;
   font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: 0.01em;
 }
-/* A plain ball: amber disc with two seam lines. */
-.brand-mark {
-  width: 20px; height: 20px; border-radius: 50%; flex: none;
-  background:
-    linear-gradient(90deg, transparent calc(50% - 0.75px), rgba(27, 20, 6, 0.7) calc(50% - 0.75px), rgba(27, 20, 6, 0.7) calc(50% + 0.75px), transparent calc(50% + 0.75px)),
-    linear-gradient(0deg, transparent calc(50% - 0.75px), rgba(27, 20, 6, 0.7) calc(50% - 0.75px), rgba(27, 20, 6, 0.7) calc(50% + 0.75px), transparent calc(50% + 0.75px)),
-    var(--ball);
-  box-shadow: inset 0 0 0 1.5px rgba(27, 20, 6, 0.55);
-  transition: transform var(--slow) var(--ease);
-}
+/* EuroLeague ball mark (from the competition's BasketNews banner). */
+.brand-mark { width: 22px; height: 22px; flex: none; transition: transform var(--slow) var(--ease); }
 .brand:hover .brand-mark { transform: rotate(90deg); }
 
 .league-switch { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; min-width: 0; flex: 1; padding: 2px; }
@@ -753,6 +743,60 @@ table.box { min-width: 1100px; }
 .adv-ctx { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 8px; color: var(--muted); }
 .adv-ctx b { color: var(--text); font-weight: 600; }
 .adv-ctx-note { margin-top: 4px; color: var(--faint); font-size: 11.5px; }
+
+/* ---------- season shooting (player modal) ---------- */
+.shooting { background: var(--surface-2); border-radius: var(--r-md); padding: 4px 16px; }
+.shot-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: 12px;
+  padding: 11px 0 9px; border-top: 1px solid var(--hairline);
+}
+.shot-row:first-child { border-top: 0; }
+.shot-label { font-size: 15px; font-weight: 500; }
+.shot-value { font-size: 14px; white-space: nowrap; }
+.shot-value b { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-right: 2px; }
+.shot-row .adv-bar { margin-top: 8px; }
+
+/* ---------- draft & transfers ---------- */
+.pmini { display: inline-flex; align-items: center; gap: 10px; min-width: 0; cursor: pointer; }
+.pmini .avatar { width: 34px; height: 34px; }
+.pmini > span:last-child { display: flex; flex-direction: column; min-width: 0; }
+.pmini .sub { font-size: 12.5px; }
+.grid.draft td { height: 58px; }
+.grid.draft tr.band-row td, .grid.moves tr.band-row td {
+  height: auto; padding: 8px 16px; background: var(--surface-3); color: var(--text-2);
+  font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
+}
+.grid.draft tr.band-row td.sticky { background: var(--surface-3); }
+.pick-no { white-space: nowrap; }
+.pick-no b { font-family: var(--font-display); font-size: 17px; margin-right: 6px; }
+.pick-no .dim { font-size: 12.5px; }
+.warn-text { color: var(--warn); font-size: 14px; }
+.nowrap { white-space: nowrap; }
+.subhead { margin: 22px 0 10px; font-family: var(--font-display); font-size: 17px; font-weight: 600; color: var(--text-2); }
+
+.deadline {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 12px;
+  padding: 12px 16px; border-radius: var(--r-md); background: var(--accent-soft); border: 1px solid var(--accent-line);
+}
+.deadline strong { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--accent); }
+.deadline-label { color: var(--text-2); }
+.deadline.locked { background: var(--surface-2); border-color: var(--border); }
+.deadline.locked strong { color: var(--text); }
+
+.pill {
+  display: inline-block; padding: 2px 9px; border-radius: var(--r-pill); font-size: 12px; font-weight: 600; white-space: nowrap;
+  background: var(--surface-3); color: var(--text-2);
+}
+.pill.trade { background: var(--accent-soft); color: var(--accent); }
+.move-in, .move-out { display: flex; flex-direction: column; gap: 8px; padding: 6px 0; }
+.move-in .pmini::before, .move-out .pmini::before { font-weight: 700; font-size: 14px; width: 10px; flex: none; }
+.move-in .pmini::before { content: "+"; color: var(--win); }
+.move-out .pmini::before { content: "−"; color: var(--loss); }
+.credit.neg { color: var(--loss); }
+.credit.pos { color: var(--win); }
+.credit-cell { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; min-width: 90px; }
+.credit-cell b { font-family: var(--font-display); font-size: 17px; }
+.credit-cell .adv-bar { width: 90px; margin-top: 2px; }
 
 /* ---------- tooltip ---------- */
 .hover-tip {

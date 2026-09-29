@@ -77,6 +77,59 @@ const I18N = {
     ctxLow: "Žemas iki",
     ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
+    tabDraft: "Draftas",
+    tabTransfers: "Perėjimai",
+    avgRound: "vid. {v} tšk. per turą",
+    avgRoundTip: "Vidutiniškai surinkta taškų per {n} žaistus turus",
+    shootingTitle: "Metimai per sezoną",
+    shootingSub: "{n} rungt.",
+    shotFg: "Iš žaidimo",
+    shot2: "Dvitaškiai",
+    shot3: "Tritaškiai",
+    shotFt: "Baudos",
+    draftEmpty: "Šios lygos drafto duomenų nėra.",
+    draftDate: "Draftas {d}",
+    draftOrderType: { reverse_snake: "Atvirkštinė gyvatėlė", snake: "Gyvatėlė", default: "Gyvatėlė", straight: "Ta pati tvarka kiekviename rate" },
+    draftPicksN: "{n} pasirinkimai, {r} ratų",
+    draftRound: "{n} ratas",
+    allTeams: "Visos komandos",
+    player: "Žaidėjas",
+    avgFpShort: "Vid. FP",
+    avgFpTitle: "Vidutiniai fantasy taškai šį sezoną",
+    draftNow: "Dabar",
+    draftKept: "Vis dar komandoje",
+    draftReleased: "Laisvasis agentas",
+    draftNote: "Pirmas skaičius yra bendras pasirinkimo numeris, antras rodo ratą ir eilę jame. „Dabar“ rodo, kur žaidėjas yra šiandien.",
+    creditsShort: "kr.",
+    creditsShortHead: "Kreditai",
+    moveTrade: "Mainai",
+    moveFA: "Laisvasis agentas",
+    tradeWith: "mainai su {t}",
+    windowClosed: "Perėjimų langas uždarytas iki",
+    nextProcessing: "Perėjimai prieš {n} turą bus įvykdyti",
+    creditsTitle: "Kreditai",
+    creditsStart: "pradžioje po {n}",
+    creditsLeft: "Liko",
+    creditsSpent: "Išleista",
+    signings: "Laisvieji agentai",
+    trades: "Mainai",
+    bidsTitle: "Statymai prieš {n} turą",
+    bidsCount: "Statymų",
+    bidsTop: "Didžiausias",
+    noMoves: "Šį sezoną perėjimų dar nebuvo.",
+    movesTitle: "Įvykę perėjimai",
+    movesBefore: "Prieš {n} turą",
+    moveType: "Tipas",
+    moveIn: "Atėjo",
+    moveOut: "Išėjo",
+    moveWhen: "Laikas",
+    transfersNote: "Statymai laisviesiems agentams ir mainų pasiūlymai matomi tik juos pateikusiems. BasketNews juos įvykdo likus 3 valandoms iki turo pradžios, tada jie atsiranda čia.",
+    relNow: "dabar",
+    relIn: "po {s}",
+    relAgo: "prieš {s}",
+    relH: "{h} val.",
+    relM: "{m} min.",
+    relHM: "{h} val. {m} min.",
     awardInfo: "Kaip skaičiuojama?",
     rankTip: "Vieta tarp {n} žaidėjų, 1 yra geriausias",
     proballers: "Karjera Proballers",
@@ -275,6 +328,59 @@ const I18N = {
     ctxLow: "Low up to",
     ctxNote: "Compared with players averaging at least {m} minutes.",
     lowerBetter: "For this metric a lower value is better.",
+    tabDraft: "Draft",
+    tabTransfers: "Transfers",
+    avgRound: "avg {v} pts per round",
+    avgRoundTip: "Average points over {n} rounds played",
+    shootingTitle: "Season shooting",
+    shootingSub: "{n} games",
+    shotFg: "Field goals",
+    shot2: "2-point field goals",
+    shot3: "3-point field goals",
+    shotFt: "Free throws",
+    draftEmpty: "No draft data for this league.",
+    draftDate: "Draft {d}",
+    draftOrderType: { reverse_snake: "Reverse snake", snake: "Snake", default: "Snake", straight: "Same order every round" },
+    draftPicksN: "{n} picks, {r} rounds",
+    draftRound: "Draft round {n}",
+    allTeams: "All teams",
+    player: "Player",
+    avgFpShort: "Avg FP",
+    avgFpTitle: "Average fantasy points this season",
+    draftNow: "Now",
+    draftKept: "Still on the team",
+    draftReleased: "Free agent",
+    draftNote: "The first number is the overall pick, the second the draft round and pick within it. \"Now\" shows where the player is today.",
+    creditsShort: "cr.",
+    creditsShortHead: "Credits",
+    moveTrade: "Trade",
+    moveFA: "Free agent",
+    tradeWith: "trade with {t}",
+    windowClosed: "Transfer window closed until",
+    nextProcessing: "Transfers before round {n} are processed",
+    creditsTitle: "Credits",
+    creditsStart: "{n} each at the start",
+    creditsLeft: "Left",
+    creditsSpent: "Spent",
+    signings: "Free agents",
+    trades: "Trades",
+    bidsTitle: "Bids before round {n}",
+    bidsCount: "Bids",
+    bidsTop: "Highest",
+    noMoves: "No transfers this season yet.",
+    movesTitle: "Completed transfers",
+    movesBefore: "Before round {n}",
+    moveType: "Type",
+    moveIn: "In",
+    moveOut: "Out",
+    moveWhen: "When",
+    transfersNote: "Free-agent bids and trade offers are only visible to the teams that made them. BasketNews processes them 3 hours before the round starts, and then they show up here.",
+    relNow: "now",
+    relIn: "in {s}",
+    relAgo: "{s} ago",
+    relH: "{h} h",
+    relM: "{m} min",
+    relHM: "{h} h {m} min",
     awardInfo: "How is it worked out?",
     rankTip: "Rank among {n} players, 1 is the best",
     proballers: "Career on Proballers",
@@ -794,9 +900,11 @@ function leagueHeader(league, tab) {
     ["standings", t("tabStandings"), `#/l/${league.id}`],
     ["rounds", league.format === "head_to_head" ? t("tabMatchups") : t("tabRounds"), `#/l/${league.id}/rounds`],
     ["games", t("tabGames"), `#/l/${league.id}/games`],
+    ["transfers", t("tabTransfers"), `#/l/${league.id}/transfers`],
     ["records", t("tabRecords"), `#/l/${league.id}/records`],
     ["players", t("tabPlayers"), `#/l/${league.id}/players`],
     ["free-agents", t("tabFA"), `#/l/${league.id}/free-agents`],
+    ["draft", t("tabDraft"), `#/l/${league.id}/draft`],
   ];
   const status = league.roundStarted
     ? `<span class="badge live">${t("liveRound", { r: roundLabel(league.currentRound) })}</span>`
@@ -1133,6 +1241,170 @@ async function renderRecords(fid, params, token, silent) {
     el.addEventListener("click", (e) => {
       if (!e.target.closest("[data-award-info], .award-info")) location.hash = `#/l/${fid}/t/${el.dataset.team}`;
     }));
+}
+
+// ------------------------------------------------------------------ draft
+
+function playerMini(p) {
+  return `<span class="pmini" data-player="${esc(p.id || "")}">${avatar(p)}<span>
+    <span class="player-name">${esc(p.name)}</span>
+    <span class="sub">${POS[p.position] || ""}${p.club ? ` · ${clubTag(p.club)}` : ""}</span></span></span>`;
+}
+
+function dateTime(iso) {
+  return iso ? new Date(iso).toLocaleString(LANG === "en" ? "en-GB" : "lt-LT",
+    { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
+}
+
+async function renderDraft(fid, params, token, silent) {
+  if (!silent) setView(skeletonTable());
+  let data;
+  try {
+    data = await api(`/api/league/${fid}/draft`);
+  } catch (e) {
+    if (token === renderToken) setView(stateBox(e.message, true));
+    return;
+  }
+  if (token !== renderToken) return;
+  const { league, picks, teams } = data;
+  if (!picks.length) {
+    setView(`${leagueHeader(league, "draft")}${stateBox(t("draftEmpty"))}`);
+    return;
+  }
+  const only = params.get("team");
+  const mine = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
+  const d = league.draft || {};
+  const info = [
+    d.date ? t("draftDate", { d: dateTime(d.date) }) : null,
+    t("draftOrderType")[d.order] || null,
+    t("draftPicksN", { n: picks.length, r: picks[picks.length - 1].round }),
+  ].filter(Boolean).map((x) => `<span>${esc(x)}</span>`).join("");
+  const select = `<select class="select" id="draft-team" aria-label="${esc(t("team"))}">
+      <option value="">${t("allTeams")}</option>
+      ${teams.map((tm) => `<option value="${tm.id}"${tm.id === only ? " selected" : ""}>${esc(tm.title)}</option>`).join("")}
+    </select>`;
+  let lastRound = null;
+  const rows = picks.filter((pk) => !only || pk.team.id === only).map((pk) => {
+    const band = !only && pk.round !== lastRound
+      ? `<tr class="band-row"><td colspan="5">${t("draftRound", { n: pk.round })}</td></tr>` : "";
+    lastRound = pk.round;
+    const kept = pk.owner && pk.owner.id === pk.team.id;
+    const now = kept ? `<span class="dim">${t("draftKept")}</span>`
+      : pk.owner ? `<a class="team-name" href="#/l/${fid}/t/${pk.owner.id}">→ ${esc(pk.owner.title)}</a>`
+      : `<span class="warn-text">${t("draftReleased")}</span>`;
+    return `${band}<tr class="clickable${pk.team.id === mine ? " mine" : ""}" data-player="${esc(pk.player.id || "")}">
+      <td class="num pick-no"><b>${pk.overall}</b><span class="dim">${pk.round}.${pk.pick}</span></td>
+      <td><a class="team-name" href="#/l/${fid}/t/${pk.team.id}">${esc(pk.team.title)}</a></td>
+      <td>${playerMini(pk.player)}</td>
+      <td class="num pts-strong">${fmt1(pk.player.avgPts)}</td>
+      <td>${now}</td>
+    </tr>`;
+  }).join("");
+  setView(`
+    ${leagueHeader(league, "draft")}
+    <div class="toolbar"><div class="toolbar-left">${select}</div><div class="meta-line divided">${info}</div></div>
+    <div class="card table-scroll"><table class="grid draft">
+      <thead><tr><th class="num">#</th><th>${t("team")}</th><th>${t("player")}</th>
+        <th class="num" title="${esc(t("avgFpTitle"))}">${t("avgFpShort")}</th><th>${t("draftNow")}</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>
+    <p class="note">${t("draftNote")}</p>`);
+  document.getElementById("draft-team").addEventListener("change", (e) => {
+    location.hash = `#/l/${fid}/draft${e.target.value ? `?team=${e.target.value}` : ""}`;
+  });
+}
+
+// ------------------------------------------------------------------ transfers
+
+function creditText(n) {
+  return `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(n)} ${t("creditsShort")}`;
+}
+
+// One row per team involved: what came in, what went out, credits.
+function moveRows(fid, m, usesCredits) {
+  const sides = m.type === "trade"
+    ? [[m.offer, m.request, m.creditChange], [m.request, m.offer, -m.creditChange]]
+    : [[m.offer, m.request, m.creditChange]];
+  return sides.filter(([own]) => own.team).map(([own, other, credits]) => `
+    <tr>
+      <td><span class="pill ${m.type}">${m.type === "trade" ? t("moveTrade") : t("moveFA")}</span></td>
+      <td><a class="team-name" href="#/l/${fid}/t/${own.team.id}">${esc(own.team.title)}</a>
+        ${m.type === "trade" && other.team ? `<div class="sub">${t("tradeWith", { t: esc(other.team.title) })}</div>` : ""}</td>
+      <td><div class="move-in">${other.players.map(playerMini).join("") || '<span class="dim">-</span>'}</div></td>
+      <td><div class="move-out">${own.players.map(playerMini).join("") || '<span class="dim">-</span>'}</div></td>
+      ${usesCredits ? `<td class="num credit ${credits < 0 ? "neg" : credits > 0 ? "pos" : ""}">${credits ? creditText(credits) : "-"}</td>` : ""}
+      <td class="dim nowrap">${esc(dateTime(m.at))}</td>
+    </tr>`).join("");
+}
+
+async function renderTransfers(fid, token, silent) {
+  if (!silent) setView(skeletonTable(6));
+  let data;
+  try {
+    data = await api(`/api/league/${fid}/transfers`);
+  } catch (e) {
+    if (token === renderToken) setView(stateBox(e.message, true));
+    return;
+  }
+  if (token !== renderToken) return;
+  const { league, moves, teams, upcoming, lock, usesCredits } = data;
+  const mine = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
+
+  const deadline = lock?.nextChange
+    ? `<div class="deadline${lock.locked ? " locked" : ""}">
+        <span class="deadline-label">${lock.locked ? t("windowClosed") : t("nextProcessing", { n: league.currentRound + 1 })}</span>
+        <strong>${esc(dateTime(lock.nextChange))}</strong>
+        <span class="dim">${esc(relTime(lock.nextChange))}</span>
+      </div>` : "";
+
+  const creditsTable = usesCredits ? `
+    <h2 class="section-title">${t("creditsTitle")} <span class="dim small">${t("creditsStart", { n: data.startingCredits })}</span></h2>
+    <div class="card table-scroll"><table class="grid">
+      <thead><tr><th>${t("team")}</th><th class="num">${t("creditsLeft")}</th><th class="num">${t("creditsSpent")}</th>
+        <th class="num">${t("signings")}</th><th class="num">${t("trades")}</th></tr></thead>
+      <tbody>${teams.map((r) => `<tr class="${r.team.id === mine ? "mine" : ""}">
+        <td><a class="team-name" href="#/l/${fid}/t/${r.team.id}">${esc(r.team.title)}</a><span class="owner">${esc(r.team.owner || "")}</span></td>
+        <td class="num"><div class="credit-cell"><b>${r.credits}</b><span class="adv-bar"><i style="width:${Math.max(0, Math.min(100, 100 * r.credits / (data.startingCredits || 1)))}%"></i></span></div></td>
+        <td class="num">${r.spent || "-"}</td><td class="num">${r.signings || "-"}</td><td class="num">${r.trades || "-"}</td>
+      </tr>`).join("")}</tbody></table></div>` : "";
+
+  const bids = upcoming.length ? `
+    <h2 class="section-title">${t("bidsTitle", { n: league.currentRound + 1 })}</h2>
+    <div class="card table-scroll"><table class="grid">
+      <thead><tr><th>${t("player")}</th><th class="num">${t("bidsCount")}</th><th class="num">${t("bidsTop")}</th></tr></thead>
+      <tbody>${upcoming.map((b) => `<tr class="clickable" data-player="${esc(b.player.id)}">
+        <td class="sticky">${playerMini(b.player)}</td><td class="num">${b.totalBids}</td><td class="num">${b.highestBid ?? "-"}</td></tr>`).join("")}</tbody>
+    </table></div>` : "";
+
+  let list;
+  if (!moves.length) {
+    list = `<div class="card">${stateBox(t("noMoves"))}</div>`;
+  } else {
+    const rounds = [...new Set(moves.map((m) => m.round))];
+    list = rounds.map((r) => `
+      <h3 class="subhead">${t("movesBefore", { n: r + 1 })}</h3>
+      <div class="card table-scroll"><table class="grid moves">
+        <thead><tr><th>${t("moveType")}</th><th>${t("team")}</th><th>${t("moveIn")}</th><th>${t("moveOut")}</th>
+          ${usesCredits ? `<th class="num">${t("creditsShortHead")}</th>` : ""}<th>${t("moveWhen")}</th></tr></thead>
+        <tbody>${moves.filter((m) => m.round === r).map((m) => moveRows(fid, m, usesCredits)).join("")}</tbody>
+      </table></div>`).join("");
+  }
+
+  setView(`
+    ${leagueHeader(league, "transfers")}
+    ${deadline}
+    <p class="note">${t("transfersNote")}</p>
+    <h2 class="section-title">${t("movesTitle")}</h2>
+    ${list}
+    ${bids}
+    ${creditsTable}`);
+}
+
+function relTime(iso) {
+  const mins = Math.round((new Date(iso) - Date.now()) / 60000);
+  if (Math.abs(mins) < 1) return t("relNow");
+  const h = Math.floor(Math.abs(mins) / 60), m = Math.abs(mins) % 60;
+  const span = h ? (m ? t("relHM", { h, m }) : t("relH", { h })) : t("relM", { m });
+  return mins > 0 ? t("relIn", { s: span }) : t("relAgo", { s: span });
 }
 
 // ------------------------------------------------------------------ player lists (free agents / all players)
@@ -1644,11 +1916,14 @@ async function renderTeam(fid, tid, params, token, silent) {
   if (STATIC) data.isMine = myTeamOf(fid) === tid;
   const star = tracked
     ? `<button class="btn star${data.isMine ? " on" : ""}" id="my-team">${data.isMine ? t("myTeam") : t("markMine")}</button>` : "";
+  const scored = data.history.filter((h) => h.state !== "upcoming" && h.points != null);
+  const avgRound = scored.length ? scored.reduce((sum, h) => sum + h.points, 0) / scored.length : null;
   const seasonLine = [
     esc(data.team.owner),
     t("placeOf", { p: s.position, n: league.teamsCount || "" }),
     h2h ? `${s.wins}-${s.losses}${s.ties ? `-${s.ties}` : ""}` : null,
     `${fmt(s.pointsTotal)} ${t("ptsShort")}`,
+    avgRound !== null ? `<span data-tip="${esc(t("avgRoundTip", { n: scored.length }))}">${t("avgRound", { v: fmt1(avgRound) })}</span>` : null,
   ].filter(Boolean).map((x) => `<span>${x}</span>`).join("");
   const label = (x) => `${roundLabel(x)}${x === league.currentRound ? ` ${t("current")}` : ""}`;
   const charts = teamCharts(data);
@@ -1723,6 +1998,21 @@ function advContext(x, minutes) {
       <span>${t("ctxLow")} <b>${fmt1(c.low)}</b></span>
     </div>
     <div class="adv-ctx-note">${c.better === "lower" ? `${t("lowerBetter")} ` : ""}${t("ctxNote", { m: minutes })}</div>`;
+}
+
+// Season shooting: made / attempted totals summed from the round box scores.
+function shootingSection(sh) {
+  if (!sh || !sh.games) return "";
+  const rows = [["fg", t("shotFg")], ["two", t("shot2")], ["three", t("shot3")], ["ft", t("shotFt")]];
+  return `<h3 class="section-title">${t("shootingTitle")} <span class="dim small">${t("shootingSub", { n: sh.games })}</span></h3>
+    <div class="shooting">${rows.map(([key, label]) => {
+      const x = sh[key];
+      return `<div class="shot-row">
+        <span class="shot-label">${label}</span>
+        <span class="shot-value">${x.pct == null ? '<span class="dim">-</span>' : `<b>${fmt1(x.pct)}%</b>`} <span class="dim">(${x.made}/${x.att})</span></span>
+        <span class="adv-bar"><i style="width:${Math.max(0, Math.min(100, x.pct ?? 0))}%"></i></span>
+      </div>`;
+    }).join("")}</div>`;
 }
 
 function advancedSection(adv) {
@@ -1806,6 +2096,7 @@ function playerView(fid, data) {
     </div>
     ${status}
     <div class="tiles compact">${tiles.map(([l, v]) => `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div></div>`).join("")}</div>
+    ${shootingSection(data.shooting)}
     ${advancedSection(data.advanced)}
     <h3 class="section-title">${t("injuryHistory")}</h3>
     <p class="summary">${esc(injury.summary)}</p>
@@ -1869,6 +2160,8 @@ async function route(silent = false) {
   if (parts[2] === "games") return renderGames(fid, params, token, silent);
   if (parts[2] === "players") return renderPlayerList(fid, "all", token, silent);
   if (parts[2] === "free-agents") return renderPlayerList(fid, "free", token, silent);
+  if (parts[2] === "draft") return renderDraft(fid, params, token, silent);
+  if (parts[2] === "transfers") return renderTransfers(fid, token, silent);
   return renderStandings(fid, params, token, silent);
 }
 
