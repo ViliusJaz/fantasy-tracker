@@ -1,5 +1,6 @@
 #!/bin/bash
-# Rebuilds the public site on this Mac and uploads it to GitHub Pages.
+# Rebuilds the public site and uploads it to GitHub Pages: every 15 minutes on the Mac, or
+# on demand from an Android phone (phone/setup.sh adds a home-screen button for it).
 #
 #   ./publish.sh        (a launch agent runs this every 15 minutes, see below)
 #
@@ -14,7 +15,8 @@
 #   log:      ~/Library/Logs/fantasy-tracker.log
 set -euo pipefail
 cd "$(dirname "$0")"
-export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+# keep the caller's PATH (Termux on Android has its own); launchd on the Mac gives a minimal one
+export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin"
 
 LOG="$HOME/Library/Logs/fantasy-tracker.log"
 if [ -f "$LOG" ] && [ "$(wc -c < "$LOG")" -gt 1000000 ]; then : > "$LOG"; fi  # keep the log small

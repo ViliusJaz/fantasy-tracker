@@ -10,6 +10,7 @@ server runs.
 """
 import bisect
 import contextvars
+import gzip
 import http.client
 import itertools
 import json
@@ -109,6 +110,13 @@ _cache = {}
 _cache_lock = threading.Lock()
 
 
+def read_body(req, timeout=30):
+    """Response body, unpacked when the server sent it gzip-compressed."""
+    with urllib.request.urlopen(req, context=SSL_CTX, timeout=timeout) as resp:
+        raw = resp.read()
+        return gzip.decompress(raw) if resp.headers.get("Content-Encoding") == "gzip" else raw
+
+
 def gql(query, variables, ttl=LIVE_TTL):
     key = query + json.dumps(variables, sort_keys=True)
     now = time.time()
@@ -124,17 +132,18 @@ def gql(query, variables, ttl=LIVE_TTL):
         # away requests that do not look like they come from a browser on that site.
         headers={"Content-Type": "application/json", "Accept": "application/json, */*",
                  "User-Agent": BROWSER_UA, "Origin": "https://fantasy.basketnews.com",
-                 "Referer": "https://fantasy.basketnews.com/", "Accept-Language": "lt,en;q=0.8"},
+                 "Referer": "https://fantasy.basketnews.com/", "Accept-Language": "lt,en;q=0.8",
+                 # compressed answers are several times smaller (matters on mobile data)
+                 "Accept-Encoding": "gzip"},
     )
     for attempt in range(3):  # BasketNews sometimes stalls mid-answer: retry before giving up
         try:
-            with urllib.request.urlopen(req, context=SSL_CTX, timeout=25) as resp:
-                payload = json.load(resp)
+            payload = json.loads(read_body(req, timeout=25))
             break
         except urllib.error.HTTPError as exc:
             if exc.code < 500 or attempt == 2:
                 raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
-        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException, ValueError) as exc:
+        except (OSError, http.client.HTTPException, ValueError) as exc:  # network, timeout, bad gzip / JSON
             if attempt == 2:
                 raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
         time.sleep(1 + attempt)
@@ -505,6 +514,8 @@ def advanced_stats(meta, rnd=None):
     league, season = meta.get("bnLeagueId"), meta.get("seasonYear")
     if not league or not season:
         return {}
+    if rnd is not None and rnd > meta["latestRound"]:
+        return {}  # a round that has not been played has no stats (BasketNews would send the last one)
     key = (league, season, rnd)
     with _adv_lock:
         hit = _adv_cache.get(key)
@@ -516,18 +527,17 @@ def advanced_stats(meta, rnd=None):
     req = urllib.request.Request(
         ADV_URL, data=urllib.parse.urlencode(form).encode(),
         headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
-                 "Content-Type": "application/x-www-form-urlencoded",
+                 "Content-Type": "application/x-www-form-urlencoded", "Accept-Encoding": "gzip",
                  "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
     try:
-        with urllib.request.urlopen(req, context=SSL_CTX, timeout=30) as resp:
-            payload = json.load(resp)
+        payload = json.loads(read_body(req))
         data = payload.get("data") or {}
         max_seq = (data.get("extra") or {}).get("max_sequence") or 0
         if rnd is not None and max_seq < rnd + 1:
             result = {}  # BasketNews clamps to its last game; that round isn't there yet
         else:
             result = {str(r["player_id"]): r for r in data.get("stats") or []}
-    except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException, ValueError) as exc:
+    except (OSError, http.client.HTTPException, ValueError) as exc:  # network, timeout, bad gzip / JSON
         print(f"Pažangi statistika nepasiekiama: {exc}")
         return hit[1] if hit else {}
     ttl = 3600 if rnd is None else (12 * 3600 if rnd < meta["currentRound"] else 300)
@@ -1028,11 +1038,10 @@ def injury_report(meta):
         hit = _injury_cache.get(url)
         if hit and hit[0] > time.time():
             return hit[1]
-        req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA, "Accept-Language": "en,lt"})
+        req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA, "Accept-Language": "en,lt",
+                                                   "Accept-Encoding": "gzip"})
         try:
-            with urllib.request.urlopen(req, context=SSL_CTX, timeout=30) as resp:
-                page = resp.read().decode("utf-8", errors="replace")
-            entries = parse_injury_report(page)
+            entries = parse_injury_report(read_body(req).decode("utf-8", errors="replace"))
         except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException) as exc:
             print(f"Traumų sąrašas nepasiekiamas ({url}): {exc}")
             if hit:
@@ -1461,12 +1470,11 @@ def team_advanced(meta):
     req = urllib.request.Request(
         TEAM_ADV_URL, data=urllib.parse.urlencode({"league_id": league, "season": season}).encode(),
         headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
-                 "Content-Type": "application/x-www-form-urlencoded",
+                 "Content-Type": "application/x-www-form-urlencoded", "Accept-Encoding": "gzip",
                  "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
     try:
-        with urllib.request.urlopen(req, context=SSL_CTX, timeout=30) as resp:
-            data = (json.load(resp).get("data") or {})
-    except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException, ValueError) as exc:
+        data = json.loads(read_body(req)).get("data") or {}
+    except (OSError, http.client.HTTPException, ValueError) as exc:  # network, timeout, bad gzip / JSON
         print(f"Komandų statistika nepasiekiama: {exc}")
         return hit[1] if hit else {}
     lang = "en" if LANG.get() == "en" else "lt"
