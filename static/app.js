@@ -794,9 +794,10 @@ const POS = { guard: "G", forward: "F", center: "C" };
 const SEVERITY = { out: "bad", doubtful: "warn", uncertain: "warn", questionable: "warn", "game-time": "mild", expected: "mild" };
 const pct = (m, a) => (a ? (m / a) * 100 : null);
 
-function statHeads(sortable = false) {
+// League averages are only shown inside the player card (withAvg), not in the lists.
+function statHeads(sortable = false, withAvg = false) {
   return statCols().map((c) =>
-    `<th class="num stat${sortable ? " sortable" : ""}"${sortable ? ` data-sort="${c.key}"` : ""} title="${esc(c.title + avgTip(c.key))}">${esc(c.abbr)}</th>`).join("");
+    `<th class="num stat${sortable ? " sortable" : ""}"${sortable ? ` data-sort="${c.key}"` : ""} title="${esc(c.title + (withAvg ? avgTip(c.key) : ""))}">${esc(c.abbr)}</th>`).join("");
 }
 
 // mode "round": totals of one round (made/attempted); mode "avg": season averages (shooting as %).
@@ -1458,7 +1459,7 @@ async function renderDraft(fid, params, token, silent) {
     <div class="toolbar"><div class="toolbar-left">${select}</div><div class="meta-line divided">${info}</div></div>
     <div class="card table-scroll"><table class="grid draft">
       <thead><tr><th class="num">#</th><th>${t("team")}</th><th>${t("player")}</th>
-        <th class="num" title="${esc(t("avgFpTitle") + avgTip("fp"))}">${t("avgFpShort")}</th><th>${t("draftNow")}</th></tr></thead>
+        <th class="num" title="${esc(t("avgFpTitle"))}">${t("avgFpShort")}</th><th>${t("draftNow")}</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     <p class="note">${t("draftNote")}</p>`);
   document.getElementById("draft-team").addEventListener("change", (e) => {
@@ -1717,7 +1718,7 @@ async function renderPlayerList(fid, scope, token, silent) {
           ${all ? `<th class="sortable" data-sort="owner">${t("ownerCol")}</th>` : ""}
           <th class="sortable" data-sort="status" title="${esc(t("statusSortTitle"))}">${t("status")}</th>
           <th>${roundLabel(league.currentRound)}</th>
-          <th class="num sortable" data-sort="avgPts" title="${esc(t("avgFpTitle") + avgTip("fp"))}">${t("avgFp")}</th>
+          <th class="num sortable" data-sort="avgPts" title="${esc(t("avgFpTitle"))}">${t("avgFp")}</th>
           <th class="num sortable" data-sort="roundPts" title="${esc(t("lastFpTitle"))}">${esc(lastLabel)}</th>
           <th class="num sortable" data-sort="gamesPlayed" title="${esc(t("gpTitle"))}">${t("gp")}</th>
           ${statHeads(true)}
@@ -1904,7 +1905,7 @@ function boxTable(side) {
       ${side.combined ? `<span class="dim small">${t("combinedNote")}</span>` : ""}</div>
     ${side.players.length ? `<div class="table-scroll"><table class="grid box stats-table">
       <thead><tr><th class="sticky">${t("player")}</th><th class="num">FP</th>
-        ${cols.map((c) => `<th class="num stat" title="${esc(c.title + avgTip(c.key))}">${esc(c.abbr)}</th>`).join("")}
+        ${cols.map((c) => `<th class="num stat" title="${esc(c.title)}">${esc(c.abbr)}</th>`).join("")}
         <th class="owner-col">${t("ownerCol")}</th></tr></thead>
       <tbody>${rows}</tbody></table></div>` : `<p class="dim small box-empty">${t("noBoxYet")}</p>`}
   </div>`;
@@ -2319,7 +2320,7 @@ function playerView(fid, data) {
     <p class="note">${t("historyNote", { link })}</p>
     <h3 class="section-title">${t("rounds")}</h3>
     <div class="card table-scroll"><table class="grid log stats-table">
-      <thead><tr><th class="sticky">${t("rounds")}</th><th>${t("games")}</th><th class="num">FP</th>${statHeads()}</tr></thead>
+      <thead><tr><th class="sticky">${t("rounds")}</th><th>${t("games")}</th><th class="num">FP</th>${statHeads(false, true)}</tr></thead>
       <tbody>${log || `<tr><td colspan="${STAT_DEFS.length + 3}" class="dim">${t("noRoundsPlayed")}</td></tr>`}</tbody>
     </table></div>`;
 }

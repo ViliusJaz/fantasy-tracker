@@ -1265,7 +1265,6 @@ def team_payload(fid, team_id, rnd=None):
     entry = config_entry(fid) or {}
     return {
         "league": meta,
-        "leagueAvg": league_averages(meta),
         "team": row["team"],
         "standing": row,
         "standingRound": shown,
@@ -1325,7 +1324,6 @@ def players_payload(fid, scope="free"):
         "totalPlayers": len(pmap),
         "rosteredPlayers": len(own),
         "injuryReportUrl": meta["injuryReportUrl"],
-        "leagueAvg": league_averages(meta),
     }
 
 
@@ -1403,8 +1401,7 @@ def games_payload(fid, rnd=None):
                   key=lambda x: x["fp"] if x["fp"] is not None else -99, default=None)
         g["top"] = {"name": top["name"], "fp": top["fp"]} if top else None
         out.append(g)
-    return {"league": meta, "round": rnd, "state": round_state(meta, rnd), "games": out,
-            "leagueAvg": league_averages(meta)}
+    return {"league": meta, "round": rnd, "state": round_state(meta, rnd), "games": out}
 
 
 def _player_rounds_query(rounds):
@@ -1863,7 +1860,7 @@ def draft_payload(fid):
             "player": player_brief(pmap.get(pid), pid),
             "owner": (own.get(pid) or {}).get("team"),
         })
-    return {"league": meta, "picks": rows, "teams": list(teams.values()), "leagueAvg": league_averages(meta)}
+    return {"league": meta, "picks": rows, "teams": list(teams.values())}
 
 
 def _transfer_side(item, teams, pmap):
