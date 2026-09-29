@@ -1520,7 +1520,26 @@
       ],
       "name": "Bandja Sy",
       "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "36658": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "status": "doubtful",
+              "return": "Round 2",
+              "comment": "Was announced as a new signing on 09.29, but hasn't been registered yet."
+            }
+          ]
+        }
+      ],
+      "name": "Marcio Santos",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-09-29T08:41:04"
+  "updatedAt": "2026-09-29T10:21:51"
 }
