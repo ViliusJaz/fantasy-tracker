@@ -1132,17 +1132,6 @@ def standings_payload(fid, rnd=None):
     meta = league_meta(fid)
     shown, rows = standings(meta, rnd)
     live = is_live(meta, shown)
-    if live:
-        lu = lineups(meta)
-        pmap = players(meta, shown, shown)
-        for row in rows:
-            team_lu = lu.get(row["team"]["id"])
-            row["left"] = players_left(
-                [{**p, "games": (pmap.get(p["id"]) or {}).get("games", [])} for p in team_lu["players"]]
-            ) if team_lu else 0
-    else:
-        for row in rows:
-            row["left"] = 0
     entry = config_entry(fid) or {}
     return {
         "league": meta,

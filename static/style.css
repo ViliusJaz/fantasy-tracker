@@ -372,7 +372,6 @@ table.grid { width: 100%; border-collapse: collapse; min-width: 560px; }
 .move { font-family: var(--font-text); font-size: 11px; margin-left: 4px; }
 .move.up { color: var(--win); }
 .move.down { color: var(--loss); }
-.left-live { color: var(--accent); font-weight: 600; }
 .clickable { cursor: pointer; }
 .show-sm { display: none; }
 

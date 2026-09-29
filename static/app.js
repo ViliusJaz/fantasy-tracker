@@ -206,8 +206,6 @@ const I18N = {
     colT: "L",
     points: "Taškai",
     thisRound: "Šio turo",
-    left: "Liko",
-    leftTitle: "Pagrindinio penketo žaidėjai, kuriems dar liko žaisti šį turą",
     seasonNotStarted: "Sezonas dar neprasidėjo",
     afterRound: "Po {n} turo",
     clickTeam: "Paspausk ant komandos pavadinimo, kad pamatytum jos sudėtį.",
@@ -516,8 +514,6 @@ const I18N = {
     colT: "T",
     points: "Points",
     thisRound: "This round",
-    left: "Left",
-    leftTitle: "Starting-five players still to play this round",
     seasonNotStarted: "Season has not started",
     afterRound: "After round {n}",
     clickTeam: "Click a team name to see its roster.",
@@ -1312,13 +1308,13 @@ function moveMark(gained) {
 }
 
 function standingsTable(data) {
-  const { league, rows, myTeamId, hasTies, live } = data;
+  const { league, rows, myTeamId, hasTies } = data;
   const h2h = league.format === "head_to_head";
   const head = `
     <tr>
       <th class="rank">#</th><th>${t("team")}</th>
       ${h2h ? `<th class="ctr">${t("colW")}</th><th class="ctr">${t("colL")}</th>${hasTies ? `<th class="ctr">${t("colT")}</th>` : ""}` : ""}
-      <th class="num">${t("points")}</th><th class="num">${t("thisRound")}</th><th class="num" title="${esc(t("leftTitle"))}">${t("left")}</th>
+      <th class="num">${t("points")}</th><th class="num">${t("thisRound")}</th>
     </tr>`;
   const body = rows
     .map((r) => `
@@ -1328,7 +1324,6 @@ function standingsTable(data) {
         ${h2h ? `<td class="ctr wins">${r.wins}</td><td class="ctr">${r.losses}</td>${hasTies ? `<td class="ctr">${r.ties}</td>` : ""}` : ""}
         <td class="num">${fmt(r.pointsTotal)}</td>
         <td class="num">${fmt(r.pointsRound)}</td>
-        <td class="num${live && r.left ? " left-live" : ""}">${r.left}</td>
       </tr>`)
     .join("");
   return `<div class="card table-scroll"><table class="grid"><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
