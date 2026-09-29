@@ -89,7 +89,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-09-29",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -97,6 +97,13 @@
               "status": "game-time",
               "return": "Round 2",
               "comment": "DNP in Round 1 (Muscle issue)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "Cleared to play after a DNP in Round 1 (Muscle issue)"
             }
           ]
         }
@@ -180,6 +187,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1(coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -199,6 +213,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -218,6 +239,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -235,6 +263,13 @@
             {
               "date": "2026-09-28",
               "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (quad injury)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
               "return": "Round 2",
               "comment": "DNP in Round 1 (quad injury)"
             }
@@ -256,6 +291,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -267,12 +309,19 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-09-29",
           "lastSeen": "2026-09-29",
           "updates": [
             {
               "date": "2026-09-28",
               "status": "game-time",
+              "return": "Round 2",
+              "comment": "Undisclosed injury"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "ready",
               "return": "Round 2",
               "comment": "Undisclosed injury"
             }
@@ -294,6 +343,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (knee injury)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (knee injury)"
             }
           ]
         }
@@ -313,6 +369,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -727,6 +790,20 @@
               "comment": "DNP in Round 1, played in the domestic cup (09.26)"
             }
           ]
+        },
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Oz Blayzer",
@@ -765,6 +842,20 @@
               "comment": "DNP in Round 1, played in the domestic cup (09.26)"
             }
           ]
+        },
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Frederic Bourdillon",
@@ -799,6 +890,13 @@
             {
               "date": "2026-09-28",
               "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (undisclosed injury)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
               "return": "Round 2",
               "comment": "DNP in Round 1 (undisclosed injury)"
             }
@@ -866,6 +964,20 @@
               "comment": "DNP in Round 1, played in the domestic cup (09.26)"
             }
           ]
+        },
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Max Heidegger",
@@ -883,6 +995,20 @@
               "status": "ready",
               "return": "Round 2",
               "comment": "DNP in Round 1, played in the domestic cup (09.26)"
+            }
+          ]
+        },
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -904,6 +1030,20 @@
               "comment": "DNP in Round 1, played in the domestic cup (09.26)"
             }
           ]
+        },
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Itay Segev",
@@ -921,6 +1061,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -940,6 +1087,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -1335,7 +1489,22 @@
       "club": "Panathinaikos AKTOR Athens"
     },
     "35591": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "Joel Ayayi",
       "club": "Paris Basketball"
     },
@@ -1351,6 +1520,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (undisclosed)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -1370,6 +1546,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (undisclosed)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -1378,7 +1561,22 @@
       "club": "Paris Basketball"
     },
     "18387": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": "2026-09-29",
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "Cleared to play after a DNP in Round 1."
+            }
+          ]
+        }
+      ],
       "name": "Frank Ntilikina",
       "club": "Paris Basketball"
     },
@@ -1394,6 +1592,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (undisclosed)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -1413,6 +1618,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (undisclosed)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -1620,7 +1832,22 @@
       "club": "Real Madrid"
     },
     "35781": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "Gonzalo Corbalan",
       "club": "Valencia Basket"
     },
@@ -1638,6 +1865,20 @@
               "comment": "Didn't travel with the team in Round 1"
             }
           ]
+        },
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Lucas Mari",
@@ -1647,7 +1888,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-09-29",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -1655,6 +1896,13 @@
               "status": "game-time",
               "return": "Round 2",
               "comment": "Illness"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "Cleared to play (Illness)"
             }
           ]
         }
@@ -1674,6 +1922,20 @@
               "status": "ready",
               "return": "Round 2",
               "comment": "Didn't travel with the team in Round 1"
+            }
+          ]
+        },
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -1781,7 +2043,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-09-29",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -1789,6 +2051,13 @@
               "status": "expected",
               "return": "Round 2",
               "comment": "New signing, travels with team to Paris"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "New signing, travels with team to Paris (included in 12-man roster)"
             }
           ]
         }
@@ -2034,7 +2303,227 @@
       ],
       "name": "Davide Casarin",
       "club": "Virtus Bologna"
+    },
+    "35207": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Nicola Akele",
+      "club": "Armani Olimpia Milan"
+    },
+    "35352": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Ousmane Diop",
+      "club": "Armani Olimpia Milan"
+    },
+    "18424": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Diego Flaccadori",
+      "club": "Armani Olimpia Milan"
+    },
+    "37314": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Jacob Toppin",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "8305": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Kenneth Faried",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "34680": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Clement Frisch",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "35775": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "D.J. Stewart",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "22973": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Alize Johnson",
+      "club": "Paris Basketball"
+    },
+    "37625": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Mitar Bosnjakovic",
+      "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "40279": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Uros Danilovic",
+      "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "24103": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T21:04+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Jasiel Rivero",
+      "club": "Valencia Basket"
     }
   },
-  "updatedAt": "2026-09-29T19:13:19"
+  "updatedAt": "2026-09-29T21:04:17"
 }
