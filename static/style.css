@@ -803,6 +803,7 @@ table.box { min-width: 1100px; }
   position: fixed; z-index: var(--z-tip); pointer-events: none; max-width: 280px;
   background: var(--tip-bg); color: var(--text); border: 1px solid var(--border-strong); border-radius: var(--r-sm);
   padding: 6px 9px; font-size: 12.5px; font-weight: 500; line-height: 1.35; box-shadow: var(--shadow-pop);
+  white-space: pre-line;  /* name, league average and sample on their own lines */
 }
 
 /* ---------- states ---------- */

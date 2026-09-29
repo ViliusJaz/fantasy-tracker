@@ -1256,6 +1256,7 @@ def team_payload(fid, team_id, rnd=None):
     entry = config_entry(fid) or {}
     return {
         "league": meta,
+        "leagueAvg": league_averages(meta),
         "team": row["team"],
         "standing": row,
         "standingRound": shown,
@@ -1315,7 +1316,36 @@ def players_payload(fid, scope="free"):
         "totalPlayers": len(pmap),
         "rosteredPlayers": len(own),
         "injuryReportUrl": meta["injuryReportUrl"],
+        "leagueAvg": league_averages(meta),
     }
+
+
+AVG_KEYS = ("min", "pts", "reb", "oreb", "dreb", "ast", "stl", "blk", "tov", "pf", "fd", "ba", "eff", "usg")
+
+
+def league_averages(meta):
+    """Per-game league averages of regular-rotation players (the same 10+ minute sample
+    as the advanced-stats context), shown in the stat tooltips."""
+    pmap = players(meta, meta["latestRound"], meta["currentRound"])
+    regular = [p for p in pmap.values()
+               if p["season"] and p["gamesPlayed"] and p["season"]["min"] >= ADV_MIN_SECONDS / 60]
+    if not regular:
+        return None
+    mean = lambda vals: round(sum(vals) / len(vals), 1) if vals else None  # noqa: E731
+    out = {"n": len(regular), "minutes": ADV_MIN_SECONDS // 60,
+           "fp": mean([p["avgPts"] for p in regular if p.get("avgPts") is not None])}
+    for key in AVG_KEYS:
+        out[key] = mean([p["season"][key] for p in regular if p["season"].get(key) is not None])
+    made_att = {}
+    for key, made, att in (("p2", "p2m", "p2a"), ("p3", "p3m", "p3a"), ("ft", "ftm", "fta")):
+        # season lines are per-game averages: times games played gives the totals
+        m = sum(p["season"][made] * p["gamesPlayed"] for p in regular)
+        a = sum(p["season"][att] * p["gamesPlayed"] for p in regular)
+        made_att[key] = (m, a)
+        out[key] = round(100 * m / a, 1) if a else None
+    m, a = made_att["p2"][0] + made_att["p3"][0], made_att["p2"][1] + made_att["p3"][1]
+    out["fg"] = round(100 * m / a, 1) if a else None
+    return out
 
 
 def games_payload(fid, rnd=None):
@@ -1364,7 +1394,8 @@ def games_payload(fid, rnd=None):
                   key=lambda x: x["fp"] if x["fp"] is not None else -99, default=None)
         g["top"] = {"name": top["name"], "fp": top["fp"]} if top else None
         out.append(g)
-    return {"league": meta, "round": rnd, "state": round_state(meta, rnd), "games": out}
+    return {"league": meta, "round": rnd, "state": round_state(meta, rnd), "games": out,
+            "leagueAvg": league_averages(meta)}
 
 
 def _player_rounds_query(rounds):
@@ -1698,6 +1729,7 @@ def player_payload(fid, player_id):
         "player": info,
         "owner": owner,
         "advanced": advanced_profile(meta, info["bnId"]),
+        "leagueAvg": league_averages(meta),
         "proballers": f"/go/proballers/{fid}/{player_id}",
         "injury": {
             "current": injury_view(current, info["health"]),
@@ -1774,7 +1806,7 @@ def draft_payload(fid):
             "player": player_brief(pmap.get(pid), pid),
             "owner": (own.get(pid) or {}).get("team"),
         })
-    return {"league": meta, "picks": rows, "teams": list(teams.values())}
+    return {"league": meta, "picks": rows, "teams": list(teams.values()), "leagueAvg": league_averages(meta)}
 
 
 def _transfer_side(item, teams, pmap):

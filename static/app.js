@@ -16,6 +16,7 @@ let renderToken = 0;
 let modalToken = 0;
 let animateView = false;
 let dataTime = null;  // when the static files were generated
+let LEAGUE_AVG = null;  // per-game league averages for the stat tooltips (latest payload that had them)
 
 // ------------------------------------------------------------------ i18n
 
@@ -78,6 +79,10 @@ const I18N = {
     ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
     tabDraft: "Draftas",
+    avgTipGame: "Lygos vidurkis: {v} per rungtynes",
+    avgTipPct: "Lygos vidurkis: {v}",
+    avgTipPlain: "Lygos vidurkis: {v}",
+    avgTipWho: "(žaidėjai, žaidžiantys bent {m} min.)",
     tabTransfers: "Perėjimai",
     avgRound: "vid. {v} tšk. per turą",
     avgRoundTip: "Vidutiniškai surinkta taškų per {n} žaistus turus",
@@ -95,7 +100,6 @@ const I18N = {
     allTeams: "Visos komandos",
     player: "Žaidėjas",
     avgFpShort: "Vid. FP",
-    avgFpTitle: "Vidutiniai fantasy taškai šį sezoną",
     draftNow: "Dabar",
     draftKept: "Vis dar komandoje",
     draftReleased: "Laisvasis agentas",
@@ -329,6 +333,10 @@ const I18N = {
     ctxNote: "Compared with players averaging at least {m} minutes.",
     lowerBetter: "For this metric a lower value is better.",
     tabDraft: "Draft",
+    avgTipGame: "League average: {v} per game",
+    avgTipPct: "League average: {v}",
+    avgTipPlain: "League average: {v}",
+    avgTipWho: "(players averaging {m}+ minutes)",
     tabTransfers: "Transfers",
     avgRound: "avg {v} pts per round",
     avgRoundTip: "Average points over {n} rounds played",
@@ -346,7 +354,6 @@ const I18N = {
     allTeams: "All teams",
     player: "Player",
     avgFpShort: "Avg FP",
-    avgFpTitle: "Average fantasy points this season",
     draftNow: "Now",
     draftKept: "Still on the team",
     draftReleased: "Free agent",
@@ -655,7 +662,7 @@ const pct = (m, a) => (a ? (m / a) * 100 : null);
 
 function statHeads(sortable = false) {
   return statCols().map((c) =>
-    `<th class="num stat${sortable ? " sortable" : ""}"${sortable ? ` data-sort="${c.key}"` : ""} title="${esc(c.title)}">${esc(c.abbr)}</th>`).join("");
+    `<th class="num stat${sortable ? " sortable" : ""}"${sortable ? ` data-sort="${c.key}"` : ""} title="${esc(c.title + avgTip(c.key))}">${esc(c.abbr)}</th>`).join("");
 }
 
 // mode "round": totals of one round (made/attempted); mode "avg": season averages (shooting as %).
@@ -690,6 +697,7 @@ async function api(path, opts = {}) {
     if (!res.ok) throw new Error(res.status === 404 ? t("staticMissing") : t("error", { s: res.status }));
     const data = await res.json();
     if (data.generatedAt) dataTime = data.generatedAt;
+    if (data.leagueAvg) LEAGUE_AVG = data.leagueAvg;
     return data;
   }
   const url = `${path}${path.includes("?") ? "&" : "?"}lang=${LANG}`;
@@ -699,7 +707,17 @@ async function api(path, opts = {}) {
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || t("error", { s: res.status }));
+  if (data.leagueAvg) LEAGUE_AVG = data.leagueAvg;
   return data;
+}
+
+// Second and third tooltip lines: the league average for a stat, and who it covers.
+const PCT_AVG = new Set(["p2", "p3", "ft", "fg"]);
+function avgTip(key) {
+  const v = LEAGUE_AVG?.[key];
+  if (v === null || v === undefined) return "";
+  const value = PCT_AVG.has(key) ? `${fmt1(v)}%` : key === "usg" ? `${fmt1(v)}%` : fmt1(v);
+  return `\n${t(PCT_AVG.has(key) || key === "usg" ? "avgTipPct" : "avgTipGame", { v: value })}\n${t("avgTipWho", { m: LEAGUE_AVG.minutes })}`;
 }
 
 // "My team": in the server version it lives in leagues.json; online every visitor keeps
@@ -1305,7 +1323,7 @@ async function renderDraft(fid, params, token, silent) {
     <div class="toolbar"><div class="toolbar-left">${select}</div><div class="meta-line divided">${info}</div></div>
     <div class="card table-scroll"><table class="grid draft">
       <thead><tr><th class="num">#</th><th>${t("team")}</th><th>${t("player")}</th>
-        <th class="num" title="${esc(t("avgFpTitle"))}">${t("avgFpShort")}</th><th>${t("draftNow")}</th></tr></thead>
+        <th class="num" title="${esc(t("avgFpTitle") + avgTip("fp"))}">${t("avgFpShort")}</th><th>${t("draftNow")}</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     <p class="note">${t("draftNote")}</p>`);
   document.getElementById("draft-team").addEventListener("change", (e) => {
@@ -1505,7 +1523,7 @@ async function renderPlayerList(fid, scope, token, silent) {
           ${all ? `<th class="sortable" data-sort="owner">${t("ownerCol")}</th>` : ""}
           <th class="sortable" data-sort="status" title="${esc(t("statusSortTitle"))}">${t("status")}</th>
           <th>${roundLabel(league.currentRound)}</th>
-          <th class="num sortable" data-sort="avgPts" title="${esc(t("avgFpTitle"))}">${t("avgFp")}</th>
+          <th class="num sortable" data-sort="avgPts" title="${esc(t("avgFpTitle") + avgTip("fp"))}">${t("avgFp")}</th>
           <th class="num sortable" data-sort="roundPts" title="${esc(t("lastFpTitle"))}">${esc(lastLabel)}</th>
           <th class="num sortable" data-sort="gamesPlayed" title="${esc(t("gpTitle"))}">${t("gp")}</th>
           ${statHeads(true)}
@@ -1692,7 +1710,7 @@ function boxTable(side) {
       ${side.combined ? `<span class="dim small">${t("combinedNote")}</span>` : ""}</div>
     ${side.players.length ? `<div class="table-scroll"><table class="grid box stats-table">
       <thead><tr><th class="sticky">${t("player")}</th><th class="num">FP</th>
-        ${cols.map((c) => `<th class="num stat" title="${esc(c.title)}">${esc(c.abbr)}</th>`).join("")}
+        ${cols.map((c) => `<th class="num stat" title="${esc(c.title + avgTip(c.key))}">${esc(c.abbr)}</th>`).join("")}
         <th class="owner-col">${t("ownerCol")}</th></tr></thead>
       <tbody>${rows}</tbody></table></div>` : `<p class="dim small box-empty">${t("noBoxYet")}</p>`}
   </div>`;
@@ -2008,7 +2026,7 @@ function shootingSection(sh) {
     <div class="shooting">${rows.map(([key, label]) => {
       const x = sh[key];
       return `<div class="shot-row">
-        <span class="shot-label">${label}</span>
+        <span class="shot-label" data-tip="${esc(label + avgTip({ fg: "fg", two: "p2", three: "p3", ft: "ft" }[key]))}">${label}</span>
         <span class="shot-value">${x.pct == null ? '<span class="dim">-</span>' : `<b>${fmt1(x.pct)}%</b>`} <span class="dim">(${x.made}/${x.att})</span></span>
         <span class="adv-bar"><i style="width:${Math.max(0, Math.min(100, x.pct ?? 0))}%"></i></span>
       </div>`;
@@ -2022,7 +2040,7 @@ function advancedSection(adv) {
     <div class="adv-group">
       <h4>${esc(g.title)}</h4>
       ${g.stats.map((x) => `<div class="adv-row">
-        <span class="adv-label"><abbr data-tip="${esc(x.title)}" aria-label="${esc(x.title)}">${esc(x.short)}</abbr>${x.context?.better === "lower" ? `<span class="adv-dir" data-tip="${esc(t("lowerBetter"))}" aria-label="${esc(t("lowerBetter"))}">↓</span>` : ""}
+        <span class="adv-label"><abbr data-tip="${esc(x.title + (x.context ? `\n${t("avgTipPlain", { v: fmt1(x.context.avg) })}\n${t("avgTipWho", { m: adv.contextMinutes || 10 })}` : ""))}" aria-label="${esc(x.title)}">${esc(x.short)}</abbr>${x.context?.better === "lower" ? `<span class="adv-dir" data-tip="${esc(t("lowerBetter"))}" aria-label="${esc(t("lowerBetter"))}">↓</span>` : ""}
           <button type="button" class="info-btn" data-info aria-expanded="false" aria-label="${esc(t("advInfo"))}" data-tip="${esc(t("advInfo"))}">i</button></span>
         <span class="adv-value">${fmt1(x.value)}${x.level ? `<span class="lvl ${x.level}">${t("lvl")[x.level]}</span>` : ""}</span>
         <span class="adv-rank dim" data-tip="${esc(t("rankTip", { n: adv.ranked }))}">${x.rank ? `#${x.rank}` : ""}</span>
@@ -2052,8 +2070,8 @@ function playerView(fid, data) {
   const season = p.season || {};
   const tl = t("tiles");
   const tiles = [
-    [tl.avgFp, fmt1(p.avgPts)], [tl.gp, p.gamesPlayed], [tl.min, fmt1(season.min)], [tl.pts, fmt1(season.pts)],
-    [tl.reb, fmt1(season.reb)], [tl.ast, fmt1(season.ast)], [tl.stl, fmt1(season.stl)], [tl.eff, fmt1(season.eff)],
+    [tl.avgFp, fmt1(p.avgPts), "fp"], [tl.gp, p.gamesPlayed], [tl.min, fmt1(season.min), "min"], [tl.pts, fmt1(season.pts), "pts"],
+    [tl.reb, fmt1(season.reb), "reb"], [tl.ast, fmt1(season.ast), "ast"], [tl.stl, fmt1(season.stl), "stl"], [tl.eff, fmt1(season.eff), "eff"],
   ];
 
   const episodes = injury.episodes.map((e) => {
@@ -2095,7 +2113,10 @@ function playerView(fid, data) {
       <button class="close" type="button" data-close aria-label="${t("close")}">×</button>
     </div>
     ${status}
-    <div class="tiles compact">${tiles.map(([l, v]) => `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div></div>`).join("")}</div>
+    <div class="tiles compact">${tiles.map(([l, v, key]) => {
+      const tip = key ? avgTip(key) : "";
+      return `<div class="tile"${tip ? ` data-tip="${esc(l + tip)}"` : ""}><div class="label">${l}</div><div class="value">${v}</div></div>`;
+    }).join("")}</div>
     ${shootingSection(data.shooting)}
     ${advancedSection(data.advanced)}
     <h3 class="section-title">${t("injuryHistory")}</h3>
