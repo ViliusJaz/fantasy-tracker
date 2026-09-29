@@ -1,0 +1,44 @@
+# Rebuilds the public site every 15 minutes on GitHub: publish.sh fetches BasketNews through
+# the Cloudflare relay (BasketNews refuses GitHub's own servers), commits the recorded
+# lineups / injuries to main and pushes ./site to the gh-pages branch that Pages serves.
+name: Update site
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # GitHub may start scheduled runs a few minutes late
+  workflow_dispatch:          # "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write   # commit data, push gh-pages
+  pages: write      # ask Pages to rebuild
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build and publish
+        env:
+          BN_RELAY: https://bn-relay.vilius-jazgevicius.workers.dev
+          BN_RELAY_KEY: ${{ secrets.BN_RELAY_KEY }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          # the previous site as a local ref, so the push only uploads files that changed
+          git fetch -q --depth=1 origin gh-pages:refs/heads/gh-pages || true
+          bash publish.sh
+
+      - name: Rebuild Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" --silent || true
