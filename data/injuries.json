@@ -1340,7 +1340,22 @@
       "club": "Real Madrid"
     },
     "4913": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T11:42+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Played in the domestic league, but didn't travel with the team for Round 2 to Istanbul after a DNP in Round 1."
+            }
+          ]
+        }
+      ],
       "name": "Sergio Llull",
       "club": "Real Madrid"
     },
@@ -1366,6 +1381,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "DNP in Round 1 and domestic league, not registered yet (not injured)."
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T11:42+02:00",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "Has been registered for Round 2 and traveled with the team to Istanbul after DNP in Round 1 and domestic league (not injured)."
             }
           ]
         }
@@ -1539,7 +1561,27 @@
       ],
       "name": "Marcio Santos",
       "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "35875": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T11:42+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Didn't travel with the team to Istanbul (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Gabriele Procida",
+      "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-09-29T10:21:51"
+  "updatedAt": "2026-09-29T11:42:53"
 }
