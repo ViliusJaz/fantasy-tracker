@@ -702,6 +702,12 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (undisclosed)"
+            },
+            {
+              "date": "2026-09-29",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (knee injury)"
             }
           ]
         }
@@ -1497,5 +1503,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-09-29T00:00:41"
+  "updatedAt": "2026-09-29T05:34:02"
 }
