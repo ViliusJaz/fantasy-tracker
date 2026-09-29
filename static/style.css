@@ -799,6 +799,39 @@ table.box { min-width: 1100px; }
 .pv-notes ul { margin: 0; padding-left: 18px; }
 .pv-notes li { margin: 4px 0; color: var(--text-2); }
 
+.pv-compare { margin: 10px 0 4px; }
+.cmp { width: 100%; max-width: 560px; margin: 0 auto; border-collapse: collapse; font-size: 14px; }
+.cmp th { padding: 6px 8px; font-family: var(--font-display); font-size: 16px; font-weight: 700; white-space: nowrap; }
+.cmp td { padding: 5px 8px; border-top: 1px solid var(--hairline); }
+.cmp-l { text-align: right; width: 34%; }
+.cmp-r { text-align: left; width: 34%; }
+.cmp-label { text-align: center; color: var(--muted); white-space: nowrap; }
+.cmp-label span { cursor: help; }
+.cmp td b { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-2); }
+.cmp td .rk { margin: 0 6px; font-size: 12px; color: var(--faint); }
+.cmp td.better b { color: var(--win); }
+.cmp td.better .rk { color: var(--win); opacity: 0.8; }
+.pv-bullets { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--text-2); }
+.pv-bullets li { margin: 3px 0; }
+.pv-bullets.good li::marker { color: var(--win); }
+.pv-bullets.bad li::marker { color: var(--loss); }
+
+/* ---------- team page: games with the most of the team's players ---------- */
+.tg-list { display: grid; gap: 10px; }
+.tg-item {
+  display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 8px 22px;
+  width: 100%; padding: 14px 18px; text-align: left; cursor: pointer; font: inherit; color: inherit;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+  transition: border-color var(--fast) var(--ease), transform var(--fast) var(--ease);
+}
+.tg-item:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+.tg-teams { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 18px; }
+.tg-when { display: flex; align-items: center; gap: 4px; white-space: nowrap; font-size: 14px; }
+.tg-count { white-space: nowrap; font-size: 14px; color: var(--text-2); }
+.tg-count b { font-family: var(--font-display); font-size: 20px; color: var(--accent); margin-right: 2px; }
+.tg-names { font-size: 13.5px; color: var(--text-2); min-width: 0; }
+.tg-names b { color: var(--muted); font-weight: 600; font-size: 12px; }
+
 /* ---------- draft & transfers ---------- */
 .pmini { display: inline-flex; align-items: center; gap: 10px; min-width: 0; cursor: pointer; }
 .pmini .avatar { width: 34px; height: 34px; }
@@ -925,6 +958,8 @@ table.box { min-width: 1100px; }
 
 /* ---------- small screens ---------- */
 @media (max-width: 720px) {
+  .tg-item { grid-template-columns: auto minmax(0, 1fr); }
+  .tg-names { grid-column: 1 / -1; }
   .pv-sides { grid-template-columns: minmax(0, 1fr); }
   .preview { padding: 4px 14px 16px; }
   .news-row { grid-template-columns: minmax(0, 1fr); gap: 2px; padding: 12px 16px; }

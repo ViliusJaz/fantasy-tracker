@@ -1442,16 +1442,98 @@ def club_results(meta, before_round):
     return {club: sorted(games.values(), key=lambda x: x["at"]) for club, games in results.items()}
 
 
+TEAM_ADV_URL = "https://basketnews.com/advanced-stats/team-profile/overview.json"
+_team_adv_cache = {}
+# Tokens every other club shares; they would pair e.g. the two Tel Aviv clubs.
+_CLUB_NOISE = {"fc", "bc", "basket", "basketball", "tel", "aviv", "istanbul", "belgrade", "athens", "milan"}
+# BasketNews team stat -> (our key, "higher is better")
+TEAM_STATS = [
+    ("offensive_rating", "ortg", True), ("defensive_rating", "drtg", False), ("possessions", "pace", True),
+    ("points", "pts", True), ("points_opponent", "ptsAgainst", False), ("ts_percentage", "ts", True),
+    ("3p_percentage", "p3", True), ("3p_percentage_opponent", "p3Against", False),
+    ("offensive_rebound_percentage", "oreb", True), ("defensive_rebound_percentage", "dreb", True),
+    ("assist_percentage", "ast", True), ("turnover_percentage", "tov", False),
+]
+
+
+def team_advanced(meta):
+    """BasketNews team stats for the season: {bnTeamId: {"name", "short", "stats": {key: {value, rank}},
+    "strengths", "weaknesses", "games"}}; ranks are among all clubs (1 = best)."""
+    league, season = meta.get("bnLeagueId"), meta.get("seasonYear")
+    if not league or not season:
+        return {}
+    key = (league, season, LANG.get())
+    hit = _team_adv_cache.get(key)
+    if hit and hit[0] > time.time():
+        return hit[1]
+    req = urllib.request.Request(
+        TEAM_ADV_URL, data=urllib.parse.urlencode({"league_id": league, "season": season}).encode(),
+        headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
+                 "Content-Type": "application/x-www-form-urlencoded",
+                 "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
+    try:
+        with urllib.request.urlopen(req, context=SSL_CTX, timeout=30) as resp:
+            data = (json.load(resp).get("data") or {})
+    except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException, ValueError) as exc:
+        print(f"Komandų statistika nepasiekiama: {exc}")
+        return hit[1] if hit else {}
+    lang = "en" if LANG.get() == "en" else "lt"
+    summaries = {}
+    for item in data.get("summaries") or []:
+        for part in item.get("items") or []:
+            # "general" is a free-text summary that is often a request for more data, not a summary
+            if part.get("language") == lang and part.get("type") in ("strengths", "weaknesses"):
+                summaries.setdefault(item["team_id"], {})[part["type"]] = part.get("content") or []
+    stats = {row["team_id"]: row for row in data.get("stats") or []}
+    result = {}
+    for team in data.get("teams") or []:
+        row = stats.get(team["id"]) or {}
+        result[team["id"]] = {
+            "name": team.get("name_en"), "short": team.get("short_name_en"),
+            "games": ((row.get("games_played") or {}).get("total") or {}).get("value") or 0,
+            "stats": {ours: {"value": ((row.get(theirs) or {}).get("total") or {}).get("value"),
+                             "rank": ((row.get(theirs) or {}).get("total") or {}).get("rank")}
+                      for theirs, ours, _ in TEAM_STATS},
+            "strengths": (summaries.get(team["id"]) or {}).get("strengths") or [],
+            "weaknesses": (summaries.get(team["id"]) or {}).get("weaknesses") or [],
+        }
+    _team_adv_cache[key] = (time.time() + 3600, result)
+    return result
+
+
+def _club_tokens(name):
+    return set(ascii_slug(name or "").split("-")) - _CLUB_NOISE - {""}
+
+
+def club_team_ids(clubs, teams):
+    """Fantasy club abbr -> BasketNews team id, matched on the English club name."""
+    out = {}
+    for abbr, club in clubs.items():
+        mine = _club_tokens(club.get("nameEn"))
+        best, score = None, 0
+        for tid, team in teams.items():
+            sc = len(mine & _club_tokens(team["name"])) + (2 if ascii_slug(club.get("name") or "") == ascii_slug(team["short"] or "") else 0)
+            if sc > score:
+                best, score = tid, sc
+        if best is not None:
+            out[abbr] = best
+    return out
+
+
 def preview_context(meta, rnd, pmap, own):
     report = injury_report(meta)
-    roster = {}
+    roster, clubs = {}, {}
     for p in pmap.values():
         if p["club"]:
             roster.setdefault(p["club"]["abbr"], []).append(p)
+            clubs[p["club"]["abbr"]] = p["club"]
     results = club_results(meta, rnd)
     allowed = [g["against"] for games in results.values() for g in games]
+    teams = team_advanced(meta)
     return {"roster": roster, "results": results, "own": own, "report": report,
-            "leagueAllowed": sum(allowed) / len(allowed) if allowed else None}
+            "leagueAllowed": sum(allowed) / len(allowed) if allowed else None,
+            "teamStats": {abbr: teams[tid] for abbr, tid in club_team_ids(clubs, teams).items()},
+            "teamCount": len(teams)}
 
 
 def _preview_player(p, own, report):
@@ -1482,13 +1564,42 @@ def game_preview(g, ctx):
                       "home": x["home"]} for x in games[-5:]],
             "key": [v for v in active if not (v["injury"] and v["injury"]["status"] == "out")][:4],
             "injuries": injured,
+            "team": ctx["teamStats"].get(abbr),
         }
     notes = preview_notes(g, sides, ctx)
     owned = [{"player": {k: v[k] for k in ("id", "name")}, "owner": v["owner"], "club": g[side]["abbr"]}
              for side in ("home", "away")
              for v in (_preview_player(p, own, report) for p in ctx["roster"].get(g[side]["abbr"], []))
              if v["owner"]]
-    return {"home": sides["home"], "away": sides["away"], "notes": notes, "owned": owned}
+    return {"home": sides["home"], "away": sides["away"], "notes": notes, "owned": owned,
+            "teamCount": ctx["teamCount"]}
+
+
+def team_notes(g, sides, ctx):
+    """Notes from the BasketNews team ratings: attack against a weak defence, pace."""
+    n = ctx["teamCount"] or 20
+    home, away = sides["home"]["team"], sides["away"]["team"]
+    if not home or not away or min(home["games"], away["games"]) < 1:
+        return []
+    notes = []
+    top, bottom = max(3, n // 4), n - max(3, n // 4) + 1  # top / bottom quarter of the league
+    for team, other, abbr, opp in ((home, away, g["home"]["abbr"], g["away"]["abbr"]),
+                                   (away, home, g["away"]["abbr"], g["home"]["abbr"])):
+        o, d = team["stats"]["ortg"], other["stats"]["drtg"]
+        if o["rank"] and d["rank"] and o["rank"] <= top and d["rank"] >= bottom:
+            notes.append(L(f"Palanku {abbr} žaidėjams: puolimas {o['rank']}-as lygoje, o {opp} gynyba tik {d['rank']}-a.",
+                           f"Good for {abbr} players: their offense ranks {o['rank']}, {opp}'s defense only {d['rank']}."))
+        elif o["rank"] and d["rank"] and o["rank"] >= bottom and d["rank"] <= top:
+            notes.append(L(f"Sunkus vakaras {abbr} puolimui: {opp} gynyba {d['rank']}-a lygoje.",
+                           f"Tough night for {abbr}'s offense: {opp}'s defense ranks {d['rank']}."))
+    ph, pa = home["stats"]["pace"]["rank"], away["stats"]["pace"]["rank"]
+    if ph and pa and ph <= top and pa <= top:
+        notes.append(L("Abi komandos žaidžia greitu tempu: daugiau atakų, daugiau fantasy taškų.",
+                       "Both teams play fast: more possessions, more fantasy points."))
+    elif ph and pa and ph >= bottom and pa >= bottom:
+        notes.append(L("Abi komandos žaidžia lėtai: mažiau atakų, mažiau taškų.",
+                       "Both teams play slowly: fewer possessions, fewer points."))
+    return notes
 
 
 def preview_notes(g, sides, ctx):
@@ -1520,6 +1631,7 @@ def preview_notes(g, sides, ctx):
         if allowed is not None and league and len(last) >= 2 and allowed - league >= 5:
             notes.append(L(f"Palanku {opp} puolėjams: {abbr} praleidžia vid. {num(allowed)} tšk. (lygos vid. {num(round(league, 1))}).",
                            f"Good for {opp} scorers: {abbr} allow {num(allowed)} points a game (league {num(round(league, 1))})."))
+    notes += team_notes(g, sides, ctx)
     free = [v for side in ("home", "away") for v in sides[side]["key"] if not v["owner"]]
     if free:
         best = max(free, key=lambda v: v["avgPts"] or 0)

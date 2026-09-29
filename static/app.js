@@ -72,6 +72,26 @@ const I18N = {
     pvMore: "ir dar {n}",
     pvNotes: "Į ką atkreipti dėmesį",
     pvMine: "Tavo žaidėjai šiose rungtynėse: {p}.",
+    pvTeamStats: "Komandų statistika (vieta tarp {n})",
+    pvStrengths: "Stiprybės (BasketNews)",
+    pvWeaknesses: "Silpnybės (BasketNews)",
+    teamStat: {
+      ortg: ["Puolimo reitingas", "Įmesti taškai per 100 atakų"],
+      drtg: ["Gynybos reitingas", "Praleisti taškai per 100 atakų; mažiau yra geriau"],
+      pace: ["Tempas", "Atakų skaičius per rungtynes"],
+      pts: ["Taškai", "Įmesti taškai per rungtynes"],
+      ptsAgainst: ["Praleista taškų", "Praleisti taškai per rungtynes"],
+      ts: ["TS%", "Tikrasis metimų taiklumas: dvitaškiai, tritaškiai ir baudos kartu"],
+      p3: ["Tritaškiai", "Tritaškių taiklumas"],
+      p3Against: ["Varžovų tritaškiai", "Kiek taikliai prieš juos meta varžovai"],
+      oreb: ["Atk. kam. puolime", "Kokią dalį galimų kamuolių atkovoja puolime"],
+      dreb: ["Atk. kam. gynyboje", "Kokią dalį galimų kamuolių atkovoja gynyboje"],
+      ast: ["Rez. perdavimai", "Kokia dalis pataikymų po rezultatyvaus perdavimo"],
+      tov: ["Klaidos", "Kokia atakų dalis baigiasi klaida; mažiau yra geriau"],
+    },
+    tgTitle: "Rungtynės, kuriose komanda turi daugiausia žaidėjų",
+    tgPlayers: "žaidėjai",
+    tgInactive: "+{n} neregistr.",
     gameCanceled: "Atšauktos",
     gameFinal: "Baigtos",
     ownedInGame: "{n} lygos žaid.",
@@ -352,6 +372,26 @@ const I18N = {
     pvMore: "and {n} more",
     pvNotes: "Things to watch",
     pvMine: "Your players in this game: {p}.",
+    pvTeamStats: "Team stats (rank among {n})",
+    pvStrengths: "Strengths (BasketNews)",
+    pvWeaknesses: "Weaknesses (BasketNews)",
+    teamStat: {
+      ortg: ["Offensive rating", "Points scored per 100 possessions"],
+      drtg: ["Defensive rating", "Points allowed per 100 possessions; lower is better"],
+      pace: ["Pace", "Possessions per game"],
+      pts: ["Points", "Points scored per game"],
+      ptsAgainst: ["Points allowed", "Points allowed per game"],
+      ts: ["TS%", "True shooting: twos, threes and free throws together"],
+      p3: ["3-point %", "Three-point accuracy"],
+      p3Against: ["Opponent 3-point %", "How well opponents shoot threes against them"],
+      oreb: ["Offensive rebounds", "Share of available offensive rebounds they get"],
+      dreb: ["Defensive rebounds", "Share of available defensive rebounds they get"],
+      ast: ["Assists", "Share of made baskets that were assisted"],
+      tov: ["Turnovers", "Share of possessions ending in a turnover; lower is better"],
+    },
+    tgTitle: "Games with the most of this team's players",
+    tgPlayers: "players",
+    tgInactive: "+{n} not registered",
     gameCanceled: "Canceled",
     gameFinal: "Final",
     ownedInGame: "{n} league players",
@@ -1993,6 +2033,30 @@ function previewSide(fid, side, pv, mine) {
     <ul class="pv-list">${key || `<li class="dim small">${t("pvNoStats")}</li>`}</ul>
     <h5 class="pv-h">${t("pvInjuries")}</h5>
     <ul class="pv-list">${inj || `<li class="dim small">${t("pvNoInjuries")}</li>`}${more}</ul>
+    ${pv.team?.strengths.length ? `<h5 class="pv-h">${t("pvStrengths")}</h5><ul class="pv-bullets good">${pv.team.strengths.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+    ${pv.team?.weaknesses.length ? `<h5 class="pv-h">${t("pvWeaknesses")}</h5><ul class="pv-bullets bad">${pv.team.weaknesses.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+  </div>`;
+}
+
+// Side-by-side team ratings; the better rank of each row is highlighted.
+const TEAM_ROWS = ["ortg", "drtg", "pace", "pts", "ptsAgainst", "ts", "p3", "p3Against", "oreb", "dreb", "ast", "tov"];
+function teamCompare(g) {
+  const h = g.preview.home.team, a = g.preview.away.team;
+  if (!h || !a) return "";
+  const labels = t("teamStat");
+  const cell = (x, better, side) => `<td class="cmp-${side}${better ? " better" : ""}">
+      <b>${x.value == null ? "-" : fmt1(x.value)}</b>${x.rank ? `<span class="rk">#${x.rank}</span>` : ""}</td>`;
+  const rows = TEAM_ROWS.map((k) => {
+    const x = h.stats[k], y = a.stats[k];
+    const hb = x.rank && y.rank && x.rank < y.rank, ab = x.rank && y.rank && y.rank < x.rank;
+    return `<tr>${cell(x, hb, "l")}<td class="cmp-label"><span data-tip="${esc(labels[k][1])}">${labels[k][0]}</span></td>${cell(y, ab, "r")}</tr>`;
+  }).join("");
+  return `<div class="pv-compare">
+    <h5 class="pv-h">${t("pvTeamStats", { n: g.preview.teamCount || 20 })}</h5>
+    <table class="cmp">
+      <thead><tr><th class="cmp-l">${clubMini(g.home)} ${esc(g.home.abbr)}</th><th></th><th class="cmp-r">${esc(g.away.abbr)} ${clubMini(g.away)}</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
   </div>`;
 }
 
@@ -2005,6 +2069,7 @@ function gamePreview(fid, g) {
     ...pv.notes,
   ];
   return `<div class="preview">
+    ${teamCompare(g)}
     <div class="pv-sides">${previewSide(fid, g.home, pv.home, mine)}${previewSide(fid, g.away, pv.away, mine)}</div>
     ${notes.length ? `<div class="pv-notes"><h5 class="pv-h">${t("pvNotes")}</h5><ul>${notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul></div>` : ""}
   </div>`;
@@ -2159,6 +2224,42 @@ function teamCharts(data) {
   return { html, bind: () => { pos.bind(); pts.bind(); } };
 }
 
+// The round's real games where this fantasy team has the most players.
+function topGamesSection(fid, data) {
+  const byGame = new Map();
+  for (const p of data.lineup.players) {
+    for (const g of p.games || []) {
+      if (!p.club) continue;
+      const [home, away] = g.home ? [p.club.abbr, g.opponent] : [g.opponent, p.club.abbr];
+      const id = `${home}-${away}-${g.at.slice(0, 10)}`;
+      const e = byGame.get(id) || { id, g, home, away, logos: {}, players: [] };
+      e.logos[p.club.abbr] = p.club.logo;
+      e.logos[g.opponent] = g.opponentLogo;
+      e.players.push(p);
+      byGame.set(id, e);
+    }
+  }
+  const active = (e) => e.players.filter((p) => p.slot !== "inactive").length;
+  const top = [...byGame.values()]
+    .sort((x, y) => active(y) - active(x) || y.players.length - x.players.length || x.g.at.localeCompare(y.g.at))
+    .slice(0, 3);
+  if (!top.length) return "";
+  const logo = (src) => (src ? `<img class="club-mini md" src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">` : "");
+  const items = top.map((e) => {
+    const names = e.players.map((p) => `<span class="${p.slot === "inactive" ? "dim" : ""}">${p.slotLabel ? `<b>${esc(p.slotLabel)}</b> ` : ""}${esc(p.name)}</span>`).join(", ");
+    const g = e.g;
+    const status = g.completed ? `${g.home ? g.score[0] : g.score[1]}:${g.home ? g.score[1] : g.score[0]}` : g.live ? "LIVE" : when(g.at);
+    return `<button type="button" class="tg-item" data-open-game="${esc(e.id)}">
+      <span class="tg-teams">${logo(e.logos[e.home])}<strong>${esc(e.home)}</strong><span class="dim">-</span><strong>${esc(e.away)}</strong>${logo(e.logos[e.away])}</span>
+      <span class="tg-when">${g.day ? `<span class="day-tag d${g.day}">${t("dayShort", { n: g.day })}</span>` : ""}<span class="dim">${esc(status)}</span></span>
+      <span class="tg-count"><b>${active(e)}</b> ${t("tgPlayers")}${e.players.length > active(e) ? ` <span class="dim">${t("tgInactive", { n: e.players.length - active(e) })}</span>` : ""}</span>
+      <span class="tg-names">${names}</span>
+    </button>`;
+  }).join("");
+  return `<h2 class="section-title">${t("tgTitle")}</h2>
+    <div class="tg-list">${items}</div>`;
+}
+
 function historyTable(data) {
   const { league, history } = data;
   if (!history.length) return "";
@@ -2235,10 +2336,15 @@ async function renderTeam(fid, tid, params, token, silent) {
     ${lineup.note ? `<p class="note warn-note">${esc(lineup.note)}</p>` : ""}
     ${lineup.players.length ? lineupTable(lineup, data.roundState) : stateBox(t("lineupNA"))}
     <p class="note">${statsNote} ${lineup.source !== "roster" ? t("multNote") : ""}</p>
-    ${historyTable(data)}`);
+    ${historyTable(data)}
+    ${topGamesSection(fid, data)}`);
 
   charts.bind();
   bindRoundSelect(base);
+  app.querySelectorAll("[data-open-game]").forEach((b) => b.addEventListener("click", () => {
+    openGames.add(b.dataset.openGame);
+    location.hash = `#/l/${fid}/games?r=${r}`;
+  }));
   app.querySelectorAll("tr[data-href]").forEach((tr) => tr.addEventListener("click", () => (location.hash = tr.dataset.href)));
   const btn = document.getElementById("my-team");
   if (btn) {
