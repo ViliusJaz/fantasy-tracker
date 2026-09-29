@@ -183,7 +183,6 @@ const I18N = {
     moveIn: "Atėjo",
     moveOut: "Išėjo",
     moveWhen: "Laikas",
-    transfersNote: "Statymai laisviesiems agentams ir mainų pasiūlymai matomi tik juos pateikusiems. BasketNews juos įvykdo likus 3 valandoms iki turo pradžios, tada jie atsiranda čia.",
     relNow: "dabar",
     relIn: "po {s}",
     relAgo: "prieš {s}",
@@ -491,7 +490,6 @@ const I18N = {
     moveIn: "In",
     moveOut: "Out",
     moveWhen: "When",
-    transfersNote: "Free-agent bids and trade offers are only visible to the teams that made them. BasketNews processes them 3 hours before the round starts, and then they show up here.",
     relNow: "now",
     relIn: "in {s}",
     relAgo: "{s} ago",
@@ -1653,7 +1651,6 @@ async function renderTransfers(fid, token, silent) {
   setView(`
     ${leagueHeader(league, "transfers")}
     ${deadline}
-    <p class="note">${t("transfersNote")}</p>
     <h2 class="section-title">${t("movesTitle")}</h2>
     ${list}
     ${bids}
