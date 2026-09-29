@@ -12,6 +12,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "DNP in Round 1 (rehab after surgery)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Rehab after surgery"
             }
           ]
         }
@@ -20,12 +27,42 @@
       "club": "Anadolu Efes Istanbul"
     },
     "14714": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "Burak Can Yildizli",
       "club": "Anadolu Efes Istanbul"
     },
     "35489": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "David Mutaf",
       "club": "Anadolu Efes Istanbul"
     },
@@ -628,12 +665,19 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-09-29",
           "lastSeen": "2026-09-29",
           "updates": [
             {
               "date": "2026-09-28",
               "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (Undisclosed)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "ready",
               "return": "Round 2",
               "comment": "DNP in Round 1 (Undisclosed)"
             }
@@ -653,6 +697,13 @@
             {
               "date": "2026-09-28",
               "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (Undisclosed injury)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
               "return": "Round 2",
               "comment": "DNP in Round 1 (Undisclosed injury)"
             }
@@ -1013,6 +1064,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -1024,7 +1082,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-09-29",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -1032,6 +1090,13 @@
               "status": "game-time",
               "return": "Round 2",
               "comment": "Traveled with the team to Kaunas"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "Included in 12-man roster"
             }
           ]
         }
@@ -1040,7 +1105,22 @@
       "club": "Olympiacos Piraeus"
     },
     "35250": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "Antonios Karagiannidis",
       "club": "Olympiacos Piraeus"
     },
@@ -1064,7 +1144,22 @@
       "club": "Olympiacos Piraeus"
     },
     "37246": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "Omiros Netzipoglou",
       "club": "Olympiacos Piraeus"
     },
@@ -1080,6 +1175,13 @@
               "status": "doubtful",
               "return": "Round 2",
               "comment": "Not expected to play in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -1417,7 +1519,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-09-29",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -1425,6 +1527,13 @@
               "status": "game-time",
               "return": "Round 2",
               "comment": "DNP in domestic league, will travel to Istanbul (minor undisclosed injury)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "Cleared to play, included in 12-man roster (minor undisclosed injury)"
             }
           ]
         }
@@ -1458,7 +1567,22 @@
       "club": "Real Madrid"
     },
     "39042": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "Max Shulga",
       "club": "Real Madrid"
     },
@@ -1466,7 +1590,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-09-29",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -1481,6 +1605,13 @@
               "status": "game-time",
               "return": "Round 2",
               "comment": "Has been registered for Round 2 and traveled with the team to Istanbul after DNP in Round 1 and domestic league (not injured)."
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "ready",
+              "return": "Round 2",
+              "comment": "Cleared to play, included in 12-man roster"
             }
           ]
         }
@@ -1723,7 +1854,187 @@
       ],
       "name": "Tobias Jensen",
       "club": "FC Bayern Munich"
+    },
+    "39671": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Ruzgar Fenemen",
+      "club": "Anadolu Efes Istanbul"
+    },
+    "40764": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "D. Karutasu",
+      "club": "Anadolu Efes Istanbul"
+    },
+    "21014": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Onuralp Bitim",
+      "club": "Fenerbahce Beko Istanbul"
+    },
+    "36924": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Mert Emre Eksioglu",
+      "club": "Fenerbahce Beko Istanbul"
+    },
+    "14693": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Melih Mahmutoglu",
+      "club": "Fenerbahce Beko Istanbul"
+    },
+    "8318": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Back discomfort"
+            }
+          ]
+        }
+      ],
+      "name": "Cory Joseph",
+      "club": "Olympiacos Piraeus"
+    },
+    "35704": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Olivier Sarr",
+      "club": "Real Madrid"
+    },
+    "39598": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Matteo Baiocchi",
+      "club": "Virtus Bologna"
+    },
+    "23833": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T19:13+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Davide Casarin",
+      "club": "Virtus Bologna"
     }
   },
-  "updatedAt": "2026-09-29T18:10:18"
+  "updatedAt": "2026-09-29T19:13:19"
 }
