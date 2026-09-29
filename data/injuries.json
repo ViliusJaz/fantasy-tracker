@@ -1570,7 +1570,22 @@
       "club": "Virtus Bologna"
     },
     "38970": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T17:54+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Played in the domestic league.Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "Kaodirichi Akobundu-Ehiogu",
       "club": "Zalgiris Kaunas"
     },
@@ -1586,6 +1601,13 @@
               "status": "game-time",
               "return": "Round 2",
               "comment": "DNP in Round 1+DNP in the domestic league (hamstring strain)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T17:54+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Hamstring strain"
             }
           ]
         }
@@ -1696,5 +1718,5 @@
       "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-09-29T17:28:59"
+  "updatedAt": "2026-09-29T17:54:54"
 }
