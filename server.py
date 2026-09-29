@@ -2474,26 +2474,20 @@ def draft_awards(meta, finished, team_names):
                 drops += [(rnd, t.get("updatedAt") or "", tid, pid) for pid in moved_players(t.get("offer"))]
     none_yet = L("atsiras po pirmųjų išmetimų", "appears after the first drops")
     before = lambda r: L(f"prieš {r + 1} turą", f"before round {r + 1}")  # noqa: E731
-    drop_titles = (L("Pirmas išmestas", "Earliest player dropped"), L("Geriausias išmestas", "Best player who was dropped"),
+    drop_titles = (L("Geriausias išmestas", "Best player who was dropped"),
                    L("Labiausiai gailimas išmetimas", "Most regrettable drop"))
     drop_info = (
-        L("Pirmasis žaidėjas, kurį kuri nors komanda paleido į laisvuosius agentus.",
-          "The first player any team released to free agency."),
         L("Iš visų išmestų žaidėjų: didžiausi šio sezono vidutiniai FP.",
           "Of all dropped players: the highest average FP this season."),
         L("Kiek FP žaidėjas surinko baigtuose turuose po to, kai komanda jį išmetė. Laimi daugiausia surinkęs.",
           "FP the player scored in finished rounds after the team let the player go. The most wins."))
     if not drops:
-        cards += [no_award(title, none_yet, icon, info=info) for title, icon, info in zip(drop_titles, ("🚪", "🗑️", "😬"), drop_info)]
+        cards += [no_award(title, none_yet, icon, info=info) for title, icon, info in zip(drop_titles, ("🗑️", "😬"), drop_info)]
     else:
-        rnd, _, tid, pid = min(drops)
-        extra = f" · {L('drafte', 'drafted')} {pick_word(drafted[pid][0])}" if pid in drafted else ""
-        cards.append(award(drop_titles[0], name(pid), rnd_word(rnd), f"{L('išmetė', 'dropped by')} {team(tid)} {before(rnd)}{extra}",
-                           "🚪", player_id=pid, info=drop_info[0]))
         rnd, _, tid, pid = max(drops, key=lambda d: avg(d[3]))
-        cards.append(award(drop_titles[1], name(pid), f"{num(avg(pid))} FP",
+        cards.append(award(drop_titles[0], name(pid), f"{num(avg(pid))} FP",
                            f"{L('išmetė', 'dropped by')} {team(tid)} {before(rnd)} · {L('dabar', 'now')}: {holder(pid)}",
-                           "🗑️", player_id=pid, info=drop_info[1]))
+                           "🗑️", player_id=pid, info=drop_info[0]))
         after = {}
         for r in finished:
             round_pts = {v["id"]: v.get("roundPts") or 0 for v in players(meta, r, r).values()}
@@ -2501,8 +2495,8 @@ def draft_awards(meta, finished, team_names):
                 if r >= d[0]:
                     after[d] = after.get(d, 0) + round_pts.get(d[3], 0)
         rnd, _, tid, pid = max(drops, key=lambda d: after.get(d, 0))
-        cards.append(award(drop_titles[2], team(tid), f"{num(after.get((rnd, _, tid, pid), 0))} FP",
-                           f"{L('išmetė', 'dropped')} {name(pid)} {before(rnd)}", "😬", team_id=tid, info=drop_info[2]))
+        cards.append(award(drop_titles[1], team(tid), f"{num(after.get((rnd, _, tid, pid), 0))} FP",
+                           f"{L('išmetė', 'dropped')} {name(pid)} {before(rnd)}", "😬", team_id=tid, info=drop_info[1]))
 
     # Best draft-day roster: season FP of everyone a team drafted, wherever they play now.
     by_team = {}
