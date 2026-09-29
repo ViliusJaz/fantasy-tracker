@@ -1807,7 +1807,7 @@ def injuries_payload(fid):
                 })
     events.sort(key=lambda e: e["at"], reverse=True)
     return {"league": meta, "events": events[:FEED_LIMIT], "total": len(events),
-            "reportUrl": meta["injuryReportUrl"]}
+            "teams": [r["team"] for r in standings(meta)[1]], "reportUrl": meta["injuryReportUrl"]}
 
 
 # --------------------------------------------------------------------------- draft & transfers

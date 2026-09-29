@@ -82,7 +82,10 @@ const I18N = {
     tabInjuries: "Traumos",
     newsBad: "Bloga žinia komandai {t}:",
     newsGood: "Gera žinia komandai {t}:",
-    newsOwnedOnly: "Tik lygos komandų žaidėjai",
+    newsOwnedOnly: "Visų lygos komandų žaidėjai",
+    newsAll: "Visi žaidėjai",
+    newsMine: "(mano)",
+    newsEmptyTeam: "Šios komandos žaidėjų traumų sąraše nebuvo.",
     newsCount: "{n} įrašai",
     newsEmpty: "Traumų sąraše pokyčių dar nebuvo.",
     newsNote: "Pagal BasketNews traumų sąrašą ({link}). Pokyčiai tikrinami kas 15 min., laikas rodo, kada pokytis pastebėtas.",
@@ -344,7 +347,10 @@ const I18N = {
     tabInjuries: "Injuries",
     newsBad: "Bad news for {t}:",
     newsGood: "Good news for {t}:",
-    newsOwnedOnly: "Only players on league teams",
+    newsOwnedOnly: "Players on any league team",
+    newsAll: "All players",
+    newsMine: "(mine)",
+    newsEmptyTeam: "No players of this team have been on the injury report.",
     newsCount: "{n} updates",
     newsEmpty: "No injury report changes yet.",
     newsNote: "From the BasketNews injury report ({link}). Checked every 15 minutes; the time shows when a change was spotted.",
@@ -1558,9 +1564,10 @@ async function renderInjuries(fid, params, token, silent) {
   }
   if (token !== renderToken) return;
   const { league } = data;
-  const owned = params.get("owned") === "1";
+  // "" = everyone, "owned" = players on any league team, otherwise one team's players
+  const filter = params.get("team") || (params.get("owned") === "1" ? "owned" : "");
   const mine = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
-  const events = data.events.filter((e) => !owned || e.owner);
+  const events = data.events.filter((e) => !filter || (filter === "owned" ? e.owner : e.owner?.id === filter));
   const rows = events.map((e) => {
     const where = [e.player.club?.abbr, e.owner?.title].filter(Boolean).map(esc).join(", ");
     const prefix = e.owner && e.tone !== "neutral"
@@ -1581,13 +1588,18 @@ async function renderInjuries(fid, params, token, silent) {
   setView(`
     ${leagueHeader(league, "injuries")}
     <div class="toolbar">
-      <label class="check"><input type="checkbox" id="news-owned"${owned ? " checked" : ""}> ${t("newsOwnedOnly")}</label>
+      <select class="select" id="news-team" aria-label="${esc(t("team"))}">
+        <option value="">${t("newsAll")}</option>
+        <option value="owned"${filter === "owned" ? " selected" : ""}>${t("newsOwnedOnly")}</option>
+        ${(data.teams || []).map((tm) => `<option value="${esc(tm.id)}"${tm.id === filter ? " selected" : ""}>${esc(tm.title)}${tm.id === mine ? ` ${t("newsMine")}` : ""}</option>`).join("")}
+      </select>
       <span class="dim small">${t("newsCount", { n: events.length })}</span>
     </div>
-    ${events.length ? `<ul class="card news">${rows}</ul>` : `<div class="card">${stateBox(t("newsEmpty"))}</div>`}
+    ${events.length ? `<ul class="card news">${rows}</ul>`
+      : `<div class="card">${stateBox(filter && filter !== "owned" ? t("newsEmptyTeam") : t("newsEmpty"))}</div>`}
     <p class="note">${t("newsNote", { link: report })}</p>`);
-  document.getElementById("news-owned").addEventListener("change", (ev) => {
-    location.hash = `#/l/${fid}/injuries${ev.target.checked ? "?owned=1" : ""}`;
+  document.getElementById("news-team").addEventListener("change", (ev) => {
+    location.hash = `#/l/${fid}/injuries${ev.target.value ? `?team=${ev.target.value}` : ""}`;
   });
 }
 
