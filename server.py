@@ -1401,7 +1401,128 @@ def games_payload(fid, rnd=None):
                   key=lambda x: x["fp"] if x["fp"] is not None else -99, default=None)
         g["top"] = {"name": top["name"], "fp": top["fp"]} if top else None
         out.append(g)
+    upcoming = [g for g in out if not g["completed"] and not g["live"] and not g["canceled"]]
+    if upcoming:
+        ctx = preview_context(meta, rnd, pmap, own)
+        for g in upcoming:
+            g["preview"] = game_preview(g, ctx)
     return {"league": meta, "round": rnd, "state": round_state(meta, rnd), "games": out}
+
+
+# --------------------------------------------------------------------------- game previews
+
+def club_results(meta, before_round):
+    """Finished games of every club before a round: {abbr: [{at, opp, home, for, against}]} oldest first."""
+    rounds = list(range(meta["firstRound"], before_round))
+    results = {}
+    for _, pm in pool_map(lambda r: (r, players(meta, r, r)), rounds):
+        for p in pm.values():
+            club = (p["club"] or {}).get("abbr")
+            for g in (p["games"] if club else []):
+                if not g["completed"] or not g["score"]:
+                    continue
+                games = results.setdefault(club, {})
+                games.setdefault(g["at"], {"at": g["at"], "opp": g["opponent"], "home": g["home"],
+                                           "for": g["score"][0], "against": g["score"][1]})
+    return {club: sorted(games.values(), key=lambda x: x["at"]) for club, games in results.items()}
+
+
+def preview_context(meta, rnd, pmap, own):
+    report = injury_report(meta)
+    roster = {}
+    for p in pmap.values():
+        if p["club"]:
+            roster.setdefault(p["club"]["abbr"], []).append(p)
+    results = club_results(meta, rnd)
+    allowed = [g["against"] for games in results.values() for g in games]
+    return {"roster": roster, "results": results, "own": own, "report": report,
+            "leagueAllowed": sum(allowed) / len(allowed) if allowed else None}
+
+
+def _preview_player(p, own, report):
+    season = p["season"] or {}
+    inj = injury_view(report.get(p["bnId"]), p["health"])
+    return {**player_brief(p), "owner": (own.get(p["id"]) or {}).get("team"),
+            "line": {k: season.get(k) for k in ("min", "pts", "reb", "ast")},
+            "injury": inj}
+
+
+def game_preview(g, ctx):
+    """What to know before a game: form, key players, injuries and a few generated notes."""
+    own, report = ctx["own"], ctx["report"]
+    sides, notes = {}, []
+    for side in ("home", "away"):
+        abbr = g[side]["abbr"]
+        roster = ctx["roster"].get(abbr, [])
+        games = ctx["results"].get(abbr, [])
+        views = [_preview_player(p, own, report) for p in roster]
+        active = sorted((v for v in views if v["gamesPlayed"]), key=lambda v: -(v["avgPts"] or 0))
+        injured = sorted((v for v in views if v["injury"]), key=lambda v: -(v["avgPts"] or 0))
+        wins = sum(1 for x in games if x["for"] > x["against"])
+        sides[side] = {
+            "record": {"w": wins, "l": len(games) - wins} if games else None,
+            "avgFor": round(sum(x["for"] for x in games) / len(games), 1) if games else None,
+            "avgAgainst": round(sum(x["against"] for x in games) / len(games), 1) if games else None,
+            "last": [{"won": x["for"] > x["against"], "score": [x["for"], x["against"]], "opp": x["opp"],
+                      "home": x["home"]} for x in games[-5:]],
+            "key": [v for v in active if not (v["injury"] and v["injury"]["status"] == "out")][:4],
+            "injuries": injured,
+        }
+    notes = preview_notes(g, sides, ctx)
+    owned = [{"player": {k: v[k] for k in ("id", "name")}, "owner": v["owner"], "club": g[side]["abbr"]}
+             for side in ("home", "away")
+             for v in (_preview_player(p, own, report) for p in ctx["roster"].get(g[side]["abbr"], []))
+             if v["owner"]]
+    return {"home": sides["home"], "away": sides["away"], "notes": notes, "owned": owned}
+
+
+def preview_notes(g, sides, ctx):
+    notes = []
+    for side, other in (("home", "away"), ("away", "home")):
+        abbr, opp = g[side]["abbr"], g[other]["abbr"]
+        info = sides[side]
+        for v in info["injuries"]:
+            status, avg = v["injury"]["status"], v["avgPts"] or 0
+            if status == "out" and avg >= 8:
+                notes.append(L(f"{abbr} žais be {v['name']} (vid. {num(avg)} FP).",
+                               f"{abbr} will be without {v['name']} ({num(avg)} FP avg)."))
+            elif status != "out" and avg >= 12:
+                notes.append(L(f"{v['name']} ({abbr}) dalyvavimas neaiškus: {v['injury']['label'].lower()}.",
+                               f"{v['name']} ({abbr}) is uncertain: {v['injury']['label'].lower()}."))
+        if g[side].get("combined"):
+            notes.append(L(f"{abbr} šį turą žaidžia daugiau nei vienas rungtynes: jų žaidėjai gali surinkti daugiau taškų.",
+                           f"{abbr} play more than once this round, so their players can score more."))
+        last = [x["for"] > x["against"] for x in ctx["results"].get(abbr, [])]
+        streak = 0
+        for won in reversed(last):
+            if won != last[-1]:
+                break
+            streak += 1
+        if streak >= 2:
+            notes.append(L(f"{abbr} {'laimėjo' if last[-1] else 'pralaimėjo'} {streak} rungtynes iš eilės.",
+                           f"{abbr} have {'won' if last[-1] else 'lost'} {streak} in a row."))
+        allowed, league = info["avgAgainst"], ctx["leagueAllowed"]
+        if allowed is not None and league and len(last) >= 2 and allowed - league >= 5:
+            notes.append(L(f"Palanku {opp} puolėjams: {abbr} praleidžia vid. {num(allowed)} tšk. (lygos vid. {num(round(league, 1))}).",
+                           f"Good for {opp} scorers: {abbr} allow {num(allowed)} points a game (league {num(round(league, 1))})."))
+    free = [v for side in ("home", "away") for v in sides[side]["key"] if not v["owner"]]
+    if free:
+        best = max(free, key=lambda v: v["avgPts"] or 0)
+        club = next(g[s_]["abbr"] for s_ in ("home", "away") if best in sides[s_]["key"])
+        notes.append(L(f"Geriausias laisvasis agentas šiose rungtynėse: {best['name']} ({club}, vid. {num(best['avgPts'])} FP).",
+                       f"Best free agent in this game: {best['name']} ({club}, {num(best['avgPts'])} FP avg)."))
+    counts = {}
+    for side in ("home", "away"):
+        for p in ctx["roster"].get(g[side]["abbr"], []):
+            team = (ctx["own"].get(p["id"]) or {}).get("team")
+            if team:
+                counts.setdefault(team["id"], [team, 0])[1] += 1
+    if counts:
+        team, n = max(counts.values(), key=lambda x: x[1])
+        if n >= 2:
+            notes.append(L(f"Daugiausia žaidėjų šiose rungtynėse turi {team['title']} ({n}).",
+                           f"{team['title']} have the most players in this game ({n})."))
+    return notes
 
 
 def _player_rounds_query(rounds):

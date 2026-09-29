@@ -59,6 +59,19 @@ const I18N = {
     allNote: "Statistika: sezono vidurkiai (metimai: taiklumo %). Paspausk ant stulpelio pavadinimo, kad surikiuotum. Traumos iš ",
     combinedNote: "komanda šį turą žaidė dukart, statistika sudėta",
     noBoxYet: "Statistikos dar nėra.",
+    previewReady: "Apžvalga",
+    pvRecord: "Balansas",
+    pvAvg: "Vid. taškai",
+    pvAvgTip: "Vidutiniškai įmesta : praleista per rungtynes šį sezoną",
+    pvLast: "Paskutinės",
+    pvKey: "Pagrindiniai žaidėjai",
+    pvLine: "{p} tšk. · {r} atk. · {a} rp.",
+    pvInjuries: "Traumos",
+    pvNoInjuries: "Traumų sąraše nėra.",
+    pvNoStats: "Šį sezoną dar nežaidė.",
+    pvMore: "ir dar {n}",
+    pvNotes: "Į ką atkreipti dėmesį",
+    pvMine: "Tavo žaidėjai šiose rungtynėse: {p}.",
     gameCanceled: "Atšauktos",
     gameFinal: "Baigtos",
     ownedInGame: "{n} lygos žaid.",
@@ -324,6 +337,19 @@ const I18N = {
     allNote: "Stats are season averages (shooting as %). Click a column name to sort. Injuries come from the ",
     combinedNote: "played twice this round, stats combined",
     noBoxYet: "No stats yet.",
+    previewReady: "Preview",
+    pvRecord: "Record",
+    pvAvg: "Avg score",
+    pvAvgTip: "Average points scored : allowed per game this season",
+    pvLast: "Last games",
+    pvKey: "Key players",
+    pvLine: "{p} pts · {r} reb · {a} ast",
+    pvInjuries: "Injuries",
+    pvNoInjuries: "Nobody on the injury report.",
+    pvNoStats: "Has not played yet this season.",
+    pvMore: "and {n} more",
+    pvNotes: "Things to watch",
+    pvMine: "Your players in this game: {p}.",
     gameCanceled: "Canceled",
     gameFinal: "Final",
     ownedInGame: "{n} league players",
@@ -1921,6 +1947,7 @@ function gameCardHead(g) {
     ? `<span class="${g.completed && g.homeScore > g.awayScore ? "win" : ""}">${g.homeScore}</span><span class="sep">:</span><span class="${g.completed && g.awayScore > g.homeScore ? "win" : ""}">${g.awayScore}</span>`
     : '<span class="dim">-</span>';
   const meta = [
+    g.preview ? t("previewReady") : null,
     g.owned ? t("ownedInGame", { n: g.owned }) : null,
     g.top && g.top.fp !== null ? `${t("topFp")}: ${esc(g.top.name)} ${fmt(g.top.fp)}` : null,
   ].filter(Boolean).join(" · ");
@@ -1934,6 +1961,48 @@ function gameCardHead(g) {
     ${status}
     <span class="chev" aria-hidden="true">▾</span>
   </button>`;
+}
+
+// Before tip-off: form, key players, injuries and generated notes for each side.
+function previewSide(fid, side, pv, mine) {
+  const res = t("resShort");
+  const rec = pv.record ? `${pv.record.w}-${pv.record.l}` : "-";
+  const avg = pv.avgFor !== null ? `${fmt1(pv.avgFor)} : ${fmt1(pv.avgAgainst)}` : "-";
+  const last = pv.last.map((x) => `<span class="res ${x.won ? "W" : "L"}" data-tip="${esc(`${x.home ? "vs" : "@"} ${x.opp} ${x.score[0]}:${x.score[1]}`)}">${x.won ? res.W : res.L}</span>`).join("");
+  const player = (v, extra) => `<li class="pv-player${v.owner?.id && v.owner.id === mine ? " mine" : ""}" data-player="${esc(v.id)}">
+      ${avatar(v)}<span class="pv-name"><span class="player-name">${esc(v.name)}</span>
+      <span class="sub">${POS[v.position] || ""}${v.owner ? ` · ${esc(v.owner.title)}` : ` · <span class="free-tag">${t("draftReleased")}</span>`}</span></span>
+      ${extra}</li>`;
+  const key = pv.key.map((v) => player(v, `<span class="pv-num"><b>${fmt1(v.avgPts)}</b><span class="dim">${t("pvLine", { p: fmt1(v.line.pts), r: fmt1(v.line.reb), a: fmt1(v.line.ast) })}</span></span>`)).join("");
+  const shown = pv.injuries.slice(0, 5);
+  const inj = shown.map((v) => player(v, `<span class="pv-num">${injuryBadge(v.injury)}</span>`)).join("");
+  const more = pv.injuries.length > shown.length ? `<li class="dim small pv-more">${t("pvMore", { n: pv.injuries.length - shown.length })}</li>` : "";
+  return `<div class="pv-side">
+    <div class="pv-team">${clubMini(side, "md")}<strong>${esc(side.name || side.abbr)}</strong></div>
+    <div class="pv-stats">
+      <div><span class="stat-label">${t("pvRecord")}</span><span class="stat-value">${rec}</span></div>
+      <div><span class="stat-label" data-tip="${esc(t("pvAvgTip"))}">${t("pvAvg")}</span><span class="stat-value">${avg}</span></div>
+      <div><span class="stat-label">${t("pvLast")}</span><span class="chips">${last || '<span class="dim">-</span>'}</span></div>
+    </div>
+    <h5 class="pv-h">${t("pvKey")}</h5>
+    <ul class="pv-list">${key || `<li class="dim small">${t("pvNoStats")}</li>`}</ul>
+    <h5 class="pv-h">${t("pvInjuries")}</h5>
+    <ul class="pv-list">${inj || `<li class="dim small">${t("pvNoInjuries")}</li>`}${more}</ul>
+  </div>`;
+}
+
+function gamePreview(fid, g) {
+  const pv = g.preview;
+  const mine = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
+  const mineHere = pv.owned.filter((o) => mine && o.owner?.id === mine);
+  const notes = [
+    ...(mineHere.length ? [t("pvMine", { p: mineHere.map((o) => `${o.player.name} (${o.club})`).join(", ") })] : []),
+    ...pv.notes,
+  ];
+  return `<div class="preview">
+    <div class="pv-sides">${previewSide(fid, g.home, pv.home, mine)}${previewSide(fid, g.away, pv.away, mine)}</div>
+    ${notes.length ? `<div class="pv-notes"><h5 class="pv-h">${t("pvNotes")}</h5><ul>${notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul></div>` : ""}
+  </div>`;
 }
 
 async function renderGames(fid, params, token, silent) {
@@ -1951,7 +2020,7 @@ async function renderGames(fid, params, token, silent) {
   const cards = data.games.map((g) => `
     <section class="game-card${openGames.has(g.id) ? " open" : ""}" data-card="${esc(g.id)}">
       ${gameCardHead(g)}
-      <div class="game-body">${boxTable(g.home)}${boxTable(g.away)}</div>
+      <div class="game-body">${g.preview ? gamePreview(fid, g) : `${boxTable(g.home)}${boxTable(g.away)}`}</div>
     </section>`).join("");
   setView(`
     ${leagueHeader(league, "games")}
