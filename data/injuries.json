@@ -5,7 +5,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -31,7 +31,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -51,7 +51,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -71,7 +71,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -116,7 +116,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -135,7 +135,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -154,7 +154,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -166,6 +166,13 @@
               "date": "2026-09-29",
               "at": "2026-09-29T14:45+02:00",
               "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (back injury)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T00:06+02:00",
+              "status": "out",
               "return": "Round 2",
               "comment": "DNP in Round 1 (back injury)"
             }
@@ -180,7 +187,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -206,7 +213,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -232,7 +239,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -258,7 +265,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -284,7 +291,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -336,7 +343,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -362,7 +369,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -388,7 +395,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -407,7 +414,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -433,7 +440,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -459,7 +466,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -478,7 +485,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -504,7 +511,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -530,7 +537,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -556,7 +563,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -582,7 +589,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -602,7 +609,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -621,7 +628,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -646,7 +653,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -665,7 +672,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -691,7 +698,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -710,7 +717,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -755,7 +762,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -794,7 +801,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -814,7 +821,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -846,7 +853,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -885,7 +892,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -911,7 +918,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -930,7 +937,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -968,7 +975,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1001,7 +1008,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1034,7 +1041,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1054,7 +1061,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1080,7 +1087,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1106,7 +1113,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1130,7 +1137,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1154,7 +1161,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1173,7 +1180,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1211,7 +1218,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1263,7 +1270,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1283,7 +1290,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1302,7 +1309,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1322,7 +1329,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1353,7 +1360,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1372,7 +1379,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1391,7 +1398,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1417,7 +1424,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1436,7 +1443,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1455,7 +1462,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1474,7 +1481,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1493,7 +1500,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1513,7 +1520,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1539,7 +1546,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1585,7 +1592,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1611,7 +1618,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1637,7 +1644,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1656,7 +1663,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1675,7 +1682,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1694,7 +1701,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1713,7 +1720,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1758,7 +1765,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1783,7 +1790,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1835,7 +1842,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-09-30",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -1844,6 +1851,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster (coach's decision)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T00:06+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -1869,7 +1883,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1928,7 +1942,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1948,7 +1962,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1967,7 +1981,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -1994,7 +2008,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -2025,7 +2039,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-28",
@@ -2070,7 +2084,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2089,7 +2103,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2109,7 +2123,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2129,7 +2143,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2149,7 +2163,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2169,7 +2183,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2189,7 +2203,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2209,7 +2223,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2229,7 +2243,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2249,7 +2263,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2269,7 +2283,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2289,7 +2303,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2309,7 +2323,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2329,7 +2343,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2349,7 +2363,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2369,7 +2383,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2388,7 +2402,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-09-30",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -2397,6 +2411,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster (coach's decision)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T00:06+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -2408,7 +2429,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-09-30",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -2417,6 +2438,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster (coach's decision)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T00:06+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -2428,7 +2456,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-09-30",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -2437,6 +2465,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster (coach's decision)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T00:06+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -2449,7 +2484,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2469,7 +2504,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2489,7 +2524,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-09-29",
+          "lastSeen": "2026-09-30",
           "updates": [
             {
               "date": "2026-09-29",
@@ -2508,7 +2543,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-09-30",
           "lastSeen": "2026-09-29",
           "updates": [
             {
@@ -2517,6 +2552,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster (coach's decision)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T00:06+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -2525,5 +2567,5 @@
       "club": "Valencia Basket"
     }
   },
-  "updatedAt": "2026-09-29T21:04:17"
+  "updatedAt": "2026-09-30T00:06:29"
 }
