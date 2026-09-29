@@ -1375,7 +1375,8 @@ def games_payload(fid, rnd=None):
     rounds list their scheduled games with previews."""
     meta = league_meta(fid)
     last = (meta.get("totalRounds") or meta["currentRound"] + 1) - 1
-    rnd = meta["latestRound"] if rnd is None else max(meta["firstRound"], min(rnd, last))
+    # the tab opens on the current round (live, or the next one to be played)
+    rnd = meta["currentRound"] if rnd is None else max(meta["firstRound"], min(rnd, last))
     pmap = players(meta, rnd, rnd)
     own = owners(meta, rnd)
     clubs, games = {}, {}
