@@ -1,0 +1,16 @@
+name: Relay test (temporary)
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          R=https://bn-relay.vilius-jazgevicius.workers.dev
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          echo "== relay status page"; curl -s -o - -w "\nHTTP %{http_code}\n" -A "$UA" "$R/" | head -c 400
+          echo; echo "== graphql via relay"
+          curl -s -o - -w "\nHTTP %{http_code}\n" -A "$UA" -H "Content-Type: application/json" -H "Origin: https://fantasy.basketnews.com" -H "Referer: https://fantasy.basketnews.com/" \
+            --data '{"query":"{ allLeagueRecordsFromClient(locale: \"lt\", game: \"fantasy\") { id } }"}' \
+            "$R/?url=https%3A%2F%2Ffantasy.basketnews.com%2Fbackend%2Fgraphql" | head -c 600
+          echo; echo "== injury page via relay"
+          curl -s -o /tmp/p -w "HTTP %{http_code}\n" -A "$UA" "$R/?url=https%3A%2F%2Fbasketnews.com%2Fnews-212393-euroleague-injury-report-updated.html"; head -c 300 /tmp/p
