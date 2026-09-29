@@ -74,6 +74,7 @@ const I18N = {
     pvMine: "Tavo žaidėjai šiose rungtynėse: {p}.",
     pvTeamStats: "Komandų statistika (vieta tarp {n})",
     pvStrengths: "Stiprybės",
+    pvStrWeak: "Stiprybės ir silpnybės",
     pvWeaknesses: "Silpnybės",
     teamStat: {
       ortg: ["Puolimo reitingas", "Įmesti taškai per 100 atakų"],
@@ -109,6 +110,8 @@ const I18N = {
     ctxAvg: "Lygos vidurkis",
     ctxHigh: "Aukštas nuo",
     ctxLow: "Žemas iki",
+    ctxHighLower: "Aukštas iki",
+    ctxLowLower: "Žemas nuo",
     ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
     tabDraft: "Draftas",
@@ -118,6 +121,8 @@ const I18N = {
     splitAway: "Išvykoje",
     splitNoHome: "Namuose šį sezoną dar nežaidė.",
     splitNoAway: "Išvykoje šį sezoną dar nežaidė.",
+    diffVsAway: "Mažesni skaičiai: skirtumas nuo rungtynių išvykoje.",
+    diffVsHome: "Mažesni skaičiai: skirtumas nuo rungtynių namuose.",
     lastTip: "Vidutiniai FP per paskutinius {n} sužaistus turus",
     draftAwardsTitle: "Draftas ir perėjimai",
     rebSplitHead: "G/P",
@@ -381,6 +386,7 @@ const I18N = {
     pvMine: "Your players in this game: {p}.",
     pvTeamStats: "Team stats (rank among {n})",
     pvStrengths: "Strengths",
+    pvStrWeak: "Strengths and weaknesses",
     pvWeaknesses: "Weaknesses",
     teamStat: {
       ortg: ["Offensive rating", "Points scored per 100 possessions"],
@@ -416,6 +422,8 @@ const I18N = {
     ctxAvg: "League average",
     ctxHigh: "High from",
     ctxLow: "Low up to",
+    ctxHighLower: "High up to",
+    ctxLowLower: "Low from",
     ctxNote: "Compared with players averaging at least {m} minutes.",
     lowerBetter: "For this metric a lower value is better.",
     tabDraft: "Draft",
@@ -425,6 +433,8 @@ const I18N = {
     splitAway: "Away",
     splitNoHome: "Has not played at home yet this season.",
     splitNoAway: "Has not played away yet this season.",
+    diffVsAway: "Small numbers: difference from away games.",
+    diffVsHome: "Small numbers: difference from home games.",
     lastTip: "Average FP over the last {n} rounds played",
     draftAwardsTitle: "Draft and moves",
     rebSplitHead: "D/O",
@@ -662,8 +672,9 @@ function t(key, vars = {}) {
   return typeof val === "string" ? val.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? "") : val;
 }
 
-function statCols() {
-  return STAT_DEFS.map(([key, lta, ltt, ena, ent]) => ({ key, abbr: LANG === "en" ? ena : lta, title: LANG === "en" ? ent : ltt }));
+function statCols(skip) {
+  return STAT_DEFS.filter(([key]) => !skip?.includes(key))
+    .map(([key, lta, ltt, ena, ent]) => ({ key, abbr: LANG === "en" ? ena : lta, title: LANG === "en" ? ent : ltt }));
 }
 
 const skipBtn = document.getElementById("skip");
@@ -884,8 +895,8 @@ const SEVERITY = { out: "bad", doubtful: "warn", uncertain: "warn", questionable
 const pct = (m, a) => (a ? (m / a) * 100 : null);
 
 // League averages are only shown inside the player card (withAvg), not in the lists.
-function statHeads(sortable = false, withAvg = false) {
-  return statCols().map((c) => {
+function statHeads(sortable = false, withAvg = false, skip) {
+  return statCols(skip).map((c) => {
     const reb = c.key === "reb";  // total, then defensive / offensive in small print
     const title = c.title + (reb ? `\n${t("rebSplitTip")}` : "") + (withAvg ? avgTip(c.key) : "");
     return `<th class="num stat${sortable ? " sortable" : ""}"${sortable ? ` data-sort="${c.key}"` : ""} title="${esc(title)}">${esc(c.abbr)}${reb ? `<span class="split-head">${t("rebSplitHead")}</span>` : ""}</th>`;
@@ -893,8 +904,8 @@ function statHeads(sortable = false, withAvg = false) {
 }
 
 // mode "round": totals of one round (made/attempted); mode "avg": season averages (shooting as %).
-function statCells(line, mode) {
-  const cols = statCols();
+function statCells(line, mode, skip) {
+  const cols = statCols(skip);
   if (!line) return cols.map(() => '<td class="num stat dim">-</td>').join("");
   const shot = (m, a) => {
     if (mode === "round") return `${m}/${a}`;
@@ -2051,8 +2062,8 @@ function previewSide(fid, side, pv, mine) {
       ${avatar(v)}<span class="pv-name"><span class="player-name">${esc(v.name)}</span>
       <span class="sub">${POS[v.position] || ""}${v.owner ? ` · ${esc(v.owner.title)}` : ` · <span class="free-tag">${t("draftReleased")}</span>`}</span></span>
       ${extra}</li>`;
-  const key = pv.key.map((v) => player(v, `<span class="pv-num"><b>${fmt1(v.avgPts)}</b><span class="dim">${t("pvLine", { p: fmt1(v.line.pts), r: fmt1(v.line.reb), a: fmt1(v.line.ast) })}</span></span>`)).join("");
-  const shown = pv.injuries.slice(0, 5);
+  const key = pv.key.slice(0, 3).map((v) => player(v, `<span class="pv-num"><b>${fmt1(v.avgPts)}</b><span class="dim">${t("pvLine", { p: fmt1(v.line.pts), r: fmt1(v.line.reb), a: fmt1(v.line.ast) })}</span></span>`)).join("");
+  const shown = pv.injuries.slice(0, 3);
   const inj = shown.map((v) => player(v, `<span class="pv-num">${injuryBadge(v.injury)}</span>`)).join("");
   const more = pv.injuries.length > shown.length ? `<li class="dim small pv-more">${t("pvMore", { n: pv.injuries.length - shown.length })}</li>` : "";
   return `<div class="pv-side">
@@ -2066,8 +2077,11 @@ function previewSide(fid, side, pv, mine) {
     <ul class="pv-list">${key || `<li class="dim small">${t("pvNoStats")}</li>`}</ul>
     <h5 class="pv-h">${t("pvInjuries")}</h5>
     <ul class="pv-list">${inj || `<li class="dim small">${t("pvNoInjuries")}</li>`}${more}</ul>
-    ${pv.team?.strengths.length ? `<h5 class="pv-h">${t("pvStrengths")}</h5><ul class="pv-bullets good">${pv.team.strengths.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
-    ${pv.team?.weaknesses.length ? `<h5 class="pv-h">${t("pvWeaknesses")}</h5><ul class="pv-bullets bad">${pv.team.weaknesses.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+    ${pv.team?.strengths.length || pv.team?.weaknesses.length ? `<details class="pv-more-box">
+      <summary>${t("pvStrWeak")}</summary>
+      ${pv.team.strengths.length ? `<h5 class="pv-h">${t("pvStrengths")}</h5><ul class="pv-bullets good">${pv.team.strengths.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+      ${pv.team.weaknesses.length ? `<h5 class="pv-h">${t("pvWeaknesses")}</h5><ul class="pv-bullets bad">${pv.team.weaknesses.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+    </details>` : ""}
   </div>`;
 }
 
@@ -2079,17 +2093,20 @@ function teamCompare(g) {
   const labels = t("teamStat");
   const cell = (x, better, side) => `<td class="cmp-${side}${better ? " better" : ""}">
       <b>${x.value == null ? "-" : fmt1(x.value)}</b>${x.rank ? `<span class="rk">#${x.rank}</span>` : ""}</td>`;
-  const rows = TEAM_ROWS.map((k) => {
+  const row = (k) => {
     const x = h.stats[k], y = a.stats[k];
     const hb = x.rank && y.rank && x.rank < y.rank, ab = x.rank && y.rank && y.rank < x.rank;
     return `<tr>${cell(x, hb, "l")}<td class="cmp-label"><span data-tip="${esc(labels[k][1])}">${labels[k][0]}</span></td>${cell(y, ab, "r")}</tr>`;
-  }).join("");
+  };
+  const head = `<thead><tr><th class="cmp-l">${clubMini(g.home)} ${esc(g.home.abbr)}</th><th></th><th class="cmp-r">${esc(g.away.abbr)} ${clubMini(g.away)}</th></tr></thead>`;
+  const half = Math.ceil(TEAM_ROWS.length / 2);
+  // two half tables side by side: half the height of one long table
   return `<div class="pv-compare">
     <h5 class="pv-h">${t("pvTeamStats", { n: g.preview.teamCount || 20 })}</h5>
-    <table class="cmp">
-      <thead><tr><th class="cmp-l">${clubMini(g.home)} ${esc(g.home.abbr)}</th><th></th><th class="cmp-r">${esc(g.away.abbr)} ${clubMini(g.away)}</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
+    <div class="cmp-grid">
+      <table class="cmp">${head}<tbody>${TEAM_ROWS.slice(0, half).map(row).join("")}</tbody></table>
+      <table class="cmp">${head}<tbody>${TEAM_ROWS.slice(half).map(row).join("")}</tbody></table>
+    </div>
   </div>`;
 }
 
@@ -2421,15 +2438,16 @@ function advContext(x, minutes) {
   const c = x.context;
   return `<div class="adv-ctx">
       <span>${t("ctxAvg")} <b>${fmt1(c.avg)}</b></span>
-      <span>${t("ctxHigh")} <b>${fmt1(c.high)}</b></span>
-      <span>${t("ctxLow")} <b>${fmt1(c.low)}</b></span>
+      <span>${t(c.better === "lower" ? "ctxHighLower" : "ctxHigh")} <b>${fmt1(c.high)}</b></span>
+      <span>${t(c.better === "lower" ? "ctxLowLower" : "ctxLow")} <b>${fmt1(c.low)}</b></span>
     </div>
     <div class="adv-ctx-note">${c.better === "lower" ? `${t("lowerBetter")} ` : ""}${t("ctxNote", { m: minutes })}</div>`;
 }
 
 // ---- player card: whole season / home / away
 
-let currentPlayer = null;  // data of the open player card (the split buttons re-render from it)
+let currentPlayer = null;
+const LOG_SKIP = ["usg"];  // the player's per-round table: usage only means something over a season  // data of the open player card (the split buttons re-render from it)
 
 // Rounds the player played, newest first; home / away keeps rounds where every game was at home / away.
 function playedRounds(data, which) {
@@ -2463,18 +2481,29 @@ function splitButtons(data) {
 function splitBody(data, which) {
   const p = data.player, tl = t("tiles");
   const st = splitStats(data, which);
+  // home vs away: the difference to the other side, when both have games
+  const other = which === "all" ? null : splitStats(data, which === "home" ? "away" : "home");
+  const cmp = other && st.games && other.games;
+  const diff = (a, b, suffix = "") => {
+    if (!cmp || a == null || b == null) return "";
+    const d = Math.round((a - b) * 10) / 10;
+    if (!d) return `<small class="diff">±0${suffix}</small>`;
+    return `<small class="diff ${d > 0 ? "up" : "down"}">${d > 0 ? "+" : "−"}${fmt1(Math.abs(d))}${suffix}</small>`;
+  };
   // Whole season: BasketNews' own averages (the same as in the lists); home / away: from the game log.
   const all = which === "all";
   const line = all ? p.season || {} : st.line;
+  const o = other?.line || {};
   const tiles = [
-    [tl.avgFp, fmt1(all ? p.avgPts : st.fp), "fp"],
-    [tl.last3, fmt1(st.last3), null, t("lastTip", { n: 3 })],
-    [tl.last5, fmt1(st.last5), null, t("lastTip", { n: 5 })],
+    [tl.avgFp, fmt1(all ? p.avgPts : st.fp) + diff(st.fp, other?.fp), "fp"],
+    [tl.last3, fmt1(st.last3) + diff(st.last3, other?.last3), null, t("lastTip", { n: 3 })],
+    [tl.last5, fmt1(st.last5) + diff(st.last5, other?.last5), null, t("lastTip", { n: 5 })],
     [tl.gp, all ? p.gamesPlayed : st.games],
-    [tl.min, fmt1(line.min), "min"], [tl.pts, fmt1(line.pts), "pts"],
+    [tl.min, fmt1(line.min) + diff(line.min, o.min), "min"], [tl.pts, fmt1(line.pts) + diff(line.pts, o.pts), "pts"],
     [`${tl.reb} <span class="split-head">${t("rebSplitHead")}</span>`,
-      line.reb == null ? "-" : `${fmt1(line.reb)}<small class="split">${fmt1(line.dreb)}/${fmt1(line.oreb)}</small>`, "reb"],
-    [tl.ast, fmt1(line.ast), "ast"], [tl.stl, fmt1(line.stl), "stl"], [tl.blk, fmt1(line.blk), "blk"], [tl.eff, fmt1(line.eff), "eff"],
+      line.reb == null ? "-" : `${fmt1(line.reb)}${cmp ? diff(line.reb, o.reb) : `<small class="split">${fmt1(line.dreb)}/${fmt1(line.oreb)}</small>`}`, "reb"],
+    [tl.ast, fmt1(line.ast) + diff(line.ast, o.ast), "ast"], [tl.stl, fmt1(line.stl) + diff(line.stl, o.stl), "stl"],
+    [tl.blk, fmt1(line.blk) + diff(line.blk, o.blk), "blk"], [tl.eff, fmt1(line.eff) + diff(line.eff, o.eff), "eff"],
   ];
   const html = tiles.map(([l, v, key, own]) => {
     const name = l.replace(/<[^>]+>/g, "").trim();
@@ -2482,11 +2511,18 @@ function splitBody(data, which) {
     return `<div class="tile"${tip ? ` data-tip="${esc(name + tip)}"` : ""}><div class="label">${l}</div><div class="value">${v}</div></div>`;
   }).join("");
   const none = !all && !st.games ? `<p class="note">${t(which === "home" ? "splitNoHome" : "splitNoAway")}</p>` : "";
-  return `${none}<div class="tiles compact">${html}</div>${shootingSection(all ? data.shooting : st.shooting)}`;
+  const vs = cmp ? `<p class="note diff-note">${t(which === "home" ? "diffVsAway" : "diffVsHome")}</p>` : "";
+  return `${none}<div class="tiles compact">${html}</div>${vs}${shootingSection(all ? data.shooting : st.shooting, cmp ? other.shooting : null)}`;
+}
+
+function shotDiff(x, y) {
+  if (!y || x.pct == null || y.pct == null) return "";
+  const d = Math.round((x.pct - y.pct) * 10) / 10;
+  return d ? `<small class="diff ${d > 0 ? "up" : "down"}">${d > 0 ? "+" : "−"}${fmt1(Math.abs(d))}</small>` : `<small class="diff">±0</small>`;
 }
 
 // Season shooting: made / attempted totals summed from the round box scores.
-function shootingSection(sh) {
+function shootingSection(sh, vs = null) {
   if (!sh || !sh.games) return "";
   const rows = [["fg", t("shotFg")], ["two", t("shot2")], ["three", t("shot3")], ["ft", t("shotFt")]];
   return `<h3 class="section-title">${t("shootingTitle")} <span class="dim small">${t("shootingSub", { n: sh.games })}</span></h3>
@@ -2494,7 +2530,7 @@ function shootingSection(sh) {
       const x = sh[key];
       return `<div class="shot-row">
         <span class="shot-label" data-tip="${esc(label + avgTip({ fg: "fg", two: "p2", three: "p3", ft: "ft" }[key]))}">${label}</span>
-        <span class="shot-value">${x.pct == null ? '<span class="dim">-</span>' : `<b>${fmt1(x.pct)}%</b>`} <span class="dim">(${x.made}/${x.att})</span></span>
+        <span class="shot-value">${x.pct == null ? '<span class="dim">-</span>' : `<b>${fmt1(x.pct)}%</b>`}${shotDiff(x, vs?.[key])} <span class="dim">(${x.made}/${x.att})</span></span>
         <span class="adv-bar"><i style="width:${Math.max(0, Math.min(100, x.pct ?? 0))}%"></i></span>
       </div>`;
     }).join("")}</div>`;
@@ -2551,10 +2587,10 @@ function playerView(fid, data) {
   const log = data.gameLog.map((g) => {
     const games = g.games.map((x) => `${x.home ? "vs" : "@"} ${esc(x.opponent)}${x.score ? ` ${x.score[0] > x.score[1] ? "W" : "L"} ${x.score[0]}:${x.score[1]}` : ""}`).join(", ") || '<span class="dim">-</span>';
     if (g.status === "played") {
-      return `<tr><td class="sticky">${roundLabel(g.round)}</td><td>${games}</td><td class="num pts-strong">${fmt(g.fp)}</td>${statCells(g.line, "round")}</tr>`;
+      return `<tr><td class="sticky">${roundLabel(g.round)}</td><td>${games}</td><td class="num pts-strong">${fmt(g.fp)}</td>${statCells(g.line, "round", LOG_SKIP)}</tr>`;
     }
     const why = { dnp: `${t("didNotPlay")}${g.reason ? `: ${esc(g.reason)}` : ""}`, "no-game": t("teamNoGame"), pending: t("notPlayedYet") }[g.status];
-    return `<tr><td class="sticky">${roundLabel(g.round)}</td><td>${games}</td><td colspan="${STAT_DEFS.length + 1}" class="${g.status === "dnp" ? "dnp" : "dim"}">${why}</td></tr>`;
+    return `<tr><td class="sticky">${roundLabel(g.round)}</td><td>${games}</td><td colspan="${STAT_DEFS.length + 1 - LOG_SKIP.length}" class="${g.status === "dnp" ? "dnp" : "dim"}">${why}</td></tr>`;
   }).join("");
 
   const next = data.nextGames?.length
@@ -2584,7 +2620,7 @@ function playerView(fid, data) {
     <p class="note">${t("historyNote", { link })}</p>
     <h3 class="section-title">${t("rounds")}</h3>
     <div class="card table-scroll"><table class="grid log stats-table">
-      <thead><tr><th class="sticky">${t("rounds")}</th><th>${t("games")}</th><th class="num">FP</th>${statHeads(false, true)}</tr></thead>
+      <thead><tr><th class="sticky">${t("rounds")}</th><th>${t("games")}</th><th class="num">FP</th>${statHeads(false, true, LOG_SKIP)}</tr></thead>
       <tbody>${log || `<tr><td colspan="${STAT_DEFS.length + 3}" class="dim">${t("noRoundsPlayed")}</td></tr>`}</tbody>
     </table></div>`;
 }

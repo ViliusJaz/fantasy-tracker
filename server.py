@@ -553,10 +553,36 @@ def adv_value(row, key):
     return v.get("value") if isinstance(v, dict) else v
 
 
+def link_advanced_rows(table, views, line_key, games=lambda v: v["gamesPlayed"] or 0):
+    """BasketNews' advanced stats list a few players under a different id than the fantasy
+    game. Pair each such row with the player missing one by identical box-score totals and
+    add the player's id as a second key for the same row."""
+    claimed = {str(v["bnId"]) for v in views.values() if v.get("bnId")}
+    free = {k: r for k, r in table.items() if k not in claimed}
+    for v in views.values():
+        bn, line, gp = str(v.get("bnId") or ""), v.get(line_key), games(v)
+        if not free or not bn or bn in table or not line or not gp:
+            continue
+        def same(r):
+            near = lambda key, total, tol: abs((adv_value(r, key) or 0) - total) <= tol  # noqa: E731
+            return (near("points", line["pts"] * gp, 0.6 * gp) and near("rebounds", line["reb"] * gp, 0.6 * gp)
+                    and near("assists", line["ast"] * gp, 0.6 * gp) and near("time_played", line["min"] * 60 * gp, 90 * gp))
+        matches = [k for k, r in free.items() if same(r)]
+        if len(matches) == 1:
+            table[bn] = free.pop(matches[0])
+
+
+def unique_rows(table):
+    """Advanced rows without the alias keys added by link_advanced_rows."""
+    return list({id(r): r for r in table.values()}.values())
+
+
 def attach_usage(meta, views, stats_round):
     """Usage %: BasketNews' own numbers, or a box-score estimate for a round they have not published."""
     season_adv = advanced_stats(meta)
     round_adv = advanced_stats(meta, stats_round) if stats_round is not None else {}
+    link_advanced_rows(season_adv, views, "season")
+    link_advanced_rows(round_adv, views, "roundLine", games=lambda v: 1)
     teams = {}
     for v in views.values():
         line, club = v["roundLine"], (v["club"] or {}).get("abbr")
@@ -673,7 +699,7 @@ def _quartiles(values):
 
 def advanced_context(table):
     """League average, quartiles and the sorted values per metric, from regular-rotation players."""
-    rows = [r for r in table.values() if (adv_value(r, "time_played") or 0) >= ADV_MIN_SECONDS]
+    rows = [r for r in unique_rows(table) if (adv_value(r, "time_played") or 0) >= ADV_MIN_SECONDS]
     out, dist = {}, {}
     for _, _, items in ADV_GROUPS:
         for key, *_ in items:
@@ -697,6 +723,9 @@ def _percentile(vals, v):
 def advanced_profile(meta, bn_id):
     table = advanced_stats(meta)
     row = table.get(str(bn_id)) if bn_id else None
+    if not row and bn_id:
+        players(meta, meta["latestRound"], meta["currentRound"])  # pairs rows listed under another id
+        row = table.get(str(bn_id))
     if not row:
         return None
     context, dist = advanced_context(table)
@@ -708,17 +737,22 @@ def advanced_profile(meta, bn_id):
             if not isinstance(cell, dict) or cell.get("value") is None:
                 continue
             ctx = context.get(key)
-            level = None
-            if ctx:
+            level, pct = None, _percentile(dist[key], cell["value"]) if key in dist else None
+            if ctx and ctx["better"] == "lower":
+                # a small value is the good one: it is the "high" level and the long bar,
+                # and the thresholds swap (high = up to the lower quartile)
+                ctx = {**ctx, "high": ctx["low"], "low": ctx["high"]}
+                level = "high" if cell["value"] <= ctx["high"] else "low" if cell["value"] >= ctx["low"] else "avg"
+                pct = None if pct is None else 100 - pct
+            elif ctx:
                 level = "high" if cell["value"] >= ctx["high"] else "low" if cell["value"] <= ctx["low"] else "avg"
             stats.append({"key": key, "short": short, "title": L(title_lt, title_en), "desc": L(desc_lt, desc_en),
                           # BasketNews' own "pct" runs in different directions per metric, so the
                           # bar uses the same league sample as the high/low level instead.
-                          "value": cell["value"], "rank": cell.get("rank"),
-                          "pct": _percentile(dist[key], cell["value"]) if key in dist else None,
+                          "value": cell["value"], "rank": cell.get("rank"), "pct": pct,
                           "context": ctx, "level": level})
         groups.append({"id": gid, "title": L(lt, en), "stats": stats})
-    return {"groups": groups, "ranked": len(table), "games": row.get("games_played"),
+    return {"groups": groups, "ranked": len(unique_rows(table)), "games": row.get("games_played"),
             "contextMinutes": ADV_MIN_SECONDS // 60,
             "url": f"https://basketnews.com/advanced-stats/{meta['bnLeagueId']}/{meta['seasonYear']}"}
 
@@ -907,7 +941,8 @@ def health_label(key):
 # Report entries that are about availability rather than health.
 NOT_INJURY = re.compile(
     r"coach'?s?'? decision|not included|roster|personal|family|suspen|national team|domestic league|"
-    r"rest\b|load management|visa|contract|transfer|left the (team|club)|released|trade|paternity",
+    r"rest\b|load management|visa|contract|transfer|left the (team|club)|released|trade|paternity|"
+    r"new signing|signed|registered|not injured|announced",
     re.I,
 )
 
