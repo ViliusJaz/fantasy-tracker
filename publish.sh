@@ -1,6 +1,5 @@
 #!/bin/bash
-# Rebuilds the public site and uploads it to GitHub Pages. Runs on GitHub every 15 minutes
-# (.github/workflows/update.yml, through the Cloudflare relay) and works the same on a Mac.
+# Rebuilds the public site on this Mac and uploads it to GitHub Pages.
 #
 #   ./publish.sh        (a launch agent runs this every 15 minutes, see below)
 #
@@ -15,7 +14,7 @@
 #   log:      ~/Library/Logs/fantasy-tracker.log
 set -euo pipefail
 cd "$(dirname "$0")"
-export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 LOG="$HOME/Library/Logs/fantasy-tracker.log"
 if [ -f "$LOG" ] && [ "$(wc -c < "$LOG")" -gt 1000000 ]; then : > "$LOG"; fi  # keep the log small

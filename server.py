@@ -43,10 +43,6 @@ BROWSER_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.3
               "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
 LOCALE = "lt"
 HOST, PORT = "127.0.0.1", int(os.environ.get("PORT", 8124))
-# BasketNews refuses requests from cloud servers such as GitHub's. The scheduled GitHub job
-# sets BN_RELAY to a Cloudflare Worker (relay/worker.js) that forwards them instead.
-BN_RELAY = os.environ.get("BN_RELAY", "").rstrip("/")
-BN_RELAY_KEY = os.environ.get("BN_RELAY_KEY", "")
 
 LIVE_TTL = 60             # seconds to cache data that can still change
 SETTLED_TTL = 60 * 60     # seconds to cache finished rounds
@@ -113,16 +109,6 @@ _cache = {}
 _cache_lock = threading.Lock()
 
 
-def bn_request(url, data=None, headers=None):
-    """urllib Request for a BasketNews address, sent through the relay when one is set."""
-    headers = dict(headers or {})
-    if BN_RELAY:
-        url = f"{BN_RELAY}/?url={urllib.parse.quote(url, safe='')}"
-        if BN_RELAY_KEY:
-            headers["x-relay-key"] = BN_RELAY_KEY
-    return urllib.request.Request(url, data=data, headers=headers)
-
-
 def gql(query, variables, ttl=LIVE_TTL):
     key = query + json.dumps(variables, sort_keys=True)
     now = time.time()
@@ -131,7 +117,7 @@ def gql(query, variables, ttl=LIVE_TTL):
         if hit and hit[0] > now:
             return hit[1]
     body = json.dumps({"query": query, "variables": variables}).encode()
-    req = bn_request(
+    req = urllib.request.Request(
         GRAPHQL_URL,
         data=body,
         # Same headers as the fantasy site's own page: Cloudflare in front of the API turns
@@ -527,7 +513,7 @@ def advanced_stats(meta, rnd=None):
     form = {"league_id": league, "season": season}
     if rnd is not None:
         form.update(sequence_from=rnd + 1, sequence_to=rnd + 1)
-    req = bn_request(
+    req = urllib.request.Request(
         ADV_URL, data=urllib.parse.urlencode(form).encode(),
         headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
                  "Content-Type": "application/x-www-form-urlencoded",
@@ -1042,7 +1028,7 @@ def injury_report(meta):
         hit = _injury_cache.get(url)
         if hit and hit[0] > time.time():
             return hit[1]
-        req = bn_request(url, headers={"User-Agent": BROWSER_UA, "Accept-Language": "en,lt"})
+        req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA, "Accept-Language": "en,lt"})
         try:
             with urllib.request.urlopen(req, context=SSL_CTX, timeout=30) as resp:
                 page = resp.read().decode("utf-8", errors="replace")
@@ -1472,7 +1458,7 @@ def team_advanced(meta):
     hit = _team_adv_cache.get(key)
     if hit and hit[0] > time.time():
         return hit[1]
-    req = bn_request(
+    req = urllib.request.Request(
         TEAM_ADV_URL, data=urllib.parse.urlencode({"league_id": league, "season": season}).encode(),
         headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
                  "Content-Type": "application/x-www-form-urlencoded",
@@ -1865,7 +1851,7 @@ def wikidata_candidates(name):
 def basketnews_birth_date(bn_id, name):
     """'Age: 33 (1993 April 10)' on the BasketNews player page -> '1993-04-10'."""
     url = f"https://basketnews.com/players/{bn_id}-{ascii_slug(name)}.html"
-    req = bn_request(url, headers={"User-Agent": BROWSER_UA})
+    req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA})
     with urllib.request.urlopen(req, context=SSL_CTX, timeout=20) as resp:
         page = resp.read().decode("utf-8", errors="replace")
     m = re.search(r"\((\d{4})\s+([A-Za-z]+)\s+(\d{1,2})\)", page)
