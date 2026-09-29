@@ -117,6 +117,13 @@
               "status": "game-time",
               "return": "Round 2",
               "comment": "DNP in Round 1 (minor injury)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T14:45+02:00",
+              "status": "game-time",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (back injury)"
             }
           ]
         }
@@ -307,6 +314,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T14:45+02:00",
+              "status": "out",
+              "return": "Round 2-4",
+              "comment": "Hamstring injury"
             }
           ]
         }
@@ -383,6 +397,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (knee injury)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T14:45+02:00",
+              "status": "out",
+              "return": "Round 2-4",
+              "comment": "Knee injury"
             }
           ]
         }
@@ -402,6 +423,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T14:45+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Undisclosed"
             }
           ]
         }
@@ -429,7 +457,22 @@
       "club": "Dubai Basketball"
     },
     "34625": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T14:45+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Played in the domestic league during the weekend after a DNP in Round 1, but didn't travel to Istanbul for Round 2, per official injury report"
+            }
+          ]
+        }
+      ],
       "name": "Kamar Baldwin",
       "club": "FC Bayern Munich"
     },
@@ -453,7 +496,22 @@
       "club": "FC Bayern Munich"
     },
     "14073": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T14:45+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Played in the domestic league during the weekend after a DNP in Round 1, but didn't travel to Istanbul for Round 2, per official injury report"
+            }
+          ]
+        }
+      ],
       "name": "Niels Giffey",
       "club": "FC Bayern Munich"
     },
@@ -1056,6 +1114,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "Discomfort in his groin (muscle spasm) suffered during Greek SuperCup semifinal"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T14:45+02:00",
+              "status": "out",
+              "return": "Round 2-3",
+              "comment": "Discomfort in his groin (muscle spasm) suffered during Greek SuperCup semifinal"
             }
           ]
         }
@@ -1581,7 +1646,27 @@
       ],
       "name": "Gabriele Procida",
       "club": "Real Madrid"
+    },
+    "36246": {
+      "episodes": [
+        {
+          "start": "2026-09-29",
+          "end": null,
+          "lastSeen": "2026-09-29",
+          "updates": [
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T14:45+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Didn't travel to Istanbul for Round 2, per official injury report"
+            }
+          ]
+        }
+      ],
+      "name": "Tobias Jensen",
+      "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-09-29T11:42:53"
+  "updatedAt": "2026-09-29T14:45:56"
 }
