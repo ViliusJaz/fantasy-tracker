@@ -463,9 +463,11 @@ CLAUSES = [
     (r"^(?:he )?(?:also )?played in (?:the )?(.+)$", _played),
     (r"^did ?n[o']?t travel with the team(?: (?:in|for|to) round\s*(\d+))?$",
      lambda m, _: "nekeliavo su komanda" + (f" į {m.group(1)} turo rungtynes" if m.group(1) else "")),
-    (r"^(?:traveled|travelled|travels) with the team(?: to ([^()]+))?$",
+    (r"^(?:traveled|travelled) with (?:the )?team(?: to ([^()]+))?$",
      lambda m, o: "išvyko su komanda" + (f" į {_city(o[m.start(1):m.end(1)])}" if m.group(1) else "")),
-    (r"^(?:he )?will travel(?: with the team)? to ([^()]+)$",
+    (r"^(?:travels|travelling|traveling|is travelling|is traveling) with (?:the )?team(?: to ([^()]+))?$",
+     lambda m, o: "keliauja su komanda" + (f" į {_city(o[m.start(1):m.end(1)])}" if m.group(1) else "")),
+    (r"^(?:he )?will travel(?: with (?:the )?team)? to ([^()]+)$",
      lambda m, o: f"keliaus su komanda į {_city(o[m.start(1):m.end(1)])}"),
     (r"^(?:not expected|unlikely) to play in round\s*(\d+)$", lambda m, _: f"neturėtų žaisti {_round_loc(m.group(1))}"),
     (r"^expected to play in round\s*(\d+)$", lambda m, _: f"turėtų žaisti {_round_loc(m.group(1))}"),
@@ -494,6 +496,10 @@ CLAUSES = [
     (r"^(?:working back|recovering|returning) from (.+)$", _after("atsigauna")),
     (r"^(?:recovered|returned) from (.+)$", _after("atsigavo")),
     (r"^(?:underwent|had) (.+)$", lambda m, _: f"atlikta {r}" if (r := reason(m.group(1))) else None),
+    (r"^(?:a )?new signing$", lambda m, _: "naujai pasirašęs žaidėjas"),
+    (r"^(?:was )?announced as (?:a )?new signing(?: on (\d\d?\.\d\d?))?$",
+     lambda m, _: "paskelbtas nauju žaidėju" + (f" ({m.group(1)})" if m.group(1) else "")),
+    (r"^(?:but )?(?:has ?n[o']?t|has not|is not|isn'?t) (?:been )?registered(?: yet)?$", lambda m, _: "bet dar neregistruotas"),
 ]
 
 

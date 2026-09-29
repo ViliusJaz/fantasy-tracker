@@ -79,6 +79,14 @@ const I18N = {
     ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
     tabDraft: "Draftas",
+    tabInjuries: "Traumos",
+    newsBad: "Bloga žinia komandai {t}:",
+    newsGood: "Gera žinia komandai {t}:",
+    newsOwnedOnly: "Tik lygos komandų žaidėjai",
+    newsCount: "{n} įrašai",
+    newsEmpty: "Traumų sąraše pokyčių dar nebuvo.",
+    newsNote: "Pagal BasketNews traumų sąrašą ({link}). Pokyčiai tikrinami kas 15 min., laikas rodo, kada pokytis pastebėtas.",
+    injuryReportLink: "traumų sąrašas",
     avgTipGame: "Lygos vidurkis: {v} per rungtynes",
     avgTipPct: "Lygos vidurkis: {v}",
     avgTipPlain: "Lygos vidurkis: {v}",
@@ -333,6 +341,14 @@ const I18N = {
     ctxNote: "Compared with players averaging at least {m} minutes.",
     lowerBetter: "For this metric a lower value is better.",
     tabDraft: "Draft",
+    tabInjuries: "Injuries",
+    newsBad: "Bad news for {t}:",
+    newsGood: "Good news for {t}:",
+    newsOwnedOnly: "Only players on league teams",
+    newsCount: "{n} updates",
+    newsEmpty: "No injury report changes yet.",
+    newsNote: "From the BasketNews injury report ({link}). Checked every 15 minutes; the time shows when a change was spotted.",
+    injuryReportLink: "injury report",
     avgTipGame: "League average: {v} per game",
     avgTipPct: "League average: {v}",
     avgTipPlain: "League average: {v}",
@@ -608,6 +624,110 @@ themeBtn.addEventListener("click", () => {
   try { localStorage.setItem("ft-theme", next); } catch { /* per-browser preference only */ }
   applyTheme(next);
 });
+
+// ------------------------------------------------------------------ dropdowns
+
+// A native <select> opens the system's grey menu, which cannot be styled. Each
+// select.select gets a themed button + listbox; the select stays (hidden) and keeps
+// its value and change listeners, so the page code does not change.
+function enhanceSelect(sel) {
+  sel.dataset.dd = "1";
+  const wrap = document.createElement("div");
+  wrap.className = "dd";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = `${sel.className} dd-btn`;
+  btn.setAttribute("aria-haspopup", "listbox");
+  btn.setAttribute("aria-expanded", "false");
+  if (sel.getAttribute("aria-label")) btn.setAttribute("aria-label", sel.getAttribute("aria-label"));
+  const menu = document.createElement("ul");
+  menu.className = "dd-menu";
+  menu.setAttribute("role", "listbox");
+  menu.tabIndex = -1;
+  menu.hidden = true;
+  sel.replaceWith(wrap);
+  wrap.append(sel, btn);
+
+  let active = -1;
+  const items = () => [...menu.children];
+  const label = () => { btn.textContent = sel.options[sel.selectedIndex]?.text ?? ""; };
+  const mark = (i) => {
+    active = i;
+    items().forEach((li, j) => li.classList.toggle("active", j === i));
+    const li = items()[i];
+    if (li) { li.scrollIntoView({ block: "nearest" }); menu.setAttribute("aria-activedescendant", li.id); }
+  };
+  const outside = (e) => { if (!wrap.contains(e.target) && !menu.contains(e.target)) close(false); };
+  const onScroll = (e) => { if (!menu.contains(e.target)) close(false); };
+  const close = (focusBtn) => {
+    if (menu.hidden) return;
+    menu.hidden = true;
+    menu.remove();
+    btn.setAttribute("aria-expanded", "false");
+    document.removeEventListener("pointerdown", outside, true);
+    document.removeEventListener("scroll", onScroll, true);
+    window.removeEventListener("resize", onScroll);
+    if (focusBtn) btn.focus();
+  };
+  const open = () => {
+    const uid = `dd${Math.random().toString(36).slice(2, 8)}`;
+    menu.innerHTML = [...sel.options].map((o, i) =>
+      `<li role="option" id="${uid}-${i}" aria-selected="${o.selected}">${esc(o.text)}</li>`).join("");
+    // Floats above everything (cards and table scrollers would clip or cover it), placed
+    // under the button, or above it when there is no room below.
+    (btn.closest("dialog") || document.body).append(menu);
+    menu.hidden = false;
+    const r = btn.getBoundingClientRect();
+    menu.style.minWidth = `${r.width}px`;
+    const h = menu.offsetHeight;
+    const below = window.innerHeight - r.bottom;
+    const top = below < h + 12 && r.top > below ? r.top - h - 6 : r.bottom + 6;
+    menu.style.top = `${Math.max(8, top)}px`;
+    menu.style.left = `${Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8))}px`;
+    btn.setAttribute("aria-expanded", "true");
+    mark(Math.max(0, sel.selectedIndex));
+    menu.focus({ preventScroll: true });
+    document.addEventListener("pointerdown", outside, true);
+    document.addEventListener("scroll", onScroll, true);
+    window.addEventListener("resize", onScroll);
+  };
+  const choose = (i) => {
+    close(true);
+    if (i < 0 || i === sel.selectedIndex) return;
+    sel.selectedIndex = i;
+    label();
+    sel.dispatchEvent(new Event("change", { bubbles: true }));
+  };
+  btn.addEventListener("click", () => (menu.hidden ? open() : close(true)));
+  btn.addEventListener("keydown", (e) => {
+    if (["ArrowDown", "ArrowUp", "Enter", " "].includes(e.key)) { e.preventDefault(); open(); }
+  });
+  menu.addEventListener("keydown", (e) => {
+    const n = sel.options.length;
+    if (e.key === "ArrowDown") { e.preventDefault(); mark(Math.min(n - 1, active + 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); mark(Math.max(0, active - 1)); }
+    else if (e.key === "Home") { e.preventDefault(); mark(0); }
+    else if (e.key === "End") { e.preventDefault(); mark(n - 1); }
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choose(active); }
+    else if (e.key === "Escape") { e.preventDefault(); close(true); }
+    else if (e.key === "Tab") close(false);
+  });
+  menu.addEventListener("pointermove", (e) => {
+    const li = e.target.closest("li");
+    if (li) mark(items().indexOf(li));
+  });
+  menu.addEventListener("click", (e) => {
+    const li = e.target.closest("li");
+    if (li) choose(items().indexOf(li));
+  });
+  sel.addEventListener("change", label);
+  label();
+}
+
+function enhanceSelects(root) {
+  root.querySelectorAll("select.select:not([data-dd])").forEach(enhanceSelect);
+}
+new MutationObserver(() => enhanceSelects(app)).observe(app, { childList: true, subtree: true });
 
 // ------------------------------------------------------------------ tooltips
 
@@ -919,6 +1039,7 @@ function leagueHeader(league, tab) {
     ["rounds", league.format === "head_to_head" ? t("tabMatchups") : t("tabRounds"), `#/l/${league.id}/rounds`],
     ["games", t("tabGames"), `#/l/${league.id}/games`],
     ["transfers", t("tabTransfers"), `#/l/${league.id}/transfers`],
+    ["injuries", t("tabInjuries"), `#/l/${league.id}/injuries`],
     ["records", t("tabRecords"), `#/l/${league.id}/records`],
     ["players", t("tabPlayers"), `#/l/${league.id}/players`],
     ["free-agents", t("tabFA"), `#/l/${league.id}/free-agents`],
@@ -1415,6 +1536,59 @@ async function renderTransfers(fid, token, silent) {
     ${list}
     ${bids}
     ${creditsTable}`);
+}
+
+// ------------------------------------------------------------------ injury news
+
+function newsTime(e) {
+  if (!e.hasTime) return e.at.slice(5, 10);
+  const d = new Date(e.at);
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+async function renderInjuries(fid, params, token, silent) {
+  if (!silent) setView(skeletonTable(8));
+  let data;
+  try {
+    data = await api(`/api/league/${fid}/injuries`);
+  } catch (e) {
+    if (token === renderToken) setView(stateBox(e.message, true));
+    return;
+  }
+  if (token !== renderToken) return;
+  const { league } = data;
+  const owned = params.get("owned") === "1";
+  const mine = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
+  const events = data.events.filter((e) => !owned || e.owner);
+  const rows = events.map((e) => {
+    const where = [e.player.club?.abbr, e.owner?.title].filter(Boolean).map(esc).join(", ");
+    const prefix = e.owner && e.tone !== "neutral"
+      ? `<span class="news-prefix ${e.tone}">${t(e.tone === "bad" ? "newsBad" : "newsGood", { t: esc(e.owner.title) })}</span> ` : "";
+    const name = e.player.id
+      ? `<span class="news-name" data-player="${esc(e.player.id)}">${esc(e.player.name)}</span>`
+      : `<span class="news-name">${esc(e.player.name)}</span>`;
+    const extra = [e.comment.replace(/\.$/, ""), e.return ? t("expectedReturn", { r: e.return }) : ""].filter(Boolean).map(esc).join(". ");
+    return `<li class="news-row${e.owner?.id && e.owner.id === mine ? " mine" : ""}">
+      <time class="news-time" datetime="${esc(e.at)}">${newsTime(e)}</time>
+      <div class="news-body">
+        <div class="news-line">${prefix}${name}${where ? ` <span class="dim">(${where})</span>` : ""} <span class="news-phrase ${e.status}">${esc(e.phrase)}</span></div>
+        ${extra ? `<div class="news-comment">${extra}</div>` : ""}
+      </div>
+    </li>`;
+  }).join("");
+  const report = data.reportUrl ? `<a class="link" href="${esc(data.reportUrl)}" target="_blank" rel="noopener">${t("injuryReportLink")}</a>` : "";
+  setView(`
+    ${leagueHeader(league, "injuries")}
+    <div class="toolbar">
+      <label class="check"><input type="checkbox" id="news-owned"${owned ? " checked" : ""}> ${t("newsOwnedOnly")}</label>
+      <span class="dim small">${t("newsCount", { n: events.length })}</span>
+    </div>
+    ${events.length ? `<ul class="card news">${rows}</ul>` : `<div class="card">${stateBox(t("newsEmpty"))}</div>`}
+    <p class="note">${t("newsNote", { link: report })}</p>`);
+  document.getElementById("news-owned").addEventListener("change", (ev) => {
+    location.hash = `#/l/${fid}/injuries${ev.target.checked ? "?owned=1" : ""}`;
+  });
 }
 
 function relTime(iso) {
@@ -2183,6 +2357,7 @@ async function route(silent = false) {
   if (parts[2] === "free-agents") return renderPlayerList(fid, "free", token, silent);
   if (parts[2] === "draft") return renderDraft(fid, params, token, silent);
   if (parts[2] === "transfers") return renderTransfers(fid, token, silent);
+  if (parts[2] === "injuries") return renderInjuries(fid, params, token, silent);
   return renderStandings(fid, params, token, silent);
 }
 

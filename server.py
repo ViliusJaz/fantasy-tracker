@@ -10,6 +10,7 @@ server runs.
 """
 import bisect
 import contextvars
+import http.client
 import itertools
 import json
 import unicodedata
@@ -125,11 +126,18 @@ def gql(query, variables, ttl=LIVE_TTL):
                  "User-Agent": BROWSER_UA, "Origin": "https://fantasy.basketnews.com",
                  "Referer": "https://fantasy.basketnews.com/", "Accept-Language": "lt,en;q=0.8"},
     )
-    try:
-        with urllib.request.urlopen(req, context=SSL_CTX, timeout=25) as resp:
-            payload = json.load(resp)
-    except urllib.error.URLError as exc:
-        raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
+    for attempt in range(3):  # BasketNews sometimes stalls mid-answer: retry before giving up
+        try:
+            with urllib.request.urlopen(req, context=SSL_CTX, timeout=25) as resp:
+                payload = json.load(resp)
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code < 500 or attempt == 2:
+                raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
+        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException, ValueError) as exc:
+            if attempt == 2:
+                raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
+        time.sleep(1 + attempt)
     if payload.get("errors"):
         raise UpstreamError(payload["errors"][0].get("message", L("GraphQL klaida", "GraphQL error")))
     data = payload["data"]
@@ -506,7 +514,7 @@ def advanced_stats(meta, rnd=None):
             result = {}  # BasketNews clamps to its last game; that round isn't there yet
         else:
             result = {str(r["player_id"]): r for r in data.get("stats") or []}
-    except (urllib.error.URLError, TimeoutError, ValueError) as exc:
+    except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException, ValueError) as exc:
         print(f"Pažangi statistika nepasiekiama: {exc}")
         return hit[1] if hit else {}
     ttl = 3600 if rnd is None else (12 * 3600 if rnd < meta["currentRound"] else 300)
@@ -1010,7 +1018,7 @@ def injury_report(meta):
             with urllib.request.urlopen(req, context=SSL_CTX, timeout=30) as resp:
                 page = resp.read().decode("utf-8", errors="replace")
             entries = parse_injury_report(page)
-        except (urllib.error.URLError, TimeoutError) as exc:
+        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException) as exc:
             print(f"Traumų sąrašas nepasiekiamas ({url}): {exc}")
             if hit:
                 return hit[1]
@@ -1027,6 +1035,7 @@ _log_lock = threading.Lock()
 def update_injury_log(entries):
     """Turn daily report snapshots into per-player episodes (start, end, status changes)."""
     today = date.today().isoformat()
+    now = datetime.now().astimezone().isoformat(timespec="minutes")  # when the change was first seen
     with _log_lock:
         log = read_json(INJURY_LOG_FILE, {"players": {}})
         before = json.dumps(log["players"], sort_keys=True)
@@ -1040,7 +1049,7 @@ def update_injury_log(entries):
             rec["name"], rec["club"] = e["name"], e["club"]
             episodes = rec["episodes"]
             open_ep = episodes[-1] if episodes and episodes[-1]["end"] is None else None
-            update = {"date": today, "status": e["status"], "return": e["return"], "comment": e["comment"]}
+            update = {"date": today, "at": now, "status": e["status"], "return": e["return"], "comment": e["comment"]}
             if e["status"] == "ready":
                 if open_ep:
                     open_ep["end"] = today
@@ -1061,7 +1070,7 @@ def update_injury_log(entries):
             ep = episodes[-1]
             gap = (date.fromisoformat(today) - date.fromisoformat(ep["lastSeen"])).days
             ep["end"] = today if gap <= 1 else ep["lastSeen"]
-            _add_update(ep, {"date": ep["end"], "status": "ready", "return": "",
+            _add_update(ep, {"date": ep["end"], "at": now if gap <= 1 else None, "status": "ready", "return": "",
                              "comment": REMOVED_NOTE})
         # Only touch the file when something changed, so the GitHub copy is not re-committed every run.
         if json.dumps(known, sort_keys=True) != before or not INJURY_LOG_FILE.exists():
@@ -1634,7 +1643,7 @@ def proballers_link(info):
         if len(cands) == 1:
             c = cands[0]
             url = f"https://www.proballers.com/basketball/player/{c['pb']}/{ascii_slug(c['label'])}"
-    except (urllib.error.URLError, TimeoutError, ValueError, KeyError) as exc:
+    except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException, ValueError, KeyError) as exc:
         print(f"Proballers paieška nepavyko ({info['name']}): {exc}")
         return None
     with _proballers_lock:
@@ -1751,6 +1760,54 @@ def season_shooting(lines):
     fg = {"made": two["made"] + three["made"], "att": two["att"] + three["att"]}
     fg["pct"] = round(100 * fg["made"] / fg["att"], 1) if fg["att"] else None
     return {"fg": fg, "two": two, "three": three, "ft": ft, "games": len(lines)}
+
+
+# --------------------------------------------------------------------------- injury news
+
+# How a report status reads as news ("Name (CLUB) nežais.").
+FEED_PHRASES = {
+    "out": ("nežais.", "will not play."),
+    "doubtful": ("dalyvavimas abejotinas.", "is doubtful."),
+    "questionable": ("dalyvavimas abejotinas.", "is questionable."),
+    "uncertain": ("būsena neaiški.", "status unclear."),
+    "game-time": ("sprendimas bus priimtas prieš rungtynes.", "will be a game-time decision."),
+    "expected": ("turėtų žaisti.", "is expected to play."),
+    "ready": ("sveikas ir grįžta į rikiuotę.", "is healthy and back in the lineup."),
+}
+FEED_TONE = {"out": "bad", "ready": "good", "expected": "good"}
+FEED_LIMIT = 300
+
+
+def injuries_payload(fid):
+    """Injury-report changes as a news feed, newest first, with each player's owner in this league."""
+    meta = league_meta(fid)
+    injury_report(meta)  # records any new changes first
+    log = read_json(INJURY_LOG_FILE, {"players": {}})["players"]
+    pmap = players(meta, meta["latestRound"], meta["currentRound"])
+    by_bn = {p["bnId"]: p for p in pmap.values() if p.get("bnId")}
+    own = owners(meta, meta["currentRound"])
+    events = []
+    for bn_id, rec in log.items():
+        p = by_bn.get(bn_id)
+        owner = (own.get(p["id"]) or {}).get("team") if p else None
+        brief = player_brief(p, None, rec.get("name"))
+        if not p:
+            brief["club"] = {"abbr": rec.get("club")} if rec.get("club") else None
+        for ep in rec["episodes"]:
+            for u in ep["updates"]:
+                status = u["status"]
+                comment = "" if u.get("comment") == REMOVED_NOTE else loc_comment(u.get("comment"))
+                events.append({
+                    "at": u.get("at") or u["date"], "hasTime": bool(u.get("at")),
+                    "status": status, "label": health_label(status),
+                    "phrase": L(*FEED_PHRASES.get(status, ("būsena pasikeitė.", "status changed."))),
+                    "tone": FEED_TONE.get(status, "neutral"),
+                    "comment": comment, "return": return_local(u.get("return")),
+                    "player": brief, "owner": owner,
+                })
+    events.sort(key=lambda e: e["at"], reverse=True)
+    return {"league": meta, "events": events[:FEED_LIMIT], "total": len(events),
+            "reportUrl": meta["injuryReportUrl"]}
 
 
 # --------------------------------------------------------------------------- draft & transfers
@@ -2370,6 +2427,7 @@ class Handler(BaseHTTPRequestHandler):
             (rf"/api/league/{ID}/games", lambda m, q: games_payload(m[1], _round_param(q))),
             (rf"/api/league/{ID}/records", lambda m, q: records_payload(m[1], _round_param(q))),
             (rf"/api/league/{ID}/draft", lambda m, q: draft_payload(m[1])),
+            (rf"/api/league/{ID}/injuries", lambda m, q: injuries_payload(m[1])),
             (rf"/api/league/{ID}/transfers", lambda m, q: transfers_payload(m[1])),
             (rf"/api/league/{ID}/team/{ID}", lambda m, q: team_payload(m[1], m[2], _round_param(q))),
             (rf"/api/league/{ID}/player/{ID}", lambda m, q: player_payload(m[1], m[2])),
