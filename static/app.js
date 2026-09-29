@@ -112,6 +112,8 @@ const I18N = {
     ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
     tabDraft: "Draftas",
+    rebSplitHead: "G/P",
+    rebSplitTip: "Mažesni skaičiai: gynyboje / puolime",
     dayShort: "{n} diena",
     dayTip: "Žaidžia {n}-ąją turo dieną",
     tabInjuries: "Traumos",
@@ -412,6 +414,8 @@ const I18N = {
     ctxNote: "Compared with players averaging at least {m} minutes.",
     lowerBetter: "For this metric a lower value is better.",
     tabDraft: "Draft",
+    rebSplitHead: "D/O",
+    rebSplitTip: "Small numbers: defensive / offensive",
     dayShort: "Day {n}",
     dayTip: "Plays on day {n} of the round",
     tabInjuries: "Injuries",
@@ -866,8 +870,11 @@ const pct = (m, a) => (a ? (m / a) * 100 : null);
 
 // League averages are only shown inside the player card (withAvg), not in the lists.
 function statHeads(sortable = false, withAvg = false) {
-  return statCols().map((c) =>
-    `<th class="num stat${sortable ? " sortable" : ""}"${sortable ? ` data-sort="${c.key}"` : ""} title="${esc(c.title + (withAvg ? avgTip(c.key) : ""))}">${esc(c.abbr)}</th>`).join("");
+  return statCols().map((c) => {
+    const reb = c.key === "reb";  // total, then defensive / offensive in small print
+    const title = c.title + (reb ? `\n${t("rebSplitTip")}` : "") + (withAvg ? avgTip(c.key) : "");
+    return `<th class="num stat${sortable ? " sortable" : ""}"${sortable ? ` data-sort="${c.key}"` : ""} title="${esc(title)}">${esc(c.abbr)}${reb ? `<span class="split-head">${t("rebSplitHead")}</span>` : ""}</th>`;
+  }).join("");
 }
 
 // mode "round": totals of one round (made/attempted); mode "avg": season averages (shooting as %).
@@ -884,7 +891,9 @@ function statCells(line, mode) {
     if (key === "ft") return shot(line.ftm, line.fta);
     if (key === "min") return mode === "round" ? Math.round(line.min) : fmt1(line.min);
     if (key === "usg") return fmt1(line.usg);
-    return mode === "round" ? fmt(line[key]) : fmt1(line[key]);
+    const f = mode === "round" ? fmt : fmt1;
+    if (key === "reb") return `${f(line.reb)}<span class="split">${f(line.dreb)}/${f(line.oreb)}</span>`;
+    return f(line[key]);
   };
   return cols.map((c) => `<td class="num stat">${val(c.key)}</td>`).join("");
 }
@@ -2446,7 +2455,8 @@ function playerView(fid, data) {
   const tl = t("tiles");
   const tiles = [
     [tl.avgFp, fmt1(p.avgPts), "fp"], [tl.gp, p.gamesPlayed], [tl.min, fmt1(season.min), "min"], [tl.pts, fmt1(season.pts), "pts"],
-    [tl.reb, fmt1(season.reb), "reb"], [tl.ast, fmt1(season.ast), "ast"], [tl.stl, fmt1(season.stl), "stl"], [tl.blk, fmt1(season.blk), "blk"], [tl.eff, fmt1(season.eff), "eff"],
+    [`${tl.reb} <span class="split-head">${t("rebSplitHead")}</span>`,
+      season.reb == null ? "-" : `${fmt1(season.reb)}<small class="split">${fmt1(season.dreb)}/${fmt1(season.oreb)}</small>`, "reb"], [tl.ast, fmt1(season.ast), "ast"], [tl.stl, fmt1(season.stl), "stl"], [tl.blk, fmt1(season.blk), "blk"], [tl.eff, fmt1(season.eff), "eff"],
   ];
 
   const episodes = injury.episodes.map((e) => {
@@ -2489,8 +2499,9 @@ function playerView(fid, data) {
     </div>
     ${status}
     <div class="tiles compact">${tiles.map(([l, v, key]) => {
-      const tip = key ? avgTip(key) : "";
-      return `<div class="tile"${tip ? ` data-tip="${esc(l + tip)}"` : ""}><div class="label">${l}</div><div class="value">${v}</div></div>`;
+      const name = l.replace(/<[^>]+>/g, "").trim();
+      const tip = key ? (key === "reb" ? `\n${t("rebSplitTip")}` : "") + avgTip(key) : "";
+      return `<div class="tile"${tip ? ` data-tip="${esc(name + tip)}"` : ""}><div class="label">${l}</div><div class="value">${v}</div></div>`;
     }).join("")}</div>
     ${shootingSection(data.shooting)}
     ${advancedSection(data.advanced)}
