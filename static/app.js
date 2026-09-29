@@ -756,8 +756,16 @@ function showTip(el) {
   let x = r.left + r.width / 2 - w / 2;
   x = Math.max(8, Math.min(x, window.innerWidth - w - 8));
   const above = r.top - h - 8;
+  const y = above > 4 ? above : r.bottom + 8;
   tip.style.left = `${x}px`;
-  tip.style.top = `${above > 4 ? above : r.bottom + 8}px`;
+  tip.style.top = `${y}px`;
+  // Inside an animating dialog "fixed" is measured from the dialog, not the window:
+  // shift by whatever offset that adds so the tip still sits next to the element.
+  const got = tip.getBoundingClientRect();
+  if (Math.abs(got.left - x) > 1 || Math.abs(got.top - y) > 1) {
+    tip.style.left = `${2 * x - got.left}px`;
+    tip.style.top = `${2 * y - got.top}px`;
+  }
 }
 
 document.addEventListener("pointerover", (e) => {

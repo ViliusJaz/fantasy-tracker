@@ -667,7 +667,9 @@ table.box { min-width: 1100px; }
   background: var(--surface); color: var(--text); border: 1px solid var(--border-strong); border-radius: 18px;
   box-shadow: var(--shadow-pop);
 }
-.modal[open] { animation: pop var(--slow) var(--ease) both; }
+/* "backwards", not "both": an animation that keeps filling a transform turns the dialog into
+   the containing block for fixed children, which shifts the tooltips inside it. */
+.modal[open] { animation: pop var(--slow) var(--ease) backwards; }
 .modal:focus { outline: none; }
 .modal::backdrop { background: var(--backdrop); backdrop-filter: blur(4px); }
 .modal[open]::backdrop { animation: fade var(--slow) var(--ease) both; }
