@@ -12,6 +12,7 @@ Exits with an error (and the previous site stays online) when BasketNews could
 not be reached for most of the pages.
 """
 import contextvars
+import hashlib
 import json
 import shutil
 import sys
@@ -169,6 +170,11 @@ def copy_page():
     html = index.read_text(encoding="utf-8")
     # Tells app.js to read the JSON files instead of calling the server.
     html = html.replace("<head>", '<head>\n  <meta name="ft-static" content="1">', 1)
+    # GitHub Pages lets browsers keep files for 10 minutes: a content hash in the URL makes
+    # a normal reload pick up a new version right away.
+    for name in ("app.js", "style.css", "fonts/fonts.css"):
+        digest = hashlib.sha1((OUT / name).read_bytes()).hexdigest()[:10]
+        html = html.replace(f'"{name}"', f'"{name}?v={digest}"')
     index.write_text(html, encoding="utf-8")
     (OUT / ".nojekyll").write_text("")
 
