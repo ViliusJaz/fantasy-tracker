@@ -340,6 +340,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T17:28+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -378,6 +385,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T17:28+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -449,6 +463,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T17:28+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -551,6 +572,13 @@
               "status": "doubtful",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-09-29",
+              "at": "2026-09-29T17:28+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -1668,5 +1696,5 @@
       "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-09-29T14:45:56"
+  "updatedAt": "2026-09-29T17:28:59"
 }
