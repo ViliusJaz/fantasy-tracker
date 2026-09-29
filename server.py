@@ -2491,9 +2491,14 @@ def draft_awards(meta, finished, team_names):
             for d in drops:
                 if r >= d[0]:
                     after[d] = after.get(d, 0) + round_pts.get(d[3], 0)
-        rnd, _, tid, pid = max(drops, key=lambda d: after.get(d, 0))
-        cards.append(award(drop_titles[1], team(tid), f"{num(after.get((rnd, _, tid, pid), 0))} FP",
-                           f"{L('išmetė', 'dropped')} {name(pid)} {before(rnd)}", "😬", team_id=tid, info=drop_info[1]))
+        worst = max(drops, key=lambda d: after.get(d, 0))
+        rnd, _, tid, pid = worst
+        if after.get(worst, 0) > 0:
+            cards.append(award(drop_titles[1], team(tid), f"{num(after[worst])} FP",
+                               f"{L('išmetė', 'dropped')} {name(pid)} {before(rnd)}", "😬", team_id=tid, info=drop_info[1]))
+        else:  # nobody dropped has played a finished round since
+            cards.append(no_award(drop_titles[1], L("atsiras po pirmo sužaisto turo", "appears after the next finished round"),
+                                  "😬", info=drop_info[1]))
 
     # Best draft-day roster: season FP of everyone a team drafted, wherever they play now.
     by_team = {}
