@@ -282,7 +282,7 @@ const I18N = {
     error: "Klaida {s}",
     staticMissing: "Šių duomenų dar nėra. Svetainė atsinaujina kas 15 minučių.",
     pos: { guard: "Gynėjas", forward: "Puolėjas", center: "Centras" },
-    tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", eff: "NB" },
+    tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", blk: "Blokai", eff: "NB" },
     resShort: { W: "P", L: "Pr", T: "L" },
   },
   en: {
@@ -547,7 +547,7 @@ const I18N = {
     error: "Error {s}",
     staticMissing: "This data is not available yet. The site refreshes every 15 minutes.",
     pos: { guard: "Guard", forward: "Forward", center: "Center" },
-    tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", eff: "PIR" },
+    tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", blk: "BLK", eff: "PIR" },
     resShort: { W: "W", L: "L", T: "T" },
   },
 };
@@ -2266,7 +2266,7 @@ function playerView(fid, data) {
   const tl = t("tiles");
   const tiles = [
     [tl.avgFp, fmt1(p.avgPts), "fp"], [tl.gp, p.gamesPlayed], [tl.min, fmt1(season.min), "min"], [tl.pts, fmt1(season.pts), "pts"],
-    [tl.reb, fmt1(season.reb), "reb"], [tl.ast, fmt1(season.ast), "ast"], [tl.stl, fmt1(season.stl), "stl"], [tl.eff, fmt1(season.eff), "eff"],
+    [tl.reb, fmt1(season.reb), "reb"], [tl.ast, fmt1(season.ast), "ast"], [tl.stl, fmt1(season.stl), "stl"], [tl.blk, fmt1(season.blk), "blk"], [tl.eff, fmt1(season.eff), "eff"],
   ];
 
   const episodes = injury.episodes.map((e) => {
