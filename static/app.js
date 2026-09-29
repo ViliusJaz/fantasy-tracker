@@ -22,7 +22,7 @@ let LEAGUE_AVG = null;  // per-game league averages for the stat tooltips (lates
 
 const I18N = {
   lt: {
-    brand: "Fantasy trackeris",
+    brand: "Fantasy tracker",
     skip: "Pereiti prie turinio",
     themeLight: "Šviesi tema",
     themeDark: "Tamsi tema",
@@ -92,6 +92,8 @@ const I18N = {
     ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
     tabDraft: "Draftas",
+    dayShort: "{n} diena",
+    dayTip: "Žaidžia {n}-ąją turo dieną",
     tabInjuries: "Traumos",
     newsBad: "Bloga žinia komandai {t}:",
     newsGood: "Gera žinia komandai {t}:",
@@ -370,6 +372,8 @@ const I18N = {
     ctxNote: "Compared with players averaging at least {m} minutes.",
     lowerBetter: "For this metric a lower value is better.",
     tabDraft: "Draft",
+    dayShort: "Day {n}",
+    dayTip: "Plays on day {n} of the round",
     tabInjuries: "Injuries",
     newsBad: "Bad news for {t}:",
     newsGood: "Good news for {t}:",
@@ -957,7 +961,8 @@ function clubCell(club) {
 function gameCell(games) {
   if (!games || !games.length) return `<span class="dim">${t("noGame")}</span>`;
   return games.map((g) => {
-    const vs = `${g.home ? "vs" : "@"} ${esc(g.opponent)}`;
+    const day = g.day ? `<span class="day-tag d${g.day}" data-tip="${esc(t("dayTip", { n: g.day }))}">${t("dayShort", { n: g.day })}</span>` : "";
+    const vs = `${day}${g.home ? "vs" : "@"} ${esc(g.opponent)}`;
     if (g.canceled) return `<div class="game done">${vs} <span class="when">${t("canceled")}</span></div>`;
     if (g.live) return `<div class="game">${vs} <span class="live-dot">${g.score[0]}:${g.score[1]} LIVE</span></div>`;
     if (g.completed) {

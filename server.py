@@ -476,7 +476,20 @@ def players(meta, stats_round, games_round):
     }, round_ttl(meta, min(stats_round, games_round)))
     views = {p["id"]: player_view(p) for p in data["playersSearchRecordsFromClient"]["records"]}
     attach_usage(meta, views, stats_round)
+    mark_round_days(views)
     return views
+
+
+def mark_round_days(views):
+    """Tag each game with the day of the round it is on (1, 2, ...) when a round spans several days."""
+    dates = sorted({g["at"][:10] for v in views.values() for g in v["games"] if g.get("at")})
+    if len(dates) < 2:
+        return
+    day = {d: i + 1 for i, d in enumerate(dates)}
+    for v in views.values():
+        for g in v["games"]:
+            if g.get("at"):
+                g["day"] = day[g["at"][:10]]
 
 
 # --------------------------------------------------------------------------- advanced stats (BasketNews)
@@ -714,6 +727,8 @@ def players_by_ids(meta, ids, stats_round, games_round):
         for rec in data.values():
             if rec:
                 found[rec["id"]] = player_view(rec)
+    if missing:
+        mark_round_days(found)  # the directly fetched players need their round day too
     return found
 
 
