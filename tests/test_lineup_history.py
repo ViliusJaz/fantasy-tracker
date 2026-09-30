@@ -92,11 +92,13 @@ def test_leagues_are_stored_in_separate_files(ft, clock):
     assert set(store(ft, "b" * 24)["rounds"]["1"]["teams"]) == {"t2"}
 
 
-def test_lineups_parses_the_api_answer_and_records_it(ft, clock, graphql, monkeypatch):
+def test_lineups_parses_the_api_answer_and_records_it_on_flush(ft, clock, graphql, monkeypatch):
     clock.set("2026-09-30T10:00:00+03:00")
     answer = graphql("draftLeagueFantasyTeamLineupsFromClient", HLA)[0]
     monkeypatch.setattr(ft, "gql", lambda query, variables, ttl=None: answer)
     result = ft.lineups(meta(started=True))
+    assert not (ft.data_dir / "lineups").exists()  # fetching alone writes nothing
+    assert ft.flush() == {"lineups": 1, "injuries": 0}
     raw = answer["draftLeagueFantasyTeamLineupsFromClient"]
     assert set(result) == {lu["fantasyTeamId"] for lu in raw}
     for lu in result.values():
@@ -117,3 +119,21 @@ def test_lineups_skip_empty_slots(ft, clock, monkeypatch):
     monkeypatch.setattr(ft, "gql", lambda query, variables, ttl=None: answer)
     result = ft.lineups(meta())
     assert result["t1"]["players"] == [{"id": "p1", "card": "g-1", "slot": "starter", "captain": False}]
+
+
+def test_discard_drops_what_was_fetched(ft, clock, monkeypatch):
+    clock.set("2026-09-30T10:00:00+03:00")
+    ft.observe_lineups(meta(), lineup_by_team(1, {"t1": team("c-1")}))
+    ft.observe_injury_report([{"bnId": "1", "name": "A", "club": "C", "status": "out", "return": "", "comment": "Knee"}])
+    assert set(ft.pending()["lineups"]) == {HLA} and len(ft.pending()["injuries"]) == 1
+    ft.discard()
+    assert ft.flush() == {"lineups": 0, "injuries": 0}
+    assert not (ft.data_dir / "lineups").exists() and not (ft.data_dir / "injuries.json").exists()
+
+
+def test_only_the_latest_lineup_fetch_of_a_league_is_kept(ft, clock):
+    clock.set("2026-09-30T10:00:00+03:00")
+    ft.observe_lineups(meta(), lineup_by_team(1, {"t1": team("c-1")}))
+    ft.observe_lineups(meta(), lineup_by_team(1, {"t1": team("g-1")}))
+    ft.flush()
+    assert [p["card"] for p in store(ft)["rounds"]["1"]["teams"]["t1"]["players"]] == ["g-1"]

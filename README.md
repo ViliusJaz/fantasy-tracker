@@ -5,7 +5,7 @@ Vietinis BasketNews Fantasy draft lygų sekiklis: lygų sąrašas, turnyrinės l
 agentai ir žaidėjų traumos.
 
 ```bash
-python3 fantasy-tracker/server.py
+python3 server.py
 ```
 
 Atsidaryk http://127.0.0.1:8124. Papildomų bibliotekų nereikia (tik Python 3 standartinė biblioteka).
@@ -61,6 +61,23 @@ serveris, kas 10 min. išsaugoma:
 
 
 
+## Kodo struktūra
+
+`server.py` (vietinis serveris) ir `export.py` (statinė svetainė) tik kviečia bendrus `backend/` modulius:
+
+| Modulis | Ką daro |
+|---|---|
+| `backend/sources/` | Duomenų šaltiniai: BasketNews GraphQL (`basketnews.py`), pažangi statistika (`advanced.py`), traumų sąrašo puslapis (`injury_report.py`), Wikidata (`wikidata.py`). Tik čia žinoma, kaip atrodo jų atsakymai. |
+| `backend/league.py`, `players.py`, `rounds.py` | Lyga, lentelės, tvarkaraštis, sudėtys, savininkai; žaidėjai; turų būsenos. |
+| `backend/scoring.py` | Taškai pagal sudėtį, formacijos, optimali sudėtis. |
+| `backend/history.py` | Tai, ką programa kaupia `data/`: sudėtys ir traumų epizodai. Duomenų gavimas čia nieko nerašo – tik perduoda, o įrašo `pipeline.store()`. |
+| `backend/injuries.py`, `injury_lt.py` | Traumų sąrašas, būsenos ir komentarai LT/EN, žaidėjo traumų istorija. |
+| `backend/analytics/` | Sezono analitika: turų suvestinės, efektyvumas, tvarkaraščio sunkumas, apžvalga, apdovanojimai, perėjimų ROI. |
+| `backend/payloads/` | Kiekvieno API adreso JSON (tas pats ir serveriui, ir `export.py`). |
+| `backend/pipeline.py`, `log.py`, `config.py` | Bendri žingsniai (gauti → įrašyti), žurnalas su etapais `[FETCH]`, `[STORAGE]`, `[EXPORT]`…, keliai ir nustatymai. |
+
+`FT_DATA_DIR`, `FT_LEAGUES_FILE`, `FT_SITE_DIR` leidžia nukreipti `data/`, `leagues.json` ir `site/` kitur (taip daro testai).
+
 ## Testai
 
 ```bash
@@ -75,3 +92,4 @@ python3 -m pytest
 - Naują įrašą padaro `python3 tools/replay_export.py record var/recordings/<vardas>.json.gz`
   (repozitorijos nekeičia), dvi versijas palygina `python3 tools/compare_site.py A B`.
 - `DRY_RUN=1 ./publish.sh` – viskas kaip įprastai, tik nieko nekeičia git'e ir nieko neįkelia.
+- `python3 tools/check_names.py` – neapibrėžti vardai ir nenaudojami importai (be papildomų bibliotekų).

@@ -1,7 +1,7 @@
 """Shared test fixtures.
 
-`ft`         the tracker's backend with its data folder moved to a temporary directory,
-             so no test ever touches the real data/.
+`ft`         every backend module behind one name, with the data folder moved to a
+             temporary directory, so no test ever touches the real data/.
 `clock`      freezes "today" / "now" for code that records dates.
 `recording`  the recorded upstream answers in tests/fixtures (a real export run).
 `graphql`    look up a recorded GraphQL answer by its operation name.
@@ -33,26 +33,66 @@ HLA = "6aa7fe67c95ed14589bf170d"      # head-to-head league in the recording
 CLASSIC = "6aa6bddec90ec6ddaf50d152"  # classic league in the recording
 
 
+MODULES = [
+    "config", "clock", "i18n", "errors", "util", "net", "sources.basketnews", "sources.advanced",
+    "sources.injury_report", "sources.wikidata", "rounds", "scoring", "history", "injuries", "league", "players",
+    "advanced", "proballers", "previews", "projections", "pipeline", "analytics.season", "analytics.awards",
+    "analytics.transfers", "payloads.standings", "payloads.team", "payloads.players", "payloads.games",
+    "payloads.player", "payloads.injuries", "payloads.draft", "payloads.transfers", "payloads.records",
+    "payloads.leagues",
+]
+
+
+class Backend:
+    """All backend modules behind one name: ft.score_lineup, ft.gql, ... Setting an attribute
+    (monkeypatch.setattr(ft, "gql", fake)) replaces it in every module that imported it."""
+
+    def __init__(self):
+        import importlib
+        object.__setattr__(self, "_mods", [importlib.import_module(f"backend.{m}") for m in MODULES])
+
+    def _home(self, name):
+        for m in self._mods:  # the module that defines it (listed before the ones importing it)
+            if name in vars(m) and getattr(vars(m)[name], "__module__", m.__name__) == m.__name__:
+                return m
+        for m in self._mods:
+            if name in vars(m):
+                return m
+        raise AttributeError(name)
+
+    def __getattr__(self, name):
+        return getattr(self._home(name), name)
+
+    def __setattr__(self, name, value):
+        current = getattr(self._home(name), name)
+        for m in self._mods:
+            if vars(m).get(name) is current:
+                setattr(m, name, value)
+
+
 @pytest.fixture
 def ft(tmp_path, monkeypatch):
-    """server.py's functions, with every data path inside tmp_path."""
-    import server
+    """The backend, with every data path inside tmp_path and empty caches."""
+    from backend import config, history
+    from backend.sources import basketnews
+    backend = Backend()
     data = tmp_path / "data"
     data.mkdir()
-    monkeypatch.setattr(server, "DATA_DIR", data)
-    monkeypatch.setattr(server, "LINEUPS_DIR", data / "lineups")
-    monkeypatch.setattr(server, "INJURY_LOG_FILE", data / "injuries.json")
-    monkeypatch.setattr(server, "PROBALLERS_FILE", data / "proballers.json")
-    monkeypatch.setattr(server, "LEAGUES_FILE", tmp_path / "leagues.json")
-    monkeypatch.setattr(server, "_cache", {})
-    server.LANG.set("lt")
-    monkeypatch.setattr(server, "data_dir", data, raising=False)  # for tests that inspect the files
-    return server
+    for name in ("DATA_DIR", "LINEUPS_DIR", "INJURY_LOG_FILE", "PROBALLERS_FILE"):
+        monkeypatch.setattr(config, name, getattr(config, name))  # restored after the test
+    config.set_data_dir(data)
+    monkeypatch.setattr(config, "LEAGUES_FILE", tmp_path / "leagues.json")
+    monkeypatch.setattr(basketnews, "_cache", {})
+    history.discard()
+    backend.LANG.set("lt")
+    object.__setattr__(backend, "data_dir", data)  # for tests that inspect the files
+    return backend
 
 
 class Clock:
-    def __init__(self, monkeypatch, module):
-        self.monkeypatch, self.module = monkeypatch, module
+    def __init__(self, monkeypatch):
+        from backend import clock
+        self.monkeypatch, self.module = monkeypatch, clock
 
     def set(self, iso):
         """Freeze time at `iso` (e.g. "2026-09-30T12:00:00+03:00")."""
@@ -74,7 +114,7 @@ class Clock:
 
 @pytest.fixture
 def clock(ft, monkeypatch):
-    return Clock(monkeypatch, ft)
+    return Clock(monkeypatch)
 
 
 @pytest.fixture(scope="session")

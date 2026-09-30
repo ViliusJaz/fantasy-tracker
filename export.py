@@ -14,6 +14,7 @@ not be reached for most of the pages.
 import contextvars
 import hashlib
 import json
+import os
 import shutil
 import sys
 import threading
@@ -21,23 +22,42 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 
-import server as s
+from backend import config, injuries, log, net, pipeline
+from backend.errors import NotFound, UpstreamError
+from backend.i18n import LANG
+from backend.league import league_meta, lineups, standings
+from backend.rounds import round_state
+from backend.payloads.draft import draft_payload
+from backend.payloads.games import games_payload
+from backend.payloads.injuries import injuries_payload
+from backend.payloads.leagues import leagues_payload
+from backend.payloads.player import player_payload
+from backend.payloads.players import players_payload
+from backend.payloads.records import records_payload
+from backend.payloads.standings import rounds_payload, standings_payload
+from backend.payloads.team import team_payload
+from backend.payloads.transfers import transfers_payload
+from backend.players import players
+from backend.proballers import proballers_search, proballers_target
+from backend.sources import basketnews
+from backend.util import read_json
 
-OUT = s.ROOT / "site"
+OUT = config.SITE_DIR
 LANGS = ("lt", "en")
 RUN_TTL = 3 * 60 * 60        # one run fetches everything once
-PROBALLERS_LOOKUPS = 15      # new Wikidata lookups per run; the rest wait for the next runs
+# new Wikidata lookups per run; the rest wait for the next runs
+PROBALLERS_LOOKUPS = int(os.environ.get("FT_PROBALLERS_LOOKUPS", 15))
 GENERATED = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 # Every page of one run should come from the same BasketNews answers.
-_gql = s.gql
-s.gql = lambda query, variables, ttl=None: _gql(query, variables, ttl=RUN_TTL)
+basketnews.RUN_TTL = RUN_TTL
+LOG = log.get("export")
 
 failures, written = [], 0
 _lookups = {"left": PROBALLERS_LOOKUPS}
 _lookup_lock = threading.Lock()
 _write_lock = threading.Lock()
-# Own workers: the payload builders use server.POOL themselves, and waiting on it from
+# Own workers: the payload builders use backend.util.POOL themselves, and waiting on it from
 # its own threads could deadlock.
 WORKERS = ThreadPoolExecutor(max_workers=8)
 
@@ -56,10 +76,10 @@ def job(rel, build):
     global written
     try:
         payload = build()
-    except (s.UpstreamError, s.NotFound, ValueError, KeyError, TypeError) as exc:
+    except (UpstreamError, NotFound, ValueError, KeyError, TypeError) as exc:
         with _write_lock:
             failures.append(rel)
-        print(f"  ! {rel}: {exc}")
+        LOG.warning("%s not written: %s", rel, exc)
         return
     path = OUT / "api" / rel
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -74,10 +94,10 @@ def prefetch_players(meta, ids, size=10):
     """Fetch player pages ten at a time (one request instead of ten) and seed the cache
     with the exact entries player_payload() will ask for."""
     rounds = list(range(meta["firstRound"], meta["latestRound"] + 1))
-    single = s._player_rounds_query(rounds)
+    single = basketnews.player_rounds_query(rounds)
     head = "playerRecordFromClient(id: $id) {"
     fields = single[single.index(head) + len(head):single.rindex("} }")]
-    base = {"leagueId": meta["leagueId"], "locale": s.LOCALE, "pcs": meta["pointCalcSystem"],
+    base = {"leagueId": meta["leagueId"], "locale": config.LOCALE, "pcs": meta["pointCalcSystem"],
             "statsRound": meta["latestRound"], "gamesRound": meta["currentRound"]}
     decl = "$leagueId: String!, $locale: String!, $pcs: String, $statsRound: Int, $gamesRound: Int"
 
@@ -85,15 +105,13 @@ def prefetch_players(meta, ids, size=10):
         query = f"query({decl}) {{" + "".join(
             f'p{n}: playerRecordFromClient(id: "{pid}") {{{fields}}}' for n, pid in enumerate(chunk)) + "}"
         try:
-            data = _gql(query, base, ttl=RUN_TTL)
-        except s.UpstreamError as exc:
-            print(f"  ! player batch: {exc}")  # player_payload() will fetch these one by one
+            data = basketnews.gql(query, base)
+        except UpstreamError as exc:
+            log.get("fetch").warning("player batch failed (pages fetch them one by one): %s", exc)
             return
-        expires = time.time() + RUN_TTL
-        with s._cache_lock:
-            for n, pid in enumerate(chunk):
-                key = single + json.dumps({**base, "id": pid}, sort_keys=True)
-                s._cache[key] = (expires, {"playerRecordFromClient": data.get(f"p{n}")})
+        for n, pid in enumerate(chunk):
+            basketnews.cache_answer(single, {**base, "id": pid}, {"playerRecordFromClient": data.get(f"p{n}")},
+                                    RUN_TTL)
 
     chunks = [ids[i:i + size] for i in range(0, len(ids), size)]
     run_all(batch, chunks)
@@ -101,72 +119,82 @@ def prefetch_players(meta, ids, size=10):
 
 def proballers_for(info):
     """Proballers link without a redirect endpoint; new Wikidata lookups are rationed per run."""
-    known = s.read_json(s.PROBALLERS_FILE, {}).get(info["bnId"] or info["id"])
+    known = read_json(config.PROBALLERS_FILE, {}).get(info["bnId"] or info["id"])
     if known is None:
         with _lookup_lock:
             if _lookups["left"] <= 0:
-                return s.proballers_search(info)
+                return proballers_search(info)
             _lookups["left"] -= 1
-    return s.proballers_target(info)
+    return proballers_target(info)
 
 
 def player_file(fid, pid):
-    payload = s.player_payload(fid, pid)
+    payload = player_payload(fid, pid)
     payload["proballers"] = proballers_for(payload["player"])
     return payload
 
 
 def export_league(entry):
     fid = entry["id"]
-    meta = s.league_meta(fid)
+    meta = league_meta(fid)
     first, cur, latest = meta["firstRound"], meta["currentRound"], meta["latestRound"]
     finished = list(range(first, cur))
     h2h = meta["format"] == "head_to_head"
     base = f"league/{fid}"
-    print(f"{meta['title']}: rounds {first + 1}-{latest + 1}, current {cur + 1}")
 
-    teams = [r["team"]["id"] for r in s.standings(meta)[1]]
-    pmap = s.players(meta, latest, cur)
-    rostered = {p["id"] for lu in s.lineups(meta).values() for p in lu["players"]}
-    player_ids = sorted(set(pmap) | rostered)
-    prefetch_players(meta, player_ids)
+    with log.timed() as took:
+        teams = [r["team"]["id"] for r in standings(meta)[1]]
+        pmap = players(meta, latest, cur)
+        rostered = {p["id"] for lu in lineups(meta).values() for p in lu["players"]}
+        player_ids = sorted(set(pmap) | rostered)
+        prefetch_players(meta, player_ids)
+        pipeline.observe(meta)
+    log.get("fetch").info("%s: round %d of %d (%s), %d teams, %d players, %.1fs", meta["title"], cur + 1,
+                          meta["totalRounds"], round_state(meta, cur), len(teams), len(player_ids), took())
+    changed = pipeline.store()
+    log.get("storage").info("lineups changed in %d file(s), injury log %s", changed["lineups"],
+                            "updated" if changed["injuries"] else "unchanged")
+
+    pages = 0
+    started = time.monotonic()
 
     for lang in LANGS:
-        s.LANG.set(lang)
+        LANG.set(lang)
         jobs = [
-            (file_name(f"{base}/standings", None, lang), lambda: s.standings_payload(fid)),
-            (file_name(f"{base}/rounds", None, lang), lambda: s.rounds_payload(fid)),
-            (file_name(f"{base}/games", None, lang), lambda: s.games_payload(fid)),
-            (file_name(f"{base}/records", None, lang), lambda: s.records_payload(fid)),
-            (file_name(f"{base}/free-agents", None, lang), lambda: s.players_payload(fid, "free")),
-            (file_name(f"{base}/players", None, lang), lambda: s.players_payload(fid, "all")),
-            (file_name(f"{base}/draft", None, lang), lambda: s.draft_payload(fid)),
-            (file_name(f"{base}/transfers", None, lang), lambda: s.transfers_payload(fid)),
-            (file_name(f"{base}/injuries", None, lang), lambda: s.injuries_payload(fid)),
+            (file_name(f"{base}/standings", None, lang), lambda: standings_payload(fid)),
+            (file_name(f"{base}/rounds", None, lang), lambda: rounds_payload(fid)),
+            (file_name(f"{base}/games", None, lang), lambda: games_payload(fid)),
+            (file_name(f"{base}/records", None, lang), lambda: records_payload(fid)),
+            (file_name(f"{base}/free-agents", None, lang), lambda: players_payload(fid, "free")),
+            (file_name(f"{base}/players", None, lang), lambda: players_payload(fid, "all")),
+            (file_name(f"{base}/draft", None, lang), lambda: draft_payload(fid)),
+            (file_name(f"{base}/transfers", None, lang), lambda: transfers_payload(fid)),
+            (file_name(f"{base}/injuries", None, lang), lambda: injuries_payload(fid)),
         ]
         for r in range(first, latest + 1):
-            jobs.append((file_name(f"{base}/standings", r, lang), lambda r=r: s.standings_payload(fid, r)))
+            jobs.append((file_name(f"{base}/standings", r, lang), lambda r=r: standings_payload(fid, r)))
         for r in range(first, (meta["totalRounds"] if h2h else latest + 1)):
-            jobs.append((file_name(f"{base}/rounds", r, lang), lambda r=r: s.rounds_payload(fid, r)))
+            jobs.append((file_name(f"{base}/rounds", r, lang), lambda r=r: rounds_payload(fid, r)))
         for r in range(first, meta["totalRounds"]):  # the whole schedule, not just played rounds
-            jobs.append((file_name(f"{base}/games", r, lang), lambda r=r: s.games_payload(fid, r)))
+            jobs.append((file_name(f"{base}/games", r, lang), lambda r=r: games_payload(fid, r)))
         for r in finished:
-            jobs.append((file_name(f"{base}/records", r, lang), lambda r=r: s.records_payload(fid, r)))
+            jobs.append((file_name(f"{base}/records", r, lang), lambda r=r: records_payload(fid, r)))
         for tid in teams:
-            jobs.append((file_name(f"{base}/team/{tid}", None, lang), lambda tid=tid: s.team_payload(fid, tid)))
+            jobs.append((file_name(f"{base}/team/{tid}", None, lang), lambda tid=tid: team_payload(fid, tid)))
             for r in range(first, cur + 1):
                 jobs.append((file_name(f"{base}/team/{tid}", r, lang),
-                             lambda tid=tid, r=r: s.team_payload(fid, tid, r)))
+                             lambda tid=tid, r=r: team_payload(fid, tid, r)))
         for pid in player_ids:
             jobs.append((file_name(f"{base}/player/{pid}", None, lang), lambda pid=pid: player_file(fid, pid)))
         run_all(lambda j: job(*j), jobs)
-        print(f"  {lang}: {len(jobs)} pages")
+        pages += len(jobs)
+    LOG.info("%s: %d pages (%s), %.1fs", meta["title"], pages, " + ".join(LANGS), time.monotonic() - started)
 
 
 def copy_page():
     if OUT.exists():
         shutil.rmtree(OUT)
-    shutil.copytree(s.STATIC_DIR, OUT)
+    shutil.copytree(config.STATIC_DIR, OUT)
     index = OUT / "index.html"
     html = index.read_text(encoding="utf-8")
     # Tells app.js to read the JSON files instead of calling the server.
@@ -181,21 +209,27 @@ def copy_page():
 
 
 def main():
+    log.setup()
     started = time.time()
     copy_page()
-    entries = s.load_config()
+    entries = config.load_config()
     for entry in entries:
         try:
             export_league(entry)
-        except (s.UpstreamError, s.NotFound) as exc:
+        except (UpstreamError, NotFound) as exc:
             failures.append(entry["id"])
-            print(f"! {entry['id']}: {exc}")
+            log.get("fetch").error("league %s failed: %s", entry["id"], exc)
     for lang in LANGS:
-        s.LANG.set(lang)
-        job(file_name("leagues", None, lang), s.leagues_payload)
+        LANG.set(lang)
+        job(file_name("leagues", None, lang), leagues_payload)
     (OUT / "api" / "meta.json").write_text(json.dumps({"generatedAt": GENERATED}), encoding="utf-8")
-    print(f"Done in {time.time() - started:.0f}s: {written} files, {len(failures)} failed")
+    log.get("fetch").info("requests: %d, failed: %d", net.STATS["requests"], net.STATS["failures"])
+    missing = injuries.untranslated()
+    if missing:
+        LOG.info("%d injury comment(s) without a Lithuanian translation, e.g. %s", len(missing), missing[0])
+    log.get("build").info("%d files, %d failed, %.1fs", written, len(failures), time.time() - started)
     if not written or len(failures) > 0.2 * (written + len(failures)):
+        log.get("build").error("too many pages failed; keeping the previous site")
         sys.exit("Too many pages failed; keeping the previous site.")
 
 
