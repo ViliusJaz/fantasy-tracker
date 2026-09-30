@@ -30,7 +30,6 @@ const I18N = {
     myLeagues: "Mano lygos",
     pickLeague: "Pasirink lygą, kad matytum turnyrinę lentelę.",
     leader: "Lyderis",
-    myPlace: "Mano vieta",
     teamsN: "{n} komandos",
     seasonNotStartedShort: "sezonas dar neprasidėjo",
     playedN: "sužaista {n} tur.",
@@ -70,7 +69,6 @@ const I18N = {
     pvNoInjuries: "Traumų sąraše nėra.",
     pvNoStats: "Šį sezoną dar nežaidė.",
     pvNotes: "Į ką atkreipti dėmesį",
-    pvMine: "Tavo žaidėjai šiose rungtynėse: {p}.",
     pvTeamStats: "Komandų statistika (vieta tarp {n})",
     pvStrengths: "Stiprybės",
     pvStrWeak: "Stiprybės ir silpnybės",
@@ -114,6 +112,45 @@ const I18N = {
     ctxNote: "Lyginama su žaidėjais, kurie vidutiniškai žaidžia bent {m} min.",
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
     tabDraft: "Draftas",
+    projTip: "Prognozė: dabartiniai taškai + likusių žaidėjų laukiami taškai. Procentai: pergalės tikimybė.",
+    wiTitle: "Kas būtų, jeigu…",
+    wiProj: "Turo prognozė",
+    wiVs: "{t} {p}",
+    wiWin: "pergalės tikimybė {p}%",
+    wiCaptain: "Kapitonas",
+    wiSwap: "Keisti",
+    wiFor: "į",
+    wiRoster: "Komandos žaidėjai",
+    wiFreeAgents: "Laisvieji agentai",
+    wiReset: "Atstatyti",
+    wiNew: "Nauja prognozė",
+    wiHint: "Pasirink kitą kapitoną arba žaidėjų pakeitimą.",
+    wiPosWarn: "{p} nežaidžia pozicijoje {s}: tikroje sudėtyje taip pastatyti negalima.",
+    wiNote: "Prognozė: sezono vidurkis ir paskutinių 5 turų forma × rungtynių skaičius ture × tikimybė žaisti pagal traumų sąrašą. Jau sužaistos rungtynės skaičiuojamos tikrais taškais.",
+    recapTitle: "{n} turo apžvalga",
+    copyText: "Kopijuoti tekstą",
+    copied: "Nukopijuota",
+    copyFailed: "Nepavyko nukopijuoti",
+    effTitle: "Vadybininkų efektyvumas",
+    effPoints: "Taškai",
+    effMax: "Maksimalūs",
+    effPct: "Efektyvumas",
+    effLost: "Prarasta",
+    effTip: "Surinkti taškai / taškai, kuriuos būtų davusi geriausia įmanoma tų pačių žaidėjų sudėtis",
+    effNote: "Skaičiuojama turams, kurių sudėtys išsaugotos. 100% reiškia, kad kiekvieną turą buvo pasirinkta geriausia įmanoma sudėtis ir kapitonas.",
+    sosTitle: "Tvarkaraščio sunkumas",
+    sosFaced: "Iki šiol",
+    sosFacedTip: "Buvusių varžovų vidutiniai taškai per turą šį sezoną; #1 yra sunkiausias",
+    sosAgainst: "Prieš tave",
+    sosAgainstTip: "Kiek vidutiniškai surinko varžovai būtent prieš šią komandą",
+    sosNext: "Kiti 5 turai",
+    sosNextTip: "Artimiausių 5 varžovų vidutiniai taškai per turą; #1 yra sunkiausias",
+    sosRest: "Likęs sezonas",
+    sosRestTip: "Visų likusių varžovų vidutiniai taškai per turą; #1 yra sunkiausias",
+    sosNote: "Varžovo stiprumas yra jo vidutiniai taškai per turą šį sezoną. #1 reiškia sunkiausią tvarkaraštį.",
+    roiHeadTip: "Kiek taškų davė perėjimas: atėjusių žaidėjų taškai nuo perėjimo minus kiek būtų surinkę išleisti",
+    roiTip: "Atėję surinko {a} FP, išleisti {b} FP ({n} tur.)",
+    roiPer100: "{v} FP už 100 kreditų",
     splitLabel: "Rodyti statistiką",
     splitAll: "Viso",
     splitHome: "Namuose",
@@ -133,7 +170,6 @@ const I18N = {
     newsGood: "Gera žinia komandai {t}:",
     newsOwnedOnly: "Visų lygos komandų žaidėjai",
     newsAll: "Visi žaidėjai",
-    newsMine: "(mano)",
     newsEmptyTeam: "Šios komandos žaidėjų traumų sąraše nebuvo.",
     newsCount: "{n} įrašai",
     newsEmpty: "Traumų sąraše pokyčių dar nebuvo.",
@@ -212,7 +248,6 @@ const I18N = {
     seasonNotStarted: "Sezonas dar neprasidėjo",
     afterRound: "Po {n} turo",
     clickTeam: "Paspausk ant komandos pavadinimo, kad pamatytum jos sudėtį.",
-    markMineHint: " Savo komandą gali pažymėti jos puslapyje (☆).",
     leagueAvg: "Lygos vidurkis",
     noMatchups: "Šiam turui mačų nėra.",
     live: "Vyksta",
@@ -261,8 +296,6 @@ const I18N = {
     clearFilters: "Išvalyti filtrus",
     from: "nuo",
     to: "iki",
-    myTeam: "★ Mano komanda",
-    markMine: "☆ Pažymėti kaip mano",
     placeOf: "{p} vieta iš {n}",
     current: "(dabartinis)",
     toCurrent: "Į dabartinį turą",
@@ -340,7 +373,6 @@ const I18N = {
     myLeagues: "My leagues",
     pickLeague: "Pick a league to see its standings.",
     leader: "Leader",
-    myPlace: "My position",
     teamsN: "{n} teams",
     seasonNotStartedShort: "season not started",
     playedN: "{n} rounds played",
@@ -381,7 +413,6 @@ const I18N = {
     pvNoInjuries: "Nobody on the injury report.",
     pvNoStats: "Has not played yet this season.",
     pvNotes: "Things to watch",
-    pvMine: "Your players in this game: {p}.",
     pvTeamStats: "Team stats (rank among {n})",
     pvStrengths: "Strengths",
     pvStrWeak: "Strengths and weaknesses",
@@ -425,6 +456,45 @@ const I18N = {
     ctxNote: "Compared with players averaging at least {m} minutes.",
     lowerBetter: "For this metric a lower value is better.",
     tabDraft: "Draft",
+    projTip: "Projection: points so far + expected points of the players still to play. Percentages: chance to win.",
+    wiTitle: "What if…",
+    wiProj: "Round projection",
+    wiVs: "{t} {p}",
+    wiWin: "chance to win {p}%",
+    wiCaptain: "Captain",
+    wiSwap: "Swap",
+    wiFor: "for",
+    wiRoster: "Team players",
+    wiFreeAgents: "Free agents",
+    wiReset: "Reset",
+    wiNew: "New projection",
+    wiHint: "Pick another captain or a player swap.",
+    wiPosWarn: "{p} does not play {s}: the real lineup would not allow this.",
+    wiNote: "Projection: season average blended with the last 5 rounds × games this round × chance to play from the injury report. Games already played count with their real points.",
+    recapTitle: "Round {n} recap",
+    copyText: "Copy text",
+    copied: "Copied",
+    copyFailed: "Could not copy",
+    effTitle: "Manager efficiency",
+    effPoints: "Points",
+    effMax: "Maximum",
+    effPct: "Efficiency",
+    effLost: "Lost",
+    effTip: "Points scored / points the best possible lineup of the same players would have scored",
+    effNote: "Counts rounds with saved lineups. 100% means the best possible lineup and captain every round.",
+    sosTitle: "Strength of schedule",
+    sosFaced: "So far",
+    sosFacedTip: "Past opponents' average points per round this season; #1 is the hardest",
+    sosAgainst: "Against you",
+    sosAgainstTip: "What opponents scored against this team on average",
+    sosNext: "Next 5 rounds",
+    sosNextTip: "Next 5 opponents' average points per round; #1 is the hardest",
+    sosRest: "Rest of season",
+    sosRestTip: "All remaining opponents' average points per round; #1 is the hardest",
+    sosNote: "An opponent's strength is their average points per round this season. #1 means the toughest schedule.",
+    roiHeadTip: "Points the move has brought: incoming players' points since, minus what the players let go scored",
+    roiTip: "Incoming scored {a} FP, outgoing {b} FP ({n} rounds)",
+    roiPer100: "{v} FP per 100 credits",
     splitLabel: "Show stats for",
     splitAll: "Total",
     splitHome: "Home",
@@ -444,7 +514,6 @@ const I18N = {
     newsGood: "Good news for {t}:",
     newsOwnedOnly: "Players on any league team",
     newsAll: "All players",
-    newsMine: "(mine)",
     newsEmptyTeam: "No players of this team have been on the injury report.",
     newsCount: "{n} updates",
     newsEmpty: "No injury report changes yet.",
@@ -523,7 +592,6 @@ const I18N = {
     seasonNotStarted: "Season has not started",
     afterRound: "After round {n}",
     clickTeam: "Click a team name to see its roster.",
-    markMineHint: " You can mark your own team on its page (☆).",
     leagueAvg: "League average",
     noMatchups: "No matchups this round.",
     live: "Live",
@@ -572,8 +640,6 @@ const I18N = {
     clearFilters: "Clear filters",
     from: "from",
     to: "to",
-    myTeam: "★ My team",
-    markMine: "☆ Mark as mine",
     placeOf: "{p} of {n}",
     current: "(current)",
     toCurrent: "Go to current round",
@@ -968,20 +1034,6 @@ function avgTip(key) {
   return `\n${t(PCT_AVG.has(key) || key === "usg" ? "avgTipPct" : "avgTipGame", { v: value })}\n${t("avgTipWho", { m: LEAGUE_AVG.minutes })}`;
 }
 
-// "My team": in the server version it lives in leagues.json; online every visitor keeps
-// their own choice in the browser.
-function myTeamOf(fid, serverValue) {
-  if (!STATIC) return serverValue || null;
-  try { return localStorage.getItem(`ft-mine-${fid}`); } catch { return null; }
-}
-
-function setMyTeam(fid, tid) {
-  try {
-    if (tid) localStorage.setItem(`ft-mine-${fid}`, tid);
-    else localStorage.removeItem(`ft-mine-${fid}`);
-  } catch { /* private window: the choice just is not kept */ }
-}
-
 function parseHash() {
   const raw = location.hash.replace(/^#\/?/, "");
   const [path, qs] = raw.split("?");
@@ -1245,11 +1297,6 @@ async function renderHome(token) {
     const leader = l.leader
       ? `${esc(l.leader.team.title)} · ${lg.format === "head_to_head" ? `${l.leader.wins}-${l.leader.losses}` : `${fmt(l.leader.pointsTotal)} ${t("ptsShort")}`}`
       : "-";
-    const myId = myTeamOf(lg.id, l.mine?.team.id);
-    const myRow = (l.table || []).find((r) => r.team.id === myId) || (STATIC ? null : l.mine);
-    const mine = myRow
-      ? `<div><div class="stat-label">${t("myPlace")}</div><div class="stat-value">${myRow.position} / ${l.teams}</div></div>`
-      : "";
     return `
       <a class="league-card" href="#/l/${lg.id}">
         <div>
@@ -1261,7 +1308,6 @@ async function renderHome(token) {
         </div>
         <div class="stats">
           <div><div class="stat-label">${t("leader")}</div><div class="stat-value">${leader}</div></div>
-          ${mine}
         </div>
         <div class="meta-line">${t("teamsN", { n: l.teams })} · ${l.round === null ? t("seasonNotStartedShort") : (l.round === 0 && I18N[LANG].playedOne ? t("playedOne") : t("playedN", { n: l.round + 1 }))}</div>
         ${STATIC ? "" : `<button class="remove" data-remove="${lg.id}" title="${t("removeLeague")}">×</button>`}
@@ -1315,7 +1361,7 @@ function moveMark(gained) {
 }
 
 function standingsTable(data) {
-  const { league, rows, myTeamId, hasTies } = data;
+  const { league, rows, hasTies } = data;
   const h2h = league.format === "head_to_head";
   const head = `
     <tr>
@@ -1325,7 +1371,7 @@ function standingsTable(data) {
     </tr>`;
   const body = rows
     .map((r) => `
-      <tr class="${r.team.id === myTeamId ? "mine" : ""}">
+      <tr>
         <td class="rank">${r.position}${moveMark(r.positionGained)}</td>
         <td><a class="team-name" href="#/l/${league.id}/t/${r.team.id}">${esc(r.team.title)}</a><span class="owner">${esc(r.team.owner)}</span></td>
         ${h2h ? `<td class="ctr wins">${r.wins}</td><td class="ctr">${r.losses}</td>${hasTies ? `<td class="ctr">${r.ties}</td>` : ""}` : ""}
@@ -1342,7 +1388,6 @@ async function renderStandings(fid, params, token, silent) {
   let data;
   try {
     data = await api(`/api/league/${fid}/standings${round !== null ? `?round=${round}` : ""}`);
-    data.myTeamId = myTeamOf(fid, data.myTeamId);
   } catch (e) {
     if (token === renderToken) setView(stateBox(e.message, true));
     return;
@@ -1362,7 +1407,7 @@ async function renderStandings(fid, params, token, silent) {
       <span class="updated">${stamp()}</span>
     </div>
     ${standingsTable(data)}
-    <p class="note">${t("clickTeam")}${data.myTeamId ? "" : t("markMineHint")}</p>`);
+    <p class="note">${t("clickTeam")}</p>`);
   bindRoundSelect(`#/l/${fid}`);
   scheduleRefresh(data.live);
 }
@@ -1381,7 +1426,6 @@ async function renderRounds(fid, params, token, silent) {
   }
   if (token !== renderToken) return;
   const { league } = data;
-  const myTeamId = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
   const played = data.round < league.currentRound || data.live;
   let content;
 
@@ -1394,17 +1438,16 @@ async function renderRounds(fid, params, token, silent) {
       const s2 = played ? fmt(m.score2) : "-";
       const w1 = played && !data.live && m.score1 > m.score2;
       const w2 = played && !data.live && m.score2 > m.score1;
-      const mine = [m.team1?.id, m.team2?.id].includes(myTeamId);
-      return `<div class="matchup${mine ? " mine" : ""}">
+      return `<div class="matchup-wrap"><div class="matchup">
         ${side(m.team1, "")}
         <div class="score"><span class="${w1 ? "win" : ""}">${s1}</span><span class="sep">:</span><span class="${w2 ? "win" : ""}">${s2}</span></div>
         ${side(m.team2, "right")}
-      </div>`;
+      </div>${matchupProjection(m)}</div>`;
     });
     content = cards.length ? `<div class="matchups">${cards.join("")}</div>` : stateBox(t("noMatchups"));
   } else {
     const rows = data.rows.map((r, i) => `
-      <tr class="${r.team.id === myTeamId ? "mine" : ""}">
+      <tr>
         <td class="rank">${i + 1}</td>
         <td><a class="team-name" href="#/l/${fid}/t/${r.team.id}?r=${data.round}">${esc(r.team.title)}</a><span class="owner">${esc(r.team.owner)}</span></td>
         <td class="num">${fmt(r.pointsRound)}</td>
@@ -1429,7 +1472,172 @@ async function renderRounds(fid, params, token, silent) {
   scheduleRefresh(data.live);
 }
 
+// ------------------------------------------------------------------ projections
+
+// Current round, H2H: projected finals and the chance to win, as a split bar.
+function matchupProjection(m) {
+  const p = m.projection;
+  if (!p) return "";
+  const w1 = Math.round(p.win1 * 100);
+  return `<div class="proj-line" data-tip="${esc(t("projTip"))}">
+    <span class="proj-num">${fmt1(p.team1.mean)}<small>${w1}%</small></span>
+    <span class="proj-bar"><i style="width:${w1}%"></i></span>
+    <span class="proj-num right"><small>${100 - w1}%</small>${fmt1(p.team2.mean)}</span>
+  </div>`;
+}
+
+// Chance that a normal total with this mean / sd beats the opponent's.
+function winChance(mean, sd, opp) {
+  const s = Math.sqrt(sd * sd + opp.sd * opp.sd) || 1;
+  const z = (mean - opp.mean) / (s * Math.SQRT2);
+  // erf approximation (Abramowitz-Stegun 7.1.26)
+  const x = Math.abs(z), k = 1 / (1 + 0.3275911 * x);
+  const e = 1 - (((((1.061405429 * k - 1.453152027) * k) + 1.421413741) * k - 0.284496736) * k + 0.254829592) * k * Math.exp(-x * x);
+  return 0.5 * (1 + (z < 0 ? -e : e));
+}
+
+const SLOT_POS = { g: "guard", f: "forward", c: "center" };
+function slotMult(card, captain) {
+  const [prefix, n] = (card || "").split("-");
+  if (SLOT_POS[prefix]) return captain ? 2 : 1;
+  if (prefix === "b") return n === "1" ? 1 : 0.5;
+  return 0;
+}
+
+// What-if on the team page: another captain, or another player in a slot (from the bench
+// or free agency), and how the projection (and in H2H the chance to win) changes.
+function whatIfSection(data) {
+  const pr = data.projection;
+  if (!pr) return "";
+  const players = data.lineup.players.filter((p) => p.card);
+  const starters = players.filter((p) => SLOT_POS[p.card.split("-")[0]]);
+  const cap = players.find((p) => p.captain);
+  const opp = pr.opponent;
+  const vs = opp ? ` · ${t("wiVs", { t: esc(opp.team.title), p: fmt1(opp.mean) })} · <b>${t("wiWin", { p: Math.round(pr.win * 100) })}</b>` : "";
+  const opt = (p) => `<option value="${esc(p.id)}">${esc(p.slotLabel || "")} ${esc(p.name)} (${fmt1(p.proj)})</option>`;
+  return `<div class="card whatif" id="whatif">
+    <div class="wi-head">
+      <h2 class="section-title">${t("wiTitle")}</h2>
+      <div class="wi-base">${t("wiProj")} <b>${fmt1(pr.team.mean)}</b> <span class="dim">±${fmt1(pr.team.sd)}</span>${vs}</div>
+    </div>
+    <div class="wi-controls">
+      <label>${t("wiCaptain")} <select class="select" id="wi-cap">${starters.map((p) => `<option value="${esc(p.id)}"${p.id === cap?.id ? " selected" : ""}>${esc(p.name)}</option>`).join("")}</select></label>
+      <label>${t("wiSwap")} <select class="select" id="wi-out"><option value="">-</option>${players.map(opt).join("")}</select></label>
+      <label>${t("wiFor")} <select class="select" id="wi-in"><option value="">-</option><optgroup label="${esc(t("wiRoster"))}">${players.map(opt).join("")}</optgroup></select></label>
+      <button class="btn" type="button" id="wi-reset">${t("wiReset")}</button>
+    </div>
+    <div class="wi-result" id="wi-result"></div>
+    <p class="note">${t("wiNote")}</p>
+  </div>`;
+}
+
+function bindWhatIf(data) {
+  const box = document.getElementById("whatif");
+  if (!box) return;
+  const pr = data.projection;
+  const roster = data.lineup.players.filter((p) => p.card);
+  const pool = new Map(roster.map((p) => [p.id, p]));
+  const fid = data.league.id;
+  const baseCap = roster.find((p) => p.captain)?.id;
+  const $ = (id) => document.getElementById(id);
+  // free agents with projections join the "for" list once loaded
+  api(`/api/league/${fid}/free-agents`).then((fa) => {
+    const list = fa.players.filter((p) => p.proj != null).sort((a, b) => b.proj - a.proj).slice(0, 60);
+    list.forEach((p) => pool.set(p.id, { ...p, card: null }));
+    const group = document.createElement("optgroup");
+    group.label = t("wiFreeAgents");
+    group.innerHTML = list.map((p) => `<option value="${esc(p.id)}">${esc(p.name)} (${fmt1(p.proj)})</option>`).join("");
+    $("wi-in")?.append(group);
+  }).catch(() => {});
+
+  const run = () => {
+    const out = $("wi-out").value, inn = $("wi-in").value;
+    const cards = new Map(roster.map((p) => [p.id, p.card]));
+    const warn = [];
+    if (out && inn && out !== inn) {
+      const outCard = cards.get(out);
+      if (cards.has(inn)) { cards.set(out, cards.get(inn)); cards.set(inn, outCard); }
+      else { cards.delete(out); cards.set(inn, outCard); }
+      const need = SLOT_POS[(outCard || "").split("-")[0]];
+      const who = pool.get(inn);
+      if (need && who && !(who.positions || [who.position]).includes(need)) warn.push(t("wiPosWarn", { p: esc(who.name), s: t("pos")[need] || need }));
+    }
+    let capId = $("wi-cap").value;
+    if (capId === out && inn) capId = inn;  // the captain's slot goes to whoever takes it
+    let mean = 0, varSum = 0;
+    for (const [id, card] of cards) {
+      const p = pool.get(id);
+      if (!p) continue;
+      const m = slotMult(card, id === capId && SLOT_POS[card.split("-")[0]]);
+      mean += m * (p.proj || 0);
+      varSum += m * m * (p.projSd || 0) ** 2;
+    }
+    const sd = Math.sqrt(varSum);
+    const d = mean - pr.team.mean;
+    const changed = (out && inn && out !== inn) || capId !== baseCap;
+    let html = changed
+      ? `${t("wiNew")} <b>${fmt1(mean)}</b> <span class="diff ${d > 0 ? "up" : d < 0 ? "down" : ""}">${d >= 0 ? "+" : "−"}${fmt1(Math.abs(d))}</span>`
+      : `<span class="dim">${t("wiHint")}</span>`;
+    if (changed && pr.opponent) {
+      const w = winChance(mean, sd, pr.opponent), dw = Math.round((w - pr.win) * 100);
+      html += ` · ${t("wiWin", { p: Math.round(w * 100) })} <span class="diff ${dw > 0 ? "up" : dw < 0 ? "down" : ""}">${dw >= 0 ? "+" : "−"}${Math.abs(dw)} p.p.</span>`;
+    }
+    if (warn.length) html += `<div class="wi-warn">${warn.join(" ")}</div>`;
+    $("wi-result").innerHTML = html;
+  };
+  ["wi-cap", "wi-out", "wi-in"].forEach((id) => $(id).addEventListener("change", run));
+  $("wi-reset").addEventListener("click", () => {
+    $("wi-out").value = ""; $("wi-in").value = ""; $("wi-cap").value = baseCap || $("wi-cap").value;
+    ["wi-cap", "wi-out", "wi-in"].forEach((id) => $(id).dispatchEvent(new Event("change")));
+  });
+  run();
+}
+
 // ------------------------------------------------------------------ season records
+
+function recapSection(data) {
+  if (!data.recap?.length) return "";
+  const title = t("recapTitle", { n: data.round + 1 });
+  const text = `${data.league.title}: ${title}\n${data.recap.map((l) => `${l.icon} ${l.text}`).join("\n")}`;
+  return `<div class="card recap">
+    <div class="recap-head"><h3>${title}</h3>
+      <button class="btn" type="button" id="recap-copy" data-text="${esc(text)}">${t("copyText")}</button></div>
+    <ul>${data.recap.map((l) => `<li><span class="recap-icon" aria-hidden="true">${l.icon}</span>${esc(l.text)}</li>`).join("")}</ul>
+  </div>`;
+}
+
+function efficiencyTable(fid, rows) {
+  if (!rows?.length) return "";
+  return `<h2 class="section-title">${t("effTitle")}</h2>
+    <div class="card table-scroll"><table class="grid">
+      <thead><tr><th>${t("team")}</th><th class="num">${t("effPoints")}</th><th class="num">${t("effMax")}</th>
+        <th class="num" title="${esc(t("effTip"))}">${t("effPct")}</th><th class="num">${t("effLost")}</th></tr></thead>
+      <tbody>${rows.map((r) => `<tr>
+        <td><a class="team-name" href="#/l/${fid}/t/${r.team.id}">${esc(r.team.title)}</a></td>
+        <td class="num">${fmt(r.points)}</td><td class="num">${fmt(r.optimal)}</td>
+        <td class="num"><div class="credit-cell"><b>${r.efficiency == null ? "-" : `${fmt1(r.efficiency)}%`}</b><span class="adv-bar"><i style="width:${r.efficiency || 0}%"></i></span></div></td>
+        <td class="num">${r.lost ? `−${fmt(r.lost)}` : "0"}</td>
+      </tr>`).join("")}</tbody></table></div>
+    <p class="note">${t("effNote")}</p>`;
+}
+
+function scheduleTable(fid, rows) {
+  if (!rows?.length) return "";
+  const cell = (v, rank) => `${v == null ? "-" : fmt1(v)}${rank ? `<span class="rk-mini">#${rank}</span>` : ""}`;
+  return `<h2 class="section-title">${t("sosTitle")}</h2>
+    <div class="card table-scroll"><table class="grid">
+      <thead><tr><th>${t("team")}</th>
+        <th class="num" title="${esc(t("sosFacedTip"))}">${t("sosFaced")}</th>
+        <th class="num" title="${esc(t("sosAgainstTip"))}">${t("sosAgainst")}</th>
+        <th class="num" title="${esc(t("sosNextTip"))}">${t("sosNext")}</th>
+        <th class="num" title="${esc(t("sosRestTip"))}">${t("sosRest")}</th></tr></thead>
+      <tbody>${rows.map((r) => `<tr>
+        <td><a class="team-name" href="#/l/${fid}/t/${r.team.id}">${esc(r.team.title)}</a></td>
+        <td class="num">${cell(r.faced, r.facedRank)}</td><td class="num">${cell(r.against)}</td>
+        <td class="num">${cell(r.next5, r.next5Rank)}</td><td class="num">${cell(r.rest, r.restRank)}</td>
+      </tr>`).join("")}</tbody></table></div>
+    <p class="note">${t("sosNote")}</p>`;
+}
 
 function awardCards(cards) {
   return `<div class="awards">${cards.map((c) => {
@@ -1495,16 +1703,25 @@ async function renderRecords(fid, params, token, silent) {
       <h2 class="section-title">${t("roundAwards", { n: data.round + 1 })}</h2>
       <div class="round-nav inline">${roundArrows(`#/l/${fid}/records`, data.round, first, last)}</div>
     </div>
+    ${recapSection(data)}
     ${awardCards(data.roundAwards)}
     <h2 class="section-title">${t("oscars")} <span class="dim small">${t("afterDone", { n: done })}</span></h2>
     ${awardCards(data.oscars)}
     ${data.draftAwards?.length ? `<h2 class="section-title">${t("draftAwardsTitle")}</h2>${awardCards(data.draftAwards)}` : ""}
     <h2 class="section-title">${t("seasonRecords")} <span class="dim small">${t("upTo", { n: done })}</span></h2>
     ${awardCards(data.records)}
+    ${efficiencyTable(fid, data.efficiency)}
+    ${scheduleTable(fid, data.schedule)}
     <h2 class="section-title">${t("formTitle")}</h2>
     ${formTable(data)}
     <p class="note">${esc(t("recordsNote"))}</p>`);
   bindRoundSelect(`#/l/${fid}/records`);
+  document.getElementById("recap-copy")?.addEventListener("click", async (e) => {
+    try {
+      await navigator.clipboard.writeText(e.target.dataset.text);
+      e.target.textContent = t("copied");
+    } catch { e.target.textContent = t("copyFailed"); }
+  });
   app.querySelectorAll("[data-team]").forEach((el) =>
     el.addEventListener("click", (e) => {
       if (!e.target.closest("[data-award-info], .award-info")) location.hash = `#/l/${fid}/t/${el.dataset.team}`;
@@ -1540,7 +1757,6 @@ async function renderDraft(fid, params, token, silent) {
     return;
   }
   const only = params.get("team");
-  const mine = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
   const d = league.draft || {};
   const info = [
     d.date ? t("draftDate", { d: dateTime(d.date) }) : null,
@@ -1560,7 +1776,7 @@ async function renderDraft(fid, params, token, silent) {
     const now = kept ? `<span class="dim">${t("draftKept")}</span>`
       : pk.owner ? `<a class="team-name" href="#/l/${fid}/t/${pk.owner.id}">→ ${esc(pk.owner.title)}</a>`
       : `<span class="warn-text">${t("draftReleased")}</span>`;
-    return `${band}<tr class="clickable${pk.team.id === mine ? " mine" : ""}" data-player="${esc(pk.player.id || "")}">
+    return `${band}<tr class="clickable" data-player="${esc(pk.player.id || "")}">
       <td class="num pick-no"><b>${pk.overall}</b><span class="dim">${pk.round}.${pk.pick}</span></td>
       <td><a class="team-name" href="#/l/${fid}/t/${pk.team.id}">${esc(pk.team.title)}</a></td>
       <td>${playerMini(pk.player)}</td>
@@ -1587,6 +1803,14 @@ function creditText(n) {
   return `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(n)} ${t("creditsShort")}`;
 }
 
+// Points the move has brought so far: what came in minus what the players let go scored.
+function roiCell(r, credits) {
+  if (!r) return '<span class="dim">-</span>';
+  const tip = t("roiTip", { a: fmt(r.inFp), b: fmt(r.outFp), n: r.rounds })
+    + (credits < 0 && r.inFp ? `\n${t("roiPer100", { v: fmt1((100 * r.inFp) / -credits) })}` : "");
+  return `<span class="roi ${r.net > 0 ? "up" : r.net < 0 ? "down" : ""}" data-tip="${esc(tip)}">${r.net > 0 ? "+" : r.net < 0 ? "−" : ""}${fmt(Math.abs(r.net))} FP</span>`;
+}
+
 // One row per team involved: what came in, what went out, credits.
 function moveRows(fid, m, usesCredits) {
   const sides = m.type === "trade"
@@ -1600,6 +1824,7 @@ function moveRows(fid, m, usesCredits) {
       <td><div class="move-in">${other.players.map(playerMini).join("") || '<span class="dim">-</span>'}</div></td>
       <td><div class="move-out">${own.players.map(playerMini).join("") || '<span class="dim">-</span>'}</div></td>
       ${usesCredits ? `<td class="num credit ${credits < 0 ? "neg" : credits > 0 ? "pos" : ""}">${credits ? creditText(credits) : "-"}</td>` : ""}
+      <td class="num">${roiCell(m.roi?.[own.team.id], credits)}</td>
       <td class="dim nowrap">${esc(dateTime(m.at))}</td>
     </tr>`).join("");
 }
@@ -1615,7 +1840,6 @@ async function renderTransfers(fid, token, silent) {
   }
   if (token !== renderToken) return;
   const { league, moves, teams, upcoming, lock, usesCredits } = data;
-  const mine = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
 
   const deadline = lock?.nextChange
     ? `<div class="deadline${lock.locked ? " locked" : ""}">
@@ -1628,11 +1852,12 @@ async function renderTransfers(fid, token, silent) {
     <h2 class="section-title">${t("creditsTitle")} <span class="dim small">${t("creditsStart", { n: data.startingCredits })}</span></h2>
     <div class="card table-scroll"><table class="grid">
       <thead><tr><th>${t("team")}</th><th class="num">${t("creditsLeft")}</th><th class="num">${t("creditsSpent")}</th>
-        <th class="num">${t("signings")}</th><th class="num">${t("trades")}</th></tr></thead>
-      <tbody>${teams.map((r) => `<tr class="${r.team.id === mine ? "mine" : ""}">
+        <th class="num">${t("signings")}</th><th class="num">${t("trades")}</th><th class="num" title="${esc(t("roiHeadTip"))}">ROI</th></tr></thead>
+      <tbody>${teams.map((r) => `<tr>
         <td><a class="team-name" href="#/l/${fid}/t/${r.team.id}">${esc(r.team.title)}</a><span class="owner">${esc(r.team.owner || "")}</span></td>
         <td class="num"><div class="credit-cell"><b>${r.credits}</b><span class="adv-bar"><i style="width:${Math.max(0, Math.min(100, 100 * r.credits / (data.startingCredits || 1)))}%"></i></span></div></td>
         <td class="num">${r.spent || "-"}</td><td class="num">${r.signings || "-"}</td><td class="num">${r.trades || "-"}</td>
+        <td class="num">${r.roi == null ? '<span class="dim">-</span>' : `<span class="roi ${r.roi > 0 ? "up" : r.roi < 0 ? "down" : ""}">${r.roi > 0 ? "+" : r.roi < 0 ? "−" : ""}${fmt(Math.abs(r.roi))}</span>`}</td>
       </tr>`).join("")}</tbody></table></div>` : "";
 
   const bids = upcoming.length ? `
@@ -1652,7 +1877,7 @@ async function renderTransfers(fid, token, silent) {
       <h3 class="subhead">${t("movesBefore", { n: r + 1 })}</h3>
       <div class="card table-scroll"><table class="grid moves">
         <thead><tr><th>${t("moveType")}</th><th>${t("team")}</th><th>${t("moveIn")}</th><th>${t("moveOut")}</th>
-          ${usesCredits ? `<th class="num">${t("creditsShortHead")}</th>` : ""}<th>${t("moveWhen")}</th></tr></thead>
+          ${usesCredits ? `<th class="num">${t("creditsShortHead")}</th>` : ""}<th class="num" title="${esc(t("roiHeadTip"))}">ROI</th><th>${t("moveWhen")}</th></tr></thead>
         <tbody>${moves.filter((m) => m.round === r).map((m) => moveRows(fid, m, usesCredits)).join("")}</tbody>
       </table></div>`).join("");
   }
@@ -1688,7 +1913,6 @@ async function renderInjuries(fid, params, token, silent) {
   const { league } = data;
   // "" = everyone, "owned" = players on any league team, otherwise one team's players
   const filter = params.get("team") || (params.get("owned") === "1" ? "owned" : "");
-  const mine = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
   const events = data.events.filter((e) => !filter || (filter === "owned" ? e.owner : e.owner?.id === filter));
   const rows = events.map((e) => {
     const where = [e.player.club?.abbr, e.owner?.title].filter(Boolean).map(esc).join(", ");
@@ -1698,7 +1922,7 @@ async function renderInjuries(fid, params, token, silent) {
       ? `<span class="news-name" data-player="${esc(e.player.id)}">${esc(e.player.name)}</span>`
       : `<span class="news-name">${esc(e.player.name)}</span>`;
     const extra = [e.comment.replace(/\.$/, ""), e.return ? t("expectedReturn", { r: e.return }) : ""].filter(Boolean).map(esc).join(". ");
-    return `<li class="news-row${e.owner?.id && e.owner.id === mine ? " mine" : ""}">
+    return `<li class="news-row">
       <time class="news-time" datetime="${esc(e.at)}">${newsTime(e)}</time>
       <div class="news-body">
         <div class="news-line">${prefix}${name}${where ? ` <span class="dim">(${where})</span>` : ""} <span class="news-phrase ${e.status}">${esc(e.phrase)}</span></div>
@@ -1713,7 +1937,7 @@ async function renderInjuries(fid, params, token, silent) {
       <select class="select" id="news-team" aria-label="${esc(t("team"))}">
         <option value="">${t("newsAll")}</option>
         <option value="owned"${filter === "owned" ? " selected" : ""}>${t("newsOwnedOnly")}</option>
-        ${(data.teams || []).map((tm) => `<option value="${esc(tm.id)}"${tm.id === filter ? " selected" : ""}>${esc(tm.title)}${tm.id === mine ? ` ${t("newsMine")}` : ""}</option>`).join("")}
+        ${(data.teams || []).map((tm) => `<option value="${esc(tm.id)}"${tm.id === filter ? " selected" : ""}>${esc(tm.title)}</option>`).join("")}
       </select>
       <span class="dim small">${t("newsCount", { n: events.length })}</span>
     </div>
@@ -2051,12 +2275,12 @@ function gameCardHead(g) {
 }
 
 // Before tip-off: form, key players, injuries and generated notes for each side.
-function previewSide(fid, side, pv, mine) {
+function previewSide(fid, side, pv) {
   const res = t("resShort");
   const rec = pv.record ? `${pv.record.w}-${pv.record.l}` : "-";
   const avg = pv.avgFor !== null ? `${fmt1(pv.avgFor)} : ${fmt1(pv.avgAgainst)}` : "-";
   const last = pv.last.map((x) => `<span class="res ${x.won ? "W" : "L"}" data-tip="${esc(`${x.home ? "vs" : "@"} ${x.opp} ${x.score[0]}:${x.score[1]}`)}">${x.won ? res.W : res.L}</span>`).join("");
-  const player = (v, extra) => `<li class="pv-player${v.owner?.id && v.owner.id === mine ? " mine" : ""}" data-player="${esc(v.id)}">
+  const player = (v, extra) => `<li class="pv-player" data-player="${esc(v.id)}">
       ${avatar(v)}<span class="pv-name"><span class="player-name">${esc(v.name)}</span>
       <span class="sub">${POS[v.position] || ""}${v.owner ? ` · ${esc(v.owner.title)}` : ` · <span class="free-tag">${t("draftReleased")}</span>`}</span></span>
       ${extra}</li>`;
@@ -2108,15 +2332,10 @@ function teamCompare(g) {
 
 function gamePreview(fid, g) {
   const pv = g.preview;
-  const mine = myTeamOf(fid, (leaguesCache || []).find((l) => l.league.id === fid)?.mine?.team.id);
-  const mineHere = pv.owned.filter((o) => mine && o.owner?.id === mine);
-  const notes = [
-    ...(mineHere.length ? [t("pvMine", { p: mineHere.map((o) => `${o.player.name} (${o.club})`).join(", ") })] : []),
-    ...pv.notes,
-  ];
+  const notes = pv.notes;
   return `<div class="preview">
     ${teamCompare(g)}
-    <div class="pv-sides">${previewSide(fid, g.home, pv.home, mine)}${previewSide(fid, g.away, pv.away, mine)}</div>
+    <div class="pv-sides">${previewSide(fid, g.home, pv.home)}${previewSide(fid, g.away, pv.away)}</div>
     ${notes.length ? `<div class="pv-notes"><h5 class="pv-h">${t("pvNotes")}</h5><ul>${notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul></div>` : ""}
   </div>`;
 }
@@ -2347,10 +2566,6 @@ async function renderTeam(fid, tid, params, token, silent) {
   const r = data.round;
   const base = `#/l/${fid}/t/${tid}`;
 
-  const tracked = (leaguesCache || []).some((l) => l.league.id === fid);
-  if (STATIC) data.isMine = myTeamOf(fid) === tid;
-  const star = tracked
-    ? `<button class="btn star${data.isMine ? " on" : ""}" id="my-team">${data.isMine ? t("myTeam") : t("markMine")}</button>` : "";
   const scored = data.history.filter((h) => h.state !== "upcoming" && h.points != null);
   const avgRound = scored.length ? scored.reduce((sum, h) => sum + h.points, 0) / scored.length : null;
   const seasonLine = [
@@ -2371,7 +2586,6 @@ async function renderTeam(fid, tid, params, token, silent) {
         <h1 class="page-title">${esc(data.team.title)}</h1>
         <div class="meta-line divided">${seasonLine}</div>
       </div>
-      ${star}
     </div>
     ${charts.html}
     <div class="round-nav">
@@ -2379,6 +2593,7 @@ async function renderTeam(fid, tid, params, token, silent) {
       ${r !== league.currentRound ? `<a class="link small" href="${base}">${t("toCurrent")}</a>` : ""}
     </div>
     ${roundSummary(data)}
+    ${whatIfSection(data)}
     <h2 class="section-title">${t("lineupTitle", { r: roundLabel(r) })}${lineup.formation && lineup.source !== "roster" ? ` <span class="dim small">${t("formation", { f: esc(lineup.formation) })}</span>` : ""}</h2>
     ${lineup.note ? `<p class="note warn-note">${esc(lineup.note)}</p>` : ""}
     ${lineup.players.length ? lineupTable(lineup, data.roundState) : stateBox(t("lineupNA"))}
@@ -2393,15 +2608,7 @@ async function renderTeam(fid, tid, params, token, silent) {
     location.hash = `#/l/${fid}/games?r=${r}`;
   }));
   app.querySelectorAll("tr[data-href]").forEach((tr) => tr.addEventListener("click", () => (location.hash = tr.dataset.href)));
-  const btn = document.getElementById("my-team");
-  if (btn) {
-    btn.addEventListener("click", async () => {
-      if (STATIC) setMyTeam(fid, data.isMine ? null : tid);
-      else await api(`/api/league/${fid}/my-team`, { method: "POST", body: JSON.stringify({ teamId: data.isMine ? null : tid }) });
-      await loadLeagues(true);
-      route(true);
-    });
-  }
+  bindWhatIf(data);
   scheduleRefresh(data.roundState === "live");
 }
 

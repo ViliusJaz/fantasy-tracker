@@ -858,6 +858,47 @@ table.box { min-width: 1100px; }
 .tg-names { font-size: 13.5px; color: var(--text-2); min-width: 0; }
 .tg-names b { color: var(--muted); font-weight: 600; font-size: 12px; }
 
+/* ---------- projections ---------- */
+/* the card is the wrapper, so the projection line sits inside it */
+.matchup-wrap {
+  display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-lg); transition: border-color var(--fast) var(--ease);
+}
+.matchup-wrap:hover { border-color: var(--border-strong); }
+.matchup-wrap > .matchup { border: 0; background: none; }
+.proj-line {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 0 22px 14px; margin-top: -6px; font-size: 13px; color: var(--muted); cursor: help;
+}
+.proj-num { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text-2); white-space: nowrap; }
+.proj-num small { margin: 0 6px; font-family: var(--font-text); font-size: 12px; font-weight: 500; color: var(--muted); }
+.proj-bar { height: 6px; border-radius: 6px; background: var(--loss-soft); overflow: hidden; }
+.proj-bar i { display: block; height: 100%; background: var(--win); opacity: 0.7; border-radius: 6px 0 0 6px; }
+
+.whatif { padding: 16px 20px; margin: 18px 0 6px; }
+.wi-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.wi-head .section-title { margin: 0; }
+.wi-base { color: var(--text-2); font-size: 14.5px; }
+.wi-base b { font-family: var(--font-display); font-size: 19px; color: var(--accent); }
+.wi-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 12px; font-size: 14px; color: var(--muted); }
+.wi-controls label { display: inline-flex; align-items: center; gap: 8px; }
+.wi-result { margin-top: 12px; font-size: 15px; color: var(--text-2); min-height: 22px; }
+.wi-result b { font-family: var(--font-display); font-size: 19px; color: var(--text); }
+.wi-warn { margin-top: 6px; color: var(--warn); font-size: 13px; }
+.whatif .note { margin: 10px 0 0; }
+
+/* ---------- records: recap, efficiency, schedule ---------- */
+.recap { padding: 14px 18px; margin-bottom: 14px; }
+.recap-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.recap-head h3 { margin: 0; font-family: var(--font-display); font-size: 18px; }
+.recap ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
+.recap li { display: flex; gap: 10px; color: var(--text-2); font-size: 14.5px; }
+.recap-icon { width: 20px; flex: none; text-align: center; }
+.rk-mini { margin-left: 6px; font-size: 12px; color: var(--faint); }
+.roi { font-weight: 600; white-space: nowrap; cursor: help; }
+.roi.up { color: var(--win); }
+.roi.down { color: var(--loss); }
+
 /* ---------- draft & transfers ---------- */
 .pmini { display: inline-flex; align-items: center; gap: 10px; min-width: 0; cursor: pointer; }
 .pmini .avatar { width: 34px; height: 34px; }

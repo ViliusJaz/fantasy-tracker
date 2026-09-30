@@ -131,6 +131,7 @@ FILLER = {"a", "an", "the", "his", "her", "of", "on", "to", "with"}
 # Whole reasons that are not built from parts.
 WHOLE = {
     "coach's decision": "trenerio sprendimas", "coaches decision": "trenerio sprendimas",
+    "dnp coach's decision": "nežaidė, trenerio sprendimas", "dnp - coach's decision": "nežaidė, trenerio sprendimas",
     "coach decision": "trenerio sprendimas", "coaching decision": "trenerio sprendimas",
     "technical decision": "trenerio sprendimas",
     "undisclosed": "neatskleista priežastis", "unknown": "nežinoma priežastis",
@@ -503,6 +504,8 @@ CLAUSES = [
     (r"^(?:recovered|returned) from (.+)$", _after("atsigavo")),
     (r"^(?:underwent|had) (.+)$", lambda m, _: f"atlikta {r}" if (r := reason(m.group(1))) else None),
     (r"^(?:a )?new signing$", lambda m, _: "naujai pasirašęs žaidėjas"),
+    (r"^(not )?included in (?:the )?12-man roster(?: (?:in|for) round\s*(\d+))?$",
+     lambda m, _: ("nepateko" if m.group(1) else "pateko") + " į 12-uką" + (f" {m.group(2)} ture" if m.group(2) else "")),
     (r"^(?:was )?announced as (?:a )?new signing(?: on (\d\d?\.\d\d?))?$",
      lambda m, _: "paskelbtas nauju žaidėju" + (f" ({m.group(1)})" if m.group(1) else "")),
     (r"^(?:but )?(?:has ?n[o']?t|has not|is not|isn'?t) (?:been )?registered(?: yet)?$", lambda m, _: "bet dar neregistruotas"),
@@ -541,11 +544,20 @@ def clause(text):
     k = t.lower()
     if not k:
         return ""
-    # "... after (a) DNP in Round 1 (and domestic league)": translate the head, add the DNP note
-    m = re.match(r"^(.*\S)\s+after (?:a )?dnp in round\s*(\d+)( and (?:the )?domestic league)?$", k)
+    # "... after (a) DNP in Round 1 (reason) (and domestic league) (and playing in X)":
+    # translate the head, add the DNP note
+    m = re.match(r"^(.*\S)\s+after (?:a )?dnp in round\s*(\d+)(?:\s*\(([^)]*)\))?( and (?:the )?domestic league)?"
+                 r"(?: and playing in (.+))?$", k)
     if m:
         head = clause(t[:m.end(1)])
-        return f"{head} ({m.group(2)} ture{' ir šalies lygoje' if m.group(3) else ''} nežaidė)" if head else None
+        why = reason(m.group(3)) if m.group(3) else None
+        where = event_loc(t[m.start(5):m.end(5)]) if m.group(5) else None
+        if not head or (m.group(3) and not why) or (m.group(5) and not where):
+            return None
+        note = f"{m.group(2)} ture{' ir šalies lygoje' if m.group(4) else ''} nežaidė"
+        note += f": {why}" if why else ""
+        note += f"; žaidė {where}" if where else ""
+        return f"{head} ({note})"
     if k in WHOLE:
         return WHOLE[k]
     for pattern, build in CLAUSES:

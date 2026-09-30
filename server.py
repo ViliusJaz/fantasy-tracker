@@ -14,6 +14,7 @@ import gzip
 import http.client
 import itertools
 import json
+import math
 import unicodedata
 import os
 import re
@@ -1176,13 +1177,11 @@ def standings_payload(fid, rnd=None):
     meta = league_meta(fid)
     shown, rows = standings(meta, rnd)
     live = is_live(meta, shown)
-    entry = config_entry(fid) or {}
     return {
         "league": meta,
         "round": shown,
         "live": live,
         "rows": rows,
-        "myTeamId": entry.get("myTeamId"),
         "hasTies": any(r.get("ties") for r in rows),
     }
 
@@ -1191,7 +1190,10 @@ def rounds_payload(fid, rnd=None):
     meta = league_meta(fid)
     if meta["format"] == "head_to_head":
         rnd = meta["currentRound"] if rnd is None else rnd
-        return {"league": meta, "round": rnd, "live": is_live(meta, rnd), "matchups": schedule(meta, rnd)}
+        matchups = schedule(meta, rnd)
+        if rnd == meta["currentRound"]:
+            matchups = matchup_projections(meta, rnd, matchups)
+        return {"league": meta, "round": rnd, "live": is_live(meta, rnd), "matchups": matchups}
     rnd = meta["latestRound"] if rnd is None else rnd
     rows = fetch_standings_round(meta, rnd)
     rows.sort(key=lambda r: -r["pointsRound"])
@@ -1310,7 +1312,19 @@ def team_payload(fid, team_id, rnd=None):
         if result["state"] == "upcoming":
             scoring = None  # slot labels and multipliers still apply, points don't exist yet
 
-    entry = config_entry(fid) or {}
+    projection = None
+    if lineup_players and source == "current" and rnd == current and result["state"] != "finished":
+        recent = recent_points(meta)
+        projection = {"team": lineup_projection(lineup_players, recent, injury_report(meta))}
+        if meta["format"] == "head_to_head":
+            match = next((m for m in schedule(meta, rnd)
+                          if team_id in ((m["team1"] or {}).get("id"), (m["team2"] or {}).get("id"))), None)
+            opp = (match["team2"] if (match["team1"] or {}).get("id") == team_id else match["team1"]) if match else None
+            opp_proj = team_projections(meta, rnd).get((opp or {}).get("id"))
+            if opp and opp_proj:
+                projection["opponent"] = {**opp_proj, "team": opp}
+                projection["win"] = win_probability(projection["team"], opp_proj)
+
     return {
         "league": meta,
         "team": row["team"],
@@ -1323,7 +1337,7 @@ def team_payload(fid, team_id, rnd=None):
         "lineup": {"source": source if lineup else None, "note": lineup_note, "formation": formation,
                    "players": lineup_players, "scoring": scoring},
         "history": team_history(meta, team_id, shown),
-        "isMine": entry.get("myTeamId") == team_id,
+        "projection": projection,
     }
 
 
@@ -1357,12 +1371,15 @@ def players_payload(fid, scope="free"):
     stats_round = meta["latestRound"]
     pmap = players(meta, stats_round, meta["currentRound"])
     report = injury_report(meta)
+    recent = recent_points(meta)
     rows = []
     for p in pmap.values():
         owner = own.get(p["id"])
         if scope == "free" and owner:
             continue
-        rows.append({**p, "injury": injury_view(report.get(p["bnId"]), p["health"]), "owner": owner})
+        proj, var = player_projection(p, recent, report)
+        rows.append({**p, "injury": injury_view(report.get(p["bnId"]), p["health"]), "owner": owner,
+                     "proj": round(proj, 1), "projSd": round(math.sqrt(var), 1)})
     rows.sort(key=lambda p: (p["avgPts"] is None, -(p["avgPts"] or 0), p["name"]))
     return {
         "league": meta,
@@ -2093,6 +2110,228 @@ def injuries_payload(fid):
             "teams": [r["team"] for r in standings(meta)[1]], "reportUrl": meta["injuryReportUrl"]}
 
 
+# --------------------------------------------------------------------------- projections
+
+# Share of a normal game a player is expected to play, by injury-report status.
+AVAILABILITY = {"out": 0.0, "doubtful": 0.25, "questionable": 0.6, "uncertain": 0.6, "game-time": 0.85,
+                "expected": 0.95}
+
+
+def recent_points(meta, n=5):
+    """{playerId: [fantasy points in each of the last n finished rounds the player played]}"""
+    rounds = list(range(max(meta["firstRound"], meta["currentRound"] - n), meta["currentRound"]))
+    out = {}
+    for _, pm in pool_map(lambda r: (r, players(meta, r, r)), rounds):
+        for v in pm.values():
+            if v["roundPlayed"] and v.get("roundPts") is not None:
+                out.setdefault(v["id"], []).append(v["roundPts"])
+    return out
+
+
+def player_projection(v, recent, report):
+    """Expected fantasy points in the player's games of the round (before lineup multipliers)
+    and the variance of that guess. Season average blended with the last five rounds, times
+    the number of games, times the chance to play from the injury report."""
+    rec = recent.get(v["id"]) or []
+    avg = v.get("avgPts")
+    if avg is None:
+        base = sum(rec) / len(rec) if rec else 0.0
+    elif len(rec) >= 2:
+        base = 0.6 * avg + 0.4 * sum(rec) / len(rec)
+    else:
+        base = avg
+    games = [g for g in v.get("games") or [] if not g.get("canceled")]
+    inj = injury_view(report.get(v.get("bnId")), v.get("health"))
+    avail = AVAILABILITY.get((inj or {}).get("status"), 1.0)
+    if len(rec) >= 3:
+        mean_r = sum(rec) / len(rec)
+        sd = max(4.0, math.sqrt(sum((x - mean_r) ** 2 for x in rec) / (len(rec) - 1)))
+    else:
+        sd = max(4.0, 0.45 * abs(base))
+    # still to come: 1 per game not started, half of a game in progress
+    todo = sum(0 if g.get("completed") else 0.5 if g.get("live") else 1 for g in games)
+    done = (v.get("roundPts") or 0) if len(games) > todo else 0
+    mean = done + base * todo * avail
+    var = sd * sd * todo * max(avail, 0.25)
+    return round(mean, 2), var
+
+
+def lineup_projection(plist, recent, report):
+    """Projected total of a scored lineup (players carry mult) and its variance; adds proj / projSd."""
+    mean = var = 0.0
+    for p in plist:
+        pm, pv = player_projection(p, recent, report)
+        p["proj"], p["projSd"] = round(pm, 1), round(math.sqrt(pv), 1)
+        mean += p["mult"] * pm
+        var += p["mult"] ** 2 * pv
+    return {"mean": round(mean, 1), "sd": round(math.sqrt(var), 1)}
+
+
+def win_probability(a, b):
+    """P(team a outscores team b) with normally distributed totals."""
+    sd = math.sqrt(a["sd"] ** 2 + b["sd"] ** 2) or 1.0
+    return round(0.5 * (1 + math.erf((a["mean"] - b["mean"]) / (sd * math.sqrt(2)))), 3)
+
+
+def team_projections(meta, rnd):
+    """{teamId: projection} for the current round from today's lineups (only that round)."""
+    if rnd != meta["currentRound"]:
+        return {}
+    current = lineups(meta)
+    ids = [p["id"] for lu in current.values() for p in lu["players"]]
+    pmap = players_by_ids(meta, ids, rnd, rnd)
+    recent, report = recent_points(meta), injury_report(meta)
+    out = {}
+    for tid, lu in current.items():
+        if lu["round"] != rnd:
+            continue
+        plist = [{**pmap[p["id"]], "card": p["card"], "slot": p["slot"], "captain": p["captain"]}
+                 for p in lu["players"] if p["id"] in pmap]
+        score_lineup(plist)
+        out[tid] = lineup_projection(plist, recent, report)
+    return out
+
+
+def matchup_projections(meta, rnd, matchups):
+    """Adds projected finals and win probabilities to a round's H2H matchups (current round only)."""
+    proj = team_projections(meta, rnd)
+    for m in matchups:
+        a, b = proj.get((m["team1"] or {}).get("id")), proj.get((m["team2"] or {}).get("id"))
+        if a and b:
+            m["projection"] = {"team1": a, "team2": b, "win1": win_probability(a, b)}
+    return matchups
+
+
+# --------------------------------------------------------------------------- season analytics
+
+def manager_efficiency(breakdowns, team_names):
+    """Real points / best possible points per team over the rounds with saved lineups."""
+    tot, opt, rounds = {}, {}, {}
+    for bd in breakdowns:
+        for tid, lu in bd["lineups"].items():
+            tot[tid] = tot.get(tid, 0) + lu["total"]
+            opt[tid] = opt.get(tid, 0) + lu["optimal"]
+            rounds[tid] = rounds.get(tid, 0) + 1
+    rows = [{"team": {"id": tid, "title": team_names.get(tid, "?")}, "points": round(tot[tid], 2),
+             "optimal": round(opt[tid], 2), "lost": round(max(opt[tid] - tot[tid], 0), 2),
+             "efficiency": round(100 * tot[tid] / opt[tid], 1) if opt[tid] else None, "rounds": rounds[tid]}
+            for tid in tot]
+    rows.sort(key=lambda r: -(r["efficiency"] or 0))
+    return rows
+
+
+def strength_of_schedule(meta, breakdowns, team_names):
+    """H2H: how strong each team's opponents have been and will be (their average points per round)."""
+    if meta["format"] != "head_to_head" or not breakdowns:
+        return []
+    pts = {}
+    for bd in breakdowns:
+        for tid, sc in bd["scores"].items():
+            pts.setdefault(tid, []).append(sc)
+    avg = {tid: sum(v) / len(v) for tid, v in pts.items()}
+    faced, against = {}, {}
+    for bd in breakdowns:
+        for g in bd["games"]:
+            for me, opp, opp_score in ((g["winner"], g["loser"], g["ls"]), (g["loser"], g["winner"], g["ws"])):
+                faced.setdefault(me["id"], []).append(avg.get(opp["id"], 0))
+                against.setdefault(me["id"], []).append(opp_score)
+    start = meta["currentRound"] + (1 if meta["roundStarted"] else 0)
+    future = list(range(start, meta["totalRounds"]))
+    ahead = {}
+    for r, games in pool_map(lambda r: (r, schedule(meta, r)), future):
+        for m in games:
+            if m["team1"] and m["team2"]:
+                ahead.setdefault(m["team1"]["id"], []).append((r, avg.get(m["team2"]["id"], 0)))
+                ahead.setdefault(m["team2"]["id"], []).append((r, avg.get(m["team1"]["id"], 0)))
+    mean = lambda xs: round(sum(xs) / len(xs), 1) if xs else None  # noqa: E731
+    rows = []
+    for tid in avg:
+        nxt = [x for _, x in sorted(ahead.get(tid, []))]
+        rows.append({"team": {"id": tid, "title": team_names.get(tid, "?")},
+                     "faced": mean(faced.get(tid, [])), "against": mean(against.get(tid, [])),
+                     "next5": mean(nxt[:5]), "rest": mean(nxt)})
+    for key in ("faced", "next5", "rest"):  # 1 = hardest
+        ordered = sorted((r for r in rows if r[key] is not None), key=lambda r: -r[key])
+        for i, r in enumerate(ordered):
+            r[key + "Rank"] = i + 1
+    rows.sort(key=lambda r: r.get("facedRank", 99))
+    return rows
+
+
+def positions_before(meta, rnd):
+    """{teamId: standings position} after the round before `rnd` (empty for the first round)."""
+    if rnd <= meta["firstRound"]:
+        return {}
+    return {r["team"]["id"]: r["position"] for r in fetch_standings_round(meta, rnd - 1)}
+
+
+def round_recap(meta, bd, team_names, positions_before):
+    """Automatic round summary: the lines a league chat would want."""
+    lines = []
+    name = lambda tid: team_names.get(tid, "?")  # noqa: E731
+    rnd, scores = bd["round"], bd["scores"]
+    if scores:
+        hi, lo = max(scores, key=scores.get), min(scores, key=scores.get)
+        lines.append({"icon": "🔥", "text": L(f"Turo lyderis: {name(hi)} surinko {num(scores[hi])} tšk.",
+                                              f"Top score: {name(hi)} with {num(scores[hi])} points.")})
+    decided = [g for g in bd["games"] if not g["tie"]]
+    upsets = [(positions_before.get(g["winner"]["id"], 0) - positions_before.get(g["loser"]["id"], 0), g)
+              for g in decided if positions_before]
+    upsets = [u for u in upsets if u[0] > 0]
+    if upsets:
+        gap, g = max(upsets, key=lambda u: u[0])
+        lines.append({"icon": "😱", "text": L(
+            f"Staigmena: {g['winner']['title']} ({positions_before[g['winner']['id']]} vieta) įveikė "
+            f"{g['loser']['title']} ({positions_before[g['loser']['id']]} vieta) {num(g['ws'])}:{num(g['ls'])}.",
+            f"Upset: {g['winner']['title']} (#{positions_before[g['winner']['id']]}) beat "
+            f"{g['loser']['title']} (#{positions_before[g['loser']['id']]}) {num(g['ws'])}:{num(g['ls'])}.")})
+    if decided:
+        close = min(decided, key=lambda g: g["margin"])
+        lines.append({"icon": "⚔️", "text": L(
+            f"Arčiausia kova: {close['winner']['title']} {num(close['ws'])}:{num(close['ls'])} {close['loser']['title']}.",
+            f"Closest game: {close['winner']['title']} {num(close['ws'])}:{num(close['ls'])} {close['loser']['title']}.")})
+    lus = bd["lineups"]
+    if lus:
+        active = [(tid, p) for tid, lu in lus.items() for p in lu["players"] if p["slot"] != "inactive"]
+        if active:
+            tid, p = max(active, key=lambda x: x[1].get("roundPts") or -999)
+            lines.append({"icon": "⭐", "text": L(f"MVP: {p['name']} ({name(tid)}) {num(p.get('roundPts'))} FP.",
+                                                  f"MVP: {p['name']} ({name(tid)}) {num(p.get('roundPts'))} FP.")})
+        caps = [(tid, p) for tid, lu in lus.items() for p in lu["players"] if p["captain"]]
+        if caps:
+            tid, p = min(caps, key=lambda x: x[1]["contrib"])
+            lines.append({"icon": "🙈", "text": L(
+                f"Kapitono nesėkmė: {name(tid)} kapitonas {p['name']} atnešė tik {num(p['contrib'])} tšk.",
+                f"Captain flop: {name(tid)}'s captain {p['name']} brought only {num(p['contrib'])} points.")})
+        tid = max(lus, key=lambda t: lus[t]["lost"])
+        if lus[tid]["lost"] > 0:
+            lines.append({"icon": "🪑", "text": L(
+                f"Suolo katastrofa: {name(tid)} dėl sudėties prarado {num(lus[tid]['lost'])} tšk. "
+                f"(optimali sudėtis būtų surinkusi {num(lus[tid]['optimal'])}).",
+                f"Bench disaster: {name(tid)} lost {num(lus[tid]['lost'])} points to lineup choices "
+                f"(best lineup: {num(lus[tid]['optimal'])}).")})
+    # waiver steal: best first round from a player picked up right before this round
+    signed = []
+    for r, ts in raw_transfers(meta):
+        if r != rnd:
+            continue
+        for t in ts:
+            tid = ((t.get("offer") or {}).get("fantasyTeam") or {}).get("id")
+            if t.get("type") != "team" and tid:
+                signed += [(tid, pid) for pid in moved_players(t.get("request"))]
+    if signed:
+        pts_now = {v["id"]: (v.get("roundPts"), v["name"]) for v in players(meta, rnd, rnd).values()}
+        scored = [(pts_now.get(pid, (None, "?")), tid) for tid, pid in signed if pts_now.get(pid, (None,))[0] is not None]
+        if scored:
+            (fp, pname), tid = max(scored, key=lambda x: x[0][0])
+            lines.append({"icon": "💎", "text": L(f"Perėjimų radinys: {pname} ({name(tid)}) debiutavo su {num(fp)} FP.",
+                                                  f"Waiver steal: {pname} ({name(tid)}) debuted with {num(fp)} FP.")})
+    if scores and len(scores) > 1:
+        lines.append({"icon": "🧊", "text": L(f"Sunkiausias turas: {name(lo)} tik {num(scores[lo])} tšk.",
+                                              f"Rough round: {name(lo)} with only {num(scores[lo])} points.")})
+    return lines
+
+
 # --------------------------------------------------------------------------- draft & transfers
 
 Q_DRAFT = """
@@ -2147,6 +2386,40 @@ def draft_payload(fid):
             "owner": (own.get(pid) or {}).get("team"),
         })
     return {"league": meta, "picks": rows, "teams": list(teams.values())}
+
+
+def transfer_roi(meta, moves):
+    """Adds move["roi"] = {teamId: {inFp, outFp, net, rounds}}: fantasy points the players a
+    team got scored for it in rounds since the move (while still on the team; a round in progress
+    counts with its points so far), what
+    the players it gave away scored anywhere, and the difference. False when no round has
+    finished since any move."""
+    finished = list(range(meta["firstRound"], meta["latestRound"] + 1))  # includes a round in progress
+    first = min((m["round"] for m in moves), default=None)
+    rounds = [r for r in finished if first is not None and r >= first]
+    if not rounds:
+        return False
+    pts = {r: {v["id"]: v.get("roundPts") or 0 for v in pm.values()}
+           for r, pm in pool_map(lambda r: (r, players(meta, r, r)), rounds)}
+    snaps = read_json(LINEUPS_DIR / f"{meta['id']}.json", {"rounds": {}})["rounds"]
+
+    def kept(tid, pid, r):
+        team = ((snaps.get(str(r)) or {}).get("teams") or {}).get(tid)
+        return True if not team else any(p["id"] == pid for p in team["players"])
+
+    for m in moves:
+        after = [r for r in rounds if r >= m["round"]]
+        sides = [(m["offer"], m["request"])] + ([(m["request"], m["offer"])] if m["type"] == "trade" else [])
+        m["roi"] = {}
+        for own, other in sides:
+            tid = (own["team"] or {}).get("id")
+            if not tid:
+                continue
+            got = sum(pts[r].get(p["id"], 0) for r in after for p in other["players"] if kept(tid, p["id"], r))
+            gave = sum(pts[r].get(p["id"], 0) for r in after for p in own["players"])
+            m["roi"][tid] = {"inFp": round(got, 2), "outFp": round(gave, 2), "net": round(got - gave, 2),
+                             "rounds": len(after)}
+    return True
 
 
 def raw_transfers(meta):
@@ -2216,6 +2489,10 @@ def transfers_payload(fid):
                 row["spent"] += max(-delta, 0)
                 row["trades" if kind == "trade" else "signings"] += 1
     moves.sort(key=lambda m: (m["round"], m["at"] or ""), reverse=True)
+    roi = transfer_roi(meta, moves)
+    for row in summary.values():
+        mine = [r["net"] for m in moves for tid, r in m.get("roi", {}).items() if tid == row["team"]["id"]]
+        row["roi"] = round(sum(mine), 2) if roi and mine else None
 
     upcoming = [{"player": player_brief(pmap.get(b["player"]["id"]), b["player"]["id"]),
                  "highestBid": b.get("highestBid"), "totalBids": b.get("totalBids") or 0}
@@ -2679,6 +2956,9 @@ def records_payload(fid, rnd=None):
         "roundAwards": round_awards(meta, selected),
         "oscars": season_oscars(meta, breakdowns, team_names),
         "draftAwards": draft_awards(meta, finished, team_names),
+        "recap": round_recap(meta, selected, team_names, positions_before(meta, rnd)),
+        "efficiency": manager_efficiency(breakdowns, team_names),
+        "schedule": strength_of_schedule(meta, breakdowns, team_names),
         "records": season_records(meta, breakdowns, team_names, streaks, totals),
         "form": form,
         "missingLineups": [bd["round"] for bd in breakdowns if not bd["lineups"]],
@@ -2693,9 +2973,7 @@ def leagues_payload():
         try:
             meta = league_meta(entry["id"])
             shown, rows = standings(meta)
-            mine = next((r for r in rows if r["team"]["id"] == entry.get("myTeamId")), None)
-            return {"league": meta, "round": shown, "leader": rows[0] if rows else None,
-                    "mine": mine, "teams": len(rows), "table": rows}
+            return {"league": meta, "round": shown, "leader": rows[0] if rows else None, "teams": len(rows)}
         except (UpstreamError, NotFound) as exc:
             return {"league": {"id": entry["id"], "title": entry.get("title") or entry["id"]}, "error": str(exc)}
     return {"leagues": pool_map(card, load_config())}
@@ -2722,21 +3000,6 @@ def add_league(text):
 def remove_league(fid):
     with _config_lock:
         write_json(LEAGUES_FILE, [e for e in load_config() if e["id"] != fid])
-
-
-def set_my_team(fid, team_id):
-    with _config_lock:
-        entries = load_config()
-        for e in entries:
-            if e["id"] == fid:
-                if team_id:
-                    e["myTeamId"] = team_id
-                else:
-                    e.pop("myTeamId", None)
-                break
-        else:
-            raise NotFound(L("Lyga nesekama", "League is not tracked"))
-        write_json(LEAGUES_FILE, entries)
 
 
 # --------------------------------------------------------------------------- background
@@ -2860,8 +3123,6 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         routes = [
             (r"/api/leagues", lambda m, q: {"league": add_league(self._json_body().get("url"))}),
-            (rf"/api/league/{ID}/my-team",
-             lambda m, q: set_my_team(m[1], self._json_body().get("teamId")) or {"ok": True}),
         ]
         if not self._dispatch(routes):
             self._send(404, {"error": L("Nežinomas adresas", "Unknown address")})
