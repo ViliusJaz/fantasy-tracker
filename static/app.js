@@ -205,6 +205,7 @@ const I18N = {
     noMoves: "Šį sezoną perėjimų dar nebuvo.",
     movesTitle: "Įvykę perėjimai",
     movesBefore: "Prieš {n} turą",
+    noMovesRound: "Prieš šį turą perėjimų nebuvo.",
     moveType: "Tipas",
     moveIn: "Atėjo",
     moveOut: "Išėjo",
@@ -535,6 +536,7 @@ const I18N = {
     noMoves: "No transfers this season yet.",
     movesTitle: "Completed transfers",
     movesBefore: "Before round {n}",
+    noMovesRound: "No transfers before this round.",
     moveType: "Type",
     moveIn: "In",
     moveOut: "Out",
@@ -1694,7 +1696,7 @@ function moveRows(fid, m, usesCredits) {
     </tr>`).join("");
 }
 
-async function renderTransfers(fid, token, silent) {
+async function renderTransfers(fid, params, token, silent) {
   if (!silent) setView(skeletonTable(6));
   let data;
   try {
@@ -1733,18 +1735,29 @@ async function renderTransfers(fid, token, silent) {
         <td class="sticky">${playerMini(b.player)}</td><td class="num">${b.totalBids}</td><td class="num">${b.highestBid ?? "-"}</td></tr>`).join("")}</tbody>
     </table></div>` : "";
 
+  // One "before round N" group at a time, picked with the arrows / list (?r=N; newest with moves by default).
+  const base = `#/l/${fid}/transfers`;
+  const count = (r) => moves.filter((m) => m.round === r).length;
+  const withMoves = moves.map((m) => m.round);
+  const first = league.firstRound;
+  const last = Math.max(league.currentRound, ...withMoves);
+  const asked = params.has("r") ? Number(params.get("r")) : NaN;
+  const r = Number.isInteger(asked) ? Math.max(first, Math.min(asked, last))
+    : withMoves.length ? Math.max(...withMoves) : league.currentRound;
+  const label = (x) => `${t("movesBefore", { n: x + 1 })}${count(x) ? ` (${count(x)})` : ""}`;
+  const nav = `<div class="round-nav inline moves-nav">${roundArrows(base, r, first, last, label)}</div>`;
   let list;
   if (!moves.length) {
     list = `<div class="card">${stateBox(t("noMoves"))}</div>`;
+  } else if (!count(r)) {
+    list = `${nav}<div class="card">${stateBox(t("noMovesRound"))}</div>`;
   } else {
-    const rounds = [...new Set(moves.map((m) => m.round))];
-    list = rounds.map((r) => `
-      <h3 class="subhead">${t("movesBefore", { n: r + 1 })}</h3>
+    list = `${nav}
       <div class="card table-scroll"><table class="grid moves">
         <thead><tr><th>${t("moveType")}</th><th>${t("team")}</th><th>${t("moveIn")}</th><th>${t("moveOut")}</th>
           ${usesCredits ? `<th class="num">${t("creditsShortHead")}</th>` : ""}<th class="num" title="${esc(t("roiHeadTip"))}">ROI</th><th>${t("moveWhen")}</th></tr></thead>
         <tbody>${moves.filter((m) => m.round === r).map((m) => moveRows(fid, m, usesCredits)).join("")}</tbody>
-      </table></div>`).join("");
+      </table></div>`;
   }
 
   setView(`
@@ -1754,6 +1767,7 @@ async function renderTransfers(fid, token, silent) {
     ${list}
     ${bids}
     ${creditsTable}`);
+  bindRoundSelect(base);
 }
 
 // ------------------------------------------------------------------ injury news
@@ -2753,7 +2767,7 @@ async function route(silent = false) {
   if (parts[2] === "players") return renderPlayerList(fid, "all", token, silent);
   if (parts[2] === "free-agents") return renderPlayerList(fid, "free", token, silent);
   if (parts[2] === "draft") return renderDraft(fid, params, token, silent);
-  if (parts[2] === "transfers") return renderTransfers(fid, token, silent);
+  if (parts[2] === "transfers") return renderTransfers(fid, params, token, silent);
   if (parts[2] === "injuries") return renderInjuries(fid, params, token, silent);
   return renderStandings(fid, params, token, silent);
 }
