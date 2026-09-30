@@ -72,9 +72,9 @@ def _player_round(conn, rel, doc):
         line = p.get("line") or {}
         conn.execute("INSERT OR REPLACE INTO players VALUES (?,?,?,?)", (p["id"], p.get("bnId"), p.get("name"),
                                                                          p.get("position")))
-        conn.execute(f"INSERT OR REPLACE INTO player_rounds VALUES (?,?,?,?,?,?,?,?,{','.join('?' * len(LINE_KEYS))},?)",
+        conn.execute(f"INSERT OR REPLACE INTO player_rounds VALUES (?,?,?,?,?,?,?,?,{','.join('?' * len(LINE_KEYS))},?,?)",
                      (season, comp, rnd, pcs, p["id"], p.get("club"), p.get("fp"), int(bool(p.get("played"))),
-                      *(line.get(k) for k in LINE_KEYS), rel))
+                      *(line.get(k) for k in LINE_KEYS), rel, json.dumps(p.get("positions") or [])))
         n += 1
     for g in doc.get("games") or []:
         conn.execute("INSERT OR REPLACE INTO games VALUES (?,?,?,?,?,?,?,?,?,?,?)",

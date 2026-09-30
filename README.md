@@ -101,6 +101,21 @@ Vietinis `var/` (necommit'inamas): `health.json`, nuolatinis kešas `cache.sqlit
   paskutinio bandymo ir paskutinio sėkmingo atnaujinimo laikas, trukmė, užklausų ir klaidų skaičiai,
   žaidėjų ir puslapių skaičiai, patikros pastabos, kiekvieno šaltinio būsena.
 
+## Analitika
+
+`backend/analytics/metrics.py` – kiekviena formulė vienoje vietoje, kaip gryna funkcija nuo sezono
+duomenų (`dataset.py`). Iš jų skaičiuoja ir „Sezono rekordų“ puslapis (efektyvumas, tvarkaraščio
+sunkumas, serijos), ir perėjimų ROI, ir naujas `api/league/<id>/analytics.<lt|en>.json` (svetainėje dar
+nerodomas), kuris skaičiuojamas iš išsaugotos istorijos (SQLite indekso):
+
+- „visi prieš visus“ rekordas, tikėtinos pergalės ir sėkmės indeksas (tikros pergalės − tikėtinos);
+- efektyvumas ir dėl sudėties prarasti taškai, kapitono pasirinkimo nuostolis;
+- perėjimų grynasis rezultatas, drafto vertė (pasirinkimo numeris − vieta pagal sezono taškus);
+- tvarkaraščio sunkumas, varžovysčių istorija, serijos, rekordai.
+
+Tik turai su išsaugotomis sudėtimis įeina į sudėčių metrikas; trūkstami išvardijami `basedOn`, niekas
+neišgalvojama. Testas tikrina, kad istorija ir gyvi duomenys duoda tuos pačius skaičius.
+
 ## Mac ir telefonas kartu
 
 `publish.sh` gali leisti ir Mac (kas 15 min.), ir telefonas. Kad jie vienas kitam nepakenktų:

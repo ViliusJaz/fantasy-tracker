@@ -1,7 +1,8 @@
 """/api/league/<id>/records: season records, awards and analytics."""
+from backend.analytics import metrics
 from backend.analytics.awards import draft_awards, round_awards, season_oscars, season_records
 from backend.analytics.season import (
-    _streaks, manager_efficiency, positions_before, round_breakdown, round_recap, strength_of_schedule,
+    manager_efficiency, positions_before, round_breakdown, round_recap, strength_of_schedule,
 )
 from backend.league import league_meta, standings
 from backend.util import pool_map
@@ -31,7 +32,7 @@ def records_payload(fid, rnd=None):
                     (g["loser"], "T" if g["tie"] else "L", g["winner"], g["ls"], g["ws"])):
                 results.setdefault(team["id"], []).append(
                     {"round": bd["round"], "result": res, "opponent": opp["title"], "points": mine, "against": theirs})
-    streaks = {t: _streaks([x["result"] for x in rs]) for t, rs in results.items()}
+    streaks = {t: metrics.streaks([x["result"] for x in rs]) for t, rs in results.items()}
 
     form = []
     for row in table:

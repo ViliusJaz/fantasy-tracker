@@ -1,6 +1,7 @@
 """Per-round breakdowns and the season metrics built on them: efficiency, schedule strength,
 streaks, the round recap."""
 from backend import history
+from backend.analytics import dataset, metrics
 from backend.i18n import L
 from backend.league import fetch_standings_round, moved_players, raw_transfers, schedule
 from backend.players import players, players_by_ids
@@ -10,16 +11,8 @@ from backend.util import num, pool_map
 
 def manager_efficiency(breakdowns, team_names):
     """Real points / best possible points per team over the rounds with saved lineups."""
-    tot, opt, rounds = {}, {}, {}
-    for bd in breakdowns:
-        for tid, lu in bd["lineups"].items():
-            tot[tid] = tot.get(tid, 0) + lu["total"]
-            opt[tid] = opt.get(tid, 0) + lu["optimal"]
-            rounds[tid] = rounds.get(tid, 0) + 1
-    rows = [{"team": {"id": tid, "title": team_names.get(tid, "?")}, "points": round(tot[tid], 2),
-             "optimal": round(opt[tid], 2), "lost": round(max(opt[tid] - tot[tid], 0), 2),
-             "efficiency": round(100 * tot[tid] / opt[tid], 1) if opt[tid] else None, "rounds": rounds[tid]}
-            for tid in tot]
+    eff = metrics.efficiency(dataset.from_breakdowns(None, breakdowns, team_names))
+    rows = [{"team": {"id": tid, "title": team_names.get(tid, "?")}, **row} for tid, row in eff.items()]
     rows.sort(key=lambda r: -(r["efficiency"] or 0))
     return rows
 
@@ -28,32 +21,14 @@ def strength_of_schedule(meta, breakdowns, team_names):
     """H2H: how strong each team's opponents have been and will be (their average points per round)."""
     if meta["format"] != "head_to_head" or not breakdowns:
         return []
-    pts = {}
-    for bd in breakdowns:
-        for tid, sc in bd["scores"].items():
-            pts.setdefault(tid, []).append(sc)
-    avg = {tid: sum(v) / len(v) for tid, v in pts.items()}
-    faced, against = {}, {}
-    for bd in breakdowns:
-        for g in bd["games"]:
-            for me, opp, opp_score in ((g["winner"], g["loser"], g["ls"]), (g["loser"], g["winner"], g["ws"])):
-                faced.setdefault(me["id"], []).append(avg.get(opp["id"], 0))
-                against.setdefault(me["id"], []).append(opp_score)
     start = meta["currentRound"] + (1 if meta["roundStarted"] else 0)
-    future = list(range(start, meta["totalRounds"]))
-    ahead = {}
-    for r, games in pool_map(lambda r: (r, schedule(meta, r)), future):
-        for m in games:
-            if m["team1"] and m["team2"]:
-                ahead.setdefault(m["team1"]["id"], []).append((r, avg.get(m["team2"]["id"], 0)))
-                ahead.setdefault(m["team2"]["id"], []).append((r, avg.get(m["team1"]["id"], 0)))
+    future = {r: [{"team1": (m["team1"] or {}).get("id"), "team2": (m["team2"] or {}).get("id")} for m in games]
+              for r, games in pool_map(lambda r: (r, schedule(meta, r)), list(range(start, meta["totalRounds"])))}
+    strength = metrics.schedule_strength(dataset.from_breakdowns(meta, breakdowns, team_names, future))
     mean = lambda xs: round(sum(xs) / len(xs), 1) if xs else None  # noqa: E731
-    rows = []
-    for tid in avg:
-        nxt = [x for _, x in sorted(ahead.get(tid, []))]
-        rows.append({"team": {"id": tid, "title": team_names.get(tid, "?")},
-                     "faced": mean(faced.get(tid, [])), "against": mean(against.get(tid, [])),
-                     "next5": mean(nxt[:5]), "rest": mean(nxt)})
+    rows = [{"team": {"id": tid, "title": team_names.get(tid, "?")}, "faced": mean(st["faced"]),
+             "against": mean(st["against"]), "next5": mean(st["next5"]), "rest": mean(st["rest"])}
+            for tid, st in strength.items()]
     for key in ("faced", "next5", "rest"):  # 1 = hardest
         ordered = sorted((r for r in rows if r[key] is not None), key=lambda r: -r[key])
         for i, r in enumerate(ordered):
@@ -160,17 +135,3 @@ def round_breakdown(meta, rnd):
                      for p in lu["players"] if p["id"] in pmap]
             lineups_by_team[tid] = {"players": plist, **score_lineup(plist)}
     return {"round": rnd, "teams": teams, "scores": scores, "games": games, "lineups": lineups_by_team}
-
-
-def _streaks(results):
-    """Longest win / loss streaks and the current streak from a list like ['W','L','W']."""
-    best = {"W": 0, "L": 0}
-    run_kind, run = None, 0
-    for res in results:
-        if res == run_kind:
-            run += 1
-        else:
-            run_kind, run = res, 1
-        if res in best:
-            best[res] = max(best[res], run)
-    return best["W"], best["L"], (run_kind, run)

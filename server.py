@@ -19,6 +19,7 @@ from backend import config, log, pipeline
 from backend.config import BACKGROUND_EVERY, HOST, PORT
 from backend.errors import NotFound, UpstreamError
 from backend.i18n import LANG, L
+from backend.payloads.analytics import analytics_payload
 from backend.payloads.draft import draft_payload
 from backend.payloads.games import games_payload
 from backend.payloads.injuries import injuries_payload
@@ -123,6 +124,7 @@ class Handler(BaseHTTPRequestHandler):
             (rf"/api/league/{ID}/games", lambda m, q: games_payload(m[1], _round_param(q))),
             (rf"/api/league/{ID}/records", lambda m, q: records_payload(m[1], _round_param(q))),
             (rf"/api/league/{ID}/draft", lambda m, q: draft_payload(m[1])),
+            (rf"/api/league/{ID}/analytics", lambda m, q: analytics_payload(m[1])),
             (rf"/api/league/{ID}/injuries", lambda m, q: injuries_payload(m[1])),
             (rf"/api/league/{ID}/transfers", lambda m, q: transfers_payload(m[1])),
             (rf"/api/league/{ID}/team/{ID}", lambda m, q: team_payload(m[1], m[2], _round_param(q))),

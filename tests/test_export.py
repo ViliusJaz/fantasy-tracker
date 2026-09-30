@@ -29,6 +29,7 @@ SCHEMA = {
                              "nextGames", "shooting"}],
 }
 SCHEMA["league/ID/players"] = SCHEMA["league/ID/free-agents"]
+SCHEMA["league/ID/analytics"] = [{"league", "basedOn", "teams", "rivalries", "draft", "transfers", "records"}]
 SCHEMA["health.json"] = [{"version", "status", "lastAttempt", "lastSuccessfulUpdate", "buildDurationSeconds",
                           "basketnewsRequests", "failedRequests", "playersProcessed", "pagesGenerated",
                           "validationWarnings", "validationErrors", "sourceStatus", "lastSuccess", "lastFailure"}]
@@ -63,7 +64,7 @@ def test_every_page_the_site_needs_is_there(replayed):
         assert f"leagues.{lang}.json" in files
         for fid in (HLA, CLASSIC):
             for name in ("standings", "rounds", "games", "records", "free-agents", "players", "draft", "transfers",
-                         "injuries"):
+                         "injuries", "analytics"):
                 assert f"league/{fid}/{name}.{lang}.json" in files
             league = json.loads(files[f"league/{fid}/standings.{lang}.json"].read_text())["league"]
             for r in range(league["firstRound"], league["totalRounds"]):

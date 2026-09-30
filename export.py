@@ -30,6 +30,7 @@ from backend.errors import NotFound, UpstreamError
 from backend.i18n import LANG
 from backend.league import league_meta, lineups, standings
 from backend.rounds import round_state
+from backend.payloads.analytics import analytics_payload
 from backend.payloads.draft import draft_payload
 from backend.payloads.games import games_payload
 from backend.payloads.injuries import injuries_payload
@@ -239,6 +240,16 @@ def store_history(metas):
         log.get("storage").warning("SQLite index not updated: %s", exc)
 
 
+def export_analytics(leagues):
+    """ANALYTICS: season metrics from the (just refreshed) history, one file per league and language."""
+    started = time.monotonic()
+    jobs = [(file_name(f"league/{lg['meta']['id']}/analytics", None, lang), lambda fid=lg["meta"]["id"]: analytics_payload(fid))
+            for lg in leagues for lang in LANGS]
+    for rel, build in jobs:
+        job(rel, build)
+    log.get("analytics").info("%d league(s): %d files, %.1fs", len(leagues), len(jobs), time.monotonic() - started)
+
+
 def swap_in():
     """Replace site/ with the finished build in one step (a failed build never touches it)."""
     old = OUT.with_name(OUT.name + ".old")
@@ -282,6 +293,7 @@ def main():
                                examples=[f"{rel} ({why})" for rel, why in failures[:3]])
         if not report.fatal:
             store_history([lg["meta"] for lg in leagues])
+            export_analytics(leagues)
     else:
         history.discard()  # nothing from a failed build becomes history
 

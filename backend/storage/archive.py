@@ -23,9 +23,9 @@ Files are gzip with a fixed timestamp, so unchanged data never shows up as a git
 import gzip
 import json
 
-from backend import config, log
+from backend import config, history, log
 from backend.league import fetch_standings_round, raw_transfers, schedule
-from backend.players import players
+from backend.players import players, players_by_ids
 from backend.sources import basketnews as bn
 from backend.sources.advanced import advanced_stats, unique_rows
 
@@ -62,14 +62,26 @@ def write(path, doc, may_replace):
     return True
 
 
-def player_round(meta, rnd):
-    """Every player's round: box score, fantasy points (this league's scoring) and club; the games."""
-    views = players(meta, rnd, rnd)
+def round_views(metas, rnd):
+    """Every player of the round, plus rostered players the search list leaves out (looked up
+    exactly as the records page does, so nothing is downloaded twice)."""
+    views = {}
+    for meta in metas:
+        snap = history.lineup_rounds(meta["id"]).get(str(rnd)) or {}
+        ids = [p["id"] for lu in (snap.get("teams") or {}).values() for p in lu["players"]]
+        views.update(players_by_ids(meta, ids, rnd, rnd) if ids else players(meta, rnd, rnd))
+    return views
+
+
+def player_round(metas, rnd):
+    """Every player's round: box score, fantasy points (this scoring) and club; the games."""
+    meta = metas[0]
+    views = round_views(metas, rnd)
     rows, games = [], {}
     for v in views.values():
         club = (v.get("club") or {}).get("abbr")
         rows.append({"id": v["id"], "bnId": v.get("bnId"), "name": v["name"], "position": v.get("position"),
-                     "club": club, "fp": v.get("roundPts"), "played": v.get("roundPlayed"), "line": v.get("roundLine")})
+                     "positions": v.get("positions") or [], "club": club, "fp": v.get("roundPts"), "played": v.get("roundPlayed"), "line": v.get("roundLine")})
         for g in v.get("games") or []:
             if not club:
                 continue
@@ -106,6 +118,9 @@ def save_finished_rounds(metas):
     """Archive every finished round of the given leagues' competitions. Returns the files written."""
     written = []
     done_competition = set()
+    same_scoring = {}
+    for meta in metas:
+        same_scoring.setdefault((meta["leagueId"], meta.get("seasonYear"), meta["pointCalcSystem"]), []).append(meta)
     for meta in metas:
         cur, latest_finished = meta["currentRound"], meta["currentRound"] - 1
         base = season_dir(meta)
@@ -117,7 +132,7 @@ def save_finished_rounds(metas):
                 done_competition.add(comp_key)
                 path = base / round_name(rnd) / f"players-{meta['pointCalcSystem']}.json.gz"
                 if replaceable or not path.exists():
-                    if write(path, player_round(meta, rnd), replaceable):
+                    if write(path, player_round(same_scoring[comp_key[:3]], rnd), replaceable):
                         written.append(path)
                 path = base / round_name(rnd) / "advanced.json.gz"
                 if replaceable or not path.exists():
