@@ -116,6 +116,22 @@ nerodomas), kuris skaičiuojamas iš išsaugotos istorijos (SQLite indekso):
 Tik turai su išsaugotomis sudėtimis įeina į sudėčių metrikas; trūkstami išvardijami `basedOn`, niekas
 neišgalvojama. Testas tikrina, kad istorija ir gyvi duomenys duoda tuos pačius skaičius.
 
+## Rungtynių prognozės
+
+Kiekvienoms dar nesužaistoms Eurolygos rungtynėms apžvalgoje rodoma, kas turėtų laimėti ir kokia
+tikimybe (`backend/predict.py`, duomenys iš Eurolygos API – `backend/sources/euroleague.py`).
+Modelis: Elo tipo komandų reitingas, atnaujinamas po kiekvienų rungtynių pagal rezultatą, namų aikštė
+ir komandos puolimas prieš varžovo gynybą (taškai per 100 atakų; sezono pradžioje – nuo praėjusio
+sezono skaičių). Svoriai ir nustatymai – `backend/model/euroleague.json`.
+
+Patikrinimas su 2021–2026 sezonais (`python3 tools/el_data.py fetch`, tada
+`python3 tools/predict_research.py`), kiekvienai prognozei naudojant tik tai, kas buvo žinoma iki tų
+rungtynių. Požymiai atrinkti pagal 2023–24 ir 2024–25 sezonus (apie 67 % teisingų); praėjusiame
+2025–26 sezone modelis atspėjo 63,4 % (namų komanda laimėjo 63,7 %, geresnio balanso komanda – 57 %).
+Išbandyta ir neįtraukta, nes nepagerino: forma ir pergalių serijos, poilsio dienos, antros rungtynės
+per tris dienas, trūkstami žaidėjai, sudėties stiprumas, rezultatai prieš tokio lygio varžovus, namų
+aikštės stiprumas, žiūrovų skaičius, kelionės atstumas, varžovų stiprumą įvertinantys reitingai.
+
 ## Mac ir telefonas kartu
 
 `publish.sh` gali leisti ir Mac (kas 15 min.), ir telefonas. Kad jie vienas kitam nepakenktų:

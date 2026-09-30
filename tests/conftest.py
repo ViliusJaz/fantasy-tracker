@@ -39,7 +39,7 @@ MODULES = [
     "advanced", "proballers", "previews", "projections", "pipeline", "analytics.season", "analytics.awards",
     "analytics.transfers", "payloads.standings", "payloads.team", "payloads.players", "payloads.games",
     "payloads.player", "payloads.injuries", "payloads.draft", "payloads.transfers", "payloads.records",
-    "payloads.leagues",
+    "payloads.leagues", "predictions",
 ]
 
 

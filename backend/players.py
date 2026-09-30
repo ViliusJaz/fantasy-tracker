@@ -4,6 +4,7 @@ import copy
 from backend.rounds import keep_for, round_ttl
 from backend.sources.advanced import adv_value, advanced_stats, link_advanced_rows
 from backend.sources import basketnews as bn
+from backend.util import pool_map
 
 
 def players(meta, stats_round, games_round):
@@ -30,6 +31,27 @@ def _season_from_today(meta, views):
         now = today.get(pid)
         if now:
             v.update({k: copy.deepcopy(now[k]) for k in SEASON_FIELDS})
+
+
+DOUBLE_DOUBLE_KEYS = ("pts", "reb", "ast", "stl", "blk")
+
+
+def is_double_double(line):
+    """10 or more in at least two of points, rebounds, assists, steals, blocks."""
+    return sum(1 for k in DOUBLE_DOUBLE_KEYS if (line.get(k) or 0) >= 10) >= 2
+
+
+def double_doubles(meta):
+    """{playerId: double-doubles this season}, from the round box scores. Only rounds in which
+    the player's team played once count: a two-game round's totals are not one game's."""
+    rounds = list(range(meta["firstRound"], meta["latestRound"] + 1))
+    out = {}
+    for _, views in pool_map(lambda r: (r, players(meta, r, r)), rounds):
+        for v in views.values():
+            line = v.get("roundLine")
+            if line and len(v.get("games") or []) == 1 and is_double_double(line):
+                out[v["id"]] = out.get(v["id"], 0) + 1
+    return out
 
 
 def mark_round_days(views):

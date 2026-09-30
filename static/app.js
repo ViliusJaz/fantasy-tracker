@@ -358,6 +358,12 @@ const I18N = {
     rounds: "Turai",
     didNotPlay: "Nežaidė",
     fpChartOpen: "FP grafikas per turus",
+    predTitle: "Prognozė",
+    predWins: "{t} turėtų laimėti",
+    predShort: "Prognozė: {t} {p}%",
+    predWhy: "Labiausiai lemia",
+    predNote: "Modelis: komandų reitingas (atnaujinamas po kiekvienų rungtynių pagal rezultatą), namų aikštė ir komandos puolimas prieš varžovo gynybą (taškai per 100 atakų). Patikrintas su praėjusiais sezonais naudojant tik tai, kas buvo žinoma prieš rungtynes: 2025–26 sezone atspėjo {a}% rungtynių (namų komanda laimėjo 63,7%), 2023–24 ir 2024–25 – apie 67%.",
+    ddShort: "DD",
     fpChartTitle: "Fantasy taškai per turus",
     fpSeasonAvg: "Sezono vidurkis",
     fpBest: "Geriausias turas",
@@ -713,6 +719,12 @@ const I18N = {
     rounds: "Rounds",
     didNotPlay: "Did not play",
     fpChartOpen: "FP chart by round",
+    predTitle: "Prediction",
+    predWins: "{t} should win",
+    predShort: "Pick: {t} {p}%",
+    predWhy: "Mostly because of",
+    predNote: "Model: team ratings (updated after every game from the result), home court, and each side's offense against the other's defense (points per 100 possessions). Backtested on past seasons with only what was known before each game: it picked {a}% of 2025-26 games right (home teams won 63.7%), about 67% in 2023-24 and 2024-25.",
+    ddShort: "DD",
     fpChartTitle: "Fantasy points by round",
     fpSeasonAvg: "Season average",
     fpBest: "Best round",
@@ -1886,6 +1898,7 @@ const FA_VALUE = {
   avgPts: (p) => p.avgPts,
   roundPts: (p) => p.roundPts,
   gamesPlayed: (p) => p.gamesPlayed,
+  dd: (p) => p.dd,
   min: (p) => p.season?.min,
   pts: (p) => p.season?.pts,
   reb: (p) => p.season?.reb,
@@ -1912,7 +1925,7 @@ const listState = {
 
 function listFilterOptions(lastLabel, advanced) {
   return [
-    ["avgPts", t("avgFp")], ["roundPts", lastLabel], ["gamesPlayed", t("gp")],
+    ["avgPts", t("avgFp")], ["roundPts", lastLabel], ["gamesPlayed", t("gp")], ["dd", t("ddShort")],
     ...statCols().map((c) => [c.key, PCT_KEYS.has(c.key) ? `${c.abbr} %` : c.abbr]),
     ...(advanced?.columns || []).map((c) => [`adv:${c.key}`, c.short]),
   ];
@@ -1931,7 +1944,7 @@ function rangeBounds(players, key) {
   const vals = players.map(valueOf(key)).filter((v) => v !== null && v !== undefined);
   const lo = Math.floor(Math.min(0, ...vals));
   const hi = Math.ceil(Math.max(1, ...vals));
-  return { lo, hi, step: key === "gamesPlayed" ? 1 : 0.5 };
+  return { lo, hi, step: key === "gamesPlayed" || key === "dd" ? 1 : 0.5 };
 }
 
 function ownerCell(owner, withSlot = true) {
@@ -1972,6 +1985,7 @@ async function renderPlayerList(fid, scope, token, silent) {
         <th class="num sortable" data-sort="avgPts" title="${esc(t("avgFpTitle"))}">${t("avgFp")}</th>
         <th class="num sortable" data-sort="roundPts" title="${esc(t("lastFpTitle"))}">${esc(lastLabel)}</th>
         <th class="num sortable" data-sort="gamesPlayed" title="${esc(t("gpTitle"))}">${t("gp")}</th>
+        <th class="num sortable" data-sort="dd" title="${esc(`${t("tiles").dd}\n${t("ddTip")}`)}">${t("ddShort")}</th>
         ${statHeads(true)}</tr>`;
     }
     const groups = adv.groups.map((g) => {
@@ -2061,7 +2075,7 @@ async function renderPlayerList(fid, scope, token, silent) {
       th.dataset.dir = st.dir > 0 ? "↑" : "↓";
     });
     const advView = st.view === "adv";
-    const width = advView ? 3 + extraCols + adv.columns.length : 6 + extraCols + STAT_DEFS.length;
+    const width = advView ? 3 + extraCols + adv.columns.length : 7 + extraCols + STAT_DEFS.length;
     document.getElementById("fa-body").innerHTML = rows.map((p) => `
       <tr class="clickable${all && !p.owner ? " free-row" : ""}" data-player="${p.id}">
         <td class="sticky"><div class="player">${avatar(p)}<div>
@@ -2074,6 +2088,7 @@ async function renderPlayerList(fid, scope, token, silent) {
         <td class="num pts-strong">${fpLink(p.id, fmt1(p.avgPts))}</td>
         <td class="num">${fpLink(p.id, fmt(p.roundPts))}</td>
         <td class="num">${p.gamesPlayed}</td>
+        <td class="num">${p.dd ? `<b>${p.dd}</b>` : '<span class="dim">0</span>'}</td>
         ${statCells(p.season, "avg")}`}
       </tr>`).join("") || `<tr><td colspan="${width}" class="dim" style="text-align:center">${t("noPlayers")}</td></tr>`;
   };
@@ -2240,8 +2255,9 @@ function gameCardHead(g) {
   const score = g.homeScore !== null && g.homeScore !== undefined
     ? `<span class="${g.completed && g.homeScore > g.awayScore ? "win" : ""}">${g.homeScore}</span><span class="sep">:</span><span class="${g.completed && g.awayScore > g.homeScore ? "win" : ""}">${g.awayScore}</span>`
     : '<span class="dim">-</span>';
+  const pick = g.preview?.prediction;
   const meta = [
-    g.preview ? t("previewReady") : null,
+    pick ? t("predShort", { t: esc(pick.winner), p: Math.round(pick.prob * 100) }) : g.preview ? t("previewReady") : null,
     g.owned ? t("ownedInGame", { n: g.owned }) : null,
     g.top && g.top.fp !== null ? `${t("topFp")}: ${esc(g.top.name)} ${fmt(g.top.fp)}` : null,
   ].filter(Boolean).join(" · ");
@@ -2313,10 +2329,26 @@ function teamCompare(g) {
   </div>`;
 }
 
+// Who should win, how sure the model is (a bar split home / away) and what decided it.
+function predictionBox(g, pick) {
+  if (!pick) return "";
+  const home = Math.round(pick.homeWin * 100);
+  const why = pick.factors.map((f) => `<li><span class="pred-dot ${f.toward === g.home.abbr ? "home" : "away"}"></span>${esc(f.text)}
+    <span class="dim">→ ${esc(f.toward)}</span></li>`).join("");
+  return `<div class="prediction" data-tip="${esc(t("predNote", { a: pick.accuracy ?? "-" }))}">
+    <div class="pred-head"><span class="pv-h">${t("predTitle")}</span>
+      <strong>${t("predWins", { t: esc(pick.winner) })}</strong><span class="pred-prob">${Math.round(pick.prob * 100)}%</span></div>
+    <div class="pred-bar"><span class="pred-side">${esc(g.home.abbr)} ${home}%</span>
+      <span class="proj-bar"><i style="width:${home}%"></i></span><span class="pred-side">${100 - home}% ${esc(g.away.abbr)}</span></div>
+    ${why ? `<div class="pred-why"><span class="dim small">${t("predWhy")}:</span><ul>${why}</ul></div>` : ""}
+  </div>`;
+}
+
 function gamePreview(fid, g) {
   const pv = g.preview;
   const notes = pv.notes;
   return `<div class="preview">
+    ${predictionBox(g, pv.prediction)}
     ${teamCompare(g)}
     <div class="pv-sides">${previewSide(fid, g.home, pv.home)}${previewSide(fid, g.away, pv.away)}</div>
     ${notes.length ? `<div class="pv-notes"><h5 class="pv-h">${t("pvNotes")}</h5><ul>${notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul></div>` : ""}

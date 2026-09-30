@@ -824,6 +824,19 @@ table.box { min-width: 1100px; }
 
 /* ---------- game preview (games that have not started) ---------- */
 .preview { padding: 4px 20px 16px; }
+.prediction { margin: 8px 0 12px; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-2); }
+.pred-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.pred-head .pv-h { margin: 0; }
+.pred-head strong { font-family: var(--font-display); font-size: 17px; }
+.pred-prob { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--accent); }
+.pred-bar { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-size: 13px; }
+.pred-bar .proj-bar { flex: 1; }
+.pred-side { white-space: nowrap; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.pred-why { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 8px; }
+.pred-why ul { display: flex; flex-wrap: wrap; gap: 4px 14px; list-style: none; margin: 0; padding: 0; font-size: 13px; }
+.pred-why li { display: inline-flex; align-items: center; gap: 6px; }
+.pred-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.pred-dot.away { background: var(--muted); }
 .pv-sides { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
 .pv-side { min-width: 0; padding-top: 8px; }
 .pv-team { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; font-size: 16px; }

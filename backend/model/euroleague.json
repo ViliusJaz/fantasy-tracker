@@ -1,0 +1,154 @@
+{
+ "trained": "E2021-E2025",
+ "elo_k": 10,
+ "elo_home": 20,
+ "elo_carry": 0.8,
+ "elo_new_team": 1450.0,
+ "elo_points": 28.0,
+ "shrink_games": 12,
+ "form_games": 8,
+ "shrink_type": 2,
+ "backtest": {
+  "season": "E2025",
+  "accuracy": 63.4,
+  "logloss": 0.6285,
+  "games": 402
+ },
+ "bias": 0.3982,
+ "weights": {
+  "elo": 0.1822,
+  "home": 0.2214,
+  "matchup": 1.3913
+ },
+ "ratings": {
+  "after": "E2025",
+  "teams": {
+   "ASV": 1298.1,
+   "BAR": 1507.6,
+   "BAS": 1399.8,
+   "BER": 1273.1,
+   "CSK": 1489.5,
+   "DUB": 1491.2,
+   "DYR": 1486.1,
+   "HTA": 1500.0,
+   "IST": 1416.3,
+   "MAD": 1612.9,
+   "MCO": 1511.1,
+   "MIL": 1434.6,
+   "MUN": 1466.7,
+   "OLY": 1686.6,
+   "PAM": 1560.4,
+   "PAN": 1530.0,
+   "PAR": 1454.7,
+   "PRS": 1461.0,
+   "RED": 1495.3,
+   "TEL": 1431.7,
+   "ULK": 1555.4,
+   "UNK": 1485.5,
+   "VIR": 1348.5,
+   "ZAL": 1518.3
+  }
+ },
+ "priors": {
+  "ASV": {
+   "off": 108.12,
+   "deff": 117.52,
+   "home_edge": 3.74
+  },
+  "BAR": {
+   "off": 116.49,
+   "deff": 114.74,
+   "home_edge": 1.91
+  },
+  "BAS": {
+   "off": 115.16,
+   "deff": 120.32,
+   "home_edge": 10.43
+  },
+  "DUB": {
+   "off": 117.99,
+   "deff": 117.8,
+   "home_edge": 3.63
+  },
+  "HTA": {
+   "off": 116.71,
+   "deff": 114.75,
+   "home_edge": 4.89
+  },
+  "IST": {
+   "off": 112.75,
+   "deff": 116.17,
+   "home_edge": 4.08
+  },
+  "MAD": {
+   "off": 119.06,
+   "deff": 112.59,
+   "home_edge": 12.81
+  },
+  "MCO": {
+   "off": 117.77,
+   "deff": 115.38,
+   "home_edge": 8.72
+  },
+  "MIL": {
+   "off": 117.46,
+   "deff": 119.09,
+   "home_edge": 2.81
+  },
+  "MUN": {
+   "off": 112.08,
+   "deff": 115.69,
+   "home_edge": 8.77
+  },
+  "OLY": {
+   "off": 121.36,
+   "deff": 111.6,
+   "home_edge": 6.95
+  },
+  "PAM": {
+   "off": 116.25,
+   "deff": 112.83,
+   "home_edge": 3.74
+  },
+  "PAN": {
+   "off": 118.4,
+   "deff": 115.37,
+   "home_edge": 7.61
+  },
+  "PAR": {
+   "off": 111.95,
+   "deff": 116.7,
+   "home_edge": 2.89
+  },
+  "PRS": {
+   "off": 115.22,
+   "deff": 116.15,
+   "home_edge": 0.74
+  },
+  "RED": {
+   "off": 115.46,
+   "deff": 114.18,
+   "home_edge": 6.29
+  },
+  "TEL": {
+   "off": 117.18,
+   "deff": 120.59,
+   "home_edge": 2.51
+  },
+  "ULK": {
+   "off": 113.91,
+   "deff": 111.48,
+   "home_edge": 5.47
+  },
+  "VIR": {
+   "off": 111.23,
+   "deff": 117.24,
+   "home_edge": 5.78
+  },
+  "ZAL": {
+   "off": 117.61,
+   "deff": 113.87,
+   "home_edge": 4.95
+  }
+ }
+}

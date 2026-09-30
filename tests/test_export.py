@@ -130,6 +130,7 @@ def test_player_lists_carry_advanced_stats(replayed):
     regular = [p for p in doc["players"] if (p["season"] or {}).get("min", 0) >= adv["contextMinutes"]]
     assert sum(1 for p in regular if p["adv"]) > 0.9 * len(regular)
     assert all(p["adv"] is None or set(p["adv"]) == set(keys) for p in doc["players"])
+    assert all(isinstance(p["dd"], int) and p["dd"] >= 0 for p in doc["players"])
 
 
 def test_defense_ranking(replayed):
@@ -172,7 +173,7 @@ def test_health_of_a_good_build(replayed):
     assert doc["lastAttempt"].startswith("2026-09-30T12:59:55")  # the recording's (frozen) time
     assert doc["pagesGenerated"] == len(api_files(out)) - 2        # all but meta.json and health.json
     assert doc["playersProcessed"] > 250 and doc["basketnewsRequests"] > 50 and doc["failedRequests"] == 0
-    assert doc["sourceStatus"] == {"basketnews": "ok", "injuries": "ok", "advancedStats": "ok"}
+    assert doc["sourceStatus"] == {"basketnews": "ok", "injuries": "ok", "advancedStats": "ok", "euroleague": "ok"}
     assert doc["lastFailure"] is None
     metrics = doc["lastSuccess"]["metrics"]
     assert set(metrics["leagues"]) == {HLA, CLASSIC} and metrics["pages"] == doc["pagesGenerated"]

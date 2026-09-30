@@ -1,6 +1,7 @@
 """/api/league/<id>/games: every real game of a round with box scores and previews."""
 from backend.league import league_meta, owners
 from backend.players import players
+from backend.predictions import predict_games
 from backend.previews import game_preview, preview_context
 from backend.rounds import round_state
 
@@ -57,6 +58,9 @@ def games_payload(fid, rnd=None):
     upcoming = [g for g in out if not g["completed"] and not g["live"] and not g["canceled"]]
     if upcoming:
         ctx = preview_context(meta, rnd, pmap, own)
+        clubs = {p["club"]["abbr"]: p["club"] for p in pmap.values() if p["club"]}
+        picks = predict_games(meta, [(g["id"], g["home"]["abbr"], g["away"]["abbr"], g["at"]) for g in upcoming], clubs)
         for g in upcoming:
             g["preview"] = game_preview(g, ctx)
+            g["preview"]["prediction"] = picks.get(g["id"])
     return {"league": meta, "round": rnd, "state": round_state(meta, rnd), "games": out}

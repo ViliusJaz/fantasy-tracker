@@ -66,7 +66,8 @@ def source_status(requests, report, injuries_state):
         injuries = "stale"
     else:
         injuries = state("injury-report")
-    return {"basketnews": basketnews, "injuries": injuries, "advancedStats": state("advanced-stats")}
+    return {"basketnews": basketnews, "injuries": injuries, "advancedStats": state("advanced-stats"),
+            "euroleague": state("euroleague")}
 
 
 def document(previous, *, ok, started, duration, requests, report, sources, players, pages, failed_pages, metrics):
