@@ -145,7 +145,8 @@ def check_lineups(report, meta, lineups, team_ids):
     odd = [t for t, lu in lineups.items() if not ROSTER[0] <= len(lu["players"]) <= ROSTER[1]]
     if odd:
         report.add(WARNING, src, "roster-size", f"{meta['title']}: {len(odd)} team(s) with an unusual roster size")
-    stale = [t for t, lu in lineups.items() if lu["round"] < meta["currentRound"]]
+    # right after a round the API still shows it until managers set the next one: that is normal
+    stale = [t for t, lu in lineups.items() if lu["round"] < meta["currentRound"] - 1]
     if stale:
         report.add(WARNING, src, "old-round", f"{meta['title']}: {len(stale)} lineup(s) are for an earlier round")
 

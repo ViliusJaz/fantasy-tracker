@@ -107,6 +107,7 @@ def test_lineup_checks():
     assert levels(report) == [(ERROR, "missing")] and report.blocked("lineups")
     assert levels(run(v.check_lineups, meta(), {t: lineup(2) for t in teams}, teams)) == [(WARNING, "roster-size")]
     assert levels(run(v.check_lineups, meta(), {t: lineup(rnd=1) for t in teams}, teams)) == [(WARNING, "old-round")]
+    assert run(v.check_lineups, meta(), {t: lineup(rnd=2) for t in teams}, teams).issues == []  # just finished
 
 
 def injury_log(open_players):
