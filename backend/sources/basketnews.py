@@ -6,7 +6,7 @@ import threading
 import time
 import urllib.request
 
-from backend import log, net
+from backend import cache, log, net
 from backend.config import BROWSER_UA, LIVE_TTL, LOCALE, SETTLED_TTL
 from backend.errors import UpstreamError
 from backend.i18n import L
@@ -38,9 +38,10 @@ def cache_answer(query, variables, data, ttl):
         _cache[cache_key(query, variables)] = (time.time() + ttl, data)
 
 
-def gql(query, variables, ttl=LIVE_TTL):
-    """`data` of a GraphQL answer, cached for `ttl` seconds. Threads asking for the same thing
-    at the same moment share one request."""
+def gql(query, variables, ttl=LIVE_TTL, keep=0):
+    """`data` of a GraphQL answer, cached in memory for `ttl` seconds and, with `keep`, also
+    kept between runs (backend/cache.py). Threads asking for the same thing at the same
+    moment share one request."""
     ttl = RUN_TTL or ttl
     key = cache_key(query, variables)
     with _cache_lock:
@@ -49,7 +50,11 @@ def gql(query, variables, ttl=LIVE_TTL):
             return hit[1]
 
     def load():
-        data = _post(query, variables)
+        data = cache.get(key) if keep else None
+        if data is None:
+            data = _post(query, variables)
+            if keep:
+                cache.put(key, "basketnews", data, keep)
         with _cache_lock:
             _cache[key] = (time.time() + ttl, data)
         return data
@@ -346,11 +351,11 @@ def fetch_league(fid):
     }
 
 
-def fetch_standings(meta, rnd, ttl):
+def fetch_standings(meta, rnd, ttl, keep=0):
     """Table after round `rnd`: [{team, position, positionGained, (wins, losses, ties | roundPosition),
     pointsTotal, pointsRound}]; empty when the round has not been scored."""
     if meta["format"] == "head_to_head":
-        recs = gql(Q_H2H_STANDINGS, {"id": meta["id"], "round": rnd}, ttl)["allHeadToHeadScoreRecordsFromClient"]["records"]
+        recs = gql(Q_H2H_STANDINGS, {"id": meta["id"], "round": rnd}, ttl, keep)["allHeadToHeadScoreRecordsFromClient"]["records"]
         return [
             {
                 "team": team_ref(r["fantasyTeam"]),
@@ -365,7 +370,7 @@ def fetch_standings(meta, rnd, ttl):
             for r in recs
         ]
     recs = gql(
-        Q_CLASSIC_STANDINGS, {"leagueId": meta["leagueId"], "id": meta["id"], "round": rnd}, ttl
+        Q_CLASSIC_STANDINGS, {"leagueId": meta["leagueId"], "id": meta["id"], "round": rnd}, ttl, keep
     )["allFantasyTeamScoreRecordsFromClient"]["records"]
     return [
         {
@@ -384,9 +389,9 @@ def fetch_teams(fid):
     return [team_ref(t) for t in gql(Q_TEAMS, {"id": fid})["fantasyLeagueTeamsFromClient"]["records"]]
 
 
-def fetch_schedule(fid, rnd, ttl):
+def fetch_schedule(fid, rnd, ttl, keep=0):
     """Head-to-head matchups of a round: [{id, team1, team2, score1, score2}] (a team may be None)."""
-    recs = gql(Q_SCHEDULE, {"id": fid, "round": rnd}, ttl)
+    recs = gql(Q_SCHEDULE, {"id": fid, "round": rnd}, ttl, keep)
     return [
         {
             "id": m["id"],
@@ -428,11 +433,11 @@ def _transfer_side(item):
     }
 
 
-def fetch_transfers(fid, rnd, ttl):
+def fetch_transfers(fid, rnd, ttl, keep=0):
     """Processed moves of a round: [{id, kind: "trade" | "free_agent", at, offer, request}]. The offer
     is the team that proposed (for a signing: the team, the players it dropped and its bid); each
     side is {team, players (who changed hands), listed (everyone named), credits}."""
-    recs = gql(Q_TRANSFERS, {"fantasyLeagueId": fid, "fantasyRound": rnd}, ttl=ttl)["draftTransfersFromClient"] or []
+    recs = gql(Q_TRANSFERS, {"fantasyLeagueId": fid, "fantasyRound": rnd}, ttl, keep)["draftTransfersFromClient"] or []
     return [{"id": t["id"], "kind": "trade" if t.get("type") == "team" else "free_agent", "at": t.get("updatedAt"),
              "offer": _transfer_side(t.get("offer")), "request": _transfer_side(t.get("request"))} for t in recs]
 
@@ -457,10 +462,10 @@ def _player_vars(meta, stats_round, games_round):
             "gamesRound": games_round, "pcs": meta["pointCalcSystem"]}
 
 
-def fetch_players(meta, stats_round, games_round, ttl):
+def fetch_players(meta, stats_round, games_round, ttl, keep=0):
     """Every player of the competition: {playerId: player_view}. Points and box score are for
     `stats_round`, games are those of `games_round`."""
-    data = gql(Q_PLAYERS, _player_vars(meta, stats_round, games_round), ttl)
+    data = gql(Q_PLAYERS, _player_vars(meta, stats_round, games_round), ttl, keep)
     return {p["id"]: player_view(p) for p in data["playersSearchRecordsFromClient"]["records"]}
 
 

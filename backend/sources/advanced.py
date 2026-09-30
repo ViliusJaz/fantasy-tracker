@@ -5,7 +5,7 @@ import time
 import urllib.parse
 import urllib.request
 
-from backend import log, net
+from backend import cache, log, net
 from backend.config import BROWSER_UA
 from backend.i18n import LANG
 from backend.util import SingleFlight
@@ -38,6 +38,11 @@ def advanced_stats(meta, rnd=None):
     return _flights.do(("players",) + key, lambda: _load_player_rows(meta, key, rnd, hit))
 
 
+def _keep(meta, rnd):
+    """A settled round's rows never change: keep them between runs (backend/cache.py)."""
+    return 7 * 24 * 3600 if rnd is not None and rnd <= meta["currentRound"] - 2 else 0
+
+
 def _load_player_rows(meta, key, rnd, hit):
     league, season = key[0], key[1]
     form = {"league_id": league, "season": season}
@@ -48,8 +53,14 @@ def _load_player_rows(meta, key, rnd, hit):
         headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
                  "Content-Type": "application/x-www-form-urlencoded", "Accept-Encoding": "gzip",
                  "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
+    stored_key = f"advanced-stats {league} {season} {rnd}"
+    keep = _keep(meta, rnd)
     try:
-        payload = net.fetch(req, "advanced-stats", as_json=True)
+        payload = cache.get(stored_key) if keep else None
+        if payload is None:
+            payload = net.fetch(req, "advanced-stats", as_json=True)
+            if keep:
+                cache.put(stored_key, "advanced-stats", payload, keep)
         data = payload.get("data") or {}
         max_seq = (data.get("extra") or {}).get("max_sequence") or 0
         if rnd is not None and max_seq < rnd + 1:

@@ -24,7 +24,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 
-from backend import clock, config, health, history, injuries, log, net, pipeline, validation
+from backend import cache, clock, config, health, history, injuries, log, net, pipeline, validation
 from backend.errors import NotFound, UpstreamError
 from backend.i18n import LANG
 from backend.league import league_meta, lineups, standings
@@ -236,6 +236,7 @@ def main():
     log.setup()
     started, started_at = time.time(), clock.now().astimezone().isoformat(timespec="seconds")
     previous = health.load(config.VAR_DIR / "health.json", OUT / "api" / "health.json")
+    cache.prune()
     base = health.baseline(previous)
     report = validation.Report()
     leagues = []
@@ -268,6 +269,9 @@ def main():
     for source, st in sorted(requests.items()):
         log.get("fetch").info("%s: %d requests, %d retried, %d failed, %.2f MB", source, st["requests"],
                               st["retries"], st["failures"], st["bytes"] / 1e6)
+    if cache.STATS["hits"] or cache.STATS["stored"]:
+        log.get("fetch").info("cache: %d answers from var/cache.sqlite, %d stored", cache.STATS["hits"],
+                              cache.STATS["stored"])
     missing = injuries.untranslated()
     if missing:
         LOG.info("%d injury comment(s) without a Lithuanian translation, e.g. %s", len(missing), missing[0])

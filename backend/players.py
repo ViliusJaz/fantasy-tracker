@@ -1,5 +1,7 @@
 """Every player of the competition as the tracker shows them, with usage % attached."""
-from backend.rounds import round_ttl
+import copy
+
+from backend.rounds import keep_for, round_ttl
 from backend.sources.advanced import adv_value, advanced_stats, link_advanced_rows
 from backend.sources import basketnews as bn
 
@@ -7,10 +9,27 @@ from backend.sources import basketnews as bn
 def players(meta, stats_round, games_round):
     """Every player of the competition: {playerId: view}. Points are for `stats_round`,
     games are those of `games_round`."""
-    views = bn.fetch_players(meta, stats_round, games_round, round_ttl(meta, min(stats_round, games_round)))
+    keep = min(keep_for(meta, stats_round), keep_for(meta, games_round))
+    views = bn.fetch_players(meta, stats_round, games_round, round_ttl(meta, min(stats_round, games_round)), keep)
+    if keep:
+        _season_from_today(meta, views)
     attach_usage(meta, views, stats_round)
     mark_round_days(views)
     return views
+
+
+SEASON_FIELDS = ("avgPts", "gamesPlayed", "season", "health")
+
+
+def _season_from_today(meta, views):
+    """A round's player list may be days old (backend/cache.py); what it says about the whole
+    season (averages, games played, health) comes from today's list instead."""
+    today = bn.fetch_players(meta, meta["latestRound"], meta["currentRound"],
+                             round_ttl(meta, min(meta["latestRound"], meta["currentRound"])))
+    for pid, v in views.items():
+        now = today.get(pid)
+        if now:
+            v.update({k: copy.deepcopy(now[k]) for k in SEASON_FIELDS})
 
 
 def mark_round_days(views):

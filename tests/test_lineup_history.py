@@ -95,7 +95,7 @@ def test_leagues_are_stored_in_separate_files(ft, clock):
 def test_lineups_parses_the_api_answer_and_records_it_on_flush(ft, clock, graphql, monkeypatch):
     clock.set("2026-09-30T10:00:00+03:00")
     answer = graphql("draftLeagueFantasyTeamLineupsFromClient", HLA)[0]
-    monkeypatch.setattr(ft, "gql", lambda query, variables, ttl=None: answer)
+    monkeypatch.setattr(ft, "gql", lambda query, variables, ttl=None, keep=0: answer)
     result = ft.lineups(meta(started=True))
     assert not (ft.data_dir / "lineups").exists()  # fetching alone writes nothing
     assert ft.flush() == {"lineups": 1, "injuries": 0}
@@ -116,7 +116,7 @@ def test_lineups_skip_empty_slots(ft, clock, monkeypatch):
         "fantasyTeamId": "t1", "fantasyRound": 1, "formation": None,
         "players": [{"cardIdentifier": "g-1", "captain": None, "player": {"id": "p1"}},
                     {"cardIdentifier": "b-2", "captain": False, "player": None}]}]}
-    monkeypatch.setattr(ft, "gql", lambda query, variables, ttl=None: answer)
+    monkeypatch.setattr(ft, "gql", lambda query, variables, ttl=None, keep=0: answer)
     result = ft.lineups(meta())
     assert result["t1"]["players"] == [{"id": "p1", "card": "g-1", "slot": "starter", "captain": False}]
 

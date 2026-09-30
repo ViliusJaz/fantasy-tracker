@@ -34,7 +34,7 @@ CLASSIC = "6aa6bddec90ec6ddaf50d152"  # classic league in the recording
 
 
 MODULES = [
-    "config", "clock", "i18n", "errors", "util", "net", "sources.basketnews", "sources.advanced",
+    "config", "clock", "i18n", "errors", "util", "net", "cache", "sources.basketnews", "sources.advanced",
     "sources.injury_report", "sources.wikidata", "rounds", "scoring", "history", "injuries", "league", "players",
     "advanced", "proballers", "previews", "projections", "pipeline", "analytics.season", "analytics.awards",
     "analytics.transfers", "payloads.standings", "payloads.team", "payloads.players", "payloads.games",
@@ -73,7 +73,7 @@ class Backend:
 @pytest.fixture
 def ft(tmp_path, monkeypatch):
     """The backend, with every data path inside tmp_path and empty caches."""
-    from backend import config, history
+    from backend import cache, config, history
     from backend.sources import basketnews
     backend = Backend()
     data = tmp_path / "data"
@@ -82,6 +82,8 @@ def ft(tmp_path, monkeypatch):
         monkeypatch.setattr(config, name, getattr(config, name))  # restored after the test
     config.set_data_dir(data)
     monkeypatch.setattr(config, "LEAGUES_FILE", tmp_path / "leagues.json")
+    monkeypatch.setattr(config, "VAR_DIR", tmp_path / "var")
+    monkeypatch.setattr(cache, "DISABLED", True)  # tests that want it turn it on
     monkeypatch.setattr(basketnews, "_cache", {})
     history.discard()
     backend.LANG.set("lt")

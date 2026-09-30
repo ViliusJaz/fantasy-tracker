@@ -3,7 +3,7 @@ from backend import history
 from backend.config import LIVE_TTL, SETTLED_TTL
 from backend.errors import NotFound, UpstreamError
 from backend.i18n import L
-from backend.rounds import round_ttl
+from backend.rounds import keep_for, round_ttl
 from backend.scoring import _slot_sort_key, slot_label, slot_of
 from backend.sources import basketnews as bn
 from backend.util import pool_map
@@ -46,7 +46,7 @@ def league_meta(fid):
 
 
 def fetch_standings_round(meta, rnd):
-    return bn.fetch_standings(meta, rnd, round_ttl(meta, rnd))
+    return bn.fetch_standings(meta, rnd, round_ttl(meta, rnd), keep_for(meta, rnd))
 
 
 def league_teams(meta):
@@ -70,7 +70,7 @@ def standings(meta, rnd=None):
 
 
 def schedule(meta, rnd):
-    return bn.fetch_schedule(meta["id"], rnd, round_ttl(meta, rnd))
+    return bn.fetch_schedule(meta["id"], rnd, round_ttl(meta, rnd), keep_for(meta, rnd))
 
 
 def lineups(meta):
@@ -114,7 +114,7 @@ def raw_transfers(meta):
     cur = meta["currentRound"]
 
     def fetch(r):
-        return r, bn.fetch_transfers(meta["id"], r, LIVE_TTL if r >= cur else SETTLED_TTL)
+        return r, bn.fetch_transfers(meta["id"], r, LIVE_TTL if r >= cur else SETTLED_TTL, keep_for(meta, r))
 
     return pool_map(fetch, list(range(meta["firstRound"], cur + 1)))
 

@@ -8,7 +8,7 @@ from conftest import HLA, CLASSIC
 
 def fake_gql(monkeypatch, ft, answers):
     """Route gql() by the operation name in the query to canned answers."""
-    def gql(query, variables, ttl=None):
+    def gql(query, variables, ttl=None, keep=0):
         for op, data in answers.items():
             if op in query:
                 return data(variables) if callable(data) else data
