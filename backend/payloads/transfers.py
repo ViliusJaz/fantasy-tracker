@@ -3,19 +3,14 @@ from backend.analytics.transfers import transfer_roi
 from backend.errors import UpstreamError
 from backend.league import league_meta, raw_transfers, standings
 from backend.players import player_brief, players_by_ids
-from backend.sources.basketnews import Q_BID_SUMMARY, gql
+from backend.sources import basketnews as bn
 
 
-def _transfer_side(item, teams, pmap):
-    team = (item or {}).get("fantasyTeam") or {}
-    listed = (item or {}).get("players") or []
-    moved = [x for x in listed if x.get("traded")] or listed
+def _transfer_side(side, teams, pmap):
     return {
-        "team": (teams.get(team["id"]) or {"id": team["id"], "title": team.get("title")}) if team.get("id") else None,
-        "players": [player_brief(pmap.get(x["player"]["id"]), x["player"]["id"],
-                                 f"{x['player'].get('firstName', '')} {x['player'].get('lastName', '')}".strip())
-                    for x in moved if x.get("player")],
-        "credits": (item or {}).get("credits") or 0,
+        "team": (teams.get(side["team"]["id"]) or side["team"]) if side["team"] else None,
+        "players": [player_brief(pmap.get(p["id"]), p["id"], p["name"]) for p in side["players"]],
+        "credits": side["credits"],
     }
 
 
@@ -26,15 +21,14 @@ def transfers_payload(fid):
     cur = meta["currentRound"]
     raw = raw_transfers(meta)
     try:
-        bids = gql(Q_BID_SUMMARY, {"fantasyLeagueId": fid, "fantasyRound": cur})["draftFreeAgentBidsSummaryFromClient"] or []
+        bids = bn.fetch_bids(fid, cur)
     except UpstreamError:
         bids = []
 
     table = standings(meta)[1]
     teams = {r["team"]["id"]: r["team"] for r in table}
-    ids = {x["player"]["id"] for _, ts in raw for t in ts for side in ("offer", "request")
-           for x in ((t.get(side) or {}).get("players") or []) if x.get("player")}
-    ids |= {b["player"]["id"] for b in bids if b.get("player")}
+    ids = {pid for _, ts in raw for t in ts for side in ("offer", "request") for pid in t[side]["listed"]}
+    ids |= {b["playerId"] for b in bids}
     pmap = players_by_ids(meta, sorted(ids), meta["latestRound"], cur) if ids else {}
 
     start = meta["draft"].get("startingCredits") or 0
@@ -43,10 +37,10 @@ def transfers_payload(fid):
     moves = []
     for rnd, ts in raw:
         for t in ts:
-            offer, request = _transfer_side(t.get("offer"), teams, pmap), _transfer_side(t.get("request"), teams, pmap)
+            offer, request = _transfer_side(t["offer"], teams, pmap), _transfer_side(t["request"], teams, pmap)
             change = request["credits"] - offer["credits"]  # for the offering team; the other side gets -change
-            kind = "trade" if t.get("type") == "team" else "free_agent"
-            moves.append({"id": t["id"], "type": kind, "round": rnd, "at": t.get("updatedAt"),
+            kind = t["kind"]
+            moves.append({"id": t["id"], "type": kind, "round": rnd, "at": t["at"],
                           "offer": offer, "request": request, "creditChange": change})
             for side, delta in ((offer, change), (request, -change)):
                 row = summary.get((side["team"] or {}).get("id"))
@@ -61,9 +55,9 @@ def transfers_payload(fid):
         mine = [r["net"] for m in moves for tid, r in m.get("roi", {}).items() if tid == row["team"]["id"]]
         row["roi"] = round(sum(mine), 2) if roi and mine else None
 
-    upcoming = [{"player": player_brief(pmap.get(b["player"]["id"]), b["player"]["id"]),
-                 "highestBid": b.get("highestBid"), "totalBids": b.get("totalBids") or 0}
-                for b in bids if b.get("player")]
+    upcoming = [{"player": player_brief(pmap.get(b["playerId"]), b["playerId"]),
+                 "highestBid": b["highestBid"], "totalBids": b["totalBids"] or 0}
+                for b in bids]
     upcoming.sort(key=lambda b: (-b["totalBids"], -(b["highestBid"] or 0)))
     order = {r["team"]["id"]: r["position"] for r in table}
     return {

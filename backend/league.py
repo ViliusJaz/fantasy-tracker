@@ -5,87 +5,52 @@ from backend.errors import NotFound, UpstreamError
 from backend.i18n import L
 from backend.rounds import round_ttl
 from backend.scoring import _slot_sort_key, slot_label, slot_of
-from backend.sources.basketnews import (
-    Q_CLASSIC_STANDINGS, Q_FANTASY_LEAGUE, Q_H2H_STANDINGS, Q_LINEUPS, Q_SCHEDULE, Q_TEAMS, Q_TRANSFERS,
-    competitions, gql, owner_name, team_ref,
-)
+from backend.sources import basketnews as bn
 from backend.util import pool_map
 
 
 def league_meta(fid):
-    rec = gql(Q_FANTASY_LEAGUE, {"id": fid}, ttl=SETTLED_TTL)["fantasyLeagueRecordFromClient"]
+    """Everything the pages need to know about a league and its competition's calendar."""
+    rec = bn.fetch_league(fid)
     if not rec:
         raise NotFound(L("Lyga nerasta", "League not found"))
-    comp = competitions().get(rec["leagueId"])
+    comp = bn.fetch_competitions().get(rec["competitionId"])
     if not comp:
         raise UpstreamError(L("Nerasta lygos varžybų informacija", "Competition info not found"))
-    current = comp["currentFantasyRound"]
-    first = comp.get("startingFantasyRound") or 0
+    current = comp["currentRound"]
+    first = comp["firstRound"]
     # Round whose results are shown by default: the live one, or the last finished one.
     latest = current if comp["roundStarted"] else max(current - 1, first)
-    injury_url = ((comp.get("en") or {}).get("injuryReportUrl") or comp.get("injury_report_url")
-                  or (comp.get("translation") or {}).get("injuryReportUrl") or None)
     return {
         "id": rec["id"],
-        "title": rec["title"].strip(),
+        "title": rec["title"],
         "format": rec["format"],  # "head_to_head" | "classic"
-        "leagueId": rec["leagueId"],
-        "pointCalcSystem": rec.get("pointCalcSystem") or "modern",
-        "teamsCount": rec.get("fantasyTeamsCount"),
-        "commissioner": owner_name(rec.get("publicUser")),
-        "competition": L(comp["translation"]["name"], (comp.get("en") or {}).get("name") or comp["translation"]["name"]),
+        "leagueId": rec["competitionId"],
+        "pointCalcSystem": rec["pointCalcSystem"],
+        "teamsCount": rec["teamsCount"],
+        "commissioner": rec["commissioner"],
+        "competition": L(comp["name"]["lt"], comp["name"]["en"]),
         "currentRound": current,
         "roundStarted": comp["roundStarted"],
         "firstRound": first,
         "latestRound": latest,
         "totalRounds": comp["totalRounds"],
-        "injuryReportUrl": injury_url,
+        "injuryReportUrl": comp["injuryReportUrl"],
         # Free-agent bids and trades are processed when this lock next changes (3 h before a round).
-        "transferLock": comp.get("activeDraftTradeLock"),
-        "draft": {"date": rec.get("draftDate"), "order": rec.get("draftOrder"), "pickOrder": rec.get("pickOrder"),
-                  "tradingMethod": rec.get("draftTradingMethod"), "startingCredits": rec.get("draftStartingCredits")},
-        "bnLeagueId": comp.get("basketnewsApiLeagueId"),
-        "seasonYear": comp.get("seasonYear"),
+        "transferLock": comp["transferLock"],
+        "draft": rec["draft"],
+        "bnLeagueId": comp["bnLeagueId"],
+        "seasonYear": comp["seasonYear"],
         "url": f"https://fantasy.basketnews.com/fantasy-leagues/{fid}/leaderboards",
     }
 
 
 def fetch_standings_round(meta, rnd):
-    ttl = round_ttl(meta, rnd)
-    if meta["format"] == "head_to_head":
-        recs = gql(Q_H2H_STANDINGS, {"id": meta["id"], "round": rnd}, ttl)["allHeadToHeadScoreRecordsFromClient"]["records"]
-        return [
-            {
-                "team": team_ref(r["fantasyTeam"]),
-                "position": r["position"],
-                "positionGained": r.get("positionGained") or 0,
-                "wins": r["wins"],
-                "losses": r["losses"],
-                "ties": r["ties"],
-                "pointsTotal": (r.get("fantasyTeamScore") or {}).get("pointsTotal") or 0,
-                "pointsRound": (r.get("fantasyTeamScore") or {}).get("pointsGained") or 0,
-            }
-            for r in recs
-        ]
-    recs = gql(
-        Q_CLASSIC_STANDINGS, {"leagueId": meta["leagueId"], "id": meta["id"], "round": rnd}, ttl
-    )["allFantasyTeamScoreRecordsFromClient"]["records"]
-    return [
-        {
-            "team": team_ref(r["fantasyTeam"]),
-            "position": r["position"],
-            "positionGained": r.get("positionGained") or 0,
-            "roundPosition": r.get("roundPosition"),
-            "pointsTotal": r.get("pointsTotal") or 0,
-            "pointsRound": r.get("pointsGained") or 0,
-        }
-        for r in recs
-    ]
+    return bn.fetch_standings(meta, rnd, round_ttl(meta, rnd))
 
 
 def league_teams(meta):
-    recs = gql(Q_TEAMS, {"id": meta["id"]})["fantasyLeagueTeamsFromClient"]["records"]
-    return [team_ref(t) for t in recs]
+    return bn.fetch_teams(meta["id"])
 
 
 def standings(meta, rnd=None):
@@ -105,34 +70,18 @@ def standings(meta, rnd=None):
 
 
 def schedule(meta, rnd):
-    recs = gql(Q_SCHEDULE, {"id": meta["id"], "round": rnd}, round_ttl(meta, rnd))
-    out = []
-    for m in recs["allHeadToHeadScheduleRecordsFromClient"]["records"]:
-        out.append({
-            "id": m["id"],
-            "team1": team_ref(m["fantasyTeam1"]) if m.get("fantasyTeam1") else None,
-            "team2": team_ref(m["fantasyTeam2"]) if m.get("fantasyTeam2") else None,
-            "score1": m.get("fantasyTeam1ScorePoints") or 0,
-            "score2": m.get("fantasyTeam2ScorePoints") or 0,
-        })
-    return out
+    return bn.fetch_schedule(meta["id"], rnd, round_ttl(meta, rnd))
 
 
 def lineups(meta):
     """Current lineup of every team: {teamId: {round, formation, players: [{id, card, slot, captain}]}}.
     Every fetch is also queued for the history, so past rounds stay viewable after the API moves on."""
-    data = gql(Q_LINEUPS, {"id": meta["id"]})["draftLeagueFantasyTeamLineupsFromClient"]
     result = {}
-    for lineup in data:
-        entries = [
-            {"id": lp["player"]["id"], "card": lp["cardIdentifier"], "slot": slot_of(lp["cardIdentifier"]),
-             "captain": bool(lp.get("captain"))}
-            for lp in lineup["players"] if lp.get("player")
-        ]
+    for lineup in bn.fetch_lineups(meta["id"]):
+        entries = [{"id": p["id"], "card": p["card"], "slot": slot_of(p["card"]), "captain": p["captain"]}
+                   for p in lineup["players"]]
         entries.sort(key=_slot_sort_key)
-        result[lineup["fantasyTeamId"]] = {
-            "round": lineup["fantasyRound"], "formation": lineup.get("formation"), "players": entries,
-        }
+        result[lineup["teamId"]] = {"round": lineup["round"], "formation": lineup["formation"], "players": entries}
     history.observe_lineups(meta, result)
     return result
 
@@ -161,17 +110,15 @@ def owners(meta, rnd):
 
 
 def raw_transfers(meta):
-    """[(round, transfer)] as BasketNews lists them, oldest round first."""
+    """[(round, [transfer])] of every round so far, oldest first (see basketnews.fetch_transfers)."""
     cur = meta["currentRound"]
 
     def fetch(r):
-        ttl = LIVE_TTL if r >= cur else SETTLED_TTL
-        return r, gql(Q_TRANSFERS, {"fantasyLeagueId": meta["id"], "fantasyRound": r}, ttl=ttl)["draftTransfersFromClient"] or []
+        return r, bn.fetch_transfers(meta["id"], r, LIVE_TTL if r >= cur else SETTLED_TTL)
 
     return pool_map(fetch, list(range(meta["firstRound"], cur + 1)))
 
 
-def moved_players(item):
-    """Player ids that actually changed hands on one side of a transfer."""
-    listed = (item or {}).get("players") or []
-    return [x["player"]["id"] for x in ([x for x in listed if x.get("traded")] or listed) if x.get("player")]
+def moved_players(side):
+    """Player ids that changed hands on one side of a transfer."""
+    return [p["id"] for p in side["players"]]

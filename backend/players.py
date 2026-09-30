@@ -1,20 +1,13 @@
 """Every player of the competition as the tracker shows them, with usage % attached."""
-import re
-
-from backend.config import LOCALE
 from backend.rounds import round_ttl
 from backend.sources.advanced import adv_value, advanced_stats, link_advanced_rows
-from backend.sources.basketnews import PLAYER_FIELDS, Q_PLAYERS, gql, player_view
+from backend.sources import basketnews as bn
 
 
 def players(meta, stats_round, games_round):
     """Every player of the competition: {playerId: view}. Points are for `stats_round`,
     games are those of `games_round`."""
-    data = gql(Q_PLAYERS, {
-        "leagueId": meta["leagueId"], "locale": LOCALE, "statsRound": stats_round,
-        "gamesRound": games_round, "pcs": meta["pointCalcSystem"],
-    }, round_ttl(meta, min(stats_round, games_round)))
-    views = {p["id"]: player_view(p) for p in data["playersSearchRecordsFromClient"]["records"]}
+    views = bn.fetch_players(meta, stats_round, games_round, round_ttl(meta, min(stats_round, games_round)))
     attach_usage(meta, views, stats_round)
     mark_round_days(views)
     return views
@@ -69,15 +62,7 @@ def players_by_ids(meta, ids, stats_round, games_round):
     found = players(meta, stats_round, games_round)
     missing = [i for i in ids if i not in found]
     if missing:
-        fields = "\n".join(f'p{n}: playerRecordFromClient(id: "{pid}") {{ {PLAYER_FIELDS} }}'
-                           for n, pid in enumerate(missing) if re.fullmatch(r"[0-9a-f]{24}", pid))
-        query = ("query($leagueId: String!, $locale: String!, $statsRound: Int, $gamesRound: Int, $pcs: String) {"
-                 + fields + "}")
-        data = gql(query, {"leagueId": meta["leagueId"], "locale": LOCALE, "statsRound": stats_round,
-                           "gamesRound": games_round, "pcs": meta["pointCalcSystem"]})
-        for rec in data.values():
-            if rec:
-                found[rec["id"]] = player_view(rec)
+        found.update(bn.fetch_players_by_id(meta, missing, stats_round, games_round))
     if missing:
         mark_round_days(found)  # the directly fetched players need their round day too
     return found

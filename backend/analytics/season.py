@@ -120,9 +120,9 @@ def round_recap(meta, bd, team_names, positions_before):
         if r != rnd:
             continue
         for t in ts:
-            tid = ((t.get("offer") or {}).get("fantasyTeam") or {}).get("id")
-            if t.get("type") != "team" and tid:
-                signed += [(tid, pid) for pid in moved_players(t.get("request"))]
+            tid = (t["offer"]["team"] or {}).get("id")
+            if t["kind"] != "trade" and tid:
+                signed += [(tid, pid) for pid in moved_players(t["request"])]
     if signed:
         pts_now = {v["id"]: (v.get("roundPts"), v["name"]) for v in players(meta, rnd, rnd).values()}
         scored = [(pts_now.get(pid, (None, "?")), tid) for tid, pid in signed if pts_now.get(pid, (None,))[0] is not None]

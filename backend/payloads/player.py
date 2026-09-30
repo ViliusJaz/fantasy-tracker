@@ -1,14 +1,13 @@
 """/api/league/<id>/player/<player id>: the player card, and the Proballers redirect."""
 from backend import pipeline
 from backend.advanced import advanced_profile, league_averages
-from backend.config import LOCALE
 from backend.errors import NotFound
 from backend.i18n import L
 from backend.injuries import _day, build_injury_history, injury_report, injury_view, loc_comment, loc_reason
 from backend.league import league_meta, lineups, standings
 from backend.players import players
 from backend.proballers import proballers_target
-from backend.sources.basketnews import player_rounds_query, game_view, gql, player_view, stat_line
+from backend.sources import basketnews as bn
 from backend.sources.injury_report import dnp_reason
 
 
@@ -16,12 +15,10 @@ def proballers_redirect(fid, player_id):
     meta = league_meta(fid)
     info = players(meta, meta["latestRound"], meta["currentRound"]).get(player_id)
     if not info:
-        data = gql(player_rounds_query([]), {"id": player_id, "leagueId": meta["leagueId"], "locale": LOCALE,
-                                              "pcs": meta["pointCalcSystem"], "statsRound": meta["latestRound"],
-                                              "gamesRound": meta["currentRound"]})["playerRecordFromClient"]
-        if not data:
+        found = bn.fetch_player_rounds(meta, player_id, [])
+        if not found:
             raise NotFound(L("Žaidėjas nerastas", "Player not found"))
-        info = player_view(data)
+        info = found[0]
     return proballers_target(info)
 
 
@@ -29,24 +26,18 @@ def player_payload(fid, player_id):
     meta = league_meta(fid)
     last = meta["latestRound"]
     rounds = list(range(meta["firstRound"], last + 1))
-    data = gql(player_rounds_query(rounds), {
-        "id": player_id, "leagueId": meta["leagueId"], "locale": LOCALE, "pcs": meta["pointCalcSystem"],
-        "statsRound": last, "gamesRound": meta["currentRound"],
-    })["playerRecordFromClient"]
-    if not data:
+    found = bn.fetch_player_rounds(meta, player_id, rounds)
+    if not found:
         raise NotFound(L("Žaidėjas nerastas", "Player not found"))
-    info = player_view(data)
+    info, per_round = found
 
     game_log = []
-    for r in rounds:
-        club = ((data.get(f"r{r}_tm") or {}).get("team")) or {}
-        games = [game_view(g, club["id"]) for g in club.get("games") or []] if club else []
-        st = data.get(f"r{r}_st")
-        played = bool(st and st.get("s_gp"))
-        row = {"round": r, "games": games, "date": _day(games[0]["at"]) if games else None,
-               "fp": data.get(f"r{r}_pts"), "club": club.get("abbreviation")}
-        if played:
-            row.update(status="played", line=stat_line(st))
+    for rr in per_round:
+        games = rr["games"]
+        row = {"round": rr["round"], "games": games, "date": _day(games[0]["at"]) if games else None,
+               "fp": rr["fp"], "club": rr["club"]}
+        if rr["line"]:
+            row.update(status="played", line=rr["line"])
         elif not games:
             row["status"] = "no-game"
         elif all(g["completed"] or g["canceled"] for g in games):

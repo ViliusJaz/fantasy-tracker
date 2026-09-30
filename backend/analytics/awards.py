@@ -1,9 +1,8 @@
 """Award cards for the season records page: round awards, season "Oscars", draft awards, records."""
-from backend.config import SETTLED_TTL
 from backend.i18n import L, LANG
 from backend.league import lineups, moved_players, owners, raw_transfers
 from backend.players import players, players_by_ids
-from backend.sources.basketnews import Q_DRAFT, gql
+from backend.sources import basketnews as bn
 from backend.util import num
 
 
@@ -174,12 +173,11 @@ def best_transfer(with_lineups, team_names):
 
 def draft_awards(meta, finished, team_names):
     """Awards about the draft and the moves since: busts, steals, drops and roster value."""
-    rec = gql(Q_DRAFT, {"id": meta["id"]}, ttl=SETTLED_TTL)["fantasyLeagueRecordFromClient"] or {}
-    picks = [p for p in sorted(((rec.get("draft") or {}).get("picks") or []), key=lambda p: p["id"]) if p.get("player")]
+    picks = [p for p in bn.fetch_draft_picks(meta["id"]) if p["playerId"]]
     if not picks or not finished:
         return []
     per_round = len(team_names) or 8
-    drafted = {p["player"]["id"]: (i + 1, p["fantasyTeamId"]) for i, p in enumerate(picks)}
+    drafted = {p["playerId"]: (i + 1, p["teamId"]) for i, p in enumerate(picks)}
     pmap = players_by_ids(meta, list(drafted), meta["latestRound"], meta["currentRound"])
     avg = lambda pid: (pmap.get(pid) or {}).get("avgPts") or 0  # noqa: E731
     games = lambda pid: (pmap.get(pid) or {}).get("gamesPlayed") or 0  # noqa: E731
@@ -194,15 +192,15 @@ def draft_awards(meta, finished, team_names):
     early = picks[:3 * per_round]
     round_avg = {}
     for i, p in enumerate(early):
-        round_avg.setdefault(i // per_round, []).append(avg(p["player"]["id"]))
-    busts = [(sum(round_avg[i // per_round]) / len(round_avg[i // per_round]) - avg(p["player"]["id"]), i, p)
+        round_avg.setdefault(i // per_round, []).append(avg(p["playerId"]))
+    busts = [(sum(round_avg[i // per_round]) / len(round_avg[i // per_round]) - avg(p["playerId"]), i, p)
              for i, p in enumerate(early)]
     gap, i, p = max(busts, key=lambda x: x[0])
-    pid = p["player"]["id"]
+    pid = p["playerId"]
     expected = gap + avg(pid)
     cards.append(award(
         L("Didžiausias nusivylimas", "Biggest bust"), name(pid), f"{num(avg(pid))} FP",
-        f"{pick_word(i + 1)} ({team(p['fantasyTeamId'])}) · {L('rato vidurkis', 'round average')} {num(round(expected, 1))}",
+        f"{pick_word(i + 1)} ({team(p['teamId'])}) · {L('rato vidurkis', 'round average')} {num(round(expected, 1))}",
         "📉", player_id=pid,
         info=L("Iš pirmųjų trijų drafto ratų: žaidėjas, kurio vidutiniai FP labiausiai atsilieka nuo to paties "
                "drafto rato pasirinkimų vidurkio. Dar nežaidę skaičiuojami kaip 0.",
@@ -226,9 +224,9 @@ def draft_awards(meta, finished, team_names):
     drops = []
     for rnd, ts in raw_transfers(meta):
         for t in ts:
-            tid = ((t.get("offer") or {}).get("fantasyTeam") or {}).get("id")
-            if t.get("type") != "team" and tid:
-                drops += [(rnd, t.get("updatedAt") or "", tid, pid) for pid in moved_players(t.get("offer"))]
+            tid = (t["offer"]["team"] or {}).get("id")
+            if t["kind"] != "trade" and tid:
+                drops += [(rnd, t["at"] or "", tid, pid) for pid in moved_players(t["offer"])]
     none_yet = L("atsiras po pirmųjų išmetimų", "appears after the first drops")
     before = lambda r: L(f"prieš {r + 1} turą", f"before round {r + 1}")  # noqa: E731
     drop_titles = (L("Geriausias išmestas", "Best player who was dropped"),

@@ -1,13 +1,14 @@
 """BasketNews Fantasy GraphQL API: the queries, the client with its cache, and the adapters that
 turn raw records into the tracker's player / game / team dicts."""
 import json
+import re
 import threading
 import time
 import urllib.request
 from concurrent.futures import Future
 
 from backend import net
-from backend.config import BROWSER_UA, LIVE_TTL, LOCALE
+from backend.config import BROWSER_UA, LIVE_TTL, LOCALE, SETTLED_TTL
 from backend.errors import UpstreamError
 from backend.i18n import L
 
@@ -198,10 +199,6 @@ def team_ref(team):
     return {"id": team["id"], "title": team["title"], "owner": owner_name(team.get("publicUser"))}
 
 
-def competitions():
-    return {c["id"]: c for c in gql(Q_COMPETITIONS, {"locale": LOCALE})["allLeagueRecordsFromClient"]}
-
-
 def game_view(game, club_id):
     home = game["team1"]["team"]["id"] == club_id
     me, opp = (game["team1"], game["team2"]) if home else (game["team2"], game["team1"])
@@ -308,3 +305,196 @@ query($fantasyLeagueId: String!, $fantasyRound: Int!) {
     player { id } highestBid totalBids
   }
 }"""
+
+
+# --------------------------------------------------------------------------- fetchers
+# Everything below returns the tracker's own records. Nothing outside this module reads
+# BasketNews field names, so a renamed field upstream is fixed here only.
+
+def fetch_competitions():
+    """{competitionId: {currentRound, roundStarted, firstRound, totalRounds, name: {lt, en}, ...}}."""
+    out = {}
+    for c in gql(Q_COMPETITIONS, {"locale": LOCALE})["allLeagueRecordsFromClient"]:
+        lt, en = c["translation"], c.get("en") or {}
+        out[c["id"]] = {
+            "currentRound": c["currentFantasyRound"],
+            "roundStarted": c["roundStarted"],
+            "firstRound": c.get("startingFantasyRound") or 0,
+            "totalRounds": c["totalRounds"],
+            "name": {"lt": lt["name"], "en": en.get("name") or lt["name"]},
+            # the English report is the one the parser and the translations are made for
+            "injuryReportUrl": (en.get("injuryReportUrl") or c.get("injury_report_url")
+                                or lt.get("injuryReportUrl") or None),
+            "transferLock": c.get("activeDraftTradeLock"),
+            "bnLeagueId": c.get("basketnewsApiLeagueId"),
+            "seasonYear": c.get("seasonYear"),
+        }
+    return out
+
+
+def fetch_league(fid):
+    """A fantasy league's settings, or None when BasketNews does not know it."""
+    rec = gql(Q_FANTASY_LEAGUE, {"id": fid}, ttl=SETTLED_TTL)["fantasyLeagueRecordFromClient"]
+    if not rec:
+        return None
+    return {
+        "id": rec["id"],
+        "title": rec["title"].strip(),
+        "format": rec["format"],  # "head_to_head" | "classic"
+        "competitionId": rec["leagueId"],
+        "pointCalcSystem": rec.get("pointCalcSystem") or "modern",
+        "teamsCount": rec.get("fantasyTeamsCount"),
+        "commissioner": owner_name(rec.get("publicUser")),
+        "draft": {"date": rec.get("draftDate"), "order": rec.get("draftOrder"), "pickOrder": rec.get("pickOrder"),
+                  "tradingMethod": rec.get("draftTradingMethod"), "startingCredits": rec.get("draftStartingCredits")},
+    }
+
+
+def fetch_standings(meta, rnd, ttl):
+    """Table after round `rnd`: [{team, position, positionGained, (wins, losses, ties | roundPosition),
+    pointsTotal, pointsRound}]; empty when the round has not been scored."""
+    if meta["format"] == "head_to_head":
+        recs = gql(Q_H2H_STANDINGS, {"id": meta["id"], "round": rnd}, ttl)["allHeadToHeadScoreRecordsFromClient"]["records"]
+        return [
+            {
+                "team": team_ref(r["fantasyTeam"]),
+                "position": r["position"],
+                "positionGained": r.get("positionGained") or 0,
+                "wins": r["wins"],
+                "losses": r["losses"],
+                "ties": r["ties"],
+                "pointsTotal": (r.get("fantasyTeamScore") or {}).get("pointsTotal") or 0,
+                "pointsRound": (r.get("fantasyTeamScore") or {}).get("pointsGained") or 0,
+            }
+            for r in recs
+        ]
+    recs = gql(
+        Q_CLASSIC_STANDINGS, {"leagueId": meta["leagueId"], "id": meta["id"], "round": rnd}, ttl
+    )["allFantasyTeamScoreRecordsFromClient"]["records"]
+    return [
+        {
+            "team": team_ref(r["fantasyTeam"]),
+            "position": r["position"],
+            "positionGained": r.get("positionGained") or 0,
+            "roundPosition": r.get("roundPosition"),
+            "pointsTotal": r.get("pointsTotal") or 0,
+            "pointsRound": r.get("pointsGained") or 0,
+        }
+        for r in recs
+    ]
+
+
+def fetch_teams(fid):
+    return [team_ref(t) for t in gql(Q_TEAMS, {"id": fid})["fantasyLeagueTeamsFromClient"]["records"]]
+
+
+def fetch_schedule(fid, rnd, ttl):
+    """Head-to-head matchups of a round: [{id, team1, team2, score1, score2}] (a team may be None)."""
+    recs = gql(Q_SCHEDULE, {"id": fid, "round": rnd}, ttl)
+    return [
+        {
+            "id": m["id"],
+            "team1": team_ref(m["fantasyTeam1"]) if m.get("fantasyTeam1") else None,
+            "team2": team_ref(m["fantasyTeam2"]) if m.get("fantasyTeam2") else None,
+            "score1": m.get("fantasyTeam1ScorePoints") or 0,
+            "score2": m.get("fantasyTeam2ScorePoints") or 0,
+        }
+        for m in recs["allHeadToHeadScheduleRecordsFromClient"]["records"]
+    ]
+
+
+def fetch_lineups(fid):
+    """Current lineup of every team: [{teamId, round, formation, players: [{id, card, captain}]}]."""
+    return [
+        {
+            "teamId": lu["fantasyTeamId"],
+            "round": lu["fantasyRound"],
+            "formation": lu.get("formation"),
+            "players": [{"id": lp["player"]["id"], "card": lp["cardIdentifier"], "captain": bool(lp.get("captain"))}
+                        for lp in lu["players"] if lp.get("player")],
+        }
+        for lu in gql(Q_LINEUPS, {"id": fid})["draftLeagueFantasyTeamLineupsFromClient"]
+    ]
+
+
+def _transfer_side(item):
+    item = item or {}
+    team = item.get("fantasyTeam") or {}
+    listed = item.get("players") or []
+    moved = [x for x in listed if x.get("traded")] or listed  # without flags, everybody listed moves
+    return {
+        "team": {"id": team["id"], "title": team.get("title")} if team.get("id") else None,
+        "players": [{"id": x["player"]["id"],
+                     "name": f"{x['player'].get('firstName') or ''} {x['player'].get('lastName') or ''}".strip()}
+                    for x in moved if x.get("player")],
+        "listed": [x["player"]["id"] for x in listed if x.get("player")],
+        "credits": item.get("credits") or 0,
+    }
+
+
+def fetch_transfers(fid, rnd, ttl):
+    """Processed moves of a round: [{id, kind: "trade" | "free_agent", at, offer, request}]. The offer
+    is the team that proposed (for a signing: the team, the players it dropped and its bid); each
+    side is {team, players (who changed hands), listed (everyone named), credits}."""
+    recs = gql(Q_TRANSFERS, {"fantasyLeagueId": fid, "fantasyRound": rnd}, ttl=ttl)["draftTransfersFromClient"] or []
+    return [{"id": t["id"], "kind": "trade" if t.get("type") == "team" else "free_agent", "at": t.get("updatedAt"),
+             "offer": _transfer_side(t.get("offer")), "request": _transfer_side(t.get("request"))} for t in recs]
+
+
+def fetch_bids(fid, rnd):
+    """Public free-agent bids for a round: [{playerId, highestBid, totalBids}] (who bid stays private)."""
+    recs = gql(Q_BID_SUMMARY, {"fantasyLeagueId": fid, "fantasyRound": rnd})["draftFreeAgentBidsSummaryFromClient"] or []
+    return [{"playerId": b["player"]["id"], "highestBid": b.get("highestBid"), "totalBids": b.get("totalBids")}
+            for b in recs if b.get("player")]
+
+
+def fetch_draft_picks(fid):
+    """Every draft pick in order: [{id, teamId, playerId (None for an empty pick)}]."""
+    rec = gql(Q_DRAFT, {"id": fid}, ttl=SETTLED_TTL)["fantasyLeagueRecordFromClient"] or {}
+    picks = sorted(((rec.get("draft") or {}).get("picks") or []), key=lambda p: p["id"])
+    return [{"id": p["id"], "teamId": p["fantasyTeamId"], "playerId": (p.get("player") or {}).get("id")}
+            for p in picks]
+
+
+def _player_vars(meta, stats_round, games_round):
+    return {"leagueId": meta["leagueId"], "locale": LOCALE, "statsRound": stats_round,
+            "gamesRound": games_round, "pcs": meta["pointCalcSystem"]}
+
+
+def fetch_players(meta, stats_round, games_round, ttl):
+    """Every player of the competition: {playerId: player_view}. Points and box score are for
+    `stats_round`, games are those of `games_round`."""
+    data = gql(Q_PLAYERS, _player_vars(meta, stats_round, games_round), ttl)
+    return {p["id"]: player_view(p) for p in data["playersSearchRecordsFromClient"]["records"]}
+
+
+def fetch_players_by_id(meta, ids, stats_round, games_round):
+    """Players looked up one by one (the search list leaves some rostered players out)."""
+    fields = "\n".join(f'p{n}: playerRecordFromClient(id: "{pid}") {{ {PLAYER_FIELDS} }}'
+                       for n, pid in enumerate(ids) if re.fullmatch(r"[0-9a-f]{24}", pid))
+    query = ("query($leagueId: String!, $locale: String!, $statsRound: Int, $gamesRound: Int, $pcs: String) {"
+             + fields + "}")
+    data = gql(query, _player_vars(meta, stats_round, games_round))
+    return {rec["id"]: player_view(rec) for rec in data.values() if rec}
+
+
+def fetch_player_rounds(meta, player_id, rounds):
+    """One player with a line per round: (player_view, [{round, club, games, fp, line}]), or None.
+    `line` is the round's box score, None when the player did not play."""
+    data = gql(player_rounds_query(rounds), {
+        "id": player_id, "leagueId": meta["leagueId"], "locale": LOCALE, "pcs": meta["pointCalcSystem"],
+        "statsRound": meta["latestRound"], "gamesRound": meta["currentRound"],
+    })["playerRecordFromClient"]
+    if not data:
+        return None
+    per_round = []
+    for r in rounds:
+        club = ((data.get(f"r{r}_tm") or {}).get("team")) or {}
+        per_round.append({
+            "round": r,
+            "club": club.get("abbreviation"),
+            "games": [game_view(g, club["id"]) for g in club.get("games") or []] if club else [],
+            "fp": data.get(f"r{r}_pts"),
+            "line": stat_line(data.get(f"r{r}_st")),
+        })
+    return player_view(data), per_round
