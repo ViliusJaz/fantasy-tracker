@@ -1,5 +1,6 @@
 """BasketNews advanced statistics (basketnews.com/advanced-stats): player rows per season or round,
 and team ratings with the strengths / weaknesses summaries."""
+import json
 import threading
 import time
 import urllib.parse
@@ -57,6 +58,8 @@ def _load_player_rows(meta, key, rnd, hit):
     keep = _keep(meta, rnd)
     try:
         payload = cache.get(stored_key) if keep else None
+        if payload is not None:  # a snapshot of this build should still contain it
+            net.remember("POST", ADV_URL, req.data, json.dumps(payload).encode())
         if payload is None:
             payload = net.fetch(req, "advanced-stats", as_json=True)
             if keep:

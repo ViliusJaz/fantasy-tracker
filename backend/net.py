@@ -54,6 +54,15 @@ def _ssl_context():
 SSL_CTX = _ssl_context()
 
 
+RECORDER = None  # set by backend/storage/snapshots.py while a build is being recorded
+
+
+def remember(method, url, data, body, status=200, content_type=None):
+    """Hand an answer to the snapshot recorder, if one is running (also used for cache hits)."""
+    if RECORDER is not None:
+        RECORDER(method, url, data, body, status, content_type)
+
+
 class FetchError(Exception):
     """A request that failed for good (after any retries). `status` is the HTTP code, if any."""
 
@@ -156,6 +165,7 @@ def fetch(req, source, timeout=30, as_json=False):
                 with urllib.request.urlopen(req, context=SSL_CTX, timeout=timeout) as resp:
                     raw = resp.read()
                     encoding = resp.headers.get("Content-Encoding")
+                    status, content_type = getattr(resp, "status", 200), resp.headers.get("Content-Type")
             body = gzip.decompress(raw) if encoding == "gzip" else raw
             if as_json:
                 try:
@@ -182,6 +192,10 @@ def fetch(req, source, timeout=30, as_json=False):
         with _lock:
             src.failed_in_row = 0
             src.stats["bytes"] += len(raw)
+        if isinstance(req, str):
+            remember("GET", url, None, body, status, content_type)
+        else:
+            remember(req.get_method(), url, req.data, body, status, content_type)
         return data if as_json else body
     raise AssertionError("unreachable")
 

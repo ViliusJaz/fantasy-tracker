@@ -137,11 +137,12 @@ def graphql(recording):
     return find
 
 
-def run_replay(out, *extra, root=ROOT):
-    """Offline export of the recording into `out`; returns the replay report."""
-    cmd = [sys.executable, str(TOOLS / "replay_export.py"), "replay", str(RECORDING), str(out), "--root", str(root), *extra]
+def run_replay(out, *extra, root=ROOT, recording=RECORDING, env=None):
+    """Offline export of a recording into `out`; returns the replay report."""
+    cmd = [sys.executable, str(TOOLS / "replay_export.py"), "replay", str(recording), str(out), "--root", str(root),
+           *extra]
     proc = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=600,
-                          env={**os.environ, "PYTHONIOENCODING": "utf-8"})
+                          env={**os.environ, "PYTHONIOENCODING": "utf-8", **(env or {})})
     assert proc.returncode == 0, proc.stdout[-3000:] + proc.stderr[-3000:]
     report = json.loads((out / "report.json").read_text())
     report["log"] = proc.stdout

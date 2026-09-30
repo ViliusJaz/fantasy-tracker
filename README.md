@@ -58,6 +58,12 @@ serveris, kas 10 min. išsaugoma:
 - `data/injuries.json` – traumų epizodai (kada žaidėjas atsirado sąraše, statuso ir
   komentarų pokyčiai, kada pasveiko). Kartu su praleistais turais iš statistikos iš to
   sudaroma žaidėjo traumų istorija.
+- `data/archive/` – kiekvieno pasibaigusio turo galutinė kopija: visų žaidėjų statistika ir FP,
+  rungtynės, pažangi statistika, lygų lentelės, mačai, perėjimai, draftas (~40 KB turui).
+
+Vietinis `var/` (necommit'inamas): `health.json`, nuolatinis kešas `cache.sqlite`, SQLite indeksas
+`tracker.sqlite` (`python3 -m backend.storage status`) ir paskutinių paleidimų kopijos
+`snapshots/live/` (tik Mac). Kas, kur ir kiek laikoma – [docs/DATA.md](docs/DATA.md).
 
 
 

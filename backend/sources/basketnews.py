@@ -51,6 +51,8 @@ def gql(query, variables, ttl=LIVE_TTL, keep=0):
 
     def load():
         data = cache.get(key) if keep else None
+        if data is not None:  # a snapshot of this build should still contain it
+            net.remember("POST", GRAPHQL_URL, _body(query, variables), json.dumps({"data": data}).encode())
         if data is None:
             data = _post(query, variables)
             if keep:
@@ -61,8 +63,12 @@ def gql(query, variables, ttl=LIVE_TTL, keep=0):
     return _flights.do(key, load)
 
 
+def _body(query, variables):
+    return json.dumps({"query": query, "variables": variables}).encode()
+
+
 def _post(query, variables):
-    body = json.dumps({"query": query, "variables": variables}).encode()
+    body = _body(query, variables)
     req = urllib.request.Request(
         GRAPHQL_URL,
         data=body,

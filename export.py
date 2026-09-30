@@ -18,6 +18,7 @@ import hashlib
 import json
 import os
 import shutil
+import sqlite3
 import sys
 import threading
 import time
@@ -42,6 +43,7 @@ from backend.payloads.transfers import transfers_payload
 from backend.players import players
 from backend.proballers import proballers_search, proballers_target
 from backend.sources import basketnews
+from backend.storage import archive, db, ingest, snapshots
 from backend.util import read_json
 
 OUT = config.SITE_DIR
@@ -222,6 +224,21 @@ def copy_page():
     (BUILD / ".nojekyll").write_text("")
 
 
+def store_history(metas):
+    """STORAGE: archive finished rounds (data/archive) and refresh the SQLite index."""
+    written = archive.save_finished_rounds(metas)
+    log.get("storage").info("archive: %d file(s) written", len(written))
+    try:
+        conn = db.connect()
+        try:
+            loaded = ingest.refresh(conn)
+        finally:
+            conn.close()
+        log.get("storage").info("SQLite index: %d file(s) loaded, %d rows", loaded["files"], loaded["rows"])
+    except sqlite3.Error as exc:  # the index is a convenience: never fail a build over it
+        log.get("storage").warning("SQLite index not updated: %s", exc)
+
+
 def swap_in():
     """Replace site/ with the finished build in one step (a failed build never touches it)."""
     old = OUT.with_name(OUT.name + ".old")
@@ -237,6 +254,7 @@ def main():
     started, started_at = time.time(), clock.now().astimezone().isoformat(timespec="seconds")
     previous = health.load(config.VAR_DIR / "health.json", OUT / "api" / "health.json")
     cache.prune()
+    recording = snapshots.start()
     base = health.baseline(previous)
     report = validation.Report()
     leagues = []
@@ -262,6 +280,8 @@ def main():
         (BUILD / "api" / "meta.json").write_text(json.dumps({"generatedAt": GENERATED}), encoding="utf-8")
         validation.check_pages(report, written, len(failures), base.get("pages"),
                                examples=[f"{rel} ({why})" for rel, why in failures[:3]])
+        if not report.fatal:
+            store_history([lg["meta"] for lg in leagues])
     else:
         history.discard()  # nothing from a failed build becomes history
 
@@ -276,6 +296,10 @@ def main():
     if missing:
         LOG.info("%d injury comment(s) without a Lithuanian translation, e.g. %s", len(missing), missing[0])
 
+    snap = snapshots.save(recording)
+    if snap:
+        log.get("storage").info("snapshot of this build: %s", snap.relative_to(config.ROOT) if
+                                snap.is_relative_to(config.ROOT) else snap)
     ok = not report.fatal
     doc = health.document(
         previous, ok=ok, started=started_at, duration=time.time() - started, requests=requests, report=report,
