@@ -196,6 +196,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "DNP in Round 2 (back injury)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T16:54+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "DNP in Round 2 (back injury)"
             }
           ]
         }
@@ -1405,6 +1412,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (undisclosed)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T16:54+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Undisclosed injury (DNP in Round 1)"
             }
           ]
         }
@@ -3064,7 +3078,27 @@
       ],
       "name": "Jasiel Rivero",
       "club": "Valencia Basket"
+    },
+    "21024": {
+      "episodes": [
+        {
+          "start": "2026-09-30",
+          "end": null,
+          "lastSeen": "2026-09-30",
+          "updates": [
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T16:54+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Personal reasons"
+            }
+          ]
+        }
+      ],
+      "name": "John Dibartolomeo",
+      "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-09-30T10:34:42"
+  "updatedAt": "2026-09-30T16:54:22"
 }
