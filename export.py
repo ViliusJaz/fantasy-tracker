@@ -31,6 +31,7 @@ from backend.i18n import LANG
 from backend.league import league_meta, lineups, standings
 from backend.rounds import round_state
 from backend.payloads.analytics import analytics_payload
+from backend.payloads.defenses import defenses_payload
 from backend.payloads.draft import draft_payload
 from backend.payloads.games import games_payload
 from backend.payloads.injuries import injuries_payload
@@ -187,6 +188,7 @@ def export_league(league):
             (file_name(f"{base}/draft", None, lang), lambda: draft_payload(fid)),
             (file_name(f"{base}/transfers", None, lang), lambda: transfers_payload(fid)),
             (file_name(f"{base}/injuries", None, lang), lambda: injuries_payload(fid)),
+            (file_name(f"{base}/defenses", None, lang), lambda: defenses_payload(fid)),
         ]
         for r in range(first, latest + 1):
             jobs.append((file_name(f"{base}/standings", r, lang), lambda r=r: standings_payload(fid, r)))

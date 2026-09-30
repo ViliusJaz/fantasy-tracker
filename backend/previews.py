@@ -45,20 +45,31 @@ def club_team_ids(clubs, teams):
     return out
 
 
-def club_defense_ranks(meta):
-    """Where every club's defense ranks (defensive rating, BasketNews team stats; 1 = the best)
-    and how many clubs are ranked: ({abbr: rank}, n). Empty when the team stats are unavailable."""
+def defense_table(meta):
+    """Every club by defense (defensive rating: points allowed per 100 possessions, BasketNews
+    team stats; rank 1 = the best): ([{abbr, name, logo, rank, value}], clubs ranked)."""
     teams = team_advanced(meta)
     if not teams:
-        return {}, 0
+        return [], 0
     clubs = {v["club"]["abbr"]: v["club"] for v in players(meta, meta["latestRound"], meta["currentRound"]).values()
              if v["club"]}
-    ranks = {}
-    for abbr, tid in club_team_ids(clubs, teams).items():
-        rank = teams[tid]["stats"]["drtg"]["rank"]
-        if rank:
-            ranks[abbr] = rank
-    return ranks, len(teams)
+    abbr_of = {tid: abbr for abbr, tid in club_team_ids(clubs, teams).items()}
+    rows = []
+    for tid, team in teams.items():
+        d = team["stats"]["drtg"]
+        if not d["rank"]:
+            continue
+        club = clubs.get(abbr_of.get(tid)) or {}
+        rows.append({"abbr": abbr_of.get(tid), "name": L(club.get("fullName"), club.get("nameEn")) or team["name"],
+                     "logo": club.get("logo"), "rank": d["rank"], "value": d["value"]})
+    rows.sort(key=lambda r: r["rank"])
+    return rows, len(teams)
+
+
+def club_defense_ranks(meta):
+    """{club abbr: defense rank} (see defense_table) and how many clubs are ranked."""
+    rows, n = defense_table(meta)
+    return {r["abbr"]: r["rank"] for r in rows if r["abbr"]}, n
 
 
 def preview_context(meta, rnd, pmap, own):

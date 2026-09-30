@@ -29,6 +29,7 @@ SCHEMA = {
                              "nextGames", "shooting", "defense"}],
 }
 SCHEMA["league/ID/players"] = SCHEMA["league/ID/free-agents"]
+SCHEMA["league/ID/defenses"] = [{"league", "teams", "top", "rows"}]
 SCHEMA["league/ID/analytics"] = [{"league", "basedOn", "teams", "rivalries", "draft", "transfers", "records"}]
 SCHEMA["health.json"] = [{"version", "status", "lastAttempt", "lastSuccessfulUpdate", "buildDurationSeconds",
                           "basketnewsRequests", "failedRequests", "playersProcessed", "pagesGenerated",
@@ -64,7 +65,7 @@ def test_every_page_the_site_needs_is_there(replayed):
         assert f"leagues.{lang}.json" in files
         for fid in (HLA, CLASSIC):
             for name in ("standings", "rounds", "games", "records", "free-agents", "players", "draft", "transfers",
-                         "injuries", "analytics"):
+                         "injuries", "analytics", "defenses"):
                 assert f"league/{fid}/{name}.{lang}.json" in files
             league = json.loads(files[f"league/{fid}/standings.{lang}.json"].read_text())["league"]
             for r in range(league["firstRound"], league["totalRounds"]):
@@ -115,6 +116,16 @@ def test_player_games_carry_the_opponents_defensive_rank(replayed):
     ranks = {g["opponent"]: g["oppDefRank"] for row in doc["gameLog"] for g in row["games"]}
     assert ranks and all(r is None or 1 <= r <= 20 for r in ranks.values())
     assert any(r is not None for r in ranks.values())
+
+
+def test_defense_ranking(replayed):
+    out, _ = replayed
+    doc = json.loads(api_files(out)[f"league/{HLA}/defenses.lt.json"].read_text())
+    assert doc["teams"] == 20 and doc["top"] == 10
+    assert [r["rank"] for r in doc["rows"]] == list(range(1, 21))
+    assert all(r["abbr"] and r["name"] for r in doc["rows"])
+    values = [r["value"] for r in doc["rows"]]
+    assert values == sorted(values)  # rank 1 allows the fewest points
 
 
 def test_index_page_is_static_and_cache_busted(replayed):

@@ -155,6 +155,12 @@ const I18N = {
     defTip: "Vidutiniai fantasy taškai rungtynėse prieš komandas, kurių gynyba (praleisti taškai per 100 atakų) šiuo metu yra {a}–{b} vietoje. Skaičiuojami turai su vienomis rungtynėmis.",
     defNone: "Dar nežaidė prieš šias komandas",
     defDiffNote: "Mažesni skaičiai: skirtumas nuo kitos grupės.",
+    defShow: "Rodyti gynybas",
+    defHide: "Slėpti gynybas",
+    defListTop: "{n} geriausių gynybų",
+    defListBottom: "{n} prasčiausių gynybų",
+    defRating: "Gynybos reitingas: {v} praleistų taškų per 100 atakų",
+    defFaced: "Šio žaidėjo vid. FP prieš juos ({n} rungt.)",
     draftAwardsTitle: "Draftas ir perėjimai",
     rebSplitHead: "G/P",
     rebSplitTip: "Mažesni skaičiai: gynyboje / puolime",
@@ -495,6 +501,12 @@ const I18N = {
     defTip: "Average fantasy points in games against teams whose defense (points allowed per 100 possessions) currently ranks {a}-{b}. Only rounds with one game count.",
     defNone: "No games against these teams yet",
     defDiffNote: "Small numbers: difference from the other group.",
+    defShow: "Show defenses",
+    defHide: "Hide defenses",
+    defListTop: "The {n} best defenses",
+    defListBottom: "The {n} worst defenses",
+    defRating: "Defensive rating: {v} points allowed per 100 possessions",
+    defFaced: "This player's average FP against them ({n} gm)",
     draftAwardsTitle: "Draft and moves",
     rebSplitHead: "D/O",
     rebSplitTip: "Small numbers: defensive / offensive",
@@ -2636,11 +2648,52 @@ function defenseSection(data, d) {
     return `<div class="tile" data-tip="${esc(`${label}\n${t("defTip", { a, b })}`)}"><div class="label">${label}</div>
       <div class="value">${value}</div><div class="sub dim">${x.games ? t("defGames", { n: x.games }) : t("defNone")}</div></div>`;
   };
-  return `<h3 class="section-title">${t("defTitle")} <span class="dim small">${t("defSub", { n })}</span></h3>
+  return `<div class="def-block"><h3 class="section-title def-head">${t("defTitle")} <span class="dim small">${t("defSub", { n })}</span>
+      <button type="button" class="mini-btn" data-defenses aria-expanded="false">${t("defShow")}</button></h3>
+    <div class="def-list" hidden></div>
     <div class="tiles compact def-split">
       ${tile(t("defTop", { n: top }), d.strong, d.weak, 1, top)}
       ${tile(t("defBottom", { n: n - top }), d.weak, d.strong, top + 1, n)}
-    </div>${both ? `<p class="note diff-note">${t("defDiffNote")}</p>` : ""}`;
+    </div>${both ? `<p class="note diff-note">${t("defDiffNote")}</p>` : ""}</div>`;
+}
+
+// The clubs behind the split: best and worst half by defensive rating, with the player's FP against each.
+function defenseLists(d, data) {
+  const vs = {};
+  for (const g of data.gameLog) {
+    if (g.status === "played" && g.games.length === 1) (vs[g.games[0].opponent] ||= []).push(g.fp ?? 0);
+  }
+  const row = (r) => {
+    const fp = r.abbr && vs[r.abbr];
+    const avg = fp ? fp.reduce((a, b) => a + b, 0) / fp.length : null;
+    return `<li class="def-row"><span class="def-rank">${r.rank}</span>${clubMini(r)}<span class="def-name">${esc(r.name)}</span>
+      ${fp ? `<span class="def-fp" data-tip="${esc(t("defFaced", { n: fp.length }))}">${fmt1(avg)} FP</span>` : ""}
+      <span class="def-val dim" data-tip="${esc(t("defRating", { v: fmt1(r.value) }))}">${fmt1(r.value)}</span></li>`;
+  };
+  const top = d.rows.filter((r) => r.rank <= d.top), bottom = d.rows.filter((r) => r.rank > d.top);
+  return `<div class="def-cols">
+    <div><h4>${t("defListTop", { n: d.top })}</h4><ol class="def-ol">${top.map(row).join("")}</ol></div>
+    <div><h4>${t("defListBottom", { n: d.teams - d.top })}</h4><ol class="def-ol">${bottom.map(row).join("")}</ol></div>
+  </div>`;
+}
+
+async function toggleDefenses(btn) {
+  const box = btn.closest(".def-block").querySelector(".def-list");
+  const open = box.hidden;
+  box.hidden = !open;
+  btn.setAttribute("aria-expanded", String(open));
+  btn.textContent = t(open ? "defHide" : "defShow");
+  if (!open || box.dataset.loaded) return;
+  const data = currentPlayer;
+  box.innerHTML = `<div class="dim small">${t("loading")}</div>`;
+  try {
+    const d = await api(`/api/league/${data.league.id}/defenses`);
+    if (data !== currentPlayer) return;
+    box.innerHTML = defenseLists(d, data);
+    box.dataset.loaded = "1";
+  } catch (e) {
+    box.innerHTML = stateBox(e.message, true);
+  }
 }
 
 function shotDiff(x, y) {
@@ -2761,6 +2814,11 @@ modal.addEventListener("click", (e) => {
       b.classList.toggle("on", b === split);
       b.setAttribute("aria-pressed", String(b === split));
     });
+    return;
+  }
+  const defenses = e.target.closest("[data-defenses]");
+  if (defenses) {
+    toggleDefenses(defenses);
     return;
   }
   const info = e.target.closest("[data-info]");

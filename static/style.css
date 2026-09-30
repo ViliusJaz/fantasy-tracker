@@ -775,6 +775,20 @@ table.box { min-width: 1100px; }
 #pv-split .tiles.compact { margin-top: 12px; }
 .tiles.compact.def-split { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
 .tile .sub { font-size: 12.5px; margin-top: 2px; }
+.def-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+.mini-btn { margin-left: auto; align-self: center; font: inherit; font-size: 12.5px; font-weight: 500; color: var(--accent);
+  background: transparent; border: 1px solid var(--border); border-radius: 999px; padding: 3px 11px; cursor: pointer; }
+.mini-btn:hover, .mini-btn[aria-expanded="true"] { border-color: var(--accent); }
+.def-list { margin: 10px 0 4px; }
+.def-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.def-cols h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--text-2); }
+.def-ol { list-style: none; margin: 0; padding: 6px 10px; background: var(--surface-2); border-radius: var(--r-md); }
+.def-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 13.5px; }
+.def-row + .def-row { border-top: 1px solid var(--border); }
+.def-rank { width: 18px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+.def-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.def-fp { font-size: 12px; font-weight: 600; color: var(--accent); }
+.def-val { font-variant-numeric: tabular-nums; font-size: 12.5px; }
 #pv-split > .note { margin: 12px 0 0; }
 
 /* Home / away: difference to the other side. */
