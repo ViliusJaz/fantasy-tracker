@@ -8,8 +8,10 @@ server. Like the server's background thread it also records lineups and injury
 changes in ./data. publish.sh runs this every 15 minutes on the Mac (BasketNews
 refuses GitHub's servers), commits ./data and publishes ./site to GitHub Pages.
 
-Exits with an error (and the previous site stays online) when BasketNews could
-not be reached for most of the pages.
+Every build is checked before anything is stored or published (backend/validation.py).
+A build that fails the checks exits with an error, leaves ./site as it was (the new one
+is built in ./site.new) and records why in var/health.json; publish.sh then publishes
+nothing and the previous site stays online. A good build also writes site/api/health.json.
 """
 import contextvars
 import hashlib
@@ -22,7 +24,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 
-from backend import config, injuries, log, net, pipeline
+from backend import clock, config, health, history, injuries, log, net, pipeline, validation
 from backend.errors import NotFound, UpstreamError
 from backend.i18n import LANG
 from backend.league import league_meta, lineups, standings
@@ -43,6 +45,7 @@ from backend.sources import basketnews
 from backend.util import read_json
 
 OUT = config.SITE_DIR
+BUILD = OUT.with_name(OUT.name + ".new")  # built here, moved to OUT only when the build is good
 LANGS = ("lt", "en")
 RUN_TTL = 3 * 60 * 60        # one run fetches everything once
 # new Wikidata lookups per run; the rest wait for the next runs
@@ -78,10 +81,10 @@ def job(rel, build):
         payload = build()
     except (UpstreamError, NotFound, ValueError, KeyError, TypeError) as exc:
         with _write_lock:
-            failures.append(rel)
+            failures.append((rel, f"{type(exc).__name__}: {exc}"))
         LOG.warning("%s not written: %s", rel, exc)
         return
-    path = OUT / "api" / rel
+    path = BUILD / "api" / rel
     path.parent.mkdir(parents=True, exist_ok=True)
     # No timestamp inside: a file whose data did not change stays byte-identical, so the
     # upload only carries what changed. The run time goes to api/meta.json.
@@ -134,27 +137,38 @@ def player_file(fid, pid):
     return payload
 
 
-def export_league(entry):
+def prepare_league(entry, report, base):
+    """FETCH and VALIDATION for one league: what its pages need. Upstream errors propagate."""
     fid = entry["id"]
     meta = league_meta(fid)
+    validation.check_meta(report, meta, base)
+    with log.timed() as took:
+        shown, rows = standings(meta)
+        teams = [r["team"]["id"] for r in rows]
+        pmap = players(meta, meta["latestRound"], meta["currentRound"])
+        current = lineups(meta)
+        rostered = {p["id"] for lu in current.values() for p in lu["players"]}
+        player_ids = sorted(set(pmap) | rostered)
+        prefetch_players(meta, player_ids)
+        pipeline.observe(meta)
+    log.get("fetch").info("%s: round %d of %d (%s), %d teams, %d players, %.1fs", meta["title"],
+                          meta["currentRound"] + 1, meta["totalRounds"], round_state(meta, meta["currentRound"]),
+                          len(teams), len(player_ids), took())
+    validation.check_standings(report, meta, shown, rows, base)
+    validation.check_players(report, meta, pmap, base)
+    validation.check_lineups(report, meta, current, teams)
+    return {"meta": meta, "teams": teams, "playerIds": player_ids,
+            "metrics": validation.league_metrics(meta, shown, rows, pmap)}
+
+
+def export_league(league):
+    """EXPORT: every page of one league, in both languages."""
+    meta, teams, player_ids = league["meta"], league["teams"], league["playerIds"]
+    fid = meta["id"]
     first, cur, latest = meta["firstRound"], meta["currentRound"], meta["latestRound"]
     finished = list(range(first, cur))
     h2h = meta["format"] == "head_to_head"
     base = f"league/{fid}"
-
-    with log.timed() as took:
-        teams = [r["team"]["id"] for r in standings(meta)[1]]
-        pmap = players(meta, latest, cur)
-        rostered = {p["id"] for lu in lineups(meta).values() for p in lu["players"]}
-        player_ids = sorted(set(pmap) | rostered)
-        prefetch_players(meta, player_ids)
-        pipeline.observe(meta)
-    log.get("fetch").info("%s: round %d of %d (%s), %d teams, %d players, %.1fs", meta["title"], cur + 1,
-                          meta["totalRounds"], round_state(meta, cur), len(teams), len(player_ids), took())
-    changed = pipeline.store()
-    log.get("storage").info("lineups changed in %d file(s), injury log %s", changed["lineups"],
-                            "updated" if changed["injuries"] else "unchanged")
-
     pages = 0
     started = time.monotonic()
 
@@ -192,47 +206,88 @@ def export_league(entry):
 
 
 def copy_page():
-    if OUT.exists():
-        shutil.rmtree(OUT)
-    shutil.copytree(config.STATIC_DIR, OUT)
-    index = OUT / "index.html"
+    if BUILD.exists():
+        shutil.rmtree(BUILD)
+    shutil.copytree(config.STATIC_DIR, BUILD)
+    index = BUILD / "index.html"
     html = index.read_text(encoding="utf-8")
     # Tells app.js to read the JSON files instead of calling the server.
     html = html.replace("<head>", '<head>\n  <meta name="ft-static" content="1">', 1)
     # GitHub Pages lets browsers keep files for 10 minutes: a content hash in the URL makes
     # a normal reload pick up a new version right away.
     for name in ("app.js", "style.css", "fonts/fonts.css"):
-        digest = hashlib.sha1((OUT / name).read_bytes()).hexdigest()[:10]
+        digest = hashlib.sha1((BUILD / name).read_bytes()).hexdigest()[:10]
         html = html.replace(f'"{name}"', f'"{name}?v={digest}"')
     index.write_text(html, encoding="utf-8")
-    (OUT / ".nojekyll").write_text("")
+    (BUILD / ".nojekyll").write_text("")
+
+
+def swap_in():
+    """Replace site/ with the finished build in one step (a failed build never touches it)."""
+    old = OUT.with_name(OUT.name + ".old")
+    shutil.rmtree(old, ignore_errors=True)
+    if OUT.exists():
+        OUT.rename(old)
+    BUILD.rename(OUT)
+    shutil.rmtree(old, ignore_errors=True)
 
 
 def main():
     log.setup()
-    started = time.time()
-    copy_page()
-    entries = config.load_config()
-    for entry in entries:
+    started, started_at = time.time(), clock.now().astimezone().isoformat(timespec="seconds")
+    previous = health.load(config.VAR_DIR / "health.json", OUT / "api" / "health.json")
+    base = health.baseline(previous)
+    report = validation.Report()
+    leagues = []
+
+    for entry in config.load_config():
         try:
-            export_league(entry)
+            leagues.append(prepare_league(entry, report, (base.get("leagues") or {}).get(entry["id"])))
         except (UpstreamError, NotFound) as exc:
-            failures.append(entry["id"])
-            log.get("fetch").error("league %s failed: %s", entry["id"], exc)
-    for lang in LANGS:
-        LANG.set(lang)
-        job(file_name("leagues", None, lang), leagues_payload)
-    (OUT / "api" / "meta.json").write_text(json.dumps({"generatedAt": GENERATED}), encoding="utf-8")
-    for source, st in sorted(net.stats().items()):
+            report.add(validation.FATAL, f"league {entry.get('title') or entry['id']}", "unavailable", str(exc))
+        if report.fatal:
+            break
+
+    if not report.fatal:
+        changed = pipeline.store(report)
+        log.get("storage").info("lineups changed in %d file(s), injury log %s", changed["lineups"],
+                                "updated" if changed["injuries"] else "unchanged")
+        copy_page()
+        for league in leagues:
+            export_league(league)
+        for lang in LANGS:
+            LANG.set(lang)
+            job(file_name("leagues", None, lang), leagues_payload)
+        (BUILD / "api" / "meta.json").write_text(json.dumps({"generatedAt": GENERATED}), encoding="utf-8")
+        validation.check_pages(report, written, len(failures), base.get("pages"),
+                               examples=[f"{rel} ({why})" for rel, why in failures[:3]])
+    else:
+        history.discard()  # nothing from a failed build becomes history
+
+    requests = net.stats()
+    for source, st in sorted(requests.items()):
         log.get("fetch").info("%s: %d requests, %d retried, %d failed, %.2f MB", source, st["requests"],
                               st["retries"], st["failures"], st["bytes"] / 1e6)
     missing = injuries.untranslated()
     if missing:
         LOG.info("%d injury comment(s) without a Lithuanian translation, e.g. %s", len(missing), missing[0])
-    log.get("build").info("%d files, %d failed, %.1fs", written, len(failures), time.time() - started)
-    if not written or len(failures) > 0.2 * (written + len(failures)):
-        log.get("build").error("too many pages failed; keeping the previous site")
-        sys.exit("Too many pages failed; keeping the previous site.")
+
+    ok = not report.fatal
+    doc = health.document(
+        previous, ok=ok, started=started_at, duration=time.time() - started, requests=requests, report=report,
+        sources=health.source_status(requests, report, injuries.state()),
+        players=max((len(lg["playerIds"]) for lg in leagues), default=0), pages=written, failed_pages=len(failures),
+        metrics={"pages": written, "leagues": {lg["meta"]["id"]: lg["metrics"] for lg in leagues}})
+    health.write(doc, config.VAR_DIR / "health.json", *([BUILD / "api" / "health.json"] if ok else []))
+    summary = report.summary()
+    if not ok:
+        shutil.rmtree(BUILD, ignore_errors=True)
+        log.get("build").error("FAILED after %.1fs: %d fatal, %d error(s), %d warning(s); keeping the previous site",
+                               time.time() - started, summary["fatal"], summary["errors"], summary["warnings"])
+        sys.exit("Build failed validation; keeping the previous site.")
+    swap_in()
+    log.get("build").info("%s: %d files, %d failed, %d error(s), %d warning(s), %.1fs", doc["status"], written,
+                          len(failures), summary["errors"], summary["warnings"], time.time() - started)
 
 
 if __name__ == "__main__":

@@ -5,12 +5,12 @@ import re
 import threading
 import time
 import urllib.request
-from concurrent.futures import Future
 
-from backend import net
+from backend import log, net
 from backend.config import BROWSER_UA, LIVE_TTL, LOCALE, SETTLED_TTL
 from backend.errors import UpstreamError
 from backend.i18n import L
+from backend.util import SingleFlight
 
 
 GRAPHQL_URL = "https://fantasy.basketnews.com/backend/graphql"
@@ -20,7 +20,8 @@ LOGO_URL = "https://fantasy.basketnews.com/backend/api/storage/file/"
 _cache = {}
 
 _cache_lock = threading.Lock()
-_in_flight = {}  # cache key -> Future of the request being made for it
+_flights = SingleFlight()
+LOG = log.get("fetch")
 
 # When set (export.py does), every answer is kept this long, whatever its usual cache time:
 # one export run reads each thing once and all its pages agree with each other.
@@ -46,23 +47,13 @@ def gql(query, variables, ttl=LIVE_TTL):
         hit = _cache.get(key)
         if hit and hit[0] > time.time():
             return hit[1]
-        waiting = _in_flight.get(key)
-        if waiting is None:
-            _in_flight[key] = mine = Future()
-    if waiting is not None:
-        return waiting.result()
-    try:
+
+    def load():
         data = _post(query, variables)
-    except BaseException as exc:
-        mine.set_exception(exc)
-        raise
-    finally:
         with _cache_lock:
-            _in_flight.pop(key, None)
-    with _cache_lock:
-        _cache[key] = (time.time() + ttl, data)
-    mine.set_result(data)
-    return data
+            _cache[key] = (time.time() + ttl, data)
+        return data
+    return _flights.do(key, load)
 
 
 def _post(query, variables):
@@ -78,13 +69,18 @@ def _post(query, variables):
                  # compressed answers are several times smaller (matters on mobile data)
                  "Accept-Encoding": "gzip"},
     )
-    try:
-        payload = net.fetch(req, "basketnews", timeout=25, as_json=True)
-    except net.FetchError as exc:
-        raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
-    if payload.get("errors"):
-        raise UpstreamError(payload["errors"][0].get("message", L("GraphQL klaida", "GraphQL error")))
-    return payload["data"]
+    for attempt in (1, 2):
+        try:
+            payload = net.fetch(req, "basketnews", timeout=25, as_json=True)
+        except net.FetchError as exc:
+            raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
+        if not payload.get("errors"):
+            return payload["data"]
+        message = payload["errors"][0].get("message") or L("GraphQL klaida", "GraphQL error")
+        if attempt == 1:  # BasketNews sometimes answers a query with an internal error once
+            LOG.info("basketnews: GraphQL error %r, asking once more", message)
+            time.sleep(0 if net.NO_WAIT else 1)
+    raise UpstreamError(message)
 
 
 Q_COMPETITIONS = """

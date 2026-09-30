@@ -1,4 +1,6 @@
 site/
+site.new/
+site.old/
 __pycache__/
 *.pyc
 .DS_Store

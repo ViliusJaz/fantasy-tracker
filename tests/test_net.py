@@ -144,9 +144,19 @@ def test_a_success_resets_the_failure_count(server):
 
 
 def test_graphql_errors_become_upstream_errors(ft, monkeypatch):
-    monkeypatch.setattr(ft, "fetch", lambda *a, **k: {"errors": [{"message": "bad field"}]})
+    calls = []
+    monkeypatch.setattr(ft, "NO_WAIT", True)
+    monkeypatch.setattr(ft, "fetch", lambda *a, **k: calls.append(1) or {"errors": [{"message": "bad field"}]})
     with pytest.raises(ft.UpstreamError, match="bad field"):
         ft.gql("query { x }", {})
+    assert len(calls) == 2  # asked once more before giving up
+
+
+def test_a_one_off_graphql_error_is_asked_again(ft, monkeypatch):
+    answers = [{"errors": [{"message": "Internal server error"}]}, {"data": {"ok": 1}}]
+    monkeypatch.setattr(ft, "NO_WAIT", True)
+    monkeypatch.setattr(ft, "fetch", lambda *a, **k: answers.pop(0))
+    assert ft.gql("query { z }", {}) == {"ok": 1}
     def down(*a, **k):
         raise net.FetchError("HTTP 503")
     monkeypatch.setattr(ft, "fetch", down)

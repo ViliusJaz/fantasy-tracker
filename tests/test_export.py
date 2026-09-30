@@ -29,6 +29,9 @@ SCHEMA = {
                              "nextGames", "shooting"}],
 }
 SCHEMA["league/ID/players"] = SCHEMA["league/ID/free-agents"]
+SCHEMA["health.json"] = [{"version", "status", "lastAttempt", "lastSuccessfulUpdate", "buildDurationSeconds",
+                          "basketnewsRequests", "failedRequests", "playersProcessed", "pagesGenerated",
+                          "validationWarnings", "validationErrors", "sourceStatus", "lastSuccess", "lastFailure"}]
 
 META_KEYS = {"id", "title", "format", "leagueId", "pointCalcSystem", "teamsCount", "commissioner", "competition",
              "currentRound", "roundStarted", "firstRound", "latestRound", "totalRounds", "injuryReportUrl",
@@ -116,38 +119,89 @@ def test_all_json_is_compact_and_valid(replayed):
     for rel, path in api_files(out).items():
         text = path.read_text(encoding="utf-8")
         json.loads(text)
-        assert "\n" not in text, rel
+        assert "\n" not in text or rel == "health.json", rel  # health.json is meant to be read by people
 
 
-# ---------------------------------------------------------------- failures
+# ---------------------------------------------------------------- health and failures
+
+def health(out):
+    return json.loads((out / "var" / "health.json").read_text())
+
+
+def test_health_of_a_good_build(replayed):
+    out, _ = replayed
+    doc = json.loads((out / "site" / "api" / "health.json").read_text())
+    assert doc == health(out)
+    assert doc["status"] == "healthy" and doc["lastSuccessfulUpdate"] == doc["lastAttempt"]
+    assert doc["lastAttempt"].startswith("2026-09-30T12:59:55")  # the recording's (frozen) time
+    assert doc["pagesGenerated"] == len(api_files(out)) - 2        # all but meta.json and health.json
+    assert doc["playersProcessed"] > 250 and doc["basketnewsRequests"] > 50 and doc["failedRequests"] == 0
+    assert doc["sourceStatus"] == {"basketnews": "ok", "injuries": "ok", "advancedStats": "ok"}
+    assert doc["lastFailure"] is None
+    metrics = doc["lastSuccess"]["metrics"]
+    assert set(metrics["leagues"]) == {HLA, CLASSIC} and metrics["pages"] == doc["pagesGenerated"]
+    assert "token" not in json.dumps(doc).lower()
+
 
 def open_episodes(text):
     players = json.loads(text)["players"]
     return sorted(bn for bn, p in players.items() if p["episodes"] and p["episodes"][-1]["end"] is None)
 
 
-def test_injury_report_down_leaves_history_untouched(tmp_path, recording):
-    report = run_replay(tmp_path / "out", "--fail", "injury-report")
+def test_injury_report_down_leaves_history_untouched_and_shows_the_last_known_list(tmp_path, recording):
+    out = tmp_path / "out"
+    report = run_replay(out, "--fail", "injury-report")
     assert report["exitCode"] == 0  # the site can still be built without it
-    after = (tmp_path / "out" / "state" / "data" / "injuries.json").read_text()
+    after = (out / "state" / "data" / "injuries.json").read_text()
     assert after == recording["files"]["data/injuries.json"]
+    injured = [p for p in json.loads((out / "site" / "api" / f"league/{HLA}/players.en.json").read_text())["players"]
+               if p["injury"]]
+    assert len(injured) >= len(open_episodes(after)) * 0.8  # not "nobody is injured"
+    doc = health(out)
+    assert doc["status"] == "degraded" and doc["sourceStatus"]["injuries"] == "stale"
 
 
 def test_advanced_stats_down_still_builds_every_page(tmp_path):
-    report = run_replay(tmp_path / "out", "--fail", "advanced-stats")
+    out = tmp_path / "out"
+    report = run_replay(out, "--fail", "advanced-stats")
     assert report["exitCode"] == 0
-    assert len(api_files(tmp_path / "out")) > 1600
+    assert len(api_files(out)) > 1600
+    assert health(out)["sourceStatus"]["advancedStats"] == "failed"
 
 
-@pytest.mark.xfail(strict=True, reason="fixed by validation (phase 3): a failed league is published as missing")
-def test_failed_league_is_not_published(tmp_path):
-    report = run_replay(tmp_path / "out", "--fail", HLA)
+def test_failed_league_is_not_published(tmp_path, recording):
+    out = tmp_path / "out"
+    report = run_replay(out, "--fail", HLA)
     assert report["exitCode"] != 0
+    assert not (out / "site").exists()                       # nothing to publish
+    for name in ("data/lineups/6aa6bddec90ec6ddaf50d152.json", "data/lineups/6aa7fe67c95ed14589bf170d.json",
+                 "data/injuries.json"):
+        assert (out / "state" / name).read_text() == recording["files"][name]  # no history from a failed build
+    doc = health(out)
+    assert doc["status"] == "failed" and doc["lastFailure"]["validation"]["fatal"] >= 1
+    assert "unavailable" in json.dumps(doc["lastFailure"]["validation"]["issues"])
 
 
-@pytest.mark.xfail(strict=True, reason="fixed by validation (phase 3): an unreadable report closes every injury")
+def test_a_failed_build_keeps_the_previous_site(tmp_path):
+    out = tmp_path / "out"
+    run_replay(out)
+    before = {p: p.read_bytes() for p in (out / "site").rglob("*") if p.is_file()}
+    good = health(out)
+    report = run_replay(out, "--keep", "--fail", "playersSearchRecordsFromClient")
+    assert report["exitCode"] != 0
+    assert {p: p.read_bytes() for p in (out / "site").rglob("*") if p.is_file()} == before
+    doc = health(out)
+    assert doc["status"] == "failed"
+    assert doc["lastSuccessfulUpdate"] == good["lastSuccessfulUpdate"]   # the last good build is remembered
+    assert doc["lastSuccess"] == good["lastSuccess"] and doc["lastFailure"]["status"] == "failed"
+
+
 def test_unreadable_injury_page_does_not_close_injuries(tmp_path, recording):
-    run_replay(tmp_path / "out", "--blank", "injury-report")
+    out = tmp_path / "out"
+    report = run_replay(out, "--blank", "injury-report")
+    assert report["exitCode"] == 0
     before = open_episodes(recording["files"]["data/injuries.json"])
-    after = open_episodes((tmp_path / "out" / "state" / "data" / "injuries.json").read_text())
+    after = open_episodes((out / "state" / "data" / "injuries.json").read_text())
     assert before and after == before
+    doc = health(out)
+    assert doc["status"] == "degraded" and doc["validationErrors"] >= 1

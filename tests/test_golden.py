@@ -1,8 +1,8 @@
 """Golden output: the offline export of the recording must stay byte-for-byte the same.
 
 tests/golden/recording-r1.sha256 lists a hash of every file the export writes under
-site/api and of data/ + leagues.json after the run. A refactor that should not change
-behaviour must keep this test green. When a change is meant to alter the output, check the
+site/api (except health.json, whose build times differ) and of data/ + leagues.json after
+the run. A refactor that should not change behaviour must keep this test green. When a change is meant to alter the output, check the
 differences (python3 tools/compare_site.py) and regenerate the list with:
 
     UPDATE_GOLDEN=1 python3 -m pytest tests/test_golden.py
@@ -20,7 +20,7 @@ def manifest(out):
     rows = {}
     for base in ("site/api", "state"):
         for path in sorted((out / base).rglob("*")):
-            if path.is_file():
+            if path.is_file() and path.name != "health.json":  # build times differ run to run
                 rows[str(path.relative_to(out))] = hashlib.sha256(path.read_bytes()).hexdigest()
     return rows
 

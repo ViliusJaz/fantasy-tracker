@@ -78,6 +78,23 @@ serveris, kas 10 min. išsaugoma:
 
 `FT_DATA_DIR`, `FT_LEAGUES_FILE`, `FT_SITE_DIR` leidžia nukreipti `data/`, `leagues.json` ir `site/` kitur (taip daro testai).
 
+## Patikimumas
+
+- **Tinklas** (`backend/net.py`): kartojama tik tai, kas po akimirkos gali pavykti (HTTP 429, 5xx,
+  laiko limitas, nutrūkęs ryšys, laikina DNS klaida) – po 1 s ir 2 s su atsitiktiniu nuokrypiu,
+  gerbiant `Retry-After`. 403, 404 ar HTML puslapis vietoj JSON nekartojami. Vienu metu – ne daugiau
+  kaip 6 užklausos į vieną šaltinį; po 6 nesėkmių iš eilės šaltinis 2 min. nebeklausiamas. Vienodos
+  lygiagrečios užklausos sujungiamos į vieną.
+- **Patikra prieš publikavimą** (`backend/validation.py`): WARNING – tik užrašoma; ERROR – to šaltinio
+  nauji duomenys neįrašomi į istoriją, puslapiai naudoja paskutinius gerus (pvz. neperskaitytas traumų
+  sąrašas pakeičiamas traumų žurnalo duomenimis), svetainė publikuojama kaip „degraded“; FATAL –
+  niekas neįrašoma ir nepublikuojama, internete lieka ankstesnė svetainė. Lyginama su protingomis
+  ribomis ir su paskutiniu sėkmingu to paties sezono paleidimu.
+- **Svetainė statoma `site.new/`** ir tik sėkmės atveju pakeičia `site/`.
+- **`site/api/health.json`** (ir `var/health.json`): būsena (`healthy` / `degraded` / `failed`),
+  paskutinio bandymo ir paskutinio sėkmingo atnaujinimo laikas, trukmė, užklausų ir klaidų skaičiai,
+  žaidėjų ir puslapių skaičiai, patikros pastabos, kiekvieno šaltinio būsena.
+
 ## Testai
 
 ```bash

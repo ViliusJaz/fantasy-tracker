@@ -8,15 +8,18 @@ import urllib.request
 from backend import log, net
 from backend.config import BROWSER_UA
 from backend.i18n import LANG
+from backend.util import SingleFlight
 
 
 LOG = log.get("fetch")
+_flights = SingleFlight()
 
 ADV_URL = "https://basketnews.com/advanced-stats/team-profile/players.json"
 
 _adv_cache = {}
 
 _adv_lock = threading.Lock()
+_link_lock = threading.RLock()
 
 
 def advanced_stats(meta, rnd=None):
@@ -32,6 +35,11 @@ def advanced_stats(meta, rnd=None):
         hit = _adv_cache.get(key)
         if hit and hit[0] > time.time():
             return hit[1]
+    return _flights.do(("players",) + key, lambda: _load_player_rows(meta, key, rnd, hit))
+
+
+def _load_player_rows(meta, key, rnd, hit):
+    league, season = key[0], key[1]
     form = {"league_id": league, "season": season}
     if rnd is not None:
         form.update(sequence_from=rnd + 1, sequence_to=rnd + 1)
@@ -68,29 +76,32 @@ def link_advanced_rows(table, views, line_key, games=lambda v: v["gamesPlayed"] 
     """BasketNews' advanced stats list a few players under a different id than the fantasy
     game. Pair each such row with the player missing one by identical box-score totals and
     add the player's id as a second key for the same row."""
-    claimed = {str(v["bnId"]) for v in views.values() if v.get("bnId")}
-    free = {k: r for k, r in table.items() if k not in claimed}
-    for v in views.values():
-        bn, line, gp = str(v.get("bnId") or ""), v.get(line_key), games(v)
-        if not free or not bn or bn in table or not line or not gp:
-            continue
-        def same(r):
-            near = lambda key, total, tol: abs((adv_value(r, key) or 0) - total) <= tol  # noqa: E731
-            return (near("points", line["pts"] * gp, 0.6 * gp) and near("rebounds", line["reb"] * gp, 0.6 * gp)
-                    and near("assists", line["ast"] * gp, 0.6 * gp) and near("time_played", line["min"] * 60 * gp, 90 * gp))
-        matches = [k for k, r in free.items() if same(r)]
-        if len(matches) == 1:
-            table[bn] = free.pop(matches[0])
+    with _link_lock:  # tables are shared between threads
+        claimed = {str(v["bnId"]) for v in views.values() if v.get("bnId")}
+        free = {k: r for k, r in table.items() if k not in claimed}
+        for v in views.values():
+            bn, line, gp = str(v.get("bnId") or ""), v.get(line_key), games(v)
+            if not free or not bn or bn in table or not line or not gp:
+                continue
+            def same(r):
+                near = lambda key, total, tol: abs((adv_value(r, key) or 0) - total) <= tol  # noqa: E731
+                return (near("points", line["pts"] * gp, 0.6 * gp) and near("rebounds", line["reb"] * gp, 0.6 * gp)
+                        and near("assists", line["ast"] * gp, 0.6 * gp) and near("time_played", line["min"] * 60 * gp, 90 * gp))
+            matches = [k for k, r in free.items() if same(r)]
+            if len(matches) == 1:
+                table[bn] = free.pop(matches[0])
 
 
 def unique_rows(table):
     """Advanced rows without the alias keys added by link_advanced_rows."""
-    return list({id(r): r for r in table.values()}.values())
+    with _link_lock:
+        return list({id(r): r for r in table.values()}.values())
 
 
 TEAM_ADV_URL = "https://basketnews.com/advanced-stats/team-profile/overview.json"
 
 _team_adv_cache = {}
+_team_raw_cache = {}
 
 # BasketNews team stat -> (our key, "higher is better")
 TEAM_STATS = [
@@ -100,6 +111,21 @@ TEAM_STATS = [
     ("offensive_rebound_percentage", "oreb", True), ("defensive_rebound_percentage", "dreb", True),
     ("assist_percentage", "ast", True), ("turnover_percentage", "tov", False),
 ]
+
+
+def _team_overview(league, season):
+    """The raw overview answer (the same for both languages), cached for an hour."""
+    hit = _team_raw_cache.get((league, season))
+    if hit and hit[0] > time.time():
+        return hit[1]
+    req = urllib.request.Request(
+        TEAM_ADV_URL, data=urllib.parse.urlencode({"league_id": league, "season": season}).encode(),
+        headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
+                 "Content-Type": "application/x-www-form-urlencoded", "Accept-Encoding": "gzip",
+                 "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
+    data = net.fetch(req, "advanced-stats", as_json=True).get("data") or {}
+    _team_raw_cache[(league, season)] = (time.time() + 3600, data)
+    return data
 
 
 def team_advanced(meta):
@@ -112,13 +138,8 @@ def team_advanced(meta):
     hit = _team_adv_cache.get(key)
     if hit and hit[0] > time.time():
         return hit[1]
-    req = urllib.request.Request(
-        TEAM_ADV_URL, data=urllib.parse.urlencode({"league_id": league, "season": season}).encode(),
-        headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
-                 "Content-Type": "application/x-www-form-urlencoded", "Accept-Encoding": "gzip",
-                 "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
     try:
-        data = net.fetch(req, "advanced-stats", as_json=True).get("data") or {}
+        data = _flights.do(("teams", league, season), lambda: _team_overview(league, season))
     except net.FetchError as exc:
         LOG.warning("team advanced stats unavailable: %s", exc)
         return hit[1] if hit else {}

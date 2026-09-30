@@ -8,7 +8,8 @@ record  copies data/ and leagues.json to a temporary folder, runs a real export 
 replay  rebuilds the export offline into OUT_DIR/site, with OUT_DIR/state holding data/ and
         leagues.json after the run and OUT_DIR/report.json the exit code and any requests
         the recording did not have. --fail makes matching requests answer HTTP 503, --blank
-        an empty page (both match a regex against the URL or the request body).
+        an empty page (both match a regex against the URL or the request body). --keep
+        leaves the site and var/ of an earlier replay in OUT_DIR (a build on top of it).
 
 --root picks which copy of the code runs (default: this repository), so two versions can
 be compared on the same inputs. The clock is frozen at the recording time, the time zone
@@ -53,7 +54,8 @@ def run_export(root, state, site):
     sys.path.insert(0, str(root))
     os.chdir(root)
     os.environ.update(FT_DATA_DIR=str(state / "data"), FT_LEAGUES_FILE=str(state / "leagues.json"),
-                      FT_SITE_DIR=str(site), FT_PROBALLERS_LOOKUPS="0")
+                      FT_SITE_DIR=str(site), FT_VAR_DIR=str(site.parent / "var"), FT_PROBALLERS_LOOKUPS="0",
+                      FT_DEVICE="replay")
     if not (root / "backend").is_dir():  # code from before the backend package: patch its globals
         import server as s
         s.DATA_DIR = state / "data"
@@ -96,9 +98,10 @@ def record(args, root):
 def replay_run(args, root):
     doc = replay.load(args.recording)
     out = Path(args.out).resolve()
-    if out.exists():
+    if out.exists() and not args.keep:
         shutil.rmtree(out)
     state = out / "state"
+    shutil.rmtree(state, ignore_errors=True)
     write_files(state, doc["files"])
     (state / "data").mkdir(parents=True, exist_ok=True)
     replay.freeze_clock(doc["recordedAt"])
@@ -125,6 +128,7 @@ def main():
     p.add_argument("--root")
     p.add_argument("--fail", action="append", default=[])
     p.add_argument("--blank", action="append", default=[])
+    p.add_argument("--keep", action="store_true", help="keep OUT_DIR/site and var from an earlier replay")
     args = parser.parse_args()
     args.recording = str(Path(args.recording).resolve())
     root = Path(args.root).resolve() if args.root else HERE.parent

@@ -1,7 +1,8 @@
 """Paths, upstream constants and the tracked leagues (leagues.json).
 
-The data folder, leagues.json and the export folder can be moved with the FT_DATA_DIR,
-FT_LEAGUES_FILE and FT_SITE_DIR environment variables (tests and offline replays use this).
+The data folder, leagues.json, the export folder and the local state folder can be moved
+with FT_DATA_DIR, FT_LEAGUES_FILE, FT_SITE_DIR and FT_VAR_DIR (tests and offline replays do).
+data/ is committed (the history); var/ stays on the device (health, caches, snapshots).
 Code reads the paths as config.X at call time, so set_data_dir() moves all of them.
 """
 import os
@@ -15,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 STATIC_DIR = ROOT / "static"
 LEAGUES_FILE = Path(os.environ.get("FT_LEAGUES_FILE") or ROOT / "leagues.json")
 SITE_DIR = Path(os.environ.get("FT_SITE_DIR") or ROOT / "site")
+VAR_DIR = Path(os.environ.get("FT_VAR_DIR") or ROOT / "var")
 BROWSER_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
               "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
 LOCALE = "lt"

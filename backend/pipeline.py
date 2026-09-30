@@ -1,6 +1,6 @@
-"""The steps shared by export.py and server.py: fetch what a league needs, then store what
-is worth keeping (lineups, injury changes) in the history."""
-from backend import history, log
+"""The steps shared by export.py and server.py: fetch what a league needs, check it, then
+store what is worth keeping (lineups, injury changes) in the history."""
+from backend import history, injuries, log, validation
 from backend.config import load_config
 from backend.errors import NotFound, UpstreamError
 from backend.injuries import injury_report
@@ -16,8 +16,19 @@ def observe(meta):
     injury_report(meta)
 
 
-def store():
-    """Write the queued lineups and injury changes. Returns {"lineups": n, "injuries": n} files changed."""
+def store(report=None):
+    """Write the queued lineups and injury changes, except what validation rejected. A fresh
+    injury report is checked here, whoever fetched it, so no code path can record an
+    unreadable one. Returns {"lineups": n, "injuries": n} files changed."""
+    report = report if report is not None else validation.Report()
+    pending = history.pending()
+    if pending["injuries"]:
+        known = history.injury_log()
+        for key, entries in pending["injuries"]:
+            validation.check_injury_report(report, entries, known)
+            if report.blocked("injuries") and key:
+                injuries.use_last_known(key)
+    history.discard(lineups=report.blocked("lineups"), injuries=report.blocked("injuries"))
     return history.flush()
 
 

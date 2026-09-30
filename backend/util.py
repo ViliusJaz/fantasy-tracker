@@ -1,9 +1,10 @@
 """Small helpers shared by every module: the worker pool, JSON files, number and name formatting."""
 import contextvars
+import threading
 import json
 import re
 import unicodedata
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import Future, ThreadPoolExecutor
 
 
 POOL = ThreadPoolExecutor(max_workers=8)
@@ -38,3 +39,32 @@ def num(v):
         return "-"
     text = f"{v:.2f}".rstrip("0").rstrip(".")
     return "0" if text in ("-0", "") else text
+
+
+class SingleFlight:
+    """Run a loader once per key at a time: threads asking for the same key meanwhile wait for
+    that one call and share its result (or its exception) instead of repeating the request."""
+
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._calls = {}
+
+    def do(self, key, load):
+        with self._lock:
+            call = self._calls.get(key)
+            mine = call is None
+            if mine:
+                call = self._calls[key] = Future()
+        if not mine:
+            return call.result()
+        try:
+            result = load()
+        except BaseException as exc:
+            call.set_exception(exc)
+            raise
+        else:
+            call.set_result(result)
+            return result
+        finally:
+            with self._lock:
+                self._calls.pop(key, None)

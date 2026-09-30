@@ -59,6 +59,7 @@ def loc_comment(text):
 
 
 _injury_cache = {}
+STATE = {}  # report url -> "ok" | "stale" (served from the injury log)
 
 _injury_lock = threading.Lock()
 
@@ -80,11 +81,42 @@ def injury_report(meta):
             LOG.warning("injury report unavailable (%s): %s", url, exc)
             if hit:
                 return hit[1]
-            return {}
+            # the last known report (open episodes of the injury log) beats showing nobody injured
+            last = report_from_log()
+            _injury_cache[url] = (time.time() + INJURY_TTL, last)
+            STATE[url] = "stale"
+            return last
         by_player = {e["bnId"]: e for e in entries if e["bnId"]}
-        history.observe_injury_report(entries)
+        history.observe_injury_report(entries, key=url)
+        STATE[url] = "ok"
         _injury_cache[url] = (time.time() + INJURY_TTL, by_player)
         return by_player
+
+
+def report_from_log():
+    """The report as the injury log last saw it: every player whose episode is still open."""
+    out = {}
+    for bn_id, rec in history.injury_log().items():
+        episodes = rec.get("episodes") or []
+        if not episodes or episodes[-1]["end"] is not None or not episodes[-1]["updates"]:
+            continue
+        last = episodes[-1]["updates"][-1]
+        out[bn_id] = {"bnId": bn_id, "name": rec.get("name") or "", "club": rec.get("club"), "pos": "",
+                      "status": last["status"], "siteLabel": SITE_LABELS.get(last["status"], last["status"]),
+                      "return": last.get("return") or "", "comment": last.get("comment") or ""}
+    return out
+
+
+def use_last_known(url):
+    """Serve the injury log's view instead of a report that failed validation."""
+    with _injury_lock:
+        _injury_cache[url] = (time.time() + INJURY_TTL, report_from_log())
+        STATE[url] = "stale"
+
+
+def state():
+    """"ok" when every report was read, "stale" when one had to come from the injury log."""
+    return "stale" if "stale" in STATE.values() else "ok" if STATE else "unused"
 
 
 def injury_view(entry, health=None):

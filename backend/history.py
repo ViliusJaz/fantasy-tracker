@@ -18,7 +18,7 @@ from backend.util import read_json, write_json
 _snapshot_lock = threading.Lock()
 _pending_lock = threading.Lock()
 _pending_lineups = {}  # league id -> (meta, lineups): the latest fetch not written yet
-_pending_injuries = []  # injury report entry lists fetched but not written yet
+_pending_injuries = []  # (report key, entries) fetched but not written yet
 
 
 def observe_lineups(meta, lineup_by_team):
@@ -27,22 +27,25 @@ def observe_lineups(meta, lineup_by_team):
         _pending_lineups[meta["id"]] = (meta, copy.deepcopy(lineup_by_team))
 
 
-def observe_injury_report(entries):
-    """Queue a freshly downloaded injury report for flush()."""
+def observe_injury_report(entries, key=None):
+    """Queue a freshly downloaded injury report (`key`: which report) for flush()."""
     with _pending_lock:
-        _pending_injuries.append(copy.deepcopy(entries))
+        _pending_injuries.append((key, copy.deepcopy(entries)))
 
 
 def pending():
-    """What flush() would write: {"lineups": {leagueId: (meta, lineups)}, "injuries": [entries, ...]}."""
+    """What flush() would write: {"lineups": {leagueId: (meta, lineups)}, "injuries": [(key, entries)]}."""
     with _pending_lock:
         return {"lineups": dict(_pending_lineups), "injuries": list(_pending_injuries)}
 
 
-def discard():
+def discard(lineups=True, injuries=True):
+    """Drop queued data (all of it, or one kind) instead of writing it."""
     with _pending_lock:
-        _pending_lineups.clear()
-        _pending_injuries.clear()
+        if lineups:
+            _pending_lineups.clear()
+        if injuries:
+            _pending_injuries.clear()
 
 
 def flush():
@@ -54,7 +57,7 @@ def flush():
     changed = {"lineups": 0, "injuries": 0}
     for meta, lineup_by_team in lineups:
         changed["lineups"] += save_lineup_snapshot(meta, lineup_by_team)
-    for entries in reports:
+    for _, entries in reports:
         changed["injuries"] += update_injury_log(entries)
     return changed
 
