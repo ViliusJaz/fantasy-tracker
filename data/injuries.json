@@ -1324,7 +1324,22 @@
       "club": "LDLC ASVEL Villeurbanne"
     },
     "6913": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-30",
+          "end": null,
+          "lastSeen": "2026-09-30",
+          "updates": [
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T10:34+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (coach's decision). Played in the domestic league"
+            }
+          ]
+        }
+      ],
       "name": "Edwin Jackson",
       "club": "LDLC ASVEL Villeurbanne"
     },
@@ -1338,6 +1353,13 @@
             {
               "date": "2026-09-28",
               "status": "uncertain",
+              "return": "Round 2",
+              "comment": "DNP in Round 1 (ankle injury)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T10:34+02:00",
+              "status": "out",
               "return": "Round 2",
               "comment": "DNP in Round 1 (ankle injury)"
             }
@@ -2427,7 +2449,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-09-30",
           "lastSeen": "2026-09-30",
           "updates": [
             {
@@ -2435,6 +2457,13 @@
               "status": "doubtful",
               "return": "Round 2",
               "comment": "Was announced as a new signing on 09.29, but hasn't been registered yet."
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T10:34+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -3037,5 +3066,5 @@
       "club": "Valencia Basket"
     }
   },
-  "updatedAt": "2026-09-30T10:07:10"
+  "updatedAt": "2026-09-30T10:34:42"
 }
