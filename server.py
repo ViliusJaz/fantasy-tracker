@@ -1312,19 +1312,6 @@ def team_payload(fid, team_id, rnd=None):
         if result["state"] == "upcoming":
             scoring = None  # slot labels and multipliers still apply, points don't exist yet
 
-    projection = None
-    if lineup_players and source == "current" and rnd == current and result["state"] != "finished":
-        recent = recent_points(meta)
-        projection = {"team": lineup_projection(lineup_players, recent, injury_report(meta))}
-        if meta["format"] == "head_to_head":
-            match = next((m for m in schedule(meta, rnd)
-                          if team_id in ((m["team1"] or {}).get("id"), (m["team2"] or {}).get("id"))), None)
-            opp = (match["team2"] if (match["team1"] or {}).get("id") == team_id else match["team1"]) if match else None
-            opp_proj = team_projections(meta, rnd).get((opp or {}).get("id"))
-            if opp and opp_proj:
-                projection["opponent"] = {**opp_proj, "team": opp}
-                projection["win"] = win_probability(projection["team"], opp_proj)
-
     return {
         "league": meta,
         "team": row["team"],
@@ -1337,7 +1324,6 @@ def team_payload(fid, team_id, rnd=None):
         "lineup": {"source": source if lineup else None, "note": lineup_note, "formation": formation,
                    "players": lineup_players, "scoring": scoring},
         "history": team_history(meta, team_id, shown),
-        "projection": projection,
     }
 
 
@@ -1371,15 +1357,12 @@ def players_payload(fid, scope="free"):
     stats_round = meta["latestRound"]
     pmap = players(meta, stats_round, meta["currentRound"])
     report = injury_report(meta)
-    recent = recent_points(meta)
     rows = []
     for p in pmap.values():
         owner = own.get(p["id"])
         if scope == "free" and owner:
             continue
-        proj, var = player_projection(p, recent, report)
-        rows.append({**p, "injury": injury_view(report.get(p["bnId"]), p["health"]), "owner": owner,
-                     "proj": round(proj, 1), "projSd": round(math.sqrt(var), 1)})
+        rows.append({**p, "injury": injury_view(report.get(p["bnId"]), p["health"]), "owner": owner})
     rows.sort(key=lambda p: (p["avgPts"] is None, -(p["avgPts"] or 0), p["name"]))
     return {
         "league": meta,

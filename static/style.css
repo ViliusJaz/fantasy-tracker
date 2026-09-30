@@ -875,17 +875,6 @@ table.box { min-width: 1100px; }
 .proj-bar { height: 6px; border-radius: 6px; background: var(--loss-soft); overflow: hidden; }
 .proj-bar i { display: block; height: 100%; background: var(--win); opacity: 0.7; border-radius: 6px 0 0 6px; }
 
-.whatif { padding: 16px 20px; margin: 18px 0 6px; }
-.wi-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
-.wi-head .section-title { margin: 0; }
-.wi-base { color: var(--text-2); font-size: 14.5px; }
-.wi-base b { font-family: var(--font-display); font-size: 19px; color: var(--accent); }
-.wi-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 12px; font-size: 14px; color: var(--muted); }
-.wi-controls label { display: inline-flex; align-items: center; gap: 8px; }
-.wi-result { margin-top: 12px; font-size: 15px; color: var(--text-2); min-height: 22px; }
-.wi-result b { font-family: var(--font-display); font-size: 19px; color: var(--text); }
-.wi-warn { margin-top: 6px; color: var(--warn); font-size: 13px; }
-.whatif .note { margin: 10px 0 0; }
 
 /* ---------- records: recap, efficiency, schedule ---------- */
 .recap { padding: 14px 18px; margin-bottom: 14px; }

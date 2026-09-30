@@ -113,20 +113,6 @@ const I18N = {
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
     tabDraft: "Draftas",
     projTip: "Prognozė: dabartiniai taškai + likusių žaidėjų laukiami taškai. Procentai: pergalės tikimybė.",
-    wiTitle: "Kas būtų, jeigu…",
-    wiProj: "Turo prognozė",
-    wiVs: "{t} {p}",
-    wiWin: "pergalės tikimybė {p}%",
-    wiCaptain: "Kapitonas",
-    wiSwap: "Keisti",
-    wiFor: "į",
-    wiRoster: "Komandos žaidėjai",
-    wiFreeAgents: "Laisvieji agentai",
-    wiReset: "Atstatyti",
-    wiNew: "Nauja prognozė",
-    wiHint: "Pasirink kitą kapitoną arba žaidėjų pakeitimą.",
-    wiPosWarn: "{p} nežaidžia pozicijoje {s}: tikroje sudėtyje taip pastatyti negalima.",
-    wiNote: "Prognozė: sezono vidurkis ir paskutinių 5 turų forma × rungtynių skaičius ture × tikimybė žaisti pagal traumų sąrašą. Jau sužaistos rungtynės skaičiuojamos tikrais taškais.",
     recapTitle: "{n} turo apžvalga",
     copyText: "Kopijuoti tekstą",
     copied: "Nukopijuota",
@@ -457,20 +443,6 @@ const I18N = {
     lowerBetter: "For this metric a lower value is better.",
     tabDraft: "Draft",
     projTip: "Projection: points so far + expected points of the players still to play. Percentages: chance to win.",
-    wiTitle: "What if…",
-    wiProj: "Round projection",
-    wiVs: "{t} {p}",
-    wiWin: "chance to win {p}%",
-    wiCaptain: "Captain",
-    wiSwap: "Swap",
-    wiFor: "for",
-    wiRoster: "Team players",
-    wiFreeAgents: "Free agents",
-    wiReset: "Reset",
-    wiNew: "New projection",
-    wiHint: "Pick another captain or a player swap.",
-    wiPosWarn: "{p} does not play {s}: the real lineup would not allow this.",
-    wiNote: "Projection: season average blended with the last 5 rounds × games this round × chance to play from the injury report. Games already played count with their real points.",
     recapTitle: "Round {n} recap",
     copyText: "Copy text",
     copied: "Copied",
@@ -1486,113 +1458,6 @@ function matchupProjection(m) {
   </div>`;
 }
 
-// Chance that a normal total with this mean / sd beats the opponent's.
-function winChance(mean, sd, opp) {
-  const s = Math.sqrt(sd * sd + opp.sd * opp.sd) || 1;
-  const z = (mean - opp.mean) / (s * Math.SQRT2);
-  // erf approximation (Abramowitz-Stegun 7.1.26)
-  const x = Math.abs(z), k = 1 / (1 + 0.3275911 * x);
-  const e = 1 - (((((1.061405429 * k - 1.453152027) * k) + 1.421413741) * k - 0.284496736) * k + 0.254829592) * k * Math.exp(-x * x);
-  return 0.5 * (1 + (z < 0 ? -e : e));
-}
-
-const SLOT_POS = { g: "guard", f: "forward", c: "center" };
-function slotMult(card, captain) {
-  const [prefix, n] = (card || "").split("-");
-  if (SLOT_POS[prefix]) return captain ? 2 : 1;
-  if (prefix === "b") return n === "1" ? 1 : 0.5;
-  return 0;
-}
-
-// What-if on the team page: another captain, or another player in a slot (from the bench
-// or free agency), and how the projection (and in H2H the chance to win) changes.
-function whatIfSection(data) {
-  const pr = data.projection;
-  if (!pr) return "";
-  const players = data.lineup.players.filter((p) => p.card);
-  const starters = players.filter((p) => SLOT_POS[p.card.split("-")[0]]);
-  const cap = players.find((p) => p.captain);
-  const opp = pr.opponent;
-  const vs = opp ? ` · ${t("wiVs", { t: esc(opp.team.title), p: fmt1(opp.mean) })} · <b>${t("wiWin", { p: Math.round(pr.win * 100) })}</b>` : "";
-  const opt = (p) => `<option value="${esc(p.id)}">${esc(p.slotLabel || "")} ${esc(p.name)} (${fmt1(p.proj)})</option>`;
-  return `<div class="card whatif" id="whatif">
-    <div class="wi-head">
-      <h2 class="section-title">${t("wiTitle")}</h2>
-      <div class="wi-base">${t("wiProj")} <b>${fmt1(pr.team.mean)}</b> <span class="dim">±${fmt1(pr.team.sd)}</span>${vs}</div>
-    </div>
-    <div class="wi-controls">
-      <label>${t("wiCaptain")} <select class="select" id="wi-cap">${starters.map((p) => `<option value="${esc(p.id)}"${p.id === cap?.id ? " selected" : ""}>${esc(p.name)}</option>`).join("")}</select></label>
-      <label>${t("wiSwap")} <select class="select" id="wi-out"><option value="">-</option>${players.map(opt).join("")}</select></label>
-      <label>${t("wiFor")} <select class="select" id="wi-in"><option value="">-</option><optgroup label="${esc(t("wiRoster"))}">${players.map(opt).join("")}</optgroup></select></label>
-      <button class="btn" type="button" id="wi-reset">${t("wiReset")}</button>
-    </div>
-    <div class="wi-result" id="wi-result"></div>
-    <p class="note">${t("wiNote")}</p>
-  </div>`;
-}
-
-function bindWhatIf(data) {
-  const box = document.getElementById("whatif");
-  if (!box) return;
-  const pr = data.projection;
-  const roster = data.lineup.players.filter((p) => p.card);
-  const pool = new Map(roster.map((p) => [p.id, p]));
-  const fid = data.league.id;
-  const baseCap = roster.find((p) => p.captain)?.id;
-  const $ = (id) => document.getElementById(id);
-  // free agents with projections join the "for" list once loaded
-  api(`/api/league/${fid}/free-agents`).then((fa) => {
-    const list = fa.players.filter((p) => p.proj != null).sort((a, b) => b.proj - a.proj).slice(0, 60);
-    list.forEach((p) => pool.set(p.id, { ...p, card: null }));
-    const group = document.createElement("optgroup");
-    group.label = t("wiFreeAgents");
-    group.innerHTML = list.map((p) => `<option value="${esc(p.id)}">${esc(p.name)} (${fmt1(p.proj)})</option>`).join("");
-    $("wi-in")?.append(group);
-  }).catch(() => {});
-
-  const run = () => {
-    const out = $("wi-out").value, inn = $("wi-in").value;
-    const cards = new Map(roster.map((p) => [p.id, p.card]));
-    const warn = [];
-    if (out && inn && out !== inn) {
-      const outCard = cards.get(out);
-      if (cards.has(inn)) { cards.set(out, cards.get(inn)); cards.set(inn, outCard); }
-      else { cards.delete(out); cards.set(inn, outCard); }
-      const need = SLOT_POS[(outCard || "").split("-")[0]];
-      const who = pool.get(inn);
-      if (need && who && !(who.positions || [who.position]).includes(need)) warn.push(t("wiPosWarn", { p: esc(who.name), s: t("pos")[need] || need }));
-    }
-    let capId = $("wi-cap").value;
-    if (capId === out && inn) capId = inn;  // the captain's slot goes to whoever takes it
-    let mean = 0, varSum = 0;
-    for (const [id, card] of cards) {
-      const p = pool.get(id);
-      if (!p) continue;
-      const m = slotMult(card, id === capId && SLOT_POS[card.split("-")[0]]);
-      mean += m * (p.proj || 0);
-      varSum += m * m * (p.projSd || 0) ** 2;
-    }
-    const sd = Math.sqrt(varSum);
-    const d = mean - pr.team.mean;
-    const changed = (out && inn && out !== inn) || capId !== baseCap;
-    let html = changed
-      ? `${t("wiNew")} <b>${fmt1(mean)}</b> <span class="diff ${d > 0 ? "up" : d < 0 ? "down" : ""}">${d >= 0 ? "+" : "−"}${fmt1(Math.abs(d))}</span>`
-      : `<span class="dim">${t("wiHint")}</span>`;
-    if (changed && pr.opponent) {
-      const w = winChance(mean, sd, pr.opponent), dw = Math.round((w - pr.win) * 100);
-      html += ` · ${t("wiWin", { p: Math.round(w * 100) })} <span class="diff ${dw > 0 ? "up" : dw < 0 ? "down" : ""}">${dw >= 0 ? "+" : "−"}${Math.abs(dw)} p.p.</span>`;
-    }
-    if (warn.length) html += `<div class="wi-warn">${warn.join(" ")}</div>`;
-    $("wi-result").innerHTML = html;
-  };
-  ["wi-cap", "wi-out", "wi-in"].forEach((id) => $(id).addEventListener("change", run));
-  $("wi-reset").addEventListener("click", () => {
-    $("wi-out").value = ""; $("wi-in").value = ""; $("wi-cap").value = baseCap || $("wi-cap").value;
-    ["wi-cap", "wi-out", "wi-in"].forEach((id) => $(id).dispatchEvent(new Event("change")));
-  });
-  run();
-}
-
 // ------------------------------------------------------------------ season records
 
 function recapSection(data) {
@@ -2005,9 +1870,9 @@ function rangeBounds(players, key) {
   return { lo, hi, step: key === "gamesPlayed" ? 1 : 0.5 };
 }
 
-function ownerCell(owner) {
+function ownerCell(owner, withSlot = true) {
   if (!owner) return `<span class="dim">${t("free")}</span>`;
-  const pill = owner.slotLabel ? `<span class="slot ${owner.slot || ""} mini">${esc(owner.slotLabel)}</span>` : "";
+  const pill = withSlot && owner.slotLabel ? `<span class="slot ${owner.slot || ""} mini">${esc(owner.slotLabel)}</span>` : "";
   return `<span class="owner-cell"><span>${esc(owner.team.title)}</span>${pill}</span>`;
 }
 
@@ -2235,7 +2100,7 @@ function boxTable(side) {
       <td class="sticky"><div class="player">${clubMini(side)}<span class="player-name">${esc(p.name)}</span></div></td>
       <td class="num fp-cell">${fmt(p.fp)}</td>
       ${cols.map((c) => `<td class="num stat">${cell(p.line, c.key)}</td>`).join("")}
-      <td class="owner-col">${ownerCell(p.owner)}</td>
+      <td class="owner-col">${ownerCell(p.owner, false)}</td>
     </tr>`).join("");
   return `<div class="box-team">
     <div class="box-team-head">${clubMini(side, "md")}<strong>${esc(side.name || side.abbr)}</strong>
@@ -2593,7 +2458,6 @@ async function renderTeam(fid, tid, params, token, silent) {
       ${r !== league.currentRound ? `<a class="link small" href="${base}">${t("toCurrent")}</a>` : ""}
     </div>
     ${roundSummary(data)}
-    ${whatIfSection(data)}
     <h2 class="section-title">${t("lineupTitle", { r: roundLabel(r) })}${lineup.formation && lineup.source !== "roster" ? ` <span class="dim small">${t("formation", { f: esc(lineup.formation) })}</span>` : ""}</h2>
     ${lineup.note ? `<p class="note warn-note">${esc(lineup.note)}</p>` : ""}
     ${lineup.players.length ? lineupTable(lineup, data.roundState) : stateBox(t("lineupNA"))}
@@ -2608,7 +2472,6 @@ async function renderTeam(fid, tid, params, token, silent) {
     location.hash = `#/l/${fid}/games?r=${r}`;
   }));
   app.querySelectorAll("tr[data-href]").forEach((tr) => tr.addEventListener("click", () => (location.hash = tr.dataset.href)));
-  bindWhatIf(data);
   scheduleRefresh(data.roundState === "live");
 }
 
