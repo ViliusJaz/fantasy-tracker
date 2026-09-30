@@ -773,6 +773,8 @@ table.box { min-width: 1100px; }
 .seg-btn.on { background: var(--accent); color: var(--accent-ink); }
 .seg-n { font-size: 12px; opacity: 0.7; }
 #pv-split .tiles.compact { margin-top: 12px; }
+.tiles.compact.def-split { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.tile .sub { font-size: 12.5px; margin-top: 2px; }
 #pv-split > .note { margin: 12px 0 0; }
 
 /* Home / away: difference to the other side. */

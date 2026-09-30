@@ -146,6 +146,15 @@ const I18N = {
     diffVsAway: "Mažesni skaičiai: skirtumas nuo rungtynių išvykoje.",
     diffVsHome: "Mažesni skaičiai: skirtumas nuo rungtynių namuose.",
     lastTip: "Vidutiniai FP per paskutinius {n} sužaistus turus",
+    ddTip: "Rungtynės, kuriose bent du iš šių rodiklių siekė 10: taškai, atkovoti kamuoliai, rezultatyvūs perdavimai, perimti kamuoliai, blokai",
+    defTitle: "FP prieš gynybas",
+    defSub: "pagal BasketNews gynybos reitingą, {n} komandų",
+    defTop: "Prieš {n} geriausių gynybų",
+    defBottom: "Prieš {n} prasčiausių gynybų",
+    defGames: "{n} rungt.",
+    defTip: "Vidutiniai fantasy taškai rungtynėse prieš komandas, kurių gynyba (praleisti taškai per 100 atakų) šiuo metu yra {a}–{b} vietoje. Skaičiuojami turai su vienomis rungtynėmis.",
+    defNone: "Dar nežaidė prieš šias komandas",
+    defDiffNote: "Mažesni skaičiai: skirtumas nuo kitos grupės.",
     draftAwardsTitle: "Draftas ir perėjimai",
     rebSplitHead: "G/P",
     rebSplitTip: "Mažesni skaičiai: gynyboje / puolime",
@@ -348,7 +357,7 @@ const I18N = {
     error: "Klaida {s}",
     staticMissing: "Šių duomenų dar nėra. Svetainė atsinaujina kas 15 minučių.",
     pos: { guard: "Gynėjas", forward: "Puolėjas", center: "Centras" },
-    tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", blk: "Blokai", eff: "NB", last3: "Pask. 3 FP", last5: "Pask. 5 FP" },
+    tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", blk: "Blokai", eff: "NB", last3: "Pask. 3 FP", last5: "Pask. 5 FP", dd: "Dvigubi dubliai" },
     resShort: { W: "P", L: "Pr", T: "L" },
   },
   en: {
@@ -477,6 +486,15 @@ const I18N = {
     diffVsAway: "Small numbers: difference from away games.",
     diffVsHome: "Small numbers: difference from home games.",
     lastTip: "Average FP over the last {n} rounds played",
+    ddTip: "Games with 10 or more in at least two of: points, rebounds, assists, steals, blocks",
+    defTitle: "FP against defenses",
+    defSub: "by BasketNews defensive rating, {n} teams",
+    defTop: "Vs the {n} best defenses",
+    defBottom: "Vs the {n} worst defenses",
+    defGames: "{n} gm",
+    defTip: "Average fantasy points in games against teams whose defense (points allowed per 100 possessions) currently ranks {a}-{b}. Only rounds with one game count.",
+    defNone: "No games against these teams yet",
+    defDiffNote: "Small numbers: difference from the other group.",
     draftAwardsTitle: "Draft and moves",
     rebSplitHead: "D/O",
     rebSplitTip: "Small numbers: defensive / offensive",
@@ -679,7 +697,7 @@ const I18N = {
     error: "Error {s}",
     staticMissing: "This data is not available yet. The site refreshes every 15 minutes.",
     pos: { guard: "Guard", forward: "Forward", center: "Center" },
-    tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", blk: "BLK", eff: "PIR", last3: "Last 3 FP", last5: "Last 5 FP" },
+    tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", blk: "BLK", eff: "PIR", last3: "Last 3 FP", last5: "Last 5 FP", dd: "Double-doubles" },
     resShort: { W: "W", L: "L", T: "T" },
   },
 };
@@ -2544,8 +2562,17 @@ function splitStats(data, which) {
   const pctOf = (made, att) => ({ made, att, pct: att ? Math.round((1000 * made) / att) / 10 : null });
   const shot = (m, a) => pctOf(sum((g) => g.line[m]), sum((g) => g.line[a]));
   const two = shot("p2m", "p2a"), three = shot("p3m", "p3a"), ft = shot("ftm", "fta");
+  // one game in the round, so the round's line and FP belong to that game and its opponent
+  const single = rows.filter((g) => g.games.length === 1);
+  const doubleDouble = (l) => ["pts", "reb", "ast", "stl", "blk"].filter((k) => (l[k] || 0) >= 10).length >= 2;
+  const top = data.defense?.top || 0;
+  const vsDef = (strong) => single.filter((g) => g.games[0].oppDefRank != null
+    && (strong ? g.games[0].oppDefRank <= top : g.games[0].oppDefRank > top));
+  const strong = vsDef(true), weak = vsDef(false);
   return {
     games: n, fp: fpAvg(rows), last3: fpAvg(rows.slice(0, 3)), last5: fpAvg(rows.slice(0, 5)),
+    dd: single.filter((g) => doubleDouble(g.line)).length,
+    defense: { strong: { fp: fpAvg(strong), games: strong.length }, weak: { fp: fpAvg(weak), games: weak.length } },
     line: Object.fromEntries(["min", "pts", "reb", "dreb", "oreb", "ast", "stl", "blk", "eff"].map((k) => [k, mean(k)])),
     shooting: { fg: pctOf(two.made + three.made, two.att + three.att), two, three, ft, games: n },
   };
@@ -2584,6 +2611,7 @@ function splitBody(data, which) {
       line.reb == null ? "-" : `${fmt1(line.reb)}${cmp ? diff(line.reb, o.reb) : `<small class="split">${fmt1(line.dreb)}/${fmt1(line.oreb)}</small>`}`, "reb"],
     [tl.ast, fmt1(line.ast) + diff(line.ast, o.ast), "ast"], [tl.stl, fmt1(line.stl) + diff(line.stl, o.stl), "stl"],
     [tl.blk, fmt1(line.blk) + diff(line.blk, o.blk), "blk"], [tl.eff, fmt1(line.eff) + diff(line.eff, o.eff), "eff"],
+    [tl.dd, String(st.dd), null, t("ddTip")],
   ];
   const html = tiles.map(([l, v, key, own]) => {
     const name = l.replace(/<[^>]+>/g, "").trim();
@@ -2592,7 +2620,27 @@ function splitBody(data, which) {
   }).join("");
   const none = !all && !st.games ? `<p class="note">${t(which === "home" ? "splitNoHome" : "splitNoAway")}</p>` : "";
   const vs = cmp ? `<p class="note diff-note">${t(which === "home" ? "diffVsAway" : "diffVsHome")}</p>` : "";
-  return `${none}<div class="tiles compact">${html}</div>${vs}${shootingSection(all ? data.shooting : st.shooting, cmp ? other.shooting : null)}`;
+  return `${none}<div class="tiles compact">${html}</div>${vs}${defenseSection(data, st.defense)}${shootingSection(all ? data.shooting : st.shooting, cmp ? other.shooting : null)}`;
+}
+
+// Average FP against the best and the worst half of the league's defenses (current ranks).
+function defenseSection(data, d) {
+  const n = data.defense?.teams, top = data.defense?.top;
+  if (!n || !top || (!d.strong.games && !d.weak.games)) return "";
+  const both = d.strong.games && d.weak.games;
+  const tile = (label, x, other, a, b) => {
+    const delta = both ? Math.round((x.fp - other.fp) * 10) / 10 : null;
+    const diff = delta == null ? "" : delta
+      ? `<small class="diff ${delta > 0 ? "up" : "down"}">${delta > 0 ? "+" : "−"}${fmt1(Math.abs(delta))}</small>` : `<small class="diff">±0</small>`;
+    const value = x.games ? `${fmt1(x.fp)}${diff}` : '<span class="dim">-</span>';
+    return `<div class="tile" data-tip="${esc(`${label}\n${t("defTip", { a, b })}`)}"><div class="label">${label}</div>
+      <div class="value">${value}</div><div class="sub dim">${x.games ? t("defGames", { n: x.games }) : t("defNone")}</div></div>`;
+  };
+  return `<h3 class="section-title">${t("defTitle")} <span class="dim small">${t("defSub", { n })}</span></h3>
+    <div class="tiles compact def-split">
+      ${tile(t("defTop", { n: top }), d.strong, d.weak, 1, top)}
+      ${tile(t("defBottom", { n: n - top }), d.weak, d.strong, top + 1, n)}
+    </div>${both ? `<p class="note diff-note">${t("defDiffNote")}</p>` : ""}`;
 }
 
 function shotDiff(x, y) {

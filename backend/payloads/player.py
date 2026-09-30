@@ -6,6 +6,7 @@ from backend.i18n import L
 from backend.injuries import _day, build_injury_history, injury_report, injury_view, loc_comment, loc_reason
 from backend.league import league_meta, lineups, standings
 from backend.players import players
+from backend.previews import club_defense_ranks
 from backend.proballers import proballers_target
 from backend.sources import basketnews as bn
 from backend.sources.injury_report import dnp_reason
@@ -74,6 +75,11 @@ def player_payload(fid, player_id):
             owner = next((r["team"] for r in standings(meta)[1] if r["team"]["id"] == team_id), {"id": team_id})
             break
 
+    # the opponent's defensive rank on every game, for the FP split against strong / weak defenses
+    ranks, ranked = club_defense_ranks(meta)
+    for g in [g for row in game_log for g in row["games"]] + info["games"]:
+        g["oppDefRank"] = ranks.get(g["opponent"])
+
     return {
         "league": {"id": meta["id"], "title": meta["title"], "currentRound": meta["currentRound"]},
         "player": info,
@@ -89,6 +95,7 @@ def player_payload(fid, player_id):
         "gameLog": list(reversed(game_log)),
         "nextGames": info["games"],
         "shooting": shooting,
+        "defense": {"teams": ranked, "top": ranked // 2},
     }
 
 

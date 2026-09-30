@@ -26,7 +26,7 @@ SCHEMA = {
     "league/ID/team/ID": [{"league", "team", "standing", "standingRound", "round", "roundState", "result", "after",
                            "lineup", "history"}],
     "league/ID/player/ID": [{"league", "player", "owner", "advanced", "leagueAvg", "proballers", "injury", "gameLog",
-                             "nextGames", "shooting"}],
+                             "nextGames", "shooting", "defense"}],
 }
 SCHEMA["league/ID/players"] = SCHEMA["league/ID/free-agents"]
 SCHEMA["league/ID/analytics"] = [{"league", "basedOn", "teams", "rivalries", "draft", "transfers", "records"}]
@@ -105,6 +105,16 @@ def test_nested_shapes(replayed):
     team = json.loads(files[f"league/{HLA}/team/{h2h['rows'][0]['team']['id']}.lt.json"].read_text())
     assert set(team["lineup"]) == {"source", "note", "formation", "players", "scoring"}
     assert {"card", "slot", "captain", "slotLabel", "mult", "contrib"} <= set(team["lineup"]["players"][0])
+
+
+def test_player_games_carry_the_opponents_defensive_rank(replayed):
+    out, _ = replayed
+    files = api_files(out)
+    doc = json.loads(next(p for rel, p in files.items() if rel.startswith(f"league/{HLA}/player/")).read_text())
+    assert doc["defense"] == {"teams": 20, "top": 10}
+    ranks = {g["opponent"]: g["oppDefRank"] for row in doc["gameLog"] for g in row["games"]}
+    assert ranks and all(r is None or 1 <= r <= 20 for r in ranks.values())
+    assert any(r is not None for r in ranks.values())
 
 
 def test_index_page_is_static_and_cache_busted(replayed):

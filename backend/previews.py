@@ -45,6 +45,22 @@ def club_team_ids(clubs, teams):
     return out
 
 
+def club_defense_ranks(meta):
+    """Where every club's defense ranks (defensive rating, BasketNews team stats; 1 = the best)
+    and how many clubs are ranked: ({abbr: rank}, n). Empty when the team stats are unavailable."""
+    teams = team_advanced(meta)
+    if not teams:
+        return {}, 0
+    clubs = {v["club"]["abbr"]: v["club"] for v in players(meta, meta["latestRound"], meta["currentRound"]).values()
+             if v["club"]}
+    ranks = {}
+    for abbr, tid in club_team_ids(clubs, teams).items():
+        rank = teams[tid]["stats"]["drtg"]["rank"]
+        if rank:
+            ranks[abbr] = rank
+    return ranks, len(teams)
+
+
 def preview_context(meta, rnd, pmap, own):
     report = injury_report(meta)
     roster, clubs = {}, {}
