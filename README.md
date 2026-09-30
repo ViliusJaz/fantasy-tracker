@@ -95,6 +95,20 @@ serveris, kas 10 min. išsaugoma:
   paskutinio bandymo ir paskutinio sėkmingo atnaujinimo laikas, trukmė, užklausų ir klaidų skaičiai,
   žaidėjų ir puslapių skaičiai, patikros pastabos, kiekvieno šaltinio būsena.
 
+## Mac ir telefonas kartu
+
+`publish.sh` gali leisti ir Mac (kas 15 min.), ir telefonas. Kad jie vienas kitam nepakenktų:
+
+- **Užraktas GitHub'e** – `publish-lock` šaka, užimama atomiškai (`git push --force-with-lease`:
+  tik jei jos nėra arba joje vis dar tas pats pasibaigęs užraktas). Užrakto įraše – kas jį laiko ir
+  iki kada (10 min.). Kitas įrenginys, radęs galiojantį užraktą, praleidžia paleidimą nieko
+  nesiųsdamas; pasibaigusį užraktą perima. Baigus užraktas ištrinamas.
+- Prieš kiekvieną `push` tikrinama, ar užraktas vis dar savas; `gh-pages` siunčiamas su „lease“ ant
+  pradžioje matyto commit'o, todėl senesnis rezultatas niekada nepakeis naujesnio.
+- `data/` failai sujungiami pagal turinį (`tools/merge_history.py`, `.gitattributes`), o nebaigtas
+  rebase iš ankstesnio paleidimo sutvarkomas – likęs neišsiųstas commit'as nebeužstrigdo.
+- Jei patikra nepraeina, į `gh-pages` įkeliamas tik `api/health.json`, o svetainė lieka ankstesnė.
+
 ## Testai
 
 ```bash
