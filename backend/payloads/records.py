@@ -2,7 +2,7 @@
 from backend.analytics import metrics
 from backend.analytics.awards import draft_awards, round_awards, season_oscars, season_records
 from backend.analytics.season import (
-    manager_efficiency, positions_before, round_breakdown, round_recap, strength_of_schedule,
+    manager_efficiency, round_breakdown, strength_of_schedule,
 )
 from backend.league import league_meta, standings
 from backend.util import pool_map
@@ -57,7 +57,6 @@ def records_payload(fid, rnd=None):
         "roundAwards": round_awards(meta, selected),
         "oscars": season_oscars(meta, breakdowns, team_names),
         "draftAwards": draft_awards(meta, finished, team_names),
-        "recap": round_recap(meta, selected, team_names, positions_before(meta, rnd)),
         "efficiency": manager_efficiency(breakdowns, team_names),
         "schedule": strength_of_schedule(meta, breakdowns, team_names),
         "records": season_records(meta, breakdowns, team_names, streaks, totals),

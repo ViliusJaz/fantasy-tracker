@@ -17,7 +17,7 @@ SCHEMA = {
     "league/ID/rounds": [{"league", "round", "live", "rows"}, {"league", "round", "live", "matchups"}],
     "league/ID/games": [{"league", "round", "state", "games"}],
     "league/ID/records": [{"league", "finished", "round", "roundAwards", "oscars", "records", "form", "missingLineups",
-                           "draftAwards", "recap", "efficiency", "schedule", "partialLineups"}],
+                           "draftAwards", "efficiency", "schedule", "partialLineups"}],
     "league/ID/free-agents": [{"league", "scope", "statsRound", "players", "totalPlayers", "rosteredPlayers",
                                "injuryReportUrl", "advanced"}],
     "league/ID/draft": [{"league", "picks", "teams"}],

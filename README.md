@@ -78,7 +78,7 @@ Vietinis `var/` (necommit'inamas): `health.json`, nuolatinis kešas `cache.sqlit
 | `backend/scoring.py` | Taškai pagal sudėtį, formacijos, optimali sudėtis. |
 | `backend/history.py` | Tai, ką programa kaupia `data/`: sudėtys ir traumų epizodai. Duomenų gavimas čia nieko nerašo – tik perduoda, o įrašo `pipeline.store()`. |
 | `backend/injuries.py`, `injury_lt.py` | Traumų sąrašas, būsenos ir komentarai LT/EN, žaidėjo traumų istorija. |
-| `backend/analytics/` | Sezono analitika: turų suvestinės, efektyvumas, tvarkaraščio sunkumas, apžvalga, apdovanojimai, perėjimų ROI. |
+| `backend/analytics/` | Sezono analitika: turų suvestinės, efektyvumas, tvarkaraščio sunkumas, apdovanojimai, perėjimų ROI. |
 | `backend/payloads/` | Kiekvieno API adreso JSON (tas pats ir serveriui, ir `export.py`). |
 | `backend/pipeline.py`, `log.py`, `config.py` | Bendri žingsniai (gauti → įrašyti), žurnalas su etapais `[FETCH]`, `[STORAGE]`, `[EXPORT]`…, keliai ir nustatymai. |
 

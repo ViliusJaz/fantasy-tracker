@@ -118,10 +118,6 @@ const I18N = {
     lowerBetter: "Šios metrikos mažesnė reikšmė yra geresnė.",
     tabDraft: "Draftas",
     projTip: "Prognozė: dabartiniai taškai + likusių žaidėjų laukiami taškai. Procentai: pergalės tikimybė.",
-    recapTitle: "{n} turo apžvalga",
-    copyText: "Kopijuoti tekstą",
-    copied: "Nukopijuota",
-    copyFailed: "Nepavyko nukopijuoti",
     effTitle: "Vadybininkų efektyvumas",
     effPoints: "Taškai",
     effMax: "Maksimalūs",
@@ -469,10 +465,6 @@ const I18N = {
     lowerBetter: "For this metric a lower value is better.",
     tabDraft: "Draft",
     projTip: "Projection: points so far + expected points of the players still to play. Percentages: chance to win.",
-    recapTitle: "Round {n} recap",
-    copyText: "Copy text",
-    copied: "Copied",
-    copyFailed: "Could not copy",
     effTitle: "Manager efficiency",
     effPoints: "Points",
     effMax: "Maximum",
@@ -1502,17 +1494,6 @@ function matchupProjection(m) {
 
 // ------------------------------------------------------------------ season records
 
-function recapSection(data) {
-  if (!data.recap?.length) return "";
-  const title = t("recapTitle", { n: data.round + 1 });
-  const text = `${data.league.title}: ${title}\n${data.recap.map((l) => `${l.icon} ${l.text}`).join("\n")}`;
-  return `<div class="card recap">
-    <div class="recap-head"><h3>${title}</h3>
-      <button class="btn" type="button" id="recap-copy" data-text="${esc(text)}">${t("copyText")}</button></div>
-    <ul>${data.recap.map((l) => `<li><span class="recap-icon" aria-hidden="true">${l.icon}</span>${esc(l.text)}</li>`).join("")}</ul>
-  </div>`;
-}
-
 function efficiencyTable(fid, rows) {
   if (!rows?.length) return "";
   return `<h2 class="section-title">${t("effTitle")}</h2>
@@ -1610,7 +1591,6 @@ async function renderRecords(fid, params, token, silent) {
       <h2 class="section-title">${t("roundAwards", { n: data.round + 1 })}</h2>
       <div class="round-nav inline">${roundArrows(`#/l/${fid}/records`, data.round, first, last)}</div>
     </div>
-    ${recapSection(data)}
     ${awardCards(data.roundAwards)}
     <h2 class="section-title">${t("oscars")} <span class="dim small">${t("afterDone", { n: done })}</span></h2>
     ${awardCards(data.oscars)}
@@ -1623,12 +1603,6 @@ async function renderRecords(fid, params, token, silent) {
     ${formTable(data)}
     <p class="note">${esc(t("recordsNote"))}</p>`);
   bindRoundSelect(`#/l/${fid}/records`);
-  document.getElementById("recap-copy")?.addEventListener("click", async (e) => {
-    try {
-      await navigator.clipboard.writeText(e.target.dataset.text);
-      e.target.textContent = t("copied");
-    } catch { e.target.textContent = t("copyFailed"); }
-  });
   app.querySelectorAll("[data-team]").forEach((el) =>
     el.addEventListener("click", (e) => {
       if (!e.target.closest("[data-award-info], .award-info")) location.hash = `#/l/${fid}/t/${el.dataset.team}`;
