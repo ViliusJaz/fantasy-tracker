@@ -60,3 +60,18 @@ serveris, kas 10 min. išsaugoma:
   sudaroma žaidėjo traumų istorija.
 
 
+
+## Testai
+
+```bash
+python3 -m pip install --user pytest   # tik kartą, tik kūrimui (telefonui nereikia)
+python3 -m pytest
+```
+
+- `tests/fixtures/recording-r1.json.gz` – visi BasketNews / traumų sąrašo atsakymai iš vieno
+  tikro paleidimo. `tools/replay_export.py replay` iš jų be interneto perstato visą svetainę
+  (laikrodis užšaldomas įrašymo akimirkai), o `tests/test_golden.py` tikrina, kad kiekvienas
+  failas liktų bitas į bitą toks pat (`tests/golden/recording-r1.sha256`).
+- Naują įrašą padaro `python3 tools/replay_export.py record var/recordings/<vardas>.json.gz`
+  (repozitorijos nekeičia), dvi versijas palygina `python3 tools/compare_site.py A B`.
+- `DRY_RUN=1 ./publish.sh` – viskas kaip įprastai, tik nieko nekeičia git'e ir nieko neįkelia.

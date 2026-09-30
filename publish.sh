@@ -2,7 +2,9 @@
 # Rebuilds the public site and uploads it to GitHub Pages: every 15 minutes on the Mac, or
 # on demand from an Android phone (phone/setup.sh adds a home-screen button for it).
 #
-#   ./publish.sh        (a launch agent runs this every 15 minutes, see below)
+#   ./publish.sh              (a launch agent runs this every 15 minutes, see below)
+#   DRY_RUN=1 ./publish.sh    builds everything and shows what would be committed and
+#                             published, but changes no branch and pushes nothing
 #
 # BasketNews refuses requests from GitHub's servers, so the data has to be fetched
 # here. Steps: take any edits made on GitHub (e.g. leagues.json), run export.py,
@@ -20,16 +22,23 @@ export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH:/usr/bin:/bin:/usr/sbin:/sbi
 
 LOG="$HOME/Library/Logs/fantasy-tracker.log"
 if [ -f "$LOG" ] && [ "$(wc -c < "$LOG")" -gt 1000000 ]; then : > "$LOG"; fi  # keep the log small
-echo "=== $(date '+%Y-%m-%d %H:%M:%S')"
-git pull -q --rebase --autostash origin main
+echo "=== $(date '+%Y-%m-%d %H:%M:%S')${DRY_RUN:+ (dry run)}"
+if [ -z "${DRY_RUN:-}" ]; then
+  git pull -q --rebase --autostash origin main
+fi
 
 python3 export.py
 
-git add data leagues.json
-if ! git diff --cached --quiet; then
-  git commit -q -m "Record lineups and injuries"
+if [ -n "${DRY_RUN:-}" ]; then
+  echo "would commit:"
+  git status --short -- data leagues.json
+else
+  git add data leagues.json
+  if ! git diff --cached --quiet; then
+    git commit -q -m "Record lineups and injuries"
+  fi
+  git push -q origin main
 fi
-git push -q origin main
 
 # site/ -> gh-pages without touching the working tree: build the commit from a
 # throwaway index. Keeping the previous commit as a local ref lets git upload
@@ -40,6 +49,10 @@ export GIT_INDEX_FILE="$tmp/index"
 git --work-tree=site add -A
 tree="$(git write-tree)"
 unset GIT_INDEX_FILE
+if [ -n "${DRY_RUN:-}" ]; then
+  echo "would publish site tree $tree ($(git ls-tree -r "$tree" | wc -l | tr -d ' ') files)"
+  exit 0
+fi
 commit="$(git commit-tree "$tree" -m "Site $(date '+%Y-%m-%d %H:%M')")"
 git push -q -f origin "$commit:refs/heads/gh-pages"
 git update-ref refs/heads/gh-pages "$commit"
