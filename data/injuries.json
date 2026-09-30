@@ -1377,7 +1377,22 @@
       "club": "LDLC ASVEL Villeurbanne"
     },
     "37392": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-09-30",
+          "end": null,
+          "lastSeen": "2026-09-30",
+          "updates": [
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T19:20+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Not included in 12-man roster after a DNP in Round 1 (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "Amit Ebo",
       "club": "Maccabi Rapyd Tel Aviv"
     },
@@ -1393,6 +1408,13 @@
               "status": "uncertain",
               "return": "Round 2",
               "comment": "DNP in Round 1 (undisclosed)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T19:20+02:00",
+              "status": "out",
+              "return": "Round 2",
+              "comment": "Undisclosed"
             }
           ]
         }
@@ -3107,5 +3129,5 @@
       "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-09-30T17:23:52"
+  "updatedAt": "2026-09-30T19:20:15"
 }
