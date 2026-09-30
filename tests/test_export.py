@@ -19,7 +19,7 @@ SCHEMA = {
     "league/ID/records": [{"league", "finished", "round", "roundAwards", "oscars", "records", "form", "missingLineups",
                            "draftAwards", "recap", "efficiency", "schedule", "partialLineups"}],
     "league/ID/free-agents": [{"league", "scope", "statsRound", "players", "totalPlayers", "rosteredPlayers",
-                               "injuryReportUrl"}],
+                               "injuryReportUrl", "advanced"}],
     "league/ID/draft": [{"league", "picks", "teams"}],
     "league/ID/transfers": [{"league", "moves", "teams", "upcoming", "lock", "usesCredits", "startingCredits"}],
     "league/ID/injuries": [{"league", "events", "total", "teams", "reportUrl"}],
@@ -116,6 +116,20 @@ def test_player_games_carry_the_opponents_defensive_rank(replayed):
     ranks = {g["opponent"]: g["oppDefRank"] for row in doc["gameLog"] for g in row["games"]}
     assert ranks and all(r is None or 1 <= r <= 20 for r in ranks.values())
     assert any(r is not None for r in ranks.values())
+
+
+def test_player_lists_carry_advanced_stats(replayed):
+    out, _ = replayed
+    doc = json.loads(api_files(out)[f"league/{HLA}/players.en.json"].read_text())
+    adv = doc["advanced"]
+    keys = [c["key"] for c in adv["columns"]]
+    assert len(keys) == 21 and {"usage_percentage", "ts_percentage", "turnover_percentage"} <= set(keys)
+    assert {c["group"] for c in adv["columns"]} == {g["id"] for g in adv["groups"]}
+    assert adv["context"]["ts_percentage"]["better"] == "higher"
+    assert adv["context"]["turnover_percentage"]["better"] == "lower"
+    regular = [p for p in doc["players"] if (p["season"] or {}).get("min", 0) >= adv["contextMinutes"]]
+    assert sum(1 for p in regular if p["adv"]) > 0.9 * len(regular)
+    assert all(p["adv"] is None or set(p["adv"]) == set(keys) for p in doc["players"])
 
 
 def test_defense_ranking(replayed):

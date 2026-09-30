@@ -446,6 +446,14 @@ th.sortable[data-tip] { cursor: pointer; }
 .round-nav .link { margin-left: 8px; font-size: 14px; }
 .round-nav.inline { margin: 0; }
 .round-nav.moves-nav { margin: 0 0 12px; }
+.list-views-row .check[hidden] { display: none; }
+.list-views-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 0 0 10px; }
+.seg.list-views { margin: 0; }
+.adv-group-head { text-align: center; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted);
+  border-bottom: 1px solid var(--border); }
+th .adv-dir { margin-left: 2px; font-size: 11px; color: var(--muted); }
+.grid.stats-table tr td.stat.adv-good { color: var(--win); font-weight: 600; }
+.grid.stats-table tr td.stat.adv-bad { color: var(--loss); }
 .round-card { padding: 20px 22px; }
 .round-card-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 14px; }
 .versus { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px; margin-top: 16px; }

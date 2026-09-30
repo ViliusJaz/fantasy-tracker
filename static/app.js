@@ -56,6 +56,11 @@ const I18N = {
     ownerFree: "Tik laisvi",
     statusSortTitle: "Rikiuoti pagal traumos sunkumą",
     allNote: "Statistika: sezono vidurkiai (metimai: taiklumo %). Paspausk ant stulpelio pavadinimo, kad surikiuotum. Traumos iš ",
+    viewBasic: "Statistika",
+    viewAdv: "Pažangi statistika",
+    advListNote: "Pažangi sezono statistika iš {link}. Spalva: palyginimas su žaidėjais, vidutiniškai žaidžiančiais bent {m} min. – žalia: geriausias ketvirtis, raudona: prasčiausias. ↓ – mažiau yra geriau. Užvedus pelę ant stulpelio pavadinimo – paaiškinimas.",
+    advListNone: "BasketNews pažangios statistikos šiam žaidėjui neturi",
+    advRegular: "Tik žaidžiantys {m}+ min.",
     combinedNote: "komanda šį turą žaidė dukart, statistika sudėta",
     noBoxYet: "Statistikos dar nėra.",
     previewReady: "Apžvalga",
@@ -402,6 +407,11 @@ const I18N = {
     ownerFree: "Free only",
     statusSortTitle: "Sort by injury severity",
     allNote: "Stats are season averages (shooting as %). Click a column name to sort. Injuries come from the ",
+    viewBasic: "Stats",
+    viewAdv: "Advanced stats",
+    advListNote: "Season advanced stats from {link}. Colour compares with players averaging at least {m} min: green is the best quarter, red the worst. ↓ means lower is better. Hover a column name for what it measures.",
+    advListNone: "BasketNews has no advanced stats for this player",
+    advRegular: "Only players averaging {m}+ min",
     combinedNote: "played twice this round, stats combined",
     noBoxYet: "No stats yet.",
     previewReady: "Preview",
@@ -1892,23 +1902,35 @@ const FA_VALUE = {
   ft: (p) => (p.season ? pct(p.season.ftm, p.season.fta) : null),
 };
 const PCT_KEYS = new Set(["p2", "p3", "ft"]);
+// "adv:<key>": a season advanced stat from BasketNews (see advanced_table in the backend)
+const valueOf = (key) => FA_VALUE[key] || (key.startsWith("adv:") ? (p) => p.adv?.[key.slice(4)] : () => null);
+let advLower = new Set();  // advanced stats where a smaller number is the better one
 const TEXT_KEYS = new Set(["name", "owner"]);
 
 const listState = {
-  free: { search: "", pos: "", club: "", owner: "", healthyOnly: false, sort: "avgPts", dir: -1, ranges: [] },
-  all: { search: "", pos: "", club: "", owner: "", healthyOnly: false, sort: "avgPts", dir: -1, ranges: [] },
+  free: { search: "", pos: "", club: "", owner: "", healthyOnly: false, sort: "avgPts", dir: -1, ranges: [], view: "basic", regularOnly: true },
+  all: { search: "", pos: "", club: "", owner: "", healthyOnly: false, sort: "avgPts", dir: -1, ranges: [], view: "basic", regularOnly: true },
 };
 
-function listFilterOptions(lastLabel) {
+function listFilterOptions(lastLabel, advanced) {
   return [
     ["avgPts", t("avgFp")], ["roundPts", lastLabel], ["gamesPlayed", t("gp")],
     ...statCols().map((c) => [c.key, PCT_KEYS.has(c.key) ? `${c.abbr} %` : c.abbr]),
+    ...(advanced?.columns || []).map((c) => [`adv:${c.key}`, c.short]),
   ];
+}
+
+// Green / red against the league's upper / lower quartile (reversed where lower is better).
+function advLevel(v, ctx) {
+  if (v == null || !ctx) return "";
+  const good = ctx.better === "lower" ? v <= ctx.low : v >= ctx.high;
+  const bad = ctx.better === "lower" ? v >= ctx.high : v <= ctx.low;
+  return good ? " adv-good" : bad ? " adv-bad" : "";
 }
 
 function rangeBounds(players, key) {
   if (PCT_KEYS.has(key)) return { lo: 0, hi: 100, step: 1 };
-  const vals = players.map(FA_VALUE[key]).filter((v) => v !== null && v !== undefined);
+  const vals = players.map(valueOf(key)).filter((v) => v !== null && v !== undefined);
   const lo = Math.floor(Math.min(0, ...vals));
   const hi = Math.ceil(Math.max(1, ...vals));
   return { lo, hi, step: key === "gamesPlayed" ? 1 : 0.5 };
@@ -1935,8 +1957,48 @@ async function renderPlayerList(fid, scope, token, silent) {
   const all = scope === "all";
   const clubs = [...new Set(data.players.map((p) => p.club?.abbr).filter(Boolean))].sort();
   const lastLabel = `${t("roundShort", { n: data.statsRound + 1 })} FP`;
-  const filterOptions = listFilterOptions(lastLabel);
+  const adv = data.advanced;
+  advLower = new Set((adv?.columns || []).filter((c) => c.better === "lower").map((c) => `adv:${c.key}`));
+  const filterOptions = listFilterOptions(lastLabel, adv);
   const extraCols = all ? 1 : 0;
+  if (!adv) st.view = "basic";
+
+  // Table head of the current view; the advanced one has a row of group names above.
+  const head = () => {
+    const lead = `<th class="sticky sortable" data-sort="name"${st.view === "adv" ? ' rowspan="2"' : ""}>${t("player")}</th>
+      ${all ? `<th class="sortable" data-sort="owner"${st.view === "adv" ? ' rowspan="2"' : ""}>${t("ownerCol")}</th>` : ""}`;
+    if (st.view !== "adv") {
+      return `<tr>${lead}
+        <th class="sortable" data-sort="status" title="${esc(t("statusSortTitle"))}">${t("status")}</th>
+        <th>${roundLabel(league.currentRound)}</th>
+        <th class="num sortable" data-sort="avgPts" title="${esc(t("avgFpTitle"))}">${t("avgFp")}</th>
+        <th class="num sortable" data-sort="roundPts" title="${esc(t("lastFpTitle"))}">${esc(lastLabel)}</th>
+        <th class="num sortable" data-sort="gamesPlayed" title="${esc(t("gpTitle"))}">${t("gp")}</th>
+        ${statHeads(true)}</tr>`;
+    }
+    const groups = adv.groups.map((g) => {
+      const n = adv.columns.filter((c) => c.group === g.id).length;
+      return n ? `<th class="adv-group-head" colspan="${n}">${esc(g.title)}</th>` : "";
+    }).join("");
+    const cols = adv.columns.map((c) => {
+      const ctx = adv.context[c.key];
+      const tip = `${c.title}\n${c.desc}${ctx ? `\n${t("avgTipPlain", { v: fmt1(ctx.avg) })}` : ""}`;
+      return `<th class="num sortable" data-sort="adv:${c.key}" title="${esc(tip)}">${esc(c.short)}${c.better === "lower" ? '<span class="adv-dir">↓</span>' : ""}</th>`;
+    }).join("");
+    return `<tr>${lead}
+        <th class="num sortable" data-sort="avgPts" rowspan="2" title="${esc(t("avgFpTitle"))}">${t("avgFp")}</th>
+        <th class="num sortable" data-sort="gamesPlayed" rowspan="2" title="${esc(t("gpTitle"))}">${t("gp")}</th>
+        ${groups}</tr><tr>${cols}</tr>`;
+  };
+  const advCells = (p) => (p.adv
+    ? adv.columns.map((c) => `<td class="num stat${advLevel(p.adv[c.key], adv.context[c.key])}">${fmt1(p.adv[c.key])}</td>`).join("")
+    : `<td class="dim" colspan="${adv.columns.length}">${t("advListNone")}</td>`);
+  const views = adv ? `<div class="list-views-row"><div class="seg list-views" role="group">${[["basic", t("viewBasic")], ["adv", t("viewAdv")]].map(([v, label]) =>
+    `<button type="button" class="seg-btn${st.view === v ? " on" : ""}" data-view="${v}" aria-pressed="${st.view === v}">${label}</button>`).join("")}</div>
+    <label class="check" id="fa-regular-box"${st.view === "adv" ? "" : " hidden"}><input type="checkbox" id="fa-regular"${st.regularOnly ? " checked" : ""}> ${t("advRegular", { m: adv.contextMinutes })}</label></div>` : "";
+  const note = () => (st.view === "adv"
+    ? t("advListNote", { link: `<a class="link" href="${esc(adv.url)}" target="_blank" rel="noopener">BasketNews</a>`, m: adv.contextMinutes })
+    : `${esc(all ? t("allNote") : t("faNote", { total: data.totalPlayers, comp: league.competition, owned: data.rosteredPlayers }))}<a class="link" href="${esc(data.injuryReportUrl || "#")}" target="_blank" rel="noopener">${t("injuryReport")}</a>${t("faNoteEnd")}`);
 
   setView(`
     ${leagueHeader(league, all ? "players" : "free-agents")}
@@ -1957,22 +2019,14 @@ async function renderPlayerList(fid, scope, token, silent) {
       <span class="updated" id="fa-count"></span>
     </div>
     <div class="range-filters" id="fa-ranges"></div>
+    ${views}
     <div class="card table-scroll">
       <table class="grid players stats-table">
-        <thead><tr>
-          <th class="sticky sortable" data-sort="name">${t("player")}</th>
-          ${all ? `<th class="sortable" data-sort="owner">${t("ownerCol")}</th>` : ""}
-          <th class="sortable" data-sort="status" title="${esc(t("statusSortTitle"))}">${t("status")}</th>
-          <th>${roundLabel(league.currentRound)}</th>
-          <th class="num sortable" data-sort="avgPts" title="${esc(t("avgFpTitle"))}">${t("avgFp")}</th>
-          <th class="num sortable" data-sort="roundPts" title="${esc(t("lastFpTitle"))}">${esc(lastLabel)}</th>
-          <th class="num sortable" data-sort="gamesPlayed" title="${esc(t("gpTitle"))}">${t("gp")}</th>
-          ${statHeads(true)}
-        </tr></thead>
+        <thead id="fa-head">${head()}</thead>
         <tbody id="fa-body"></tbody>
       </table>
     </div>
-    <p class="note">${esc(all ? t("allNote") : t("faNote", { total: data.totalPlayers, comp: league.competition, owned: data.rosteredPlayers }))}<a class="link" href="${esc(data.injuryReportUrl || "#")}" target="_blank" rel="noopener">${t("injuryReport")}</a>${t("faNoteEnd")}</p>`);
+    <p class="note" id="fa-note">${note()}</p>`);
 
   document.getElementById("fa-pos").value = st.pos;
   document.getElementById("fa-club").value = clubs.includes(st.club) ? st.club : "";
@@ -1986,12 +2040,13 @@ async function renderPlayerList(fid, scope, token, silent) {
       (!st.club || p.club?.abbr === st.club) &&
       (!all || !st.owner || (st.owner === "owned" ? !!p.owner : !p.owner)) &&
       (!st.healthyOnly || !p.injury) &&
+      (st.view !== "adv" || !st.regularOnly || (p.season?.min ?? 0) >= adv.contextMinutes) &&
       st.ranges.every((r) => {
-        const v = FA_VALUE[r.key](p);
+        const v = valueOf(r.key)(p);
         return v !== null && v !== undefined && v >= r.min - 1e-9 && v <= r.max + 1e-9;
       }));
     const key = st.sort;
-    const get = FA_VALUE[key];
+    const get = valueOf(key);
     rows.sort((a, b) => {
       const av = get(a), bv = get(b);
       if (TEXT_KEYS.has(key)) {
@@ -2007,19 +2062,22 @@ async function renderPlayerList(fid, scope, token, silent) {
       th.classList.toggle("sorted", th.dataset.sort === key);
       th.dataset.dir = st.dir > 0 ? "↑" : "↓";
     });
+    const advView = st.view === "adv";
+    const width = advView ? 3 + extraCols + adv.columns.length : 6 + extraCols + STAT_DEFS.length;
     document.getElementById("fa-body").innerHTML = rows.map((p) => `
       <tr class="clickable${all && !p.owner ? " free-row" : ""}" data-player="${p.id}">
         <td class="sticky"><div class="player">${avatar(p)}<div>
           <span class="player-name">${esc(p.name)}</span>
           <div class="sub">${POS[p.position] || ""} · ${clubTag(p.club)}</div></div></div></td>
         ${all ? `<td>${ownerCell(p.owner)}</td>` : ""}
+        ${advView ? `<td class="num pts-strong">${fmt1(p.avgPts)}</td><td class="num">${p.gamesPlayed}</td>${advCells(p)}` : `
         <td>${p.injury ? injuryBadge(p.injury) : '<span class="dim">-</span>'}</td>
         <td>${gameCell(p.games)}</td>
         <td class="num pts-strong">${fmt1(p.avgPts)}</td>
         <td class="num">${fmt(p.roundPts)}</td>
         <td class="num">${p.gamesPlayed}</td>
-        ${statCells(p.season, "avg")}
-      </tr>`).join("") || `<tr><td colspan="${6 + extraCols + STAT_DEFS.length}" class="dim" style="text-align:center">${t("noPlayers")}</td></tr>`;
+        ${statCells(p.season, "avg")}`}
+      </tr>`).join("") || `<tr><td colspan="${width}" class="dim" style="text-align:center">${t("noPlayers")}</td></tr>`;
   };
 
   // Stat range filters: a two-thumb slider plus number boxes that stay in sync.
@@ -2086,6 +2144,7 @@ async function renderPlayerList(fid, scope, token, silent) {
   document.getElementById("fa-club").addEventListener("change", (e) => { st.club = e.target.value; draw(); });
   if (all) document.getElementById("fa-owner").addEventListener("change", (e) => { st.owner = e.target.value; draw(); });
   document.getElementById("fa-healthy").addEventListener("change", (e) => { st.healthyOnly = e.target.checked; draw(); });
+  document.getElementById("fa-regular")?.addEventListener("change", (e) => { st.regularOnly = e.target.checked; draw(); });
   document.getElementById("fa-add-range").addEventListener("click", () => {
     const used = new Set(st.ranges.map((r) => r.key));
     const key = filterOptions.map(([k]) => k).find((k) => !used.has(k)) || "avgPts";
@@ -2093,12 +2152,29 @@ async function renderPlayerList(fid, scope, token, silent) {
     st.ranges.push({ key, min: b.lo, max: b.hi });
     drawRanges(); draw();
   });
-  app.querySelectorAll("th.sortable").forEach((th) => th.addEventListener("click", () => {
-    const key = th.dataset.sort;
-    st.dir = st.sort === key ? -st.dir : TEXT_KEYS.has(key) ? 1 : -1;
-    st.sort = key;
+  app.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => {
+    st.view = b.dataset.view;
+    app.querySelectorAll("[data-view]").forEach((x) => {
+      x.classList.toggle("on", x === b);
+      x.setAttribute("aria-pressed", String(x === b));
+    });
+    document.getElementById("fa-head").innerHTML = head();
+    document.getElementById("fa-regular-box").hidden = st.view !== "adv";
+    if (!document.querySelector(`#fa-head th[data-sort="${CSS.escape(st.sort)}"]`)) {
+      st.sort = "avgPts";  // the sorted column is not in this view
+      st.dir = -1;
+    }
+    document.getElementById("fa-note").innerHTML = note();
     draw();
   }));
+  document.getElementById("fa-head").addEventListener("click", (e) => {
+    const th = e.target.closest("th.sortable");
+    if (!th) return;
+    const key = th.dataset.sort;
+    st.dir = st.sort === key ? -st.dir : TEXT_KEYS.has(key) || advLower.has(key) ? 1 : -1;
+    st.sort = key;
+    draw();
+  });
   drawRanges();
   draw();
 }

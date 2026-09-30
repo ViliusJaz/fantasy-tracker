@@ -117,6 +117,26 @@ def _percentile(vals, v):
     return round(100 * (below + same / 2) / len(vals))
 
 
+def advanced_table(meta, pmap):
+    """Season advanced stats of every player in `pmap` for the player lists: the columns (in the
+    player card's groups and order), the league context of each, and {playerId: {key: value}}.
+    Players BasketNews has no row for get None. `pmap` must come from players(), which pairs the
+    rows listed under another id."""
+    table = advanced_stats(meta)
+    context, _ = advanced_context(table)
+    columns = [{"key": key, "short": short, "title": L(title_lt, title_en), "desc": L(desc_lt, desc_en), "group": gid,
+                "better": "lower" if key in LOWER_IS_BETTER else "higher"}
+               for gid, _, items in ADV_GROUPS for key, short, title_lt, title_en, desc_lt, desc_en in items]
+    values = {}
+    for pid, p in pmap.items():
+        row = table.get(str(p["bnId"])) if p.get("bnId") else None
+        values[pid] = {c["key"]: adv_value(row, c["key"]) for c in columns} if row else None
+    return {"groups": [{"id": gid, "title": L(lt, en)} for gid, (lt, en), _ in ADV_GROUPS],
+            "columns": columns, "context": {c["key"]: context.get(c["key"]) for c in columns},
+            "contextMinutes": ADV_MIN_SECONDS // 60,
+            "url": f"https://basketnews.com/advanced-stats/{meta['bnLeagueId']}/{meta['seasonYear']}"}, values
+
+
 def advanced_profile(meta, bn_id):
     table = advanced_stats(meta)
     row = table.get(str(bn_id)) if bn_id else None
