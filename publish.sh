@@ -47,6 +47,10 @@ device() {
   esac
 }
 
+clock_of() {  # epoch seconds -> 13:38 (BSD date on the Mac, GNU / toybox date on Termux)
+  date -r "$1" '+%H:%M' 2>/dev/null || date -d "@$1" '+%H:%M' 2>/dev/null || echo "$1"
+}
+
 cleanup() {
   release_lock
   rm -rf "$TMP"
@@ -61,11 +65,12 @@ acquire_lock() {
     git fetch -q origin "+$LOCK_REF:refs/ft/lock-seen"
     holder=$(git log -1 --format=%s refs/ft/lock-seen)
     until=$(echo "$holder" | sed -n 's/.* until \([0-9][0-9]*\).*/\1/p')
+    holder=$(echo "$holder" | sed -n 's/^publish lock: \([^ ]*\) until.*/\1/p')
     if [ "${until:-0}" -gt "$now" ]; then
-      say "skipped: ${holder#publish lock: } (another device is publishing)"
+      say "skipped: ${holder:-another device} is publishing (lock until $(clock_of "$until"))"
       exit 0
     fi
-    say "taking over an expired lock (${holder#publish lock: })"
+    say "taking over an expired lock of ${holder:-another device} (it ended $(clock_of "${until:-0}"))"
     expect=$current
   fi
   lock_tree=$(git hash-object -w -t tree /dev/null)

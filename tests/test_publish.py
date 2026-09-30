@@ -95,7 +95,7 @@ def test_second_device_skips_while_the_first_holds_the_lock(github):
         threading.Event().wait(0.05)
     second = publish(phone, FAKE_PLAYER="2")
     t.join()
-    assert second.returncode == 0 and "another device is publishing" in second.stdout
+    assert second.returncode == 0 and "skipped: mac is publishing" in second.stdout
     assert first["run"].returncode == 0, first["run"].stdout + first["run"].stderr
     assert injured(github) == {"1"}                        # the phone changed nothing
     assert remote_file(github, "gh-pages", "index.html") == "site by mac"
@@ -135,7 +135,7 @@ def test_a_valid_lock_is_respected(github):
     held = git(mac, "commit-tree", empty, "-m", "publish lock: phone until 9999999999")
     git(mac, "push", "-q", "origin", f"{held}:refs/heads/publish-lock")
     run = publish(mac, FAKE_PLAYER="7")
-    assert run.returncode == 0 and "skipped: phone until" in run.stdout
+    assert run.returncode == 0 and "skipped: phone is publishing (lock until" in run.stdout
     assert remote(github, "publish-lock") == held       # not ours to release
     assert remote(github, "gh-pages") is None
 
