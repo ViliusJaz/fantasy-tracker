@@ -2694,6 +2694,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "DNP in Round 2 (Back discomfort)"
+            },
+            {
+              "date": "2026-09-30",
+              "at": "2026-09-30T17:23+02:00",
+              "status": "expected",
+              "return": "Round 3",
+              "comment": "DNP in Round 2 (Back discomfort)"
             }
           ]
         }
@@ -3100,5 +3107,5 @@
       "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-09-30T16:54:22"
+  "updatedAt": "2026-09-30T17:23:52"
 }
