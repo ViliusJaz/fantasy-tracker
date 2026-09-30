@@ -27,7 +27,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import replay  # noqa: E402
 
-ENV = {"PYTHONHASHSEED": "0", "TZ": "Europe/Vilnius", "PYTHONDONTWRITEBYTECODE": "1"}
+ENV = {"PYTHONHASHSEED": "0", "TZ": "Europe/Vilnius", "PYTHONDONTWRITEBYTECODE": "1", "FT_NO_RETRY_WAIT": "1"}
 
 
 def reexec_with_fixed_env():

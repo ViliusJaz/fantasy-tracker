@@ -1,12 +1,10 @@
 """Direct Proballers profile links, found through Wikidata and remembered in data/proballers.json."""
-import http.client
 import re
 import threading
-import urllib.error
 import urllib.parse
 from datetime import timedelta
 
-from backend import clock, config, log
+from backend import clock, config, log, net
 from backend.sources.wikidata import basketnews_birth_date, wikidata_candidates, wikidata_search
 from backend.util import ascii_slug, read_json, write_json
 
@@ -38,7 +36,7 @@ def proballers_link(info):
         if len(cands) == 1:
             c = cands[0]
             url = f"https://www.proballers.com/basketball/player/{c['pb']}/{ascii_slug(c['label'])}"
-    except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException, ValueError, KeyError) as exc:
+    except (net.FetchError, ValueError, KeyError) as exc:
         LOG.warning("Proballers lookup failed for %s: %s", info["name"], exc)
         return None
     with _proballers_lock:

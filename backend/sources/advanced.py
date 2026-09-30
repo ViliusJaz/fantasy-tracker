@@ -1,16 +1,13 @@
 """BasketNews advanced statistics (basketnews.com/advanced-stats): player rows per season or round,
 and team ratings with the strengths / weaknesses summaries."""
-import http.client
-import json
 import threading
 import time
 import urllib.parse
 import urllib.request
 
-from backend import log
+from backend import log, net
 from backend.config import BROWSER_UA
 from backend.i18n import LANG
-from backend.net import read_body
 
 
 LOG = log.get("fetch")
@@ -44,14 +41,14 @@ def advanced_stats(meta, rnd=None):
                  "Content-Type": "application/x-www-form-urlencoded", "Accept-Encoding": "gzip",
                  "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
     try:
-        payload = json.loads(read_body(req))
+        payload = net.fetch(req, "advanced-stats", as_json=True)
         data = payload.get("data") or {}
         max_seq = (data.get("extra") or {}).get("max_sequence") or 0
         if rnd is not None and max_seq < rnd + 1:
             result = {}  # BasketNews clamps to its last game; that round isn't there yet
         else:
             result = {str(r["player_id"]): r for r in data.get("stats") or []}
-    except (OSError, http.client.HTTPException, ValueError) as exc:  # network, timeout, bad gzip / JSON
+    except net.FetchError as exc:
         LOG.warning("advanced stats unavailable: %s", exc)
         return hit[1] if hit else {}
     ttl = 3600 if rnd is None else (12 * 3600 if rnd < meta["currentRound"] else 300)
@@ -121,8 +118,8 @@ def team_advanced(meta):
                  "Content-Type": "application/x-www-form-urlencoded", "Accept-Encoding": "gzip",
                  "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
     try:
-        data = json.loads(read_body(req)).get("data") or {}
-    except (OSError, http.client.HTTPException, ValueError) as exc:  # network, timeout, bad gzip / JSON
+        data = net.fetch(req, "advanced-stats", as_json=True).get("data") or {}
+    except net.FetchError as exc:
         LOG.warning("team advanced stats unavailable: %s", exc)
         return hit[1] if hit else {}
     lang = "en" if LANG.get() == "en" else "lt"

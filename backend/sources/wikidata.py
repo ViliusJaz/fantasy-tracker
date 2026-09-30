@@ -1,6 +1,5 @@
 """Wikidata lookups for Proballers IDs (property P8548), plus birth dates from BasketNews profiles
 to tell namesakes apart."""
-import json
 import re
 import threading
 import time
@@ -9,7 +8,7 @@ import urllib.parse
 import urllib.request
 
 from backend.config import BROWSER_UA
-from backend.net import SSL_CTX
+from backend import net
 from backend.util import ascii_slug
 
 
@@ -48,8 +47,7 @@ def _wikidata_get(url, data=None):
     if data is not None:
         headers["Content-Type"] = "application/x-www-form-urlencoded"
     req = urllib.request.Request(url, data=data, headers=headers)
-    with urllib.request.urlopen(req, context=SSL_CTX, timeout=30) as resp:
-        return json.load(resp)
+    return net.fetch(req, "wikidata", timeout=30, as_json=True)
 
 
 def wikidata_search(text, limit=10):
@@ -98,8 +96,7 @@ def basketnews_birth_date(bn_id, name):
     """'Age: 33 (1993 April 10)' on the BasketNews player page -> '1993-04-10'."""
     url = f"https://basketnews.com/players/{bn_id}-{ascii_slug(name)}.html"
     req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA})
-    with urllib.request.urlopen(req, context=SSL_CTX, timeout=20) as resp:
-        page = resp.read().decode("utf-8", errors="replace")
+    page = net.fetch(req, "basketnews-web", timeout=20).decode("utf-8", errors="replace")
     m = re.search(r"\((\d{4})\s+([A-Za-z]+)\s+(\d{1,2})\)", page)
     if not m or m.group(2).lower() not in MONTHS:
         return None

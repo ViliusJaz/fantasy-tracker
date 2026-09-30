@@ -223,7 +223,9 @@ def main():
         LANG.set(lang)
         job(file_name("leagues", None, lang), leagues_payload)
     (OUT / "api" / "meta.json").write_text(json.dumps({"generatedAt": GENERATED}), encoding="utf-8")
-    log.get("fetch").info("requests: %d, failed: %d", net.STATS["requests"], net.STATS["failures"])
+    for source, st in sorted(net.stats().items()):
+        log.get("fetch").info("%s: %d requests, %d retried, %d failed, %.2f MB", source, st["requests"],
+                              st["retries"], st["failures"], st["bytes"] / 1e6)
     missing = injuries.untranslated()
     if missing:
         LOG.info("%d injury comment(s) without a Lithuanian translation, e.g. %s", len(missing), missing[0])

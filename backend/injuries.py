@@ -1,17 +1,14 @@
 """Injury report: the cached current report, statuses and comments in the UI language, and each
 player's season injury story from the recorded episodes."""
-import http.client
 import threading
 import time
-import urllib.error
 import urllib.request
 from datetime import date
 
-from backend import clock, history, injury_lt, log
+from backend import clock, history, injury_lt, log, net
 from backend.config import BROWSER_UA, INJURY_TTL
 from backend.history import REMOVED_NOTE
 from backend.i18n import L, LANG
-from backend.net import read_body
 from backend.sources.injury_report import DNP_RE, SITE_LABELS, _clean, dnp_reason, is_injury, parse_injury_report
 
 
@@ -78,8 +75,8 @@ def injury_report(meta):
         req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA, "Accept-Language": "en,lt",
                                                    "Accept-Encoding": "gzip"})
         try:
-            entries = parse_injury_report(read_body(req).decode("utf-8", errors="replace"))
-        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException) as exc:
+            entries = parse_injury_report(net.fetch(req, "injury-report").decode("utf-8", errors="replace"))
+        except net.FetchError as exc:
             LOG.warning("injury report unavailable (%s): %s", url, exc)
             if hit:
                 return hit[1]

@@ -199,15 +199,15 @@ def test_link_advanced_rows_leaves_ambiguous_matches_alone(ft):
 
 
 def test_advanced_stats_future_round_is_empty(ft, monkeypatch):
-    monkeypatch.setattr(ft, "read_body", lambda *a, **k: pytest.fail("no request expected"))
+    monkeypatch.setattr(ft, "fetch", lambda *a, **k: pytest.fail("no request expected"))
     meta = {"bnLeagueId": "25", "seasonYear": 2026, "latestRound": 1, "currentRound": 1}
     assert ft.advanced_stats(meta, 5) == {}
     assert ft.advanced_stats({**meta, "bnLeagueId": None}) == {}
 
 
 def test_advanced_stats_round_not_published_yet(ft, monkeypatch):
-    body = json.dumps({"data": {"extra": {"max_sequence": 1}, "stats": [{"player_id": 1}]}}).encode()
-    monkeypatch.setattr(ft, "read_body", lambda *a, **k: body)
+    body = {"data": {"extra": {"max_sequence": 1}, "stats": [{"player_id": 1}]}}
+    monkeypatch.setattr(ft, "fetch", lambda *a, **k: body)
     monkeypatch.setattr(ft, "_adv_cache", {})
     meta = {"bnLeagueId": "25", "seasonYear": 2026, "latestRound": 1, "currentRound": 1}
     assert ft.advanced_stats(meta, 1) == {}          # BasketNews has only game 1: round 2 is not there
@@ -216,8 +216,8 @@ def test_advanced_stats_round_not_published_yet(ft, monkeypatch):
 
 def test_advanced_stats_network_failure_keeps_old_data(ft, monkeypatch):
     def boom(*a, **k):
-        raise TimeoutError("slow")
-    monkeypatch.setattr(ft, "read_body", boom)
+        raise ft.FetchError("timed out")
+    monkeypatch.setattr(ft, "fetch", boom)
     monkeypatch.setattr(ft, "_adv_cache", {})
     meta = {"bnLeagueId": "25", "seasonYear": 2026, "latestRound": 1, "currentRound": 1}
     assert ft.advanced_stats(meta) == {}

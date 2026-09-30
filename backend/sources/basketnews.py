@@ -1,16 +1,15 @@
 """BasketNews Fantasy GraphQL API: the queries, the client with its cache, and the adapters that
 turn raw records into the tracker's player / game / team dicts."""
-import http.client
 import json
 import threading
 import time
-import urllib.error
 import urllib.request
+from concurrent.futures import Future
 
+from backend import net
 from backend.config import BROWSER_UA, LIVE_TTL, LOCALE
 from backend.errors import UpstreamError
 from backend.i18n import L
-from backend.net import read_body
 
 
 GRAPHQL_URL = "https://fantasy.basketnews.com/backend/graphql"
@@ -20,6 +19,7 @@ LOGO_URL = "https://fantasy.basketnews.com/backend/api/storage/file/"
 _cache = {}
 
 _cache_lock = threading.Lock()
+_in_flight = {}  # cache key -> Future of the request being made for it
 
 # When set (export.py does), every answer is kept this long, whatever its usual cache time:
 # one export run reads each thing once and all its pages agree with each other.
@@ -37,13 +37,34 @@ def cache_answer(query, variables, data, ttl):
 
 
 def gql(query, variables, ttl=LIVE_TTL):
+    """`data` of a GraphQL answer, cached for `ttl` seconds. Threads asking for the same thing
+    at the same moment share one request."""
     ttl = RUN_TTL or ttl
     key = cache_key(query, variables)
-    now = time.time()
     with _cache_lock:
         hit = _cache.get(key)
-        if hit and hit[0] > now:
+        if hit and hit[0] > time.time():
             return hit[1]
+        waiting = _in_flight.get(key)
+        if waiting is None:
+            _in_flight[key] = mine = Future()
+    if waiting is not None:
+        return waiting.result()
+    try:
+        data = _post(query, variables)
+    except BaseException as exc:
+        mine.set_exception(exc)
+        raise
+    finally:
+        with _cache_lock:
+            _in_flight.pop(key, None)
+    with _cache_lock:
+        _cache[key] = (time.time() + ttl, data)
+    mine.set_result(data)
+    return data
+
+
+def _post(query, variables):
     body = json.dumps({"query": query, "variables": variables}).encode()
     req = urllib.request.Request(
         GRAPHQL_URL,
@@ -56,23 +77,13 @@ def gql(query, variables, ttl=LIVE_TTL):
                  # compressed answers are several times smaller (matters on mobile data)
                  "Accept-Encoding": "gzip"},
     )
-    for attempt in range(3):  # BasketNews sometimes stalls mid-answer: retry before giving up
-        try:
-            payload = json.loads(read_body(req, timeout=25))
-            break
-        except urllib.error.HTTPError as exc:
-            if exc.code < 500 or attempt == 2:
-                raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
-        except (OSError, http.client.HTTPException, ValueError) as exc:  # network, timeout, bad gzip / JSON
-            if attempt == 2:
-                raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
-        time.sleep(1 + attempt)
+    try:
+        payload = net.fetch(req, "basketnews", timeout=25, as_json=True)
+    except net.FetchError as exc:
+        raise UpstreamError(L(f"BasketNews nepasiekiamas: {exc}", f"BasketNews unreachable: {exc}")) from exc
     if payload.get("errors"):
         raise UpstreamError(payload["errors"][0].get("message", L("GraphQL klaida", "GraphQL error")))
-    data = payload["data"]
-    with _cache_lock:
-        _cache[key] = (now + ttl, data)
-    return data
+    return payload["data"]
 
 
 Q_COMPETITIONS = """
