@@ -424,6 +424,11 @@ th.sortable[data-tip] { cursor: pointer; }
 .chart-card { padding: 18px 18px 10px; position: relative; overflow: visible; }
 .chart-title { margin: 0 0 8px; font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--text); }
 .chart-wrap { position: relative; }
+.fp-link { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer;
+  text-decoration: underline dotted; text-decoration-color: var(--muted); text-underline-offset: 3px; }
+.fp-link:hover, .fp-link:focus-visible { color: var(--accent); text-decoration-color: var(--accent); }
+.chart-modal { width: min(720px, calc(100vw - 32px)); }
+.fp-chart-card { margin-top: 14px; }
 .chart-wrap svg { display: block; width: 100%; height: auto; overflow: visible; }
 .chart-wrap .grid-line { stroke: var(--grid-line); stroke-width: 1; }
 .chart-wrap .tick { fill: var(--muted); font-size: 11px; font-family: var(--font-text); }

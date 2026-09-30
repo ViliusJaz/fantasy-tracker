@@ -357,6 +357,14 @@ const I18N = {
     historyNote: "Istorija kaupiama automatiškai iš {link} kol veikia programa, o praleisti turai nustatomi iš rungtynių statistikos.",
     rounds: "Turai",
     didNotPlay: "Nežaidė",
+    fpChartOpen: "FP grafikas per turus",
+    fpChartTitle: "Fantasy taškai per turus",
+    fpSeasonAvg: "Sezono vidurkis",
+    fpBest: "Geriausias turas",
+    fpWorst: "Prasčiausias turas",
+    fpPlayed: "Sužaista turų",
+    fpChartNote: "Tarpai linijoje – turai, kurių žaidėjas nežaidė arba jo komanda neturėjo rungtynių. Užvesk pelę ant grafiko: turas, varžovas ir taškai.",
+    fpChartNone: "Šį sezoną žaidėjas dar nežaidė.",
     teamNoGame: "Komanda nežaidė",
     noRoundsPlayed: "Dar nėra sužaistų turų",
     loading: "Kraunama…",
@@ -704,6 +712,14 @@ const I18N = {
     historyNote: "The history is built automatically from the {link} while the app runs; missed rounds come from game stats.",
     rounds: "Rounds",
     didNotPlay: "Did not play",
+    fpChartOpen: "FP chart by round",
+    fpChartTitle: "Fantasy points by round",
+    fpSeasonAvg: "Season average",
+    fpBest: "Best round",
+    fpWorst: "Worst round",
+    fpPlayed: "Rounds played",
+    fpChartNote: "Gaps in the line are rounds the player did not play or his team had no game. Hover the chart for the round, opponent and points.",
+    fpChartNone: "The player has not played this season yet.",
     teamNoGame: "Team did not play",
     noRoundsPlayed: "No rounds played yet",
     loading: "Loading…",
@@ -767,6 +783,7 @@ langSwitch.addEventListener("click", (e) => {
   try { localStorage.setItem("ft-lang", LANG); } catch { /* per-browser preference only */ }
   applyLangChrome();
   if (modal.open) modal.close();
+  if (chartModal.open) chartModal.close();
   route(true);
 });
 
@@ -1085,6 +1102,11 @@ function avatar(p, size = "") {
   return `<span class="avatar-wrap"><img class="avatar ${size}" src="${esc(p.photo)}" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg')">${ph}</span>`;
 }
 
+// A fantasy-points value that opens the player's FP-by-round chart.
+function fpLink(pid, html) {
+  return pid ? `<button type="button" class="fp-link" data-fp-chart="${esc(pid)}" title="${esc(t("fpChartOpen"))}">${html}</button>` : html;
+}
+
 function clubMini(club, size = "") {
   return club?.logo ? `<img class="club-mini ${size}" src="${esc(club.logo)}" alt="" loading="lazy" onerror="this.remove()">` : "";
 }
@@ -1127,7 +1149,7 @@ function niceStep(range, target) {
 }
 
 /* series: [{name, color, values: [{y}]}]; xs: category labels in order. */
-function lineChart(id, { xs, series, invert = false, yMin, yMax, integer = false, format = fmt }) {
+function lineChart(id, { xs, series, invert = false, yMin, yMax, integer = false, format = fmt, heads = xs }) {
   const W = 560, H = 220, L = 44, R = 16, T = 14, B = 30;
   const plotW = W - L - R, plotH = H - T - B;
   let lo = yMin, hi = yMax;
@@ -1145,7 +1167,9 @@ function lineChart(id, { xs, series, invert = false, yMin, yMax, integer = false
   };
   const grid = ticks.map((v) => `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" class="grid-line"/>
     <text x="${L - 8}" y="${y(v) + 4}" class="tick" text-anchor="end">${integer ? v : fmt(v)}</text>`).join("");
-  const xlabels = xs.map((lbl, i) => `<text x="${x(i)}" y="${H - 8}" class="tick" text-anchor="middle">${esc(lbl)}</text>`).join("");
+  const every = Math.ceil(xs.length / 12);  // keep the labels readable over a long season
+  const xlabels = xs.map((lbl, i) => (i % every && i !== xs.length - 1 ? ""
+    : `<text x="${x(i)}" y="${H - 8}" class="tick" text-anchor="middle">${esc(lbl)}</text>`)).join("");
   const lines = series.map((s) => {
     const pts = s.values.map((v, i) => (v.y === null || v.y === undefined ? null : [x(i), y(v.y)]));
     let d = "", pen = false;
@@ -1176,7 +1200,7 @@ function lineChart(id, { xs, series, invert = false, yMin, yMax, integer = false
       cross.setAttribute("x1", px); cross.setAttribute("x2", px); cross.style.display = "";
       tip.replaceChildren();
       const head = document.createElement("div");
-      head.className = "tip-head"; head.textContent = xs[i];
+      head.className = "tip-head"; head.textContent = heads[i];
       tip.append(head);
       series.forEach((s) => {
         const v = s.values[i]?.y;
@@ -1661,7 +1685,7 @@ async function renderDraft(fid, params, token, silent) {
       <td class="num pick-no"><b>${pk.overall}</b><span class="dim">${pk.round}.${pk.pick}</span></td>
       <td><a class="team-name" href="#/l/${fid}/t/${pk.team.id}">${esc(pk.team.title)}</a></td>
       <td>${playerMini(pk.player)}</td>
-      <td class="num pts-strong">${fmt1(pk.player.avgPts)}</td>
+      <td class="num pts-strong">${fpLink(pk.player.id, fmt1(pk.player.avgPts))}</td>
       <td>${now}</td>
     </tr>`;
   }).join("");
@@ -2044,11 +2068,11 @@ async function renderPlayerList(fid, scope, token, silent) {
           <span class="player-name">${esc(p.name)}</span>
           <div class="sub">${POS[p.position] || ""} · ${clubTag(p.club)}</div></div></div></td>
         ${all ? `<td>${ownerCell(p.owner)}</td>` : ""}
-        ${advView ? `<td class="num pts-strong">${fmt1(p.avgPts)}</td><td class="num">${p.gamesPlayed}</td>${advCells(p)}` : `
+        ${advView ? `<td class="num pts-strong">${fpLink(p.id, fmt1(p.avgPts))}</td><td class="num">${p.gamesPlayed}</td>${advCells(p)}` : `
         <td>${p.injury ? injuryBadge(p.injury) : '<span class="dim">-</span>'}</td>
         <td>${gameCell(p.games)}</td>
-        <td class="num pts-strong">${fmt1(p.avgPts)}</td>
-        <td class="num">${fmt(p.roundPts)}</td>
+        <td class="num pts-strong">${fpLink(p.id, fmt1(p.avgPts))}</td>
+        <td class="num">${fpLink(p.id, fmt(p.roundPts))}</td>
         <td class="num">${p.gamesPlayed}</td>
         ${statCells(p.season, "avg")}`}
       </tr>`).join("") || `<tr><td colspan="${width}" class="dim" style="text-align:center">${t("noPlayers")}</td></tr>`;
@@ -2192,7 +2216,7 @@ function boxTable(side) {
   const rows = side.players.map((p) => `
     <tr class="clickable${p.owner ? "" : " free-row"}" data-player="${p.id}">
       <td class="sticky"><div class="player">${clubMini(side)}<span class="player-name">${esc(p.name)}</span></div></td>
-      <td class="num fp-cell">${fmt(p.fp)}</td>
+      <td class="num fp-cell">${fpLink(p.id, fmt(p.fp))}</td>
       ${cols.map((c) => `<td class="num stat">${cell(p.line, c.key)}</td>`).join("")}
       <td class="owner-col">${ownerCell(p.owner, false)}</td>
     </tr>`).join("");
@@ -2369,10 +2393,10 @@ function lineupTable(lineup, state) {
       <td class="sticky"><div class="player">${pill}${avatar(p)}<div>
         <span class="player-name">${esc(p.name)}</span>${p.captain ? `<span class="cap" title="${t("captain")}">C</span>` : ""}
         <div class="sub">${POS[p.position] || ""} · ${clubTag(p.club)} ${injuryBadge(p.injury)}</div></div></div></td>
-      <td class="num pts-col">${pts}</td>
+      <td class="num pts-col">${fpLink(p.id, pts)}</td>
       ${upcoming ? statCells(p.season, "avg") : statCells(p.roundLine, "round")}
       <td>${gameCell(p.games)}</td>
-      <td class="num">${fmt1(p.avgPts)}</td>
+      <td class="num">${fpLink(p.id, fmt1(p.avgPts))}</td>
     </tr>`;
   }).join("");
   const s = lineup.scoring;
@@ -2664,7 +2688,7 @@ function splitBody(data, which) {
   const line = all ? p.season || {} : st.line;
   const o = other?.line || {};
   const tiles = [
-    [tl.avgFp, fmt1(all ? p.avgPts : st.fp) + diff(st.fp, other?.fp), "fp"],
+    [tl.avgFp, fpLink(p.id, fmt1(all ? p.avgPts : st.fp)) + diff(st.fp, other?.fp), "fp"],
     [tl.last3, fmt1(st.last3) + diff(st.last3, other?.last3), null, t("lastTip", { n: 3 })],
     [tl.last5, fmt1(st.last5) + diff(st.last5, other?.last5), null, t("lastTip", { n: 5 })],
     [tl.gp, all ? p.gamesPlayed : st.games],
@@ -2818,7 +2842,7 @@ function playerView(fid, data) {
   const log = data.gameLog.map((g) => {
     const games = g.games.map((x) => `${x.home ? "vs" : "@"} ${esc(x.opponent)}${x.score ? ` ${x.score[0] > x.score[1] ? "W" : "L"} ${x.score[0]}:${x.score[1]}` : ""}`).join(", ") || '<span class="dim">-</span>';
     if (g.status === "played") {
-      return `<tr><td class="sticky">${roundLabel(g.round)}</td><td>${games}</td><td class="num pts-strong">${fmt(g.fp)}</td>${statCells(g.line, "round", LOG_SKIP)}</tr>`;
+      return `<tr><td class="sticky">${roundLabel(g.round)}</td><td>${games}</td><td class="num pts-strong">${fpLink(p.id, fmt(g.fp))}</td>${statCells(g.line, "round", LOG_SKIP)}</tr>`;
     }
     const why = { dnp: `${t("didNotPlay")}${g.reason ? `: ${esc(g.reason)}` : ""}`, "no-game": t("teamNoGame"), pending: t("notPlayedYet") }[g.status];
     return `<tr><td class="sticky">${roundLabel(g.round)}</td><td>${games}</td><td colspan="${STAT_DEFS.length + 1 - LOG_SKIP.length}" class="${g.status === "dnp" ? "dnp" : "dim"}">${why}</td></tr>`;
@@ -2882,6 +2906,83 @@ modal.addEventListener("click", (e) => {
   if (e.target === modal || e.target.closest("[data-close]")) modal.close();
   if (e.target.closest("a[href^='#']")) modal.close();
 });
+
+// ---- FP by round: a window of its own (it can open on top of the player card)
+
+const chartModal = document.getElementById("chart-modal");
+const chartBody = document.getElementById("chart-modal-body");
+let chartToken = 0;
+
+async function openFpChart(pid) {
+  const fid = currentLeagueId();
+  if (!fid) return;
+  const token = ++chartToken;
+  chartBody.innerHTML = `<div class="state">${t("loading")}</div>`;
+  if (!chartModal.open) chartModal.showModal();
+  let data;
+  try {
+    data = await api(`/api/league/${fid}/player/${pid}`);
+  } catch (e) {
+    if (token === chartToken) chartBody.innerHTML = stateBox(e.message, true);
+    return;
+  }
+  if (token !== chartToken) return;
+  const view = fpChartView(data);
+  chartBody.innerHTML = view.html;
+  view.bind();
+}
+
+function fpChartView(data) {
+  const p = data.player;
+  const log = [...data.gameLog].reverse();  // oldest round first
+  const played = log.filter((g) => g.status === "played" && g.fp != null);
+  const games = (g) => g.games.map((x) => `${x.home ? "vs" : "@"} ${x.opponent}`).join(", ");
+  const why = { dnp: t("didNotPlay"), "no-game": t("teamNoGame"), pending: t("notPlayedYet") };
+  const heads = log.map((g) => [roundLabel(g.round), games(g), g.status === "played" ? "" : why[g.status]].filter(Boolean).join(" · "));
+  const head = `<div class="pm-head">
+      ${avatar(p, "lg")}
+      <div class="pm-title"><h2>${esc(p.name)}</h2>
+        <div class="meta-line divided">${clubCell(p.club)}<span>${t("pos")[p.position] || ""}</span><span>${t("fpChartTitle")}</span></div></div>
+      <button class="close" type="button" data-close aria-label="${t("close")}">×</button>
+    </div>`;
+  if (!played.length) return { html: `${head}<p class="note">${t("fpChartNone")}</p>`, bind: () => {} };
+  const best = played.reduce((a, b) => (b.fp > a.fp ? b : a));
+  const worst = played.reduce((a, b) => (b.fp < a.fp ? b : a));
+  const chart = lineChart("fp-chart", {
+    xs: log.map((g) => t("roundShort", { n: g.round + 1 })), heads,
+    series: [
+      { name: "FP", color: CHART_TEAM, values: log.map((g) => ({ y: g.status === "played" ? g.fp : null })) },
+      { name: t("fpSeasonAvg"), color: CHART_AVG, values: log.map(() => ({ y: p.avgPts })) },
+    ],
+    format: (v) => `${fmt1(v)} FP`,
+  });
+  const tile = (label, value, sub = "") => `<div class="tile"><div class="label">${label}</div><div class="value">${value}</div>${sub ? `<div class="sub dim">${sub}</div>` : ""}</div>`;
+  return {
+    html: `${head}
+      <div class="tiles compact">
+        ${tile(t("tiles").avgFp, fmt1(p.avgPts))}
+        ${tile(t("fpBest"), fmt1(best.fp), `${roundLabel(best.round)} · ${esc(games(best))}`)}
+        ${tile(t("fpWorst"), fmt1(worst.fp), `${roundLabel(worst.round)} · ${esc(games(worst))}`)}
+        ${tile(t("fpPlayed"), `${played.length}/${log.length}`)}
+      </div>
+      <div class="card chart-card fp-chart-card">${chart.html}</div>
+      <p class="note">${t("fpChartNote")}</p>`,
+    bind: chart.bind,
+  };
+}
+
+chartModal.addEventListener("click", (e) => {
+  if (e.target === chartModal || e.target.closest("[data-close]")) chartModal.close();
+});
+
+// Any fantasy-points value with data-fp-chart opens the chart (before the row's own click).
+document.addEventListener("click", (e) => {
+  const link = e.target.closest("[data-fp-chart]");
+  if (!link) return;
+  e.preventDefault();
+  e.stopPropagation();
+  openFpChart(link.dataset.fpChart);
+}, true);
 
 app.addEventListener("click", (e) => {
   const info = e.target.closest("[data-award-info]");
