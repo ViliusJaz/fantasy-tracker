@@ -48,7 +48,7 @@ def injuries_payload(fid):
                     "status": status, "label": health_label(status),
                     "phrase": L(*FEED_PHRASES.get(status, ("būsena pasikeitė.", "status changed."))),
                     "tone": FEED_TONE.get(status, "neutral"),
-                    "comment": comment, "return": return_local(u.get("return")),
+                    "comment": comment, "return": return_local(u.get("return"), status),
                     "player": brief, "owner": owner,
                 })
     events.sort(key=lambda e: e["at"], reverse=True)

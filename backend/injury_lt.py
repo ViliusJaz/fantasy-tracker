@@ -313,7 +313,9 @@ def reason(text, case="nom"):
 
 
 def _round_loc(n):
-    return f"{n} ture"
+    """'2' -> '2 ture', '1-2' -> '1–2 turuose'."""
+    a, _, b = re.sub(r"\s", "", n).replace("–", "-").partition("-")
+    return f"{a}–{b} turuose" if b else f"{a} ture"
 
 
 def _duration(text, case="acc"):
@@ -460,8 +462,8 @@ def _after(prefix):
 
 
 CLAUSES = [
-    (r"^dnp in round\s*(\d+)(?: and (?:the )?domestic (league|cup))?$", _dnp),
-    (r"^dnp in (?:the )?(?:round\s*(\d+) and )?(?:the )?domestic (league|cup)$", _dnp),
+    (r"^dnp in rounds?\s*(\d+(?:\s*[-–]\s*\d+)?)(?: and (?:the )?domestic (league|cup))?$", _dnp),
+    (r"^dnp in (?:the )?(?:rounds?\s*(\d+(?:\s*[-–]\s*\d+)?) and )?(?:the )?domestic (league|cup)$", _dnp),
     (r"^(?:he )?(?:also )?played in (?:the )?(.+)$", _played),
     (r"^(but )?did ?n[o']?t travel with (?:the )?team(?: (?:in|for|to) round\s*(\d+))?(?: to ([^()]+))?$",
      lambda m, o: ("bet " if m.group(1) else "") + "nekeliavo su komanda"
@@ -547,7 +549,7 @@ def clause(text):
         return ""
     # "... after (a) DNP in Round 1 (reason) (and domestic league) (and playing in X)":
     # translate the head, add the DNP note
-    m = re.match(r"^(.*\S)\s+after (?:a )?dnp in round\s*(\d+)(?:\s*\(([^)]*)\))?( and (?:the )?domestic league)?"
+    m = re.match(r"^(.*\S)\s+after (?:a )?dnp in rounds?\s*(\d+(?:\s*[-–]\s*\d+)?)(?:\s*\(([^)]*)\))?( and (?:the )?domestic league)?"
                  r"(?: and playing in (.+))?$", k)
     if m:
         head = clause(t[:m.end(1)])
@@ -555,7 +557,7 @@ def clause(text):
         where = event_loc(t[m.start(5):m.end(5)]) if m.group(5) else None
         if not head or (m.group(3) and not why) or (m.group(5) and not where):
             return None
-        note = f"{m.group(2)} ture{' ir šalies lygoje' if m.group(4) else ''} nežaidė"
+        note = f"{_round_loc(m.group(2))}{' ir šalies lygoje' if m.group(4) else ''} nežaidė"
         note += f": {why}" if why else ""
         note += f"; žaidė {where}" if where else ""
         return f"{head} ({note})"

@@ -343,7 +343,6 @@ const I18N = {
     next: "Kitas",
     teamBadge: "Komanda: {t}",
     freeAgent: "Laisvasis agentas",
-    expectedReturn: "Numatomas grįžimas: {r}",
     healthy: "Sveikas",
     notOnReport: "Traumų sąraše nėra",
     injuryHistory: "Traumų istorija",
@@ -704,7 +703,6 @@ const I18N = {
     next: "Next",
     teamBadge: "Team: {t}",
     freeAgent: "Free agent",
-    expectedReturn: "Expected return: {r}",
     healthy: "Healthy",
     notOnReport: "Not on the injury report",
     injuryHistory: "Injury history",
@@ -1101,7 +1099,7 @@ function stamp() {
 function injuryBadge(injury) {
   if (!injury) return "";
   const cls = SEVERITY[injury.status] || "mild";
-  const title = [injury.return && t("expectedReturn", { r: injury.return }), injury.comment].filter(Boolean).join(". ");
+  const title = [injury.return, injury.comment].filter(Boolean).join(". ");
   return `<span class="inj ${cls}" title="${esc(title)}">${esc(injury.label)}</span>`;
 }
 
@@ -1850,7 +1848,7 @@ async function renderInjuries(fid, params, token, silent) {
     const name = e.player.id
       ? `<span class="news-name" data-player="${esc(e.player.id)}">${esc(e.player.name)}</span>`
       : `<span class="news-name">${esc(e.player.name)}</span>`;
-    const extra = [e.comment.replace(/\.$/, ""), e.return ? t("expectedReturn", { r: e.return }) : ""].filter(Boolean).map(esc).join(". ");
+    const extra = [e.comment.replace(/\.$/, ""), e.return].filter(Boolean).map(esc).join(". ");
     return `<li class="news-row">
       <time class="news-time" datetime="${esc(e.at)}">${newsTime(e)}</time>
       <div class="news-body">
@@ -2852,7 +2850,7 @@ function playerView(fid, data) {
 
   const status = cur
     ? `<div class="status-box ${SEVERITY[cur.status] || "mild"}">
-        <div class="status-top"><strong>${esc(cur.label)}</strong>${cur.return ? `<span>${esc(t("expectedReturn", { r: cur.return }))}</span>` : ""}</div>
+        <div class="status-top"><strong>${esc(cur.return || cur.label)}</strong></div>
         ${cur.comment ? `<div class="status-comment">${esc(cur.comment)}</div>` : ""}
       </div>`
     : `<div class="status-box ok"><strong>${t("healthy")}</strong><span class="dim">${t("notOnReport")}</span></div>`;
@@ -2863,7 +2861,7 @@ function playerView(fid, data) {
     const reason = e.reason || t("noReason");
     const span = `${shortDay(e.start)} → ${e.ongoing ? t("now") : shortDay(e.end)}`;
     const missed = e.missedRounds.length ? ` · ${t("missed", { r: e.missedRounds.map((r) => t("roundShort", { n: r + 1 })).join(", ") })}` : "";
-    const updates = e.updates.map((u) => `<li><span class="dim">${shortDay(u.date)}</span> ${esc(u.statusLabel)}${u.return ? ` (${esc(u.return)})` : ""}${u.comment ? `: ${esc(u.comment)}` : ""}</li>`).join("");
+    const updates = e.updates.map((u) => `<li><span class="dim">${shortDay(u.date)}</span> ${esc(u.return || u.statusLabel)}${u.comment ? `: ${esc(u.comment)}` : ""}</li>`).join("");
     return `<li class="episode ${e.kind}">
       <div class="ep-head"><span class="ep-kind">${e.kind === "injury" ? t("kindInjury") : t("kindOther")}</span><strong>${esc(reason[0].toUpperCase() + reason.slice(1))}</strong></div>
       <div class="ep-meta">${span} · ${e.days} ${t("daysShort")}${e.ongoing ? ` ${t("ongoing")}` : ""}${missed}</div>

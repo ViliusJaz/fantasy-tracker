@@ -1,5 +1,6 @@
 """Injury report: the cached current report, statuses and comments in the UI language, and each
 player's season injury story from the recorded episodes."""
+import re
 import threading
 import time
 import urllib.request
@@ -126,16 +127,48 @@ def injury_view(entry, health=None):
         return {
             "status": key,
             "label": L(LT_LABELS.get(key, key), entry.get("siteLabel") or SITE_LABELS.get(key, key)),
-            "return": return_local(entry["return"]), "comment": loc_comment(entry["comment"]),
+            "return": return_local(entry["return"], key), "comment": loc_comment(entry["comment"]),
         }
     if health and health != "ready":
         return {"status": health, "label": health_label(health), "return": "", "comment": ""}
     return None
 
 
-def return_local(text):
+# The report's "Round" column says which rounds the status is for ("Round 3", "Round 2-4",
+# "Indefinitely"), not when the player is back: "Out" + "Round 3" = misses round 3.
+ROUNDS_RE = re.compile(r"Rounds?\s*(\d+)(?:\s*[-–]\s*(\d+))?", re.I)
+ROUND_PHRASE = {"out": ("Nežais {r}", "Out for {r}"), "doubtful": ("Greičiausiai nežais {r}", "Doubtful for {r}"),
+                "questionable": ("Gali nežaisti {r}", "Questionable for {r}"),
+                "uncertain": ("Neaišku, ar žais {r}", "Uncertain for {r}"),
+                "game-time": ("Gali nežaisti {r}", "Game-time decision for {r}"),
+                "expected": ("Tikėtina, kad žais {r}", "Expected back for {r}"), "ready": ("Žais {r}", "Available for {r}")}
+OUT_FOR = {"indefinitely": ("Nežais neribotą laiką", "Out indefinitely"),
+           "long-term": ("Nežais ilgą laiką", "Out long-term"), "long term": ("Nežais ilgą laiką", "Out long-term"),
+           "season": ("Nežais iki sezono pabaigos", "Out for the season"),
+           "end of season": ("Nežais iki sezono pabaigos", "Out for the season"),
+           "out for season": ("Nežais iki sezono pabaigos", "Out for the season"),
+           "rest of season": ("Nežais iki sezono pabaigos", "Out for the season")}
+
+
+def return_local(text, status=None):
+    """The report's "Round" column in words, with the status: "Round 3" for an uncertain
+    player -> "Neaišku, ar žais 3 ture" / "Uncertain for round 3"."""
     t = _clean(text)
-    return t if LANG.get() == "en" or not t else injury_lt.return_text(t)
+    if not t:
+        return ""
+    m = ROUNDS_RE.fullmatch(t)
+    if m and status:
+        a, b = m.groups()
+        lt, en = ROUND_PHRASE.get(status, ("Gali nežaisti {r}", "May miss {r}"))
+        return L(lt.format(r=f"{a}–{b} turuose" if b else f"{a} ture"),
+                 en.format(r=f"rounds {a}–{b}" if b else f"round {a}"))
+    k = t.lower().strip(" .")
+    if status == "out" and k in OUT_FOR:
+        return L(*OUT_FOR[k])
+    value = t if LANG.get() == "en" else injury_lt.return_text(t)
+    if not status:
+        return value
+    return f"{health_label(status)}: {value[:1].lower()}{value[1:]}"
 
 
 def _day(iso):
@@ -181,11 +214,11 @@ def build_injury_history(bn_id, game_log):
             "ongoing": end is None,
             "status": last_real["status"],
             "statusLabel": health_label(last_real["status"]),
-            "return": return_local(last_real.get("return")),
+            "return": return_local(last_real.get("return"), last_real["status"]),
             "missedRounds": ep_missed,
             "updates": [
                 {"date": u["date"], "statusLabel": health_label(u["status"]),
-                 "return": return_local(u.get("return")), "comment": loc_comment(u.get("comment"))}
+                 "return": return_local(u.get("return"), u["status"]), "comment": loc_comment(u.get("comment"))}
                 for u in ep["updates"]
             ],
         })

@@ -128,6 +128,13 @@ def test_dnp_reason(ft):
     assert ft.dnp_reason("DNP in Round 12") == (12, "")
     assert ft.dnp_reason("Knee.") == (None, "Knee")
     assert ft.dnp_reason(None) == (None, "")
+    assert ft.dnp_reason("DNP in Rounds 1-2 (coach's decision)") == (1, "coach's decision")
+
+
+def test_round_ranges_in_comments_are_translated():
+    from backend import injury_lt
+    assert injury_lt.translate("DNP in Round 1-2 (coach's decision)") == "Nežaidė 1–2 turuose (trenerio sprendimas)"
+    assert injury_lt.translate("DNP in Round 2 (coach's decision)") == "Nežaidė 2 ture (trenerio sprendimas)"
 
 
 def test_injury_view(ft):
@@ -135,8 +142,23 @@ def test_injury_view(ft):
     assert ft.injury_view(None) is None
     ft.LANG.set("en")
     view = ft.injury_view(entry("1", "out", comment="Knee injury", ret="2 weeks"))
-    assert view == {"status": "out", "label": "Out", "return": "2 weeks", "comment": "Knee injury"}
+    assert view == {"status": "out", "label": "Out", "return": "Out: 2 weeks", "comment": "Knee injury"}
     assert ft.injury_view(None, health="doubtful") == {"status": "doubtful", "label": "Doubtful", "return": "", "comment": ""}
     ft.LANG.set("lt")
     view = ft.injury_view(entry("1", "out", comment="Knee injury", ret="2 weeks"))
     assert view["label"] == "Nežaidžia" and view["comment"] != "Knee injury"  # translated
+
+
+@pytest.mark.parametrize("raw, status, lt, en", [
+    ("Round 3", "uncertain", "Neaišku, ar žais 3 ture", "Uncertain for round 3"),
+    ("Round 3", "out", "Nežais 3 ture", "Out for round 3"),
+    ("Round 2-4", "out", "Nežais 2–4 turuose", "Out for rounds 2–4"),
+    ("Indefinitely", "out", "Nežais neribotą laiką", "Out indefinitely"),
+    ("", "out", "", ""),
+])
+def test_report_round_column_names_the_rounds_missed(ft, raw, status, lt, en):
+    """BasketNews' "Round" column is the rounds the status is for, not a return date."""
+    ft.LANG.set("en")
+    assert ft.return_local(raw, status) == en
+    ft.LANG.set("lt")
+    assert ft.return_local(raw, status) == lt

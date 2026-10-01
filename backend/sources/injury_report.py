@@ -19,7 +19,8 @@ NOT_INJURY = re.compile(
     re.I,
 )
 
-DNP_RE = re.compile(r"DNP in Round\s*(\d+)\s*(?:\(([^)]*)\))?", re.I)
+# "DNP in Round 2 (reason)" or "DNP in Rounds 1-2 (reason)": the first round missed and the reason
+DNP_RE = re.compile(r"DNP in Rounds?\s*(\d+)(?:\s*[-–]\s*\d+)?\s*(?:\(([^)]*)\))?", re.I)
 
 
 def is_injury(text):
