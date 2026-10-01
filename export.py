@@ -46,7 +46,7 @@ from backend.players import players
 from backend.proballers import proballers_search, proballers_target
 from backend.sources import basketnews
 from backend.storage import archive, db, ingest, snapshots
-from backend.util import read_json
+from backend.util import read_json_cached
 
 OUT = config.SITE_DIR
 BUILD = OUT.with_name(OUT.name + ".new")  # built here, moved to OUT only when the build is good
@@ -126,7 +126,7 @@ def prefetch_players(meta, ids, size=10):
 
 def proballers_for(info):
     """Proballers link without a redirect endpoint; new Wikidata lookups are rationed per run."""
-    known = read_json(config.PROBALLERS_FILE, {}).get(info["bnId"] or info["id"])
+    known = read_json_cached(config.PROBALLERS_FILE, {}).get(info["bnId"] or info["id"])
     if known is None:
         with _lookup_lock:
             if _lookups["left"] <= 0:

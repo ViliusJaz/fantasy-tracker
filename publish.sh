@@ -156,17 +156,9 @@ main() {
     exit 1
   fi
 
-  if [ -n "$DRY_RUN" ]; then
-    echo "would commit:"
-    git status --short -- data leagues.json
-  else
-    git add data leagues.json
-    if ! git diff --cached --quiet; then
-      git commit -q -m "Record lineups and injuries"
-    fi
-    still_locked
-    push_main
-  fi
+  # The site goes up first, the history (data/) right after: the new pages do not wait
+  # for the history commit. If that push fails, the commit stays local and goes up with
+  # the next run.
 
   # site/ -> gh-pages without touching the working tree: build the commit from a
   # throwaway index. Keeping the previous commit as a local ref lets git upload
@@ -177,6 +169,8 @@ main() {
   unset GIT_INDEX_FILE
   if [ -n "$DRY_RUN" ]; then
     echo "would publish site tree $tree ($(git ls-tree -r "$tree" | wc -l | tr -d ' ') files)"
+    echo "would commit:"
+    git status --short -- data leagues.json
     exit 0
   fi
   commit="$(git commit-tree "$tree" -m "Site $(date '+%Y-%m-%d %H:%M')")"
@@ -184,6 +178,13 @@ main() {
   git push -q --force-with-lease="refs/heads/gh-pages:$pages_seen" origin "$commit:refs/heads/gh-pages"
   git update-ref refs/heads/gh-pages "$commit"
   say "published $commit"
+
+  git add data leagues.json
+  if ! git diff --cached --quiet; then
+    git commit -q -m "Record lineups and injuries"
+  fi
+  still_locked
+  push_main
 }
 
 # on one line, so bash has read it before `git pull` may rewrite this file

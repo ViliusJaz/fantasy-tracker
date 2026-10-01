@@ -70,11 +70,29 @@ def test_a_kept_round_list_takes_season_fields_from_today(ft, monkeypatch):
                 "roundPts": rpts, "roundLine": None, "club": None, "games": [], "bnId": None}
     old_round = {"p1": view("p1", 10.0, "ready", 25.0)}
     today = {"p1": view("p1", 14.0, "out", None)}
-    meta = {"currentRound": 5, "latestRound": 5, "firstRound": 0, "bnLeagueId": None, "seasonYear": None}
+    meta = {"currentRound": 5, "latestRound": 5, "firstRound": 0, "bnLeagueId": None, "seasonYear": None,
+            "leagueId": "L", "pointCalcSystem": "modern"}
 
-    def fetch_players(meta_, stats_round, games_round, ttl, keep=0):
-        return {k: dict(v) for k, v in (old_round if stats_round == 1 else today).items()}
-    monkeypatch.setattr(ft, "fetch_players", fetch_players)
+    monkeypatch.setattr(ft, "player_records", lambda meta_, stats_round, games_round, ttl, keep=0:
+                        old_round if stats_round == 1 else today)
+    monkeypatch.setattr(ft, "views_of", lambda data: {k: dict(v) for k, v in data.items()})
     p = ft.players(meta, 1, 1)["p1"]
     assert p["roundPts"] == 25.0                                   # the round's own numbers stay
     assert (p["avgPts"], p["health"], p["season"]["pts"]) == (14.0, "out", 14.0)  # season ones are today's
+
+
+def test_player_views_are_built_once_and_copied(ft, monkeypatch):
+    meta = {"currentRound": 1, "latestRound": 1, "firstRound": 0, "bnLeagueId": None, "seasonYear": None,
+            "leagueId": "L2", "pointCalcSystem": "modern"}
+    answer = {"p1": {"id": "p1", "avgPts": 5.0, "gamesPlayed": 1, "season": None, "health": None, "roundPts": 1.0,
+                     "roundLine": None, "club": None, "games": [], "bnId": None}}
+    built = []
+    monkeypatch.setattr(ft, "player_records", lambda meta_, s, g, ttl, keep=0: answer)
+    monkeypatch.setattr(ft, "views_of", lambda data: built.append(1) or {k: dict(v) for k, v in data.items()})
+    first = ft.players(meta, 1, 1)
+    first["p1"]["avgPts"] = 99  # a caller changing its copy
+    second = ft.players(meta, 1, 1)
+    assert second["p1"]["avgPts"] == 5.0 and len(built) == 1  # not rebuilt, and not changed by the first caller
+    assert ft.players(meta, 1, 1, shared=True) is ft.players(meta, 1, 1, shared=True)
+    answer = {"p1": dict(answer["p1"], avgPts=6.0)}  # a new download
+    assert ft.players(meta, 1, 1)["p1"]["avgPts"] == 6.0 and len(built) == 2

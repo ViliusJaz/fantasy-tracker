@@ -1,4 +1,6 @@
 """Game previews: form, key players, injuries and generated notes for games not played yet."""
+import functools
+
 from backend.i18n import L
 from backend.injuries import injury_report, injury_view
 from backend.players import player_brief, players
@@ -32,17 +34,23 @@ def _club_tokens(name):
 
 def club_team_ids(clubs, teams):
     """Fantasy club abbr -> BasketNews team id, matched on the English club name."""
-    out = {}
-    for abbr, club in clubs.items():
-        mine = _club_tokens(club.get("nameEn"))
+    return dict(_club_team_ids(tuple(sorted((abbr, c.get("nameEn") or "", c.get("name") or "") for abbr, c in clubs.items())),
+                               tuple(sorted((tid, t["name"] or "", t["short"] or "") for tid, t in teams.items()))))
+
+
+@functools.lru_cache(maxsize=64)  # the same clubs are matched for every page
+def _club_team_ids(clubs, teams):
+    out = []
+    for abbr, name_en, name in clubs:
+        mine = _club_tokens(name_en)
         best, score = None, 0
-        for tid, team in teams.items():
-            sc = len(mine & _club_tokens(team["name"])) + (2 if ascii_slug(club.get("name") or "") == ascii_slug(team["short"] or "") else 0)
+        for tid, team_name, short in teams:
+            sc = len(mine & _club_tokens(team_name)) + (2 if ascii_slug(name) == ascii_slug(short) else 0)
             if sc > score:
                 best, score = tid, sc
         if best is not None:
-            out[abbr] = best
-    return out
+            out.append((abbr, best))
+    return tuple(out)
 
 
 def defense_table(meta):
@@ -51,7 +59,7 @@ def defense_table(meta):
     teams = team_advanced(meta)
     if not teams:
         return [], 0
-    clubs = {v["club"]["abbr"]: v["club"] for v in players(meta, meta["latestRound"], meta["currentRound"]).values()
+    clubs = {v["club"]["abbr"]: v["club"] for v in players(meta, meta["latestRound"], meta["currentRound"], shared=True).values()
              if v["club"]}
     abbr_of = {tid: abbr for abbr, tid in club_team_ids(clubs, teams).items()}
     rows = []

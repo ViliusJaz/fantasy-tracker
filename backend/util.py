@@ -2,6 +2,7 @@
 import contextvars
 import threading
 import json
+import pickle
 import re
 import unicodedata
 from concurrent.futures import Future, ThreadPoolExecutor
@@ -21,6 +22,28 @@ def read_json(path, default):
         return json.loads(path.read_text(encoding="utf-8"))
     except (FileNotFoundError, json.JSONDecodeError):
         return default
+
+
+_read_cache = {}  # path -> ((mtime, size), pickled data)
+_read_lock = threading.Lock()
+
+
+def read_json_cached(path, default):
+    """read_json for files read on every page (the injury log, Proballers links): parsed again
+    only when the file changed. Each caller still gets its own copy."""
+    try:
+        st = path.stat()
+    except FileNotFoundError:
+        return default
+    stamp = (st.st_mtime_ns, st.st_size)
+    with _read_lock:
+        hit = _read_cache.get(str(path))
+    if hit and hit[0] == stamp:
+        return pickle.loads(hit[1])
+    data = read_json(path, default)
+    with _read_lock:
+        _read_cache[str(path)] = (stamp, pickle.dumps(data, pickle.HIGHEST_PROTOCOL))
+    return data
 
 
 def write_json(path, data):

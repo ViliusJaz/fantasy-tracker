@@ -1,32 +1,61 @@
 """Every player of the competition as the tracker shows them, with usage % attached."""
 import copy
+import pickle
+import threading
 
 from backend.rounds import keep_for, round_ttl
 from backend.sources.advanced import adv_value, advanced_stats, link_advanced_rows
 from backend.sources import basketnews as bn
 from backend.util import pool_map
 
+# Built views by (competition, scoring, stats round, games round), with the answers they were
+# built from: a build asks for the same list hundreds of times (every player page), and
+# turning 330 raw records into views each time was most of the build. Each caller still gets
+# its own copy, so changing one never touches another.
+_built = {}
+_built_lock = threading.Lock()
 
-def players(meta, stats_round, games_round):
+
+def _same(a, b):
+    return a is b or (not a and not b)
+
+
+def players(meta, stats_round, games_round, shared=False):
     """Every player of the competition: {playerId: view}. Points are for `stats_round`,
-    games are those of `games_round`."""
+    games are those of `games_round`. With `shared`, the one copy every reader gets (faster;
+    it must not be changed)."""
     keep = min(keep_for(meta, stats_round), keep_for(meta, games_round))
-    views = bn.fetch_players(meta, stats_round, games_round, round_ttl(meta, min(stats_round, games_round)), keep)
+    raw = bn.player_records(meta, stats_round, games_round, round_ttl(meta, min(stats_round, games_round)), keep)
+    today = _today_records(meta) if keep else None
+    inputs = (raw, today, advanced_stats(meta), advanced_stats(meta, stats_round) if stats_round is not None else {})
+    key = (meta["leagueId"], meta["pointCalcSystem"], stats_round, games_round)
+    with _built_lock:
+        hit = _built.get(key)
+    if hit and all(_same(a, b) for a, b in zip(hit[0], inputs)):
+        return hit[2] if shared else pickle.loads(hit[1])
+    views = bn.views_of(raw)
     if keep:
-        _season_from_today(meta, views)
+        _season_from_today(meta, views, today)
     attach_usage(meta, views, stats_round)
     mark_round_days(views)
-    return views
+    blob = pickle.dumps(views, pickle.HIGHEST_PROTOCOL)
+    with _built_lock:
+        _built[key] = (inputs, blob, pickle.loads(blob))
+    return _built[key][2] if shared else views
 
 
 SEASON_FIELDS = ("avgPts", "gamesPlayed", "season", "health")
 
 
-def _season_from_today(meta, views):
+def _today_records(meta):
+    return bn.player_records(meta, meta["latestRound"], meta["currentRound"],
+                             round_ttl(meta, min(meta["latestRound"], meta["currentRound"])))
+
+
+def _season_from_today(meta, views, today_raw=None):
     """A round's player list may be days old (backend/cache.py); what it says about the whole
     season (averages, games played, health) comes from today's list instead."""
-    today = bn.fetch_players(meta, meta["latestRound"], meta["currentRound"],
-                             round_ttl(meta, min(meta["latestRound"], meta["currentRound"])))
+    today = bn.views_of(today_raw if today_raw is not None else _today_records(meta))
     for pid, v in views.items():
         now = today.get(pid)
         if now:
@@ -46,7 +75,7 @@ def double_doubles(meta):
     the player's team played once count: a two-game round's totals are not one game's."""
     rounds = list(range(meta["firstRound"], meta["latestRound"] + 1))
     out = {}
-    for _, views in pool_map(lambda r: (r, players(meta, r, r)), rounds):
+    for _, views in pool_map(lambda r: (r, players(meta, r, r, shared=True)), rounds):
         for v in views.values():
             line = v.get("roundLine")
             if line and len(v.get("games") or []) == 1 and is_double_double(line):

@@ -7,23 +7,34 @@ before any of it becomes history (and drop it with discard())."""
 import copy
 import json
 import threading
+import time
 from datetime import date
 
 from backend import clock, config
 from backend.rounds import is_live
 from backend.sources.injury_report import is_injury
-from backend.util import read_json, write_json
+from backend.util import read_json, read_json_cached, write_json
 
 
 _snapshot_lock = threading.Lock()
 _pending_lock = threading.Lock()
 _pending_lineups = {}  # league id -> (meta, lineups): the latest fetch not written yet
 _pending_injuries = []  # (report key, entries) fetched but not written yet
+_saved_lineups = {}  # league id -> ((round, started), when, lineups) last written by flush()
 
 
 def observe_lineups(meta, lineup_by_team):
     """Queue a fetch of every team's current lineup for flush()."""
     with _pending_lock:
+        # Every page of a build asks for the lineups (and stores them): the same lineups as
+        # the ones queued or saved in the last minute are not copied and compared again.
+        state = (meta["currentRound"], meta["roundStarted"])
+        pending = _pending_lineups.get(meta["id"])
+        if pending and (pending[0]["currentRound"], pending[0]["roundStarted"]) == state and pending[1] == lineup_by_team:
+            return
+        saved = _saved_lineups.get(meta["id"])
+        if saved and saved[0] == state and saved[1] > time.monotonic() - 60 and saved[2] == lineup_by_team:
+            return
         _pending_lineups[meta["id"]] = (meta, copy.deepcopy(lineup_by_team))
 
 
@@ -57,6 +68,8 @@ def flush():
     changed = {"lineups": 0, "injuries": 0}
     for meta, lineup_by_team in lineups:
         changed["lineups"] += save_lineup_snapshot(meta, lineup_by_team)
+        with _pending_lock:
+            _saved_lineups[meta["id"]] = ((meta["currentRound"], meta["roundStarted"]), time.monotonic(), lineup_by_team)
     for _, entries in reports:
         changed["injuries"] += update_injury_log(entries)
     return changed
@@ -69,7 +82,7 @@ def lineup_rounds(fid):
 
 def injury_log():
     """Recorded injury episodes: {bnPlayerId: {name, club, episodes: [...]}}."""
-    return read_json(config.INJURY_LOG_FILE, {"players": {}})["players"]
+    return read_json_cached(config.INJURY_LOG_FILE, {"players": {}})["players"]
 
 
 def save_lineup_snapshot(meta, lineup_by_team):

@@ -1,5 +1,6 @@
 """Advanced statistics in context: league averages, quartiles and percentiles for the player card."""
 import bisect
+import copy
 
 from backend.i18n import L
 from backend.players import players
@@ -94,8 +95,20 @@ def _quartiles(values):
     return at(0.25), at(0.75)
 
 
+_context_memo = {}  # "season" -> (table, context): the same table gives the same context
+
+
 def advanced_context(table):
     """League average, quartiles and the sorted values per metric, from regular-rotation players."""
+    hit = _context_memo.get("season")
+    if hit and hit[0] is table:
+        return hit[1]
+    result = _advanced_context(table)
+    _context_memo["season"] = (table, result)
+    return result
+
+
+def _advanced_context(table):
     rows = [r for r in unique_rows(table) if (adv_value(r, "time_played") or 0) >= ADV_MIN_SECONDS]
     out, dist = {}, {}
     for _, _, items in ADV_GROUPS:
@@ -141,7 +154,7 @@ def advanced_profile(meta, bn_id):
     table = advanced_stats(meta)
     row = table.get(str(bn_id)) if bn_id else None
     if not row and bn_id:
-        players(meta, meta["latestRound"], meta["currentRound"])  # pairs rows listed under another id
+        players(meta, meta["latestRound"], meta["currentRound"], shared=True)  # pairs rows listed under another id
         row = table.get(str(bn_id))
     if not row:
         return None
@@ -177,10 +190,22 @@ def advanced_profile(meta, bn_id):
 AVG_KEYS = ("min", "pts", "reb", "oreb", "dreb", "ast", "stl", "blk", "tov", "pf", "fd", "ba", "eff", "usg")
 
 
+_averages_memo = {}  # competition -> (player list, averages)
+
+
 def league_averages(meta):
     """Per-game league averages of regular-rotation players (the same 10+ minute sample
     as the advanced-stats context), shown in the stat tooltips."""
-    pmap = players(meta, meta["latestRound"], meta["currentRound"])
+    pmap = players(meta, meta["latestRound"], meta["currentRound"], shared=True)
+    hit = _averages_memo.get(meta["leagueId"])
+    if hit and hit[0] is pmap:
+        return copy.deepcopy(hit[1])
+    out = _league_averages(pmap)
+    _averages_memo[meta["leagueId"]] = (pmap, out)
+    return copy.deepcopy(out)
+
+
+def _league_averages(pmap):
     regular = [p for p in pmap.values()
                if p["season"] and p["gamesPlayed"] and p["season"]["min"] >= ADV_MIN_SECONDS / 60]
     if not regular:

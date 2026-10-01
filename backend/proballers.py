@@ -6,7 +6,7 @@ from datetime import timedelta
 
 from backend import clock, config, log, net
 from backend.sources.wikidata import basketnews_birth_date, wikidata_candidates, wikidata_search
-from backend.util import ascii_slug, read_json, write_json
+from backend.util import ascii_slug, read_json, read_json_cached, write_json
 
 
 LOG = log.get("fetch")
@@ -17,7 +17,7 @@ def proballers_link(info):
     """Direct Proballers profile URL for a player, or None when it cannot be pinned down."""
     key = info["bnId"] or info["id"]
     with _proballers_lock:
-        cache = read_json(config.PROBALLERS_FILE, {})
+        cache = read_json_cached(config.PROBALLERS_FILE, {})
     hit = cache.get(key)
     if hit and (hit.get("url") or hit.get("checked", "") >= (clock.today() - timedelta(days=7)).isoformat()):
         return hit.get("url")

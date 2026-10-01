@@ -468,11 +468,19 @@ def _player_vars(meta, stats_round, games_round):
             "gamesRound": games_round, "pcs": meta["pointCalcSystem"]}
 
 
+def player_records(meta, stats_round, games_round, ttl, keep=0):
+    """The raw answer behind fetch_players (the same object while it is cached)."""
+    return gql(Q_PLAYERS, _player_vars(meta, stats_round, games_round), ttl, keep)
+
+
+def views_of(data):
+    return {p["id"]: player_view(p) for p in data["playersSearchRecordsFromClient"]["records"]}
+
+
 def fetch_players(meta, stats_round, games_round, ttl, keep=0):
     """Every player of the competition: {playerId: player_view}. Points and box score are for
     `stats_round`, games are those of `games_round`."""
-    data = gql(Q_PLAYERS, _player_vars(meta, stats_round, games_round), ttl, keep)
-    return {p["id"]: player_view(p) for p in data["playersSearchRecordsFromClient"]["records"]}
+    return views_of(player_records(meta, stats_round, games_round, ttl, keep))
 
 
 def fetch_players_by_id(meta, ids, stats_round, games_round):
