@@ -2307,7 +2307,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-10-01",
           "lastSeen": "2026-10-01",
           "updates": [
             {
@@ -2321,6 +2321,13 @@
               "date": "2026-09-30",
               "at": "2026-09-30T10:07+02:00",
               "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "ready",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
             }
@@ -2356,6 +2363,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
             }
           ]
         }
@@ -2389,6 +2403,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
             }
           ]
         }
@@ -2409,6 +2430,20 @@
               "status": "ready",
               "return": "Round 2",
               "comment": "Cleared to play after a DNP in Round 1."
+            }
+          ]
+        },
+        {
+          "start": "2026-10-01",
+          "end": null,
+          "lastSeen": "2026-10-01",
+          "updates": [
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Undisclosed"
             }
           ]
         }
@@ -2442,6 +2477,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
             }
           ]
         }
@@ -2473,6 +2515,13 @@
               "date": "2026-09-30",
               "at": "2026-09-30T10:07+02:00",
               "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
             }
@@ -2896,6 +2945,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "Tear right thigh biceps."
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Tear right thigh biceps"
             }
           ]
         }
@@ -3442,6 +3498,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "DNP in Round 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "DNP in Round 1-2 (coach's decision)"
             }
           ]
         }
@@ -3474,6 +3537,13 @@
               "date": "2026-10-01",
               "at": "2026-10-01T09:12+02:00",
               "status": "uncertain",
+              "return": "Round 3",
+              "comment": "DNP in Round 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
               "return": "Round 3",
               "comment": "DNP in Round 1-2 (coach's decision)"
             }
@@ -3697,7 +3767,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-10-01",
           "lastSeen": "2026-10-01",
           "updates": [
             {
@@ -3711,6 +3781,13 @@
               "date": "2026-09-30",
               "at": "2026-09-30T10:07+02:00",
               "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "ready",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
             }
@@ -3901,7 +3978,47 @@
       ],
       "name": "Lamar Stevens",
       "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "17917": {
+      "episodes": [
+        {
+          "start": "2026-10-01",
+          "end": null,
+          "lastSeen": "2026-10-01",
+          "updates": [
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Suffered a concerning non-contact injury in Round 3"
+            }
+          ]
+        }
+      ],
+      "name": "Mike James",
+      "club": "Anadolu Efes Istanbul"
+    },
+    "22859": {
+      "episodes": [
+        {
+          "start": "2026-10-01",
+          "end": null,
+          "lastSeen": "2026-10-01",
+          "updates": [
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T22:38+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Undisclosed"
+            }
+          ]
+        }
+      ],
+      "name": "Terry Tarpey",
+      "club": "Paris Basketball"
     }
   },
-  "updatedAt": "2026-10-01T19:47:07"
+  "updatedAt": "2026-10-01T22:38:04"
 }
