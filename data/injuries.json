@@ -1049,6 +1049,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "DNP in Round 1-2 (Undisclosed injury)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T17:19+02:00",
+              "status": "game-time",
+              "return": "Round 3",
+              "comment": "DNP in Round 1-2 (Undisclosed injury)"
             }
           ]
         }
@@ -3631,5 +3638,5 @@
       "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-01T16:32:38"
+  "updatedAt": "2026-10-01T17:19:21"
 }
