@@ -144,6 +144,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster after a DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
             }
           ]
         }
@@ -1357,6 +1364,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "DNP in Round 1 (coach's decision). Played in the domestic league"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "uncertain",
+              "return": "Round 3",
+              "comment": "DNP in Rounds 1-2 (coach's decision). Played in the domestic league"
             }
           ]
         }
@@ -1383,6 +1397,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "DNP in Round 1 (ankle injury)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "uncertain",
+              "return": "Round 3",
+              "comment": "DNP in Rounds 1-2 (ankle injury)"
             }
           ]
         }
@@ -1403,6 +1424,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster after a DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
             }
           ]
         }
@@ -1429,6 +1457,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Undisclosed"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Not included in official Euroleague roster"
             }
           ]
         }
@@ -1455,6 +1490,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Undisclosed injury (DNP in Round 1)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Rounds 1-2 (undisclosed injury)"
             }
           ]
         }
@@ -1770,6 +1812,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster after a DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Not included in official Euroleague roster"
             }
           ]
         }
@@ -1834,6 +1883,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster after a DNP in Round 1 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
             }
           ]
         }
@@ -3156,6 +3212,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Personal reasons"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Did not travel with the team for Round 2 (personal reasons)"
             }
           ]
         }
@@ -3167,7 +3230,7 @@
       "episodes": [
         {
           "start": "2026-09-30",
-          "end": null,
+          "end": "2026-10-01",
           "lastSeen": "2026-10-01",
           "updates": [
             {
@@ -3176,6 +3239,13 @@
               "status": "out",
               "return": "Round 2",
               "comment": "Not included in 12-man roster (undisclosed)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T04:20+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -3184,5 +3254,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-01T00:54:58"
+  "updatedAt": "2026-10-01T04:20:38"
 }
