@@ -2880,10 +2880,24 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-10-01",
+          "end": null,
+          "lastSeen": "2026-10-01",
+          "updates": [
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T17:20+02:00",
+              "status": "expected",
+              "return": "Round 3",
+              "comment": "Practiced ahead of Round 3, expected to be available (new signing, not injured)"
+            }
+          ]
         }
       ],
       "name": "Marcio Santos",
-      "club": "Maccabi Rapyd Tel Aviv"
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
     },
     "35875": {
       "episodes": [
@@ -3638,5 +3652,5 @@
       "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-01T17:19:21"
+  "updatedAt": "2026-10-01T17:20:31"
 }
