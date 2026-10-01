@@ -2741,6 +2741,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T13:45+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "DNP in Round 1-2 (coach's decision)"
             }
           ]
         }
@@ -2779,6 +2786,13 @@
               "date": "2026-10-01",
               "at": "2026-10-01T09:12+02:00",
               "status": "game-time",
+              "return": "Round 3",
+              "comment": "Hamstring strain"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T13:45+02:00",
+              "status": "out",
               "return": "Round 3",
               "comment": "Hamstring strain"
             }
@@ -3597,5 +3611,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-01T12:06:58"
+  "updatedAt": "2026-10-01T13:45:55"
 }
