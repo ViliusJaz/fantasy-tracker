@@ -24,7 +24,8 @@ def games_payload(fid, rnd=None):
                                             "logo": club["logo"], "players": [], "gameCount": len(p["games"])})
         if p["roundLine"]:
             c["players"].append({"id": p["id"], "name": p["name"], "photo": p["photo"], "fp": p["roundPts"],
-                                 "line": p["roundLine"], "owner": own.get(p["id"]), "position": p["position"]})
+                                 "line": p["roundLine"], "owner": own.get(p["id"]), "position": p["position"],
+                                 **({"live": True} if p.get("roundLive") else {})})
         for g in p["games"]:
             home, away = (club["abbr"], g["opponent"]) if g["home"] else (g["opponent"], club["abbr"])
             key = (g["at"], home, away)
@@ -37,6 +38,7 @@ def games_payload(fid, rnd=None):
                 "awayScore": (score[1] if g["home"] else score[0]) if score else None,
                 "live": g["live"], "completed": g["completed"], "canceled": g["canceled"],
                 "opponentLogo": {away if g["home"] else home: g.get("opponentLogo")},
+                **({"period": g["period"]} if g.get("period") else {}),  # quarter and clock of a live game
             }
     out = []
     for key in sorted(games, key=lambda k: (k[0], k[1])):

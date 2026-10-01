@@ -3,7 +3,7 @@ from backend.config import LIVE_TTL, SETTLED_TTL
 
 
 def is_live(meta, rnd):
-    return rnd is not None and meta["roundStarted"] and rnd == meta["currentRound"]
+    return rnd is not None and bool(meta.get("roundStarted")) and rnd == meta["currentRound"]
 
 
 def round_state(meta, rnd):

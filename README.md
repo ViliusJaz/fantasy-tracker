@@ -123,6 +123,16 @@ nerodomas), kuris skaičiuojamas iš išsaugotos istorijos (SQLite indekso):
 Tik turai su išsaugotomis sudėtimis įeina į sudėčių metrikas; trūkstami išvardijami `basedOn`, niekas
 neišgalvojama. Testas tikrina, kad istorija ir gyvi duomenys duoda tuos pačius skaičius.
 
+## Gyvi rezultatai
+
+BasketNews žaidėjų statistiką ir fantasy taškus paskelbia tik po rungtynių. Kol turas vyksta,
+kiekvienas atnaujinimas (kas 15 min.) paima jau prasidėjusių rungtynių statistiką iš Eurolygos
+gyvo srauto (`backend/sources/euroleague_live.py`) ir suskaičiuoja fantasy taškus BasketNews
+„modern“ formule (`backend/scoring.py`: patikrinta su visais 453 1–2 turų žaidėjų rezultatais).
+Taip atsiranda gyvos rungtynių suvestinės (su kėliniu ir laiku), sudėčių taškai, mačų rezultatai
+ir taškų lygos turo lentelė. Gyvi taškai pažymėti punktyru; kai tik BasketNews paskelbia savo
+skaičius, rodomi jie. Į istoriją gyvi skaičiai nepatenka (archyvuojami tik baigti turai).
+
 ## Rungtynių prognozės
 
 Kiekvienoms dar nesužaistoms Eurolygos rungtynėms apžvalgoje rodoma, kas turėtų laimėti ir kokia

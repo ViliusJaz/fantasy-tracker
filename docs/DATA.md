@@ -33,7 +33,7 @@ current health flags between runs (the injury report and its log cover this).
 | Path | What | Kept |
 |---|---|---|
 | `var/health.json` | The last attempt, the last success and the last failure of a build (also published as `api/health.json`) | Overwritten by every build |
-| `var/cache.sqlite` | Upstream answers that no longer change: settled rounds (two or more back) for 7 days, rounds two or more ahead for 3 hours. Never: the previous, current and next round, league settings, lineups, the injury report | Until they expire (pruned every build). `python3 -m backend.cache clear`, or `FT_NO_CACHE=1` for one run |
+| `var/cache.sqlite` | Upstream answers that no longer change: settled rounds (two or more back) for 7 days, rounds two or more ahead for 3 hours. Finished games of a live round from the EuroLeague live feed for 2 days. Never: the previous, current and next round, league settings, lineups, the injury report | Until they expire (pruned every build). `python3 -m backend.cache clear`, or `FT_NO_CACHE=1` for one run |
 | `var/tracker.sqlite` | SQLite index of everything in `data/` (see below) | Rebuilt from `data/` whenever a file changes. `python3 -m backend.storage rebuild` |
 | `var/snapshots/live/<time>.json.gz` | Every upstream answer one build used, plus `data/` before it: the build can be replayed offline, byte for byte (`python3 tools/replay_export.py replay <file> <out>`) | The newest 12 builds, none older than 48 hours (about 1.5 MB each). Mac only; `FT_SNAPSHOTS=1` / `0` to override |
 

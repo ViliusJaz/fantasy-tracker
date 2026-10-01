@@ -103,6 +103,10 @@ const I18N = {
     collapseAll: "Suskleisti",
     noGames: "Šį turą rungtynių nėra.",
     gamesNote: "Paspausk ant rungtynių, kad pamatytum kiekvieno žaidėjo statistiką. Pilkai pažymėti laisvieji agentai.",
+    liveGamesNote: "Vykstančių rungtynių statistika ir fantasy taškai – iš Eurolygos gyvos statistikos (atnaujinama kas 15 min.). Po rungtynių juos pakeičia oficialūs BasketNews taškai.",
+    liveFpTip: "Gyvi taškai iš Eurolygos gyvos statistikos; po rungtynių juos pakeis oficialūs BasketNews taškai",
+    periodQ: "{q} kėl.",
+    periodOT: "Pratęs.",
     advTitle: "Pažangi statistika",
     advNote: "Šaltinis: {link}. #N yra vieta tarp {n} žaidėjų, o juosta rodo procentilį.",
     advLink: "BasketNews advanced stats",
@@ -477,6 +481,10 @@ const I18N = {
     collapseAll: "Collapse",
     noGames: "No games this round.",
     gamesNote: "Click a game to see every player's stats. Grey players are free agents.",
+    liveGamesNote: "Stats and fantasy points of games in progress come from the EuroLeague live box score (updated every 15 minutes). BasketNews' official points replace them after the game.",
+    liveFpTip: "Live points from the EuroLeague live box score; BasketNews' official points replace them after the game",
+    periodQ: "Q{q}",
+    periodOT: "OT",
     advTitle: "Advanced stats",
     advNote: "Source: {link}. #N is the rank among {n} players, the bar is the percentile.",
     advLink: "BasketNews advanced stats",
@@ -1159,13 +1167,24 @@ function clubCell(club) {
   return `<div class="club">${logo}${esc(club.abbr)}</div>`;
 }
 
+// "Q3 · 04:12" for a game in progress.
+function periodText(p) {
+  if (!p) return "";
+  const q = Number(p.quarter);
+  const part = q > 4 ? t("periodOT") : q ? t("periodQ", { q }) : "";
+  return [part, p.clock].filter(Boolean).join(" · ");
+}
+
+// Fantasy points worked out from the live box score until BasketNews posts its own.
+const liveFp = (html, live) => (live ? `<span class="fp-live" title="${esc(t("liveFpTip"))}">${html}</span>` : html);
+
 function gameCell(games) {
   if (!games || !games.length) return `<span class="dim">${t("noGame")}</span>`;
   return games.map((g) => {
     const day = g.day ? `<span class="day-tag d${g.day}" data-tip="${esc(t("dayTip", { n: g.day }))}">${t("dayShort", { n: g.day })}</span>` : "";
     const vs = `${day}${g.home ? "vs" : "@"} ${esc(g.opponent)}`;
     if (g.canceled) return `<div class="game done">${vs} <span class="when">${t("canceled")}</span></div>`;
-    if (g.live) return `<div class="game">${vs} <span class="live-dot">${g.score[0]}:${g.score[1]} LIVE</span></div>`;
+    if (g.live) return `<div class="game">${vs} <span class="live-dot">${g.score ? `${g.score[0]}:${g.score[1]} ` : ""}LIVE${g.period ? ` · ${periodText(g.period)}` : ""}</span></div>`;
     if (g.completed) {
       const res = g.score[0] > g.score[1] ? "W" : "L";
       return `<div class="game done">${vs} <span class="when">${res} ${g.score[0]}:${g.score[1]}</span></div>`;
@@ -2345,7 +2364,7 @@ function boxTable(side) {
   const rows = side.players.map((p) => `
     <tr class="clickable${p.owner ? "" : " free-row"}" data-player="${p.id}">
       <td class="sticky"><div class="player">${clubMini(side)}<span class="player-name">${esc(p.name)}</span></div></td>
-      <td class="num fp-cell">${fpLink(p.id, fmt(p.fp))}</td>
+      <td class="num fp-cell">${fpLink(p.id, liveFp(fmt(p.fp), p.live))}</td>
       ${cols.map((c) => `<td class="num stat">${cell(p.line, c.key)}</td>`).join("")}
       <td class="owner-col">${ownerCell(p.owner, false)}</td>
     </tr>`).join("");
@@ -2363,7 +2382,7 @@ function boxTable(side) {
 function gameCardHead(g) {
   let status;
   if (g.canceled) status = `<span class="badge">${t("gameCanceled")}</span>`;
-  else if (g.live) status = `<span class="badge live">${t("live")}</span>`;
+  else if (g.live) status = `<span class="badge live">${t("live")}${g.period ? ` · ${periodText(g.period)}` : ""}</span>`;
   else if (g.completed) status = `<span class="badge">${t("gameFinal")}</span>`;
   else status = `<span class="badge">${when(g.at)}</span>`;
   const score = g.homeScore !== null && g.homeScore !== undefined
@@ -2499,7 +2518,7 @@ async function renderGames(fid, params, token, silent) {
       </div>
     </div>
     ${cards ? `<div class="games">${cards}</div>` : stateBox(t("noGames"))}
-    <p class="note">${t("gamesNote")}</p>`);
+    <p class="note">${t("gamesNote")}${data.games.some((g) => g.live || g.period) || data.state === "live" ? ` ${t("liveGamesNote")}` : ""}</p>`);
   bindRoundSelect(`#/l/${fid}/games`);
   const toggle = (card, open) => {
     card.classList.toggle("open", open);
@@ -2529,7 +2548,7 @@ function lineupTable(lineup, state) {
     else if (!scored) pts = `<span title="${t("fp")}">${fmt(p.roundPts)}</span>`;
     else if (p.slot === "inactive") pts = '<span class="dim">0</span>';
     else if (dnp) pts = `<span class="dim" title="${t("dnpTitle")}">DNP</span>`;
-    else pts = `<span class="team-pts${half ? " half" : ""}">${fmt(p.contrib)}</span>`;
+    else pts = liveFp(`<span class="team-pts${half ? " half" : ""}">${fmt(p.contrib)}</span>`, p.roundLive);
     const band = p.slot === "inactive" && !bandShown
       ? `<tr class="band-row"><td class="sticky" colspan="1">${t("notRegistered")}</td><td colspan="${colspan - 1}"></td></tr>` : "";
     if (p.slot === "inactive") bandShown = true;

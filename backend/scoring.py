@@ -91,3 +91,27 @@ def score_lineup(lineup_players):
     total = round(sum(p["contrib"] for p in lineup_players), 2)
     optimal = optimal_score(lineup_players)
     return {"total": total, "optimal": optimal, "lost": round(max(optimal - total, 0), 2)}
+
+
+# Fantasy points of one game under BasketNews' "modern" system, worked out from the box scores
+# and official points of every player-game of rounds 1-2 (453 of 453 exact) and checked against
+# the EuroLeague's own box scores. Used only for live games, before BasketNews scores them.
+MODERN = {"pts": 1, "oreb": 1.5, "dreb": 1, "ast": 1.5, "stl": 1.5, "blk": 1, "tov": -1.5, "fd": 1, "ba": -0.5}
+MODERN_MISS = -1           # every missed shot: two, three or free throw
+MODERN_DOUBLE_DOUBLE = 10  # 10+ in two of points, rebounds, assists, steals, blocks
+MODERN_RESULT = 1.5        # + for a win, - for a loss
+MODERN_FOULED_OUT = -5     # five fouls
+
+
+def fantasy_points(line, won, system="modern"):
+    """One game's fantasy points from its box-score line, or None for a scoring system the
+    formula is not known for. `won`: the team won (in a live game: is ahead; None while tied)."""
+    if system != "modern" or not line:
+        return None
+    misses = (line["p2a"] - line["p2m"]) + (line["p3a"] - line["p3m"]) + (line["fta"] - line["ftm"])
+    cats = sum(1 for k in ("pts", "reb", "ast", "stl", "blk") if (line.get(k) or 0) >= 10)
+    fp = sum(w * (line.get(k) or 0) for k, w in MODERN.items()) + MODERN_MISS * misses
+    fp += MODERN_DOUBLE_DOUBLE if cats >= 2 else 0
+    fp += 0 if won is None else MODERN_RESULT if won else -MODERN_RESULT
+    fp += MODERN_FOULED_OUT if (line.get("pf") or 0) >= 5 else 0
+    return round(fp, 2)

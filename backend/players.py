@@ -3,7 +3,8 @@ import copy
 import pickle
 import threading
 
-from backend.rounds import keep_for, round_ttl
+from backend import live
+from backend.rounds import is_live, keep_for, round_ttl
 from backend.sources.advanced import adv_value, advanced_stats, link_advanced_rows
 from backend.sources import basketnews as bn
 from backend.util import pool_map
@@ -27,7 +28,10 @@ def players(meta, stats_round, games_round, shared=False):
     keep = min(keep_for(meta, stats_round), keep_for(meta, games_round))
     raw = bn.player_records(meta, stats_round, games_round, round_ttl(meta, min(stats_round, games_round)), keep)
     today = _today_records(meta) if keep else None
-    inputs = (raw, today, advanced_stats(meta), advanced_stats(meta, stats_round) if stats_round is not None else {})
+    # a live round: lines and points from the EuroLeague live feed until BasketNews has its own
+    live_games = live.boxes(meta, raw) if is_live(meta, stats_round) and games_round == stats_round else None
+    inputs = (raw, today, advanced_stats(meta), advanced_stats(meta, stats_round) if stats_round is not None else {},
+              live_games)
     key = (meta["leagueId"], meta["pointCalcSystem"], stats_round, games_round)
     with _built_lock:
         hit = _built.get(key)
@@ -36,6 +40,7 @@ def players(meta, stats_round, games_round, shared=False):
     views = bn.views_of(raw)
     if keep:
         _season_from_today(meta, views, today)
+    live.overlay(meta, views, live_games)
     attach_usage(meta, views, stats_round)
     mark_round_days(views)
     blob = pickle.dumps(views, pickle.HIGHEST_PROTOCOL)
@@ -132,7 +137,11 @@ def players_by_ids(meta, ids, stats_round, games_round):
     found = players(meta, stats_round, games_round)
     missing = [i for i in ids if i not in found]
     if missing:
-        found.update(bn.fetch_players_by_id(meta, missing, stats_round, games_round))
+        extra = bn.fetch_players_by_id(meta, missing, stats_round, games_round)
+        if is_live(meta, stats_round) and games_round == stats_round:
+            live.overlay(meta, extra, live.boxes(meta, bn.player_records(
+                meta, stats_round, games_round, round_ttl(meta, stats_round), keep_for(meta, stats_round))))
+        found.update(extra)
     if missing:
         mark_round_days(found)  # the directly fetched players need their round day too
     return found
