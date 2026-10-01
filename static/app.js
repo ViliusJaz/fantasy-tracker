@@ -2424,17 +2424,17 @@ function lineupTable(lineup, state) {
         <span class="player-name">${esc(p.name)}</span>${p.captain ? `<span class="cap" title="${t("captain")}">C</span>` : ""}
         <div class="sub">${POS[p.position] || ""} · ${clubTag(p.club)} ${injuryBadge(p.injury)}</div></div></div></td>
       <td class="num pts-col">${fpLink(p.id, pts)}</td>
+      <td class="num avg-col">${fpLink(p.id, fmt1(p.avgPts))}</td>
       ${upcoming ? statCells(p.season, "avg") : statCells(p.roundLine, "round")}
       <td>${gameCell(p.games)}</td>
-      <td class="num">${fpLink(p.id, fmt1(p.avgPts))}</td>
     </tr>`;
   }).join("");
   const s = lineup.scoring;
   const foot = s ? `<tfoot><tr><td class="sticky"><strong>${t("total")}</strong></td><td class="num pts-col"><span class="team-pts">${fmt(s.total)}</span></td><td colspan="${STAT_DEFS.length + 2}"></td></tr></tfoot>` : "";
   const ptsHead = scored ? `<th class="num pts-col" title="${esc(t("teamPtsTitle"))}">${t("teamPts")}</th>` : `<th class="num">${t("fp")}</th>`;
   return `<div class="card table-scroll"><table class="grid roster stats-table">
-    <thead><tr><th class="sticky">${t("player")}</th>${ptsHead}
-      ${statHeads()}<th>${t("games")}</th><th class="num" title="${esc(t("avgTitle"))}">${t("avg")}</th></tr></thead>
+    <thead><tr><th class="sticky">${t("player")}</th>${ptsHead}<th class="num avg-col" title="${esc(t("avgTitle"))}">${t("avgFp")}</th>
+      ${statHeads()}<th>${t("games")}</th></tr></thead>
     <tbody>${rows}</tbody>${foot}</table></div>`;
 }
 

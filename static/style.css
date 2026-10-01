@@ -530,6 +530,7 @@ th .adv-dir { margin-left: 2px; font-size: 11px; color: var(--muted); }
 .roster td { height: 62px; font-size: 15px; }
 .roster .player { gap: 10px; }
 .roster td.pts-col { font-size: 17px; }
+.roster td.avg-col { font-size: 16px; font-weight: 600; }
 .team-pts { color: var(--accent); font-family: var(--font-display); font-weight: 700; font-size: 1.12em; }
 .team-pts.half { color: var(--accent-muted); font-weight: 600; }
 .grid th.pts-col { color: var(--accent); }
