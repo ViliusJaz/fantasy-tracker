@@ -177,6 +177,20 @@ const I18N = {
     newsEmpty: "Traumų sąraše pokyčių dar nebuvo.",
     newsNote: "Pagal BasketNews traumų sąrašą ({link}). Pokyčiai tikrinami kas 15 min., laikas rodo, kada pokytis pastebėtas.",
     injuryReportLink: "traumų sąrašas",
+    injViewNews: "Naujienos",
+    injViewClubs: "Komandos",
+    clubInjured: "Traumuotų: {n}",
+    clubNoInjuries: "Traumų nėra",
+    clubShort: "Gali pritrūkti: {p}",
+    clubDepthTitle: "Sveiki žaidėjai pagal pozicijas",
+    clubDepthCell: "{pos}: sveiki {h} iš {n} šią poziciją galinčių žaisti",
+    clubDepthInjured: "{n} traum.",
+    clubOther: "Sąraše dėl kitų priežasčių (ne traumos, neskaičiuojama)",
+    clubExpected: "Tikimasi, kad žais (neskaičiuojama)",
+    clubsExpandAll: "Išskleisti visas",
+    clubsCollapseAll: "Suskleisti visas",
+    clubsEmpty: "Komandų duomenų kol kas nėra.",
+    clubsNote: "Pagal BasketNews traumų sąrašą ({link}). Pozicijos – tikros krepšinio pozicijos (PG, SG, SF, PF, C) pagal BasketNews statistiką; dvi pozicijas žaidžiantis žaidėjas skaičiuojamas abiejose. Traumuotu laikomas kiekvienas sąrašo žaidėjas, išskyrus „Tikėtina“ ir ne sveikatos priežastis (trenerio sprendimas, asmeninės priežastys). „Gali pritrūkti“ – kai dėl traumų pozicijoje lieka mažiau nei 2 sveiki registruoti žaidėjai.",
     avgTipGame: "Lygos vidurkis: {v} per rungtynes",
     avgTipPct: "Lygos vidurkis: {v}",
     avgTipPlain: "Lygos vidurkis: {v}",
@@ -537,6 +551,20 @@ const I18N = {
     newsEmpty: "No injury report changes yet.",
     newsNote: "From the BasketNews injury report ({link}). Checked every 15 minutes; the time shows when a change was spotted.",
     injuryReportLink: "injury report",
+    injViewNews: "News",
+    injViewClubs: "Teams",
+    clubInjured: "Injured: {n}",
+    clubNoInjuries: "No injuries",
+    clubShort: "May run short: {p}",
+    clubDepthTitle: "Healthy players by position",
+    clubDepthCell: "{pos}: {h} of the {n} players who can play it are healthy",
+    clubDepthInjured: "{n} inj.",
+    clubOther: "Listed for other reasons (not injuries, not counted)",
+    clubExpected: "Expected to play (not counted)",
+    clubsExpandAll: "Expand all",
+    clubsCollapseAll: "Collapse all",
+    clubsEmpty: "No team data yet.",
+    clubsNote: "From the BasketNews injury report ({link}). Positions are real basketball positions (PG, SG, SF, PF, C) from BasketNews' stats; a player who plays two counts in both. Everyone on the report counts as injured except \u201cExpected\u201d and non-health reasons (coach's decision, personal). \u201cMay run short\u201d means injuries leave fewer than 2 healthy registered players at a position.",
     avgTipGame: "League average: {v} per game",
     avgTipPct: "League average: {v}",
     avgTipPlain: "League average: {v}",
@@ -1827,6 +1855,68 @@ function newsTime(e) {
   return `${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
+// Club cards opened in the injuries "Teams" view (all start collapsed; kept while the page refreshes).
+const openClubs = new Set();
+
+function clubDepthCell(d, short) {
+  return `<div class="depth-cell${short ? " short" : ""}${d.total ? "" : " none"}" role="listitem"
+    title="${esc(t("clubDepthCell", { pos: d.pos, h: d.healthy, n: d.total }))}">
+    <span class="depth-pos">${d.pos}</span><span class="depth-n">${d.healthy}<small>/${d.total}</small></span>
+    ${d.injured ? `<span class="depth-hurt">${t("clubDepthInjured", { n: d.injured })}</span>` : ""}</div>`;
+}
+
+function clubInjuryRows(list, muted = false) {
+  if (!list.length) return "";
+  return `<ul class="club-inj-rows${muted ? " muted" : ""}">${list.map((e) => {
+    const name = e.player.id
+      ? `<span class="news-name" data-player="${esc(e.player.id)}">${esc(e.player.name)}</span>`
+      : `<span class="news-name">${esc(e.player.name)}</span>`;
+    const owner = e.owner ? ` <span class="dim small">· ${esc(e.owner.title)}</span>` : "";
+    return `<li class="club-inj-row">
+      <span class="pos-chip">${esc(e.positions.join("/") || "–")}</span>
+      <div class="club-inj-who">
+        <div>${name}${owner}</div>
+        <div class="club-inj-meta"><span class="inj ${SEVERITY[e.status] || "mild"}">${esc(e.return || e.label)}</span></div>
+        ${e.comment ? `<div class="news-comment">${esc(e.comment)}</div>` : ""}
+      </div>
+    </li>`;
+  }).join("")}</ul>`;
+}
+
+function clubInjuryCard(c) {
+  const chips = [
+    c.injured.length ? `<span class="inj bad">${t("clubInjured", { n: c.injured.length })}</span>` : `<span class="dim small">${t("clubNoInjuries")}</span>`,
+    ...c.depth.filter((d) => d.injured).map((d) => `<span class="pos-chip hurt">${d.pos}${d.injured > 1 ? ` ×${d.injured}` : ""}</span>`),
+    c.short.length ? `<span class="inj warn">${esc(t("clubShort", { p: c.short.join(", ") }))}</span>` : "",
+  ].join("");
+  return `<details class="card club-inj${c.short.length ? " short" : ""}" data-club="${esc(c.abbr)}"${openClubs.has(c.abbr) ? " open" : ""}>
+    <summary><span class="club-inj-name">${clubMini(c, "md")}<strong>${esc(c.name)}</strong></span><span class="club-inj-chips">${chips}</span></summary>
+    <div class="club-inj-body">
+      <div class="depth" role="list" aria-label="${esc(t("clubDepthTitle"))}">${c.depth.map((d) => clubDepthCell(d, c.short.includes(d.pos))).join("")}</div>
+      ${clubInjuryRows(c.injured)}
+      ${c.other.length ? `<h4 class="club-inj-sub">${t("clubOther")}</h4>${clubInjuryRows(c.other, true)}` : ""}
+      ${c.expected.length ? `<h4 class="club-inj-sub">${t("clubExpected")}</h4>${clubInjuryRows(c.expected, true)}` : ""}
+    </div>
+  </details>`;
+}
+
+function bindClubCards() {
+  const cards = [...document.querySelectorAll("details.club-inj")];
+  const btn = document.getElementById("clubs-toggle");
+  const label = () => { if (btn) btn.textContent = t(cards.every((d) => d.open) ? "clubsCollapseAll" : "clubsExpandAll"); };
+  for (const d of cards) {
+    d.addEventListener("toggle", () => {
+      if (d.open) openClubs.add(d.dataset.club); else openClubs.delete(d.dataset.club);
+      label();
+    });
+  }
+  btn?.addEventListener("click", () => {
+    const open = !cards.every((d) => d.open);
+    for (const d of cards) d.open = open;
+  });
+  label();
+}
+
 async function renderInjuries(fid, params, token, silent) {
   if (!silent) setView(skeletonTable(8));
   let data;
@@ -1858,22 +1948,47 @@ async function renderInjuries(fid, params, token, silent) {
     </li>`;
   }).join("");
   const report = data.reportUrl ? `<a class="link" href="${esc(data.reportUrl)}" target="_blank" rel="noopener">${t("injuryReportLink")}</a>` : "";
-  setView(`
-    ${leagueHeader(league, "injuries")}
-    <div class="toolbar">
-      <select class="select" id="news-team" aria-label="${esc(t("team"))}">
-        <option value="">${t("newsAll")}</option>
-        <option value="owned"${filter === "owned" ? " selected" : ""}>${t("newsOwnedOnly")}</option>
-        ${(data.teams || []).map((tm) => `<option value="${esc(tm.id)}"${tm.id === filter ? " selected" : ""}>${esc(tm.title)}</option>`).join("")}
-      </select>
-      <span class="dim small">${t("newsCount", { n: events.length })}</span>
-    </div>
-    ${events.length ? `<ul class="card news">${rows}</ul>`
-      : `<div class="card">${stateBox(filter && filter !== "owned" ? t("newsEmptyTeam") : t("newsEmpty"))}</div>`}
-    <p class="note">${t("newsNote", { link: report })}</p>`);
-  document.getElementById("news-team").addEventListener("change", (ev) => {
-    location.hash = `#/l/${fid}/injuries${ev.target.value ? `?team=${ev.target.value}` : ""}`;
-  });
+  const view = params.get("view") === "teams" ? "teams" : "news";
+  const views = `<div class="seg inj-views" role="group">${[["news", t("injViewNews")], ["teams", t("injViewClubs")]].map(([v, label]) =>
+    `<button type="button" class="seg-btn${view === v ? " on" : ""}" data-inj-view="${v}" aria-pressed="${view === v}">${label}</button>`).join("")}</div>`;
+  if (view === "teams") {
+    const clubs = data.clubs || [];
+    setView(`
+      ${leagueHeader(league, "injuries")}
+      <div class="toolbar">
+        <div class="toolbar-left">${views}${clubs.length ? `<button type="button" class="link-btn" id="clubs-toggle">${t("clubsExpandAll")}</button>` : ""}</div>
+        <span class="updated">${stamp()}</span>
+      </div>
+      ${clubs.length ? `<div class="club-inj-list">${clubs.map(clubInjuryCard).join("")}</div>` : `<div class="card">${stateBox(t("clubsEmpty"))}</div>`}
+      <p class="note">${t("clubsNote", { link: report })}</p>`);
+    bindClubCards();
+  } else {
+    setView(`
+      ${leagueHeader(league, "injuries")}
+      <div class="toolbar">
+        <div class="toolbar-left">
+          ${views}
+          <select class="select" id="news-team" aria-label="${esc(t("team"))}">
+            <option value="">${t("newsAll")}</option>
+            <option value="owned"${filter === "owned" ? " selected" : ""}>${t("newsOwnedOnly")}</option>
+            ${(data.teams || []).map((tm) => `<option value="${esc(tm.id)}"${tm.id === filter ? " selected" : ""}>${esc(tm.title)}</option>`).join("")}
+          </select>
+          <span class="dim small">${t("newsCount", { n: events.length })}</span>
+        </div>
+        <span class="updated">${stamp()}</span>
+      </div>
+      ${events.length ? `<ul class="card news">${rows}</ul>`
+        : `<div class="card">${stateBox(filter && filter !== "owned" ? t("newsEmptyTeam") : t("newsEmpty"))}</div>`}
+      <p class="note">${t("newsNote", { link: report })}</p>`);
+    document.getElementById("news-team").addEventListener("change", (ev) => {
+      location.hash = `#/l/${fid}/injuries${ev.target.value ? `?team=${ev.target.value}` : ""}`;
+    });
+  }
+  for (const b of document.querySelectorAll("[data-inj-view]")) {
+    b.addEventListener("click", () => {
+      location.hash = `#/l/${fid}/injuries${b.dataset.injView === "teams" ? "?view=teams" : ""}`;
+    });
+  }
 }
 
 function relTime(iso) {

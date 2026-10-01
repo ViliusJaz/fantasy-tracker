@@ -39,6 +39,11 @@ grąžina pagal `?lang=`.
   („Nežaidžia“, „Prieš rungtynes“ ...), o komentarus išverčia `injury_lt.py` (kūno dalis +
   pusė + traumos tipas su teisingais linksniais). Ko vertėjas nesupranta, serverio konsolėje
   pažymi „Traumos komentaras neišverstas“ ir rodo originalą.
+- Traumos pagal komandas (skirtukas „Traumos“ → „Komandos“): tikros krepšinio pozicijos (PG, SG,
+  SF, PF, C) iš BasketNews pažangiosios statistikos (šio sezono, žaidėjams be rungtynių – praėjusio,
+  tada traumų sąrašo „P“ stulpelis). „Tikėtina“ ir ne sveikatos priežastys (trenerio sprendimas...)
+  traumomis nelaikomos. „Gali pritrūkti“ – kai dėl traumų pozicijoje lieka mažiau nei 2 sveiki
+  registruoti žaidėjai.
 - Taškai pagal sudėtį: penketas ×1, kapitonas ×2, 6-as žaidėjas (b-1) ×1, B2–B5 ×0.5,
   neaktyvūs („Out“) ×0. Leidžiamos formacijos (C-F-G): 1-2-2, 2-1-2, 2-2-1, 1-3-1, 1-1-3.
   „Optimali sudėtis“ – geriausias tų pačių aktyvių žaidėjų išdėstymas; skirtumas –

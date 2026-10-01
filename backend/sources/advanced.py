@@ -44,27 +44,35 @@ def _keep(meta, rnd):
     return 7 * 24 * 3600 if rnd is not None and rnd <= meta["currentRound"] - 2 else 0
 
 
-def _load_player_rows(meta, key, rnd, hit):
-    league, season = key[0], key[1]
-    form = {"league_id": league, "season": season}
-    if rnd is not None:
-        form.update(sequence_from=rnd + 1, sequence_to=rnd + 1)
-    req = urllib.request.Request(
-        ADV_URL, data=urllib.parse.urlencode(form).encode(),
+def _players_request(league, season, form=None):
+    return urllib.request.Request(
+        ADV_URL, data=urllib.parse.urlencode({"league_id": league, "season": season, **(form or {})}).encode(),
         headers={"User-Agent": BROWSER_UA, "X-Requested-With": "XMLHttpRequest",
                  "Content-Type": "application/x-www-form-urlencoded", "Accept-Encoding": "gzip",
                  "Referer": f"https://basketnews.com/advanced-stats/{league}/{season}"})
-    stored_key = f"advanced-stats {league} {season} {rnd}"
-    keep = _keep(meta, rnd)
+
+
+def _players_answer(req, stored_key, keep):
+    """The players.json answer, from the persistent cache when `keep` allows it."""
+    payload = cache.get(stored_key) if keep else None
+    if payload is not None:  # a snapshot of this build should still contain it
+        net.remember("POST", ADV_URL, req.data, json.dumps(payload).encode())
+    if payload is None:
+        payload = net.fetch(req, "advanced-stats", as_json=True)
+        if keep:
+            cache.put(stored_key, "advanced-stats", payload, keep)
+    return payload
+
+
+def _load_player_rows(meta, key, rnd, hit):
+    league, season = key[0], key[1]
+    form = {} if rnd is None else {"sequence_from": rnd + 1, "sequence_to": rnd + 1}
+    req = _players_request(league, season, form)
     try:
-        payload = cache.get(stored_key) if keep else None
-        if payload is not None:  # a snapshot of this build should still contain it
-            net.remember("POST", ADV_URL, req.data, json.dumps(payload).encode())
-        if payload is None:
-            payload = net.fetch(req, "advanced-stats", as_json=True)
-            if keep:
-                cache.put(stored_key, "advanced-stats", payload, keep)
+        payload = _players_answer(req, f"advanced-stats {league} {season} {rnd}", _keep(meta, rnd))
         data = payload.get("data") or {}
+        if rnd is None:
+            _remember_positions((league, season), data)
         max_seq = (data.get("extra") or {}).get("max_sequence") or 0
         if rnd is not None and max_seq < rnd + 1:
             result = {}  # BasketNews clamps to its last game; that round isn't there yet
@@ -77,6 +85,42 @@ def _load_player_rows(meta, key, rnd, hit):
     with _adv_lock:
         _adv_cache[key] = (time.time() + ttl, result)
     return result
+
+
+# BasketNews' position ids (the "positions" list of players.json)
+POSITION_NAMES = {1: "PG", 2: "SG", 3: "SF", 4: "PF", 5: "C"}
+_positions = {}  # (league, season) -> {bnPlayerId: ["PG", ...]}
+
+
+def _remember_positions(key, data):
+    found = {str(p["id"]): [POSITION_NAMES[i] for i in p.get("positions") or [] if i in POSITION_NAMES]
+             for p in data.get("players") or [] if p.get("id")}
+    with _adv_lock:
+        _positions[key] = {k: v for k, v in found.items() if v}
+
+
+def player_positions(meta):
+    """Real basketball positions, {bnPlayerId: ["PG", "SG"]}: this season's advanced stats, then
+    last season's for players who have not played yet. Last season's answer never changes, so
+    it is kept in the persistent cache for a month."""
+    league, season = meta.get("bnLeagueId"), meta.get("seasonYear")
+    if not league or not season:
+        return {}
+    advanced_stats(meta)  # loads this season's players and their positions
+    last = (league, season - 1)
+    with _adv_lock:
+        have_last = last in _positions
+    if not have_last:
+        def load_last():
+            try:
+                payload = _players_answer(_players_request(*last), f"advanced-stats {league} {season - 1} positions",
+                                          30 * 24 * 3600)
+                _remember_positions(last, payload.get("data") or {})
+            except net.FetchError as exc:
+                LOG.warning("last season's positions unavailable: %s", exc)
+        _flights.do(("positions",) + last, load_last)
+    with _adv_lock:
+        return {**(_positions.get(last) or {}), **(_positions.get((league, season)) or {})}
 
 
 def adv_value(row, key):

@@ -162,3 +162,38 @@ def test_report_round_column_names_the_rounds_missed(ft, raw, status, lt, en):
     assert ft.return_local(raw, status) == en
     ft.LANG.set("lt")
     assert ft.return_local(raw, status) == lt
+
+
+def test_injuries_by_club_count_real_positions(monkeypatch):
+    from backend.payloads import injuries as pay
+
+    def player(n, club, pos="guard"):
+        return {"id": f"p{n}", "bnId": str(n), "name": f"Player {n}", "photo": None, "position": pos, "avgPts": 10,
+                "gamesPlayed": 2, "club": {"abbr": club, "name": club, "fullName": f"{club} Full", "nameEn": f"{club} City",
+                                           "logo": None}}
+
+    def rep(n, status, comment, club, pos="C"):
+        return {"bnId": str(n), "name": f"Player {n}", "club": club, "pos": pos, "status": status,
+                "siteLabel": status.title(), "return": "Round 3", "comment": comment}
+
+    pmap = {f"p{n}": player(n, club, pos) for n, club, pos in
+            [(1, "AAA", "center"), (2, "AAA", "guard"), (3, "AAA", "guard"), (4, "AAA", "center"),
+             (5, "AAA", "guard"), (6, "AAA", "forward"), (7, "BBB", "center")]}
+    report = {"1": rep(1, "out", "Knee injury", "AAA City"), "2": rep(2, "uncertain", "DNP in Round 2 (coach's decision)", "AAA City", "PG"),
+              "3": rep(3, "expected", "Ankle sprain", "AAA City", "SG"), "9": rep(9, "out", "Back injury", "BBB City", "SF")}
+    monkeypatch.setattr(pay, "injury_report", lambda meta: report)
+    monkeypatch.setattr(pay, "player_positions", lambda meta: {"1": ["C"], "4": ["C"], "5": ["PG", "SG"], "7": ["C"]})
+    clubs = {c["abbr"]: c for c in pay.club_injuries({"id": "x"}, pmap, {})}
+    a = clubs["AAA"]
+    assert [e["player"]["name"] for e in a["injured"]] == ["Player 1"]
+    assert [e["player"]["name"] for e in a["other"]] == ["Player 2"]       # coach's decision: not an injury
+    assert [e["player"]["name"] for e in a["expected"]] == ["Player 3"]    # expected back: not counted
+    depth = {d["pos"]: d for d in a["depth"]}
+    assert depth["C"] == {"pos": "C", "total": 2, "injured": 1, "healthy": 1}
+    assert depth["PG"]["total"] == 2 and depth["SG"]["total"] == 2  # p2 PG (report), p5 PG/SG, p3 SG (report)
+    assert depth["SF"]["total"] == 1 and depth["PF"]["total"] == 1  # no real position known: the fantasy one
+    assert a["short"] == ["C"]
+    b = clubs["BBB"]
+    assert [e["player"]["name"] for e in b["injured"]] == ["Player 9"]  # not in the game: matched on the club name
+    assert b["short"] == []  # one center and nobody hurt there: a roster choice, not an injury problem
+    assert list(clubs) == ["AAA", "BBB"]  # clubs that may run short first

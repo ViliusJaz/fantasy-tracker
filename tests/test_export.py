@@ -22,7 +22,7 @@ SCHEMA = {
                                "injuryReportUrl", "advanced"}],
     "league/ID/draft": [{"league", "picks", "teams"}],
     "league/ID/transfers": [{"league", "moves", "teams", "upcoming", "lock", "usesCredits", "startingCredits"}],
-    "league/ID/injuries": [{"league", "events", "total", "teams", "reportUrl"}],
+    "league/ID/injuries": [{"league", "events", "total", "teams", "reportUrl", "clubs"}],
     "league/ID/team/ID": [{"league", "team", "standing", "standingRound", "round", "roundState", "result", "after",
                            "lineup", "history"}],
     "league/ID/player/ID": [{"league", "player", "owner", "advanced", "leagueAvg", "proballers", "injury", "gameLog",
