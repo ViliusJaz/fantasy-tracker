@@ -16,7 +16,7 @@ class TeamRef(TypedDict):
 class StandingRow(TypedDict, total=False):
     team: TeamRef
     position: int
-    positionGained: int
+    positionGained: int            # BasketNews' value: new place minus old (-2 = up two places)
     pointsTotal: float
     pointsRound: float
     wins: int                      # head-to-head only

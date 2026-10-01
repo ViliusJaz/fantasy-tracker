@@ -1423,9 +1423,10 @@ async function renderHome(token) {
 
 // ------------------------------------------------------------------ standings
 
-function moveMark(gained) {
-  if (!gained) return "";
-  return gained > 0 ? `<span class="move up">▲${gained}</span>` : `<span class="move down">▼${-gained}</span>`;
+// BasketNews' "positionGained" is the new place minus the old one: -2 = two places up.
+function moveMark(change) {
+  if (!change) return "";
+  return change < 0 ? `<span class="move up">▲${-change}</span>` : `<span class="move down">▼${change}</span>`;
 }
 
 function standingsTable(data) {
