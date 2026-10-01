@@ -73,7 +73,10 @@ def injury_log():
 
 
 def save_lineup_snapshot(meta, lineup_by_team):
-    """Store each round's lineups; a round locks once it starts. True when the file changed."""
+    """Store each round's lineups; a round locks once it starts. True when the file changed.
+
+    The API only shows each team's newest lineup, so once a team sets its lineup for the next
+    round it is no longer seen in the last one: teams saved earlier are kept, never dropped."""
     by_round = {}
     for team_id, lu in lineup_by_team.items():
         by_round.setdefault(lu["round"], {})[team_id] = {"formation": lu["formation"], "players": lu["players"]}
@@ -87,6 +90,7 @@ def save_lineup_snapshot(meta, lineup_by_team):
             old = store["rounds"].get(key)
             if old and old.get("locked") and not locked:
                 continue
+            teams = {**old["teams"], **teams} if old else teams
             if old and old["teams"] == teams and old.get("locked") == locked:
                 continue
             store["rounds"][key] = {"savedAt": clock.now().isoformat(timespec="seconds"),

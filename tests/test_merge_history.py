@@ -22,6 +22,15 @@ def test_lineups_keep_every_round_and_prefer_locked_then_later():
     assert set(out["rounds"]) == {"1", "2", "3"}
 
 
+def test_lineups_keep_every_team_of_a_round():
+    ours = {"rounds": {"1": {"savedAt": "2026-10-01T10:00:00", "locked": True, "teams": {"t2": {"players": ["x"]}}}}}
+    theirs = {"rounds": {"1": {"savedAt": "2026-09-30T10:00:00", "locked": True,
+                               "teams": {"t1": {"players": ["a"]}, "t2": {"players": ["b"]}}}}}
+    out = m.merge_lineups(ours, theirs)["rounds"]["1"]
+    assert out["teams"] == {"t1": {"players": ["a"]}, "t2": {"players": ["x"]}}  # t2: the later save
+    assert out["savedAt"] == "2026-10-01T10:00:00"
+
+
 def ep(*updates, end=None):
     return {"start": updates[0][0], "end": end, "lastSeen": updates[-1][0],
             "updates": [{"date": d, "at": at, "status": s} for d, at, s in updates]}

@@ -5,8 +5,8 @@ publish.sh registers it (git config merge.ft-history.driver) and .gitattributes 
 to data/**/*.json. Git calls it with the common ancestor, our version and their version;
 the merged result is written over ours. Nothing recorded on either side is dropped:
 
-  data/lineups/<league>.json  every round of both; for a round both saved, the locked one,
-                              then the later save
+  data/lineups/<league>.json  every round and team of both; for a team both saved in a round,
+                              the locked save, then the later one
   data/injuries.json          every player of both; for a player both changed, the record with
                               the latest status change (it contains the older ones)
   data/proballers.json        every lookup of both; a found link beats "not found", then the
@@ -32,8 +32,10 @@ def merge_lineups(ours, theirs):
         mine = out["rounds"].get(rnd)
         if mine is None:
             out["rounds"][rnd] = snap
-        elif (bool(snap.get("locked")), snap.get("savedAt") or "") > (bool(mine.get("locked")), mine.get("savedAt") or ""):
-            out["rounds"][rnd] = snap
+            continue
+        rank = lambda s: (bool(s.get("locked")), s.get("savedAt") or "")  # noqa: E731
+        first, last = (mine, snap) if rank(snap) > rank(mine) else (snap, mine)
+        out["rounds"][rnd] = {**last, "teams": {**first.get("teams", {}), **last.get("teams", {})}}
     return out
 
 

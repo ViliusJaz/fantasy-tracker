@@ -137,3 +137,14 @@ def test_only_the_latest_lineup_fetch_of_a_league_is_kept(ft, clock):
     ft.observe_lineups(meta(), lineup_by_team(1, {"t1": team("g-1")}))
     ft.flush()
     assert [p["card"] for p in store(ft)["rounds"]["1"]["teams"]["t1"]["players"]] == ["g-1"]
+
+
+def test_teams_that_moved_on_keep_their_lineup_in_the_finished_round(ft, clock):
+    clock.set("2026-09-30T10:00:00+03:00")
+    ft.save_lineup_snapshot(meta(started=True), lineup_by_team(1, {"t1": team("c-1"), "t2": team("g-2")}))
+    # round 1 over: t1 already set its round 2 lineup, so the API shows t1 only in round 2
+    clock.set("2026-10-01T10:00:00+03:00")
+    ft.save_lineup_snapshot(meta(current=2), {**lineup_by_team(2, {"t1": team("f-1")}), **lineup_by_team(1, {"t2": team("g-2")})})
+    rounds = store(ft)["rounds"]
+    assert set(rounds["1"]["teams"]) == {"t1", "t2"} and rounds["1"]["teams"]["t1"]["players"][0]["card"] == "c-1"
+    assert set(rounds["2"]["teams"]) == {"t1"}
