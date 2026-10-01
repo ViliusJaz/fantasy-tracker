@@ -59,7 +59,7 @@ def standings(meta, rnd=None):
     rnd = meta["latestRound"] if rnd is None else rnd
     for r in range(rnd, meta["firstRound"] - 1, -1):
         rows = fetch_standings_round(meta, r)
-        if rows:
+        if rows and not (r > meta["firstRound"] and not_scored(rows)):
             return r, rows
     rows = [
         {"team": t, "position": i + 1, "positionGained": 0, "wins": 0, "losses": 0, "ties": 0,
@@ -67,6 +67,12 @@ def standings(meta, rnd=None):
         for i, t in enumerate(league_teams(meta))
     ]
     return None, rows
+
+
+def not_scored(rows):
+    """A points league's table for a round BasketNews has not scored yet: while the round is on it
+    lists every team with zero points, season total included."""
+    return all(not r.get("pointsTotal") and not r.get("pointsRound") for r in rows)
 
 
 def schedule(meta, rnd):

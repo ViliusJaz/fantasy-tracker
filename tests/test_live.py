@@ -87,3 +87,15 @@ def test_live_tables(monkeypatch):
         ("t1", 350, 1, 0), ("t2", 341.5, 2, 0), ("t3", 200, 3, 0)]
     m = live.live_matchups({}, 3, [{"team1": {"id": "t1"}, "team2": {"id": "t2"}, "score1": 0, "score2": 0}])
     assert (m[0]["score1"], m[0]["score2"]) == (50, 61.5)
+
+
+def test_an_unscored_round_falls_back_to_the_last_table(monkeypatch):
+    from backend import league
+    scored = [{"team": {"id": "t1"}, "position": 1, "positionGained": 0, "pointsTotal": 120, "pointsRound": 60}]
+    zeros = [{"team": {"id": "t1"}, "position": 1, "positionGained": 0, "pointsTotal": 0, "pointsRound": 0}]
+    monkeypatch.setattr(league, "fetch_standings_round", lambda meta, r: scored if r == 1 else zeros)
+    meta = {"latestRound": 2, "firstRound": 0, "currentRound": 2, "roundStarted": True}
+    assert league.standings(meta) == (1, scored)  # BasketNews lists the live round with zero totals
+    monkeypatch.setattr(live, "team_totals", lambda meta_, rnd: {"t1": 30})
+    (row,) = live.live_round_rows(meta, 2)
+    assert (row["pointsTotal"], row["pointsRound"], row["position"]) == (150, 30, 1)

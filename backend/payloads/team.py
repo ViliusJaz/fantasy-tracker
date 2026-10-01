@@ -4,7 +4,7 @@ from backend.history import lineup_snapshot
 from backend.i18n import L
 from backend.injuries import injury_report, injury_view
 from backend.league import fetch_standings_round, league_meta, lineups, schedule, standings
-from backend.live import live_matchups, live_table
+from backend.live import live_matchups, live_round_rows
 from backend.players import players_by_ids
 from backend.rounds import round_state
 from backend.scoring import _slot_sort_key, players_left, score_lineup
@@ -28,9 +28,8 @@ def team_round_result(meta, team_id, rnd):
                 "opponentPoints": opp, "result": result}
     if state == "upcoming":
         return {"state": state}
-    table = fetch_standings_round(meta, rnd)
+    table = live_round_rows(meta, rnd) if state == "live" else fetch_standings_round(meta, rnd)
     if state == "live":
-        table = live_table(meta, rnd, table)
         for i, r in enumerate(sorted(table, key=lambda r: -r["pointsRound"])):
             r["roundPosition"] = i + 1
     row = next((r for r in table if r["team"]["id"] == team_id), None)
@@ -52,9 +51,8 @@ def team_history(meta, team_id, last_round):
     def one(r):
         res = team_round_result(meta, team_id, r)
         if res["state"] != "upcoming":
-            table = fetch_standings_round(meta, r)
-            if res["state"] == "live":
-                table = live_table(meta, r, table)
+            live_points = res["state"] == "live" and meta["format"] != "head_to_head"
+            table = live_round_rows(meta, r) if live_points else fetch_standings_round(meta, r)
             row = next((x for x in table if x["team"]["id"] == team_id), None)
             if row:
                 res.update(position=row["position"], pointsTotal=row["pointsTotal"],

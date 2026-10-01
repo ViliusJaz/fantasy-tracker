@@ -196,6 +196,17 @@ def live_matchups(meta, rnd, matchups):
     return out
 
 
+def live_round_rows(meta, rnd):
+    """A points league's table for live round `rnd`: the previous table plus the live points.
+    BasketNews' rows for the live round are used as the base when they already carry totals."""
+    from backend.league import fetch_standings_round, not_scored
+    before = fetch_standings_round(meta, rnd - 1) if rnd > meta["firstRound"] else []
+    rows = fetch_standings_round(meta, rnd)
+    if (not rows or not_scored(rows)) and before:
+        rows = [{**r, "pointsRound": 0, "roundPosition": None} for r in before]
+    return live_table(meta, rnd, rows, before)
+
+
 def live_table(meta, rnd, rows, before=None):
     """A points league's table during a live round: this round's live points added to the total
     before it, re-ranked; positionGained (new place minus old) against `before`, the table after
