@@ -39,9 +39,11 @@ grąžina pagal `?lang=`.
   („Nežaidžia“, „Prieš rungtynes“ ...), o komentarus išverčia `injury_lt.py` (kūno dalis +
   pusė + traumos tipas su teisingais linksniais). Ko vertėjas nesupranta, serverio konsolėje
   pažymi „Traumos komentaras neišverstas“ ir rodo originalą.
-- Traumos pagal komandas (skirtukas „Traumos“ → „Komandos“): tikros krepšinio pozicijos (PG, SG,
-  SF, PF, C) iš BasketNews pažangiosios statistikos (šio sezono, žaidėjams be rungtynių – praėjusio,
-  tada traumų sąrašo „P“ stulpelis). „Tikėtina“ ir ne sveikatos priežastys (trenerio sprendimas...)
+- Traumos pagal komandas (skirtukas „Traumos“ → „Komandos“): sudėtys ir tikros krepšinio pozicijos
+  (PG, SG, SF, PF, C) iš BasketNews Eurolygos sudėčių straipsnio (nuoroda sezonui –
+  `backend/sources/rosters.py`, kitam sezonui reikės įrašyti naują). Be jo – pažangioji statistika
+  (šio sezono, žaidėjams be rungtynių – praėjusio), traumų sąrašo „P“ stulpelis, fantasy pozicija.
+  „Tikėtina“ ir ne sveikatos priežastys (trenerio sprendimas...)
   traumomis nelaikomos. „Gali pritrūkti“ – kai dėl traumų pozicijoje lieka mažiau nei 2 sveiki
   registruoti žaidėjai.
 - Taškai pagal sudėtį: penketas ×1, kapitonas ×2, 6-as žaidėjas (b-1) ×1, B2–B5 ×0.5,

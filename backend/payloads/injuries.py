@@ -1,5 +1,6 @@
 """/api/league/<id>/injuries: injury-report changes as a news feed, and the report by EuroLeague
 club with the real basketball positions each club is missing."""
+import collections
 import re
 
 from backend import history, pipeline
@@ -10,6 +11,7 @@ from backend.league import league_meta, owners, standings
 from backend.players import player_brief, players
 from backend.sources.advanced import player_positions
 from backend.sources.injury_report import is_injury
+from backend.sources.rosters import rosters
 from backend.util import ascii_slug
 
 
@@ -81,8 +83,13 @@ def _name_tokens(name):
 def club_injuries(meta, pmap, own):
     """The injury report by EuroLeague club: who is injured (real positions), who is listed for
     another reason (coach's decision, personal...), who is expected back, and per position how
-    many registered players are healthy. "Expected" and non-injury entries do not count as injured."""
+    many players of the roster are healthy. "Expected" and non-injury entries do not count as injured.
+
+    Rosters and positions come from BasketNews' rosters article (backend/sources/rosters.py);
+    without it, a club's roster is its players in the fantasy game and positions come from the
+    advanced stats, the injury report and, last, the fantasy position."""
     report = injury_report(meta)
+    article = rosters(meta)
     positions = player_positions(meta)
     by_bn = {str(p["bnId"]): p for p in pmap.values() if p.get("bnId")}
     clubs = {}
@@ -90,18 +97,32 @@ def club_injuries(meta, pmap, own):
         if p.get("club") and p["club"].get("abbr"):
             clubs.setdefault(p["club"]["abbr"], {"club": p["club"], "roster": []})["roster"].append(p)
 
-    def club_of(entry):
-        p = by_bn.get(str(entry["bnId"]))
-        if p and p.get("club"):
-            return p["club"].get("abbr")
-        mine = _name_tokens(entry.get("club"))
+    def club_by_name(name):
+        mine = _name_tokens(name)
         scored = [(len(mine & (_name_tokens(c["club"].get("nameEn")) | _name_tokens(c["club"].get("fullName")))), abbr)
                   for abbr, c in clubs.items()]
         best = max(scored, default=(0, None))
         return best[1] if best[0] else None
 
+    # The article's clubs, matched on their players (most of them are in the game), else on the name
+    article_pos, article_club = {}, {}
+    for name, players_ in article.items():
+        votes = collections.Counter((by_bn[x["bnId"]].get("club") or {}).get("abbr") for x in players_ if x["bnId"] in by_bn)
+        abbr = votes.most_common(1)[0][0] if votes else club_by_name(name)
+        if abbr not in clubs:
+            continue
+        clubs[abbr]["roster"] = [by_bn.get(x["bnId"]) or {"bnId": x["bnId"], "name": x["name"]} for x in players_]
+        for x in players_:
+            article_pos[x["bnId"]], article_club[x["bnId"]] = x["positions"], abbr
+
+    def club_of(entry):
+        bn = str(entry["bnId"])
+        p = by_bn.get(bn)
+        return article_club.get(bn) or (p["club"].get("abbr") if p and p.get("club") else None) or club_by_name(entry.get("club"))
+
     def player_positions_of(bn, p=None, entry=None):
-        return (positions.get(str(bn)) or _report_positions((entry or {}).get("pos"))
+        bn = str(bn)
+        return (article_pos.get(bn) or positions.get(bn) or _report_positions((entry or {}).get("pos"))
                 or FANTASY_POSITIONS.get((p or {}).get("position"), []))
 
     out = {abbr: {"injured": [], "other": [], "expected": []} for abbr in clubs}

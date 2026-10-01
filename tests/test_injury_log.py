@@ -197,3 +197,52 @@ def test_injuries_by_club_count_real_positions(monkeypatch):
     assert [e["player"]["name"] for e in b["injured"]] == ["Player 9"]  # not in the game: matched on the club name
     assert b["short"] == []  # one center and nobody hurt there: a roster choice, not an injury problem
     assert list(clubs) == ["AAA", "BBB"]  # clubs that may run short first
+
+
+ROSTER_PAGE = """<table id="layout"><tr><td>
+<p>September 29: news</p>
+<table style="border-collapse: collapse;" border="1"><tbody>
+<tr class="title"><td><img src="/logo.jpg"></td><td colspan="2"><h2 id="aaa">AAA City Club</h2></td></tr>
+<tr class="title"><td><strong>Position</strong></td><td><strong>Player</strong></td><td><strong>Status</strong></td></tr>
+<tr><td>PG/SG</td><td><a href="https://basketnews.com/players/5-player-five.html"><strong>Player Five&nbsp;</strong></a>
+ (<a href="https://basketnews.com/news-1-story.html">story</a>)</td><td>Signed until 2027</td></tr>
+<tr><td>C</td><td><a href="https://basketnews.com/players/1-player-one.html">Player One</a></td><td>N/A</td></tr>
+<tr><td>G</td><td><a href="https://basketnews.com/players/8-player-eight.html">Player Eight</a></td><td>N/A</td></tr>
+<tr><td>F</td><td>Unlinked Player</td><td>N/A</td></tr>
+</tbody></table>
+</td></tr></table>"""
+
+
+def test_rosters_article_is_parsed():
+    from backend.sources import rosters
+    clubs = rosters.parse_rosters(ROSTER_PAGE)
+    assert clubs == {"AAA City Club": [
+        {"bnId": "5", "name": "Player Five", "positions": ["PG", "SG"]},
+        {"bnId": "1", "name": "Player One", "positions": ["C"]},
+        {"bnId": "8", "name": "Player Eight", "positions": ["PG", "SG"]},
+    ]}
+    assert rosters.positions_of("PF/SF") == ["PF", "SF"] and rosters.positions_of("x") == []
+
+
+def test_injuries_by_club_use_the_rosters_article(monkeypatch):
+    from backend.payloads import injuries as pay
+
+    def player(n, club, pos):
+        return {"id": f"p{n}", "bnId": str(n), "name": f"Player {n}", "photo": None, "position": pos, "avgPts": 10,
+                "gamesPlayed": 2, "club": {"abbr": club, "name": club, "fullName": f"{club} Full", "nameEn": f"{club} City",
+                                           "logo": None}}
+
+    pmap = {f"p{n}": player(n, "AAA", pos) for n, pos in [(1, "center"), (5, "guard"), (6, "guard")]}  # p6 has left
+    report = {"1": {"bnId": "1", "name": "Player 1", "club": "AAA City", "pos": "PF", "status": "out",
+                    "siteLabel": "Out", "return": "Indefinitely", "comment": "Knee injury"}}
+    monkeypatch.setattr(pay, "injury_report", lambda meta: report)
+    monkeypatch.setattr(pay, "player_positions", lambda meta: {"1": ["PF"], "5": ["SF"]})
+    monkeypatch.setattr(pay, "rosters", lambda meta: {"AAA City Club": [
+        {"bnId": "1", "name": "Player 1", "positions": ["C"]}, {"bnId": "5", "name": "Player 5", "positions": ["PG", "SG"]},
+        {"bnId": "8", "name": "Player Eight", "positions": ["C"]}]})
+    (a,) = pay.club_injuries({"id": "x"}, pmap, {})
+    assert a["injured"][0]["positions"] == ["C"]  # the article's position wins
+    depth = {d["pos"]: d for d in a["depth"]}
+    assert depth["C"] == {"pos": "C", "total": 2, "injured": 1, "healthy": 1}  # Player Eight counts, though not in the game
+    assert depth["PG"]["total"] == 1 and depth["SF"]["total"] == 0  # p6 left the club: not on the article's roster
+    assert a["short"] == ["C"]
