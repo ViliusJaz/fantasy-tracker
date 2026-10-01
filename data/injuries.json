@@ -151,6 +151,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T05:57+02:00",
+              "status": "doubtful",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
             }
           ]
         }
@@ -1431,6 +1438,13 @@
               "status": "uncertain",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T05:57+02:00",
+              "status": "doubtful",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
             }
           ]
         }
@@ -1495,6 +1509,13 @@
               "date": "2026-10-01",
               "at": "2026-10-01T04:20+02:00",
               "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Rounds 1-2 (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T05:57+02:00",
+              "status": "doubtful",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Rounds 1-2 (undisclosed injury)"
             }
@@ -1888,6 +1909,13 @@
               "date": "2026-10-01",
               "at": "2026-10-01T04:20+02:00",
               "status": "uncertain",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T05:57+02:00",
+              "status": "doubtful",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
             }
@@ -3254,5 +3282,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-01T04:20:38"
+  "updatedAt": "2026-10-01T05:57:08"
 }
