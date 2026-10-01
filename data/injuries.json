@@ -3609,7 +3609,27 @@
       ],
       "name": "Vitto Brown",
       "club": "Besiktas Istanbul"
+    },
+    "13408": {
+      "episodes": [
+        {
+          "start": "2026-10-01",
+          "end": null,
+          "lastSeen": "2026-10-01",
+          "updates": [
+            {
+              "date": "2026-10-01",
+              "at": "2026-10-01T16:32+02:00",
+              "status": "questionable",
+              "return": "Round 3",
+              "comment": "Ankle problem"
+            }
+          ]
+        }
+      ],
+      "name": "Daniel Theis",
+      "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-01T13:45:55"
+  "updatedAt": "2026-10-01T16:32:38"
 }
