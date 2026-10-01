@@ -1342,7 +1342,7 @@
       }
     },
     "2": {
-      "savedAt": "2026-10-01T13:45:55",
+      "savedAt": "2026-10-01T15:10:33",
       "locked": false,
       "teams": {
         "6aafd54a349148cc9eff62ab": {
@@ -1569,7 +1569,7 @@
               "captain": false
             },
             {
-              "id": "6a8c494f491e10f37dfb6937",
+              "id": "66e6e4304589cab32aef69eb",
               "card": "b-5",
               "slot": "bench",
               "captain": false
@@ -1581,13 +1581,13 @@
               "captain": false
             },
             {
-              "id": "6a8c494f491e10f37dfb68bf",
+              "id": "68c4081ca07be49331fea198",
               "card": "i-2",
               "slot": "inactive",
               "captain": false
             },
             {
-              "id": "6a8c494e491e10f37dfb6677",
+              "id": "68f9006c2e907ca0ed58bf8c",
               "card": "i-3",
               "slot": "inactive",
               "captain": false
@@ -1598,7 +1598,7 @@
           "formation": "1-2-2",
           "players": [
             {
-              "id": "651306f498a6be4330532056",
+              "id": "695bb2e6105e892154f7da37",
               "card": "c-1",
               "slot": "starter",
               "captain": false
@@ -1628,7 +1628,7 @@
               "captain": false
             },
             {
-              "id": "6a8c494e491e10f37dfb6657",
+              "id": "6a8c494e491e10f37dfb66fd",
               "card": "b-1",
               "slot": "bench",
               "captain": false
@@ -1640,7 +1640,7 @@
               "captain": false
             },
             {
-              "id": "6a8c494f491e10f37dfb67f2",
+              "id": "68c4084ba07be49331fea49b",
               "card": "b-3",
               "slot": "bench",
               "captain": false
@@ -1664,7 +1664,7 @@
               "captain": false
             },
             {
-              "id": "68c40843a07be49331fea404",
+              "id": "68c40827a07be49331fea244",
               "card": "i-2",
               "slot": "inactive",
               "captain": false
