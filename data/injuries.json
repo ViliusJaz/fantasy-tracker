@@ -2745,7 +2745,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-02",
           "lastSeen": "2026-10-02",
           "updates": [
             {
@@ -2767,6 +2767,13 @@
               "status": "expected",
               "return": "Round 3",
               "comment": "Expected to return, per official injury report (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T16:33+02:00",
+              "status": "ready",
+              "return": "Round 3",
+              "comment": "Listed as available per official injury report (calf injury). DNP in Rounds 1-2"
             }
           ]
         }
@@ -4403,5 +4410,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-10-02T15:43:29"
+  "updatedAt": "2026-10-02T16:33:26"
 }
