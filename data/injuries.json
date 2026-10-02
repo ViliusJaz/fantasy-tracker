@@ -60,6 +60,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "DNP in Round 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Not included in official Euroleague roster"
             }
           ]
         }
@@ -313,6 +320,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "DNP in Round 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Not included in official Euroleague roster"
             }
           ]
         }
@@ -494,6 +508,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "DNP in Round 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Not included in official Euroleague roster"
             }
           ]
         }
@@ -560,6 +581,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "DNP in Round 2 (knee injury)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Not included in official Euroleague roster"
             }
           ]
         }
@@ -607,6 +635,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "DNP in Round 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Not included in official Euroleague roster"
             }
           ]
         }
@@ -2370,6 +2405,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Not included in official Euroleague roster"
             }
           ]
         }
@@ -2410,6 +2452,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Not included in official Euroleague roster"
             }
           ]
         }
@@ -2495,7 +2544,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-02",
           "lastSeen": "2026-10-02",
           "updates": [
             {
@@ -2524,6 +2573,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -2993,6 +3049,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "DNP in Round 1-2 (coach's decision)"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "uncertain",
+              "return": "Round 4",
+              "comment": "Not included in 12-man roster in Rounds 1-3 (coach's decision)"
             }
           ]
         }
@@ -3040,6 +3103,13 @@
               "status": "out",
               "return": "Round 3",
               "comment": "Hamstring strain"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T06:03+02:00",
+              "status": "uncertain",
+              "return": "Round 4",
+              "comment": "Not included in 12-man roster in Rounds 1-3 (hamstring strain)"
             }
           ]
         }
@@ -4020,5 +4090,5 @@
       "club": "Paris Basketball"
     }
   },
-  "updatedAt": "2026-10-02T01:02:12"
+  "updatedAt": "2026-10-02T06:03:27"
 }
