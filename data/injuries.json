@@ -4294,6 +4294,13 @@
               "status": "game-time",
               "return": "Round 3",
               "comment": "Finger injury"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T15:43+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Hand injury"
             }
           ]
         }
@@ -4396,5 +4403,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-10-02T13:04:24"
+  "updatedAt": "2026-10-02T15:43:29"
 }
