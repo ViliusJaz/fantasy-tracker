@@ -2410,7 +2410,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-02",
           "lastSeen": "2026-10-02",
           "updates": [
             {
@@ -2418,6 +2418,13 @@
               "status": "out",
               "return": "Round 2-4",
               "comment": "Fractured fourth metacarpal in his left hand"
+            },
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T22:12+02:00",
+              "status": "ready",
+              "return": "Round 3",
+              "comment": "Cleared to play (Fractured fourth metacarpal in his left hand)"
             }
           ]
         }
@@ -4214,6 +4221,20 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-10-02",
+          "end": null,
+          "lastSeen": "2026-10-02",
+          "updates": [
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T22:12+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Clement Frisch",
@@ -4679,5 +4700,5 @@
       "club": "Valencia Basket"
     }
   },
-  "updatedAt": "2026-10-02T20:45:14"
+  "updatedAt": "2026-10-02T22:12:41"
 }
