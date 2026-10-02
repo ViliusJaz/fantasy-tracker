@@ -4374,7 +4374,27 @@
       ],
       "name": "Johnathan Motley",
       "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "18642": {
+      "episodes": [
+        {
+          "start": "2026-10-02",
+          "end": null,
+          "lastSeen": "2026-10-02",
+          "updates": [
+            {
+              "date": "2026-10-02",
+              "at": "2026-10-02T13:04+02:00",
+              "status": "out",
+              "return": "Round 3",
+              "comment": "Personal reasons (birth of his daughter)"
+            }
+          ]
+        }
+      ],
+      "name": "Marko Guduric",
+      "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-10-02T12:02:50"
+  "updatedAt": "2026-10-02T13:04:24"
 }
