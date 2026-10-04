@@ -5004,7 +5004,27 @@
       ],
       "name": "Jean Montero",
       "club": "Olympiacos Piraeus"
+    },
+    "24143": {
+      "episodes": [
+        {
+          "start": "2026-10-04",
+          "end": null,
+          "lastSeen": "2026-10-04",
+          "updates": [
+            {
+              "date": "2026-10-04",
+              "at": "2026-10-04T14:39+02:00",
+              "status": "uncertain",
+              "return": "Round 4",
+              "comment": "Back pain, DNP in Round 3 and Greek League (10-04)"
+            }
+          ]
+        }
+      ],
+      "name": "Nikos Rogkavopoulos",
+      "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-10-04T12:25:52"
+  "updatedAt": "2026-10-04T14:39:19"
 }
