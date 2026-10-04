@@ -4984,7 +4984,27 @@
       ],
       "name": "Tadas Sedekerskis",
       "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "24673": {
+      "episodes": [
+        {
+          "start": "2026-10-04",
+          "end": null,
+          "lastSeen": "2026-10-04",
+          "updates": [
+            {
+              "date": "2026-10-04",
+              "at": "2026-10-04T12:25+02:00",
+              "status": "uncertain",
+              "return": "Round 4",
+              "comment": "Skips Sunday's domestic league game due to a virus"
+            }
+          ]
+        }
+      ],
+      "name": "Jean Montero",
+      "club": "Olympiacos Piraeus"
     }
   },
-  "updatedAt": "2026-10-04T02:25:55"
+  "updatedAt": "2026-10-04T12:25:52"
 }
