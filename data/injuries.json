@@ -2342,6 +2342,13 @@
               "status": "uncertain",
               "return": "Round 4",
               "comment": "DNP in Round 2-3 (tendinitis)"
+            },
+            {
+              "date": "2026-10-04",
+              "at": "2026-10-04T19:04+02:00",
+              "status": "expected",
+              "return": "Round 4",
+              "comment": "Played in domestic league on Sunday after DNP in Round 2-3 (tendinitis)"
             }
           ]
         }
@@ -3357,6 +3364,20 @@
               "comment": "Cleared to play (Illness)"
             }
           ]
+        },
+        {
+          "start": "2026-10-04",
+          "end": null,
+          "lastSeen": "2026-10-04",
+          "updates": [
+            {
+              "date": "2026-10-04",
+              "at": "2026-10-04T19:04+02:00",
+              "status": "uncertain",
+              "return": "Round 4",
+              "comment": "Didn't play in domestic league on Sunday due to unspecified illness"
+            }
+          ]
         }
       ],
       "name": "Dylan Osetkowski",
@@ -3520,6 +3541,20 @@
               "comment": "DNP in Round 1-3 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-10-04",
+          "end": null,
+          "lastSeen": "2026-10-04",
+          "updates": [
+            {
+              "date": "2026-10-04",
+              "at": "2026-10-04T19:04+02:00",
+              "status": "doubtful",
+              "return": "Round 4",
+              "comment": "DNP in Round 1-3 (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Kaodirichi Akobundu-Ehiogu",
@@ -3584,6 +3619,13 @@
               "date": "2026-10-04",
               "at": "2026-10-04T15:25+02:00",
               "status": "out",
+              "return": "Round 4",
+              "comment": "DNP in Round 1-3 (hamstring strain)"
+            },
+            {
+              "date": "2026-10-04",
+              "at": "2026-10-04T19:04+02:00",
+              "status": "uncertain",
               "return": "Round 4",
               "comment": "DNP in Round 1-3 (hamstring strain)"
             }
@@ -5050,7 +5092,7 @@
       "episodes": [
         {
           "start": "2026-10-04",
-          "end": null,
+          "end": "2026-10-04",
           "lastSeen": "2026-10-04",
           "updates": [
             {
@@ -5059,6 +5101,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-10-04",
+              "at": "2026-10-04T19:04+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -5067,5 +5116,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-10-04T15:25:31"
+  "updatedAt": "2026-10-04T19:04:19"
 }
