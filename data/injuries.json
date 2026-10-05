@@ -5032,7 +5032,7 @@
       "episodes": [
         {
           "start": "2026-10-03",
-          "end": null,
+          "end": "2026-10-05",
           "lastSeen": "2026-10-05",
           "updates": [
             {
@@ -5041,6 +5041,13 @@
               "status": "uncertain",
               "return": "Round 4",
               "comment": "Played only 5 minutes in the first quarter of Round 3"
+            },
+            {
+              "date": "2026-10-05",
+              "at": "2026-10-05T07:38+02:00",
+              "status": "ready",
+              "return": "Round 4",
+              "comment": "Played only 5 minutes in the first quarter of Round 3. Played in the domestic league (10.04)"
             }
           ]
         }
@@ -5116,5 +5123,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-10-05T00:56:37"
+  "updatedAt": "2026-10-05T07:38:20"
 }
