@@ -5240,7 +5240,27 @@
       ],
       "name": "Ąžuolas Tubelis",
       "club": "Zalgiris Kaunas"
+    },
+    "18487": {
+      "episodes": [
+        {
+          "start": "2026-10-05",
+          "end": null,
+          "lastSeen": "2026-10-05",
+          "updates": [
+            {
+              "date": "2026-10-05",
+              "at": "2026-10-05T19:39+02:00",
+              "status": "uncertain",
+              "return": "Round 4",
+              "comment": "DNP in domestic league game on Monday (left hand contusion), requires a few days of rest"
+            }
+          ]
+        }
+      ],
+      "name": "Stefano Tonut",
+      "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-10-05T13:39:56"
+  "updatedAt": "2026-10-05T19:39:46"
 }
