@@ -2012,7 +2012,7 @@
       }
     },
     "3": {
-      "savedAt": "2026-10-05T19:55:15",
+      "savedAt": "2026-10-06T13:01:59",
       "locked": false,
       "teams": {
         "6aad020218d3307fab854196": {
@@ -2360,10 +2360,10 @@
               "id": "66e6e4324589cab32aef6bcb",
               "card": "f-1",
               "slot": "starter",
-              "captain": true
+              "captain": false
             },
             {
-              "id": "66e6e42e4589cab32aef6863",
+              "id": "66e6e4304589cab32aef69c3",
               "card": "f-2",
               "slot": "starter",
               "captain": false
@@ -2372,10 +2372,10 @@
               "id": "66e6e4334589cab32aef6c7c",
               "card": "g-1",
               "slot": "starter",
-              "captain": false
+              "captain": true
             },
             {
-              "id": "66e6e42f4589cab32aef6978",
+              "id": "66e6e4314589cab32aef6b27",
               "card": "g-2",
               "slot": "starter",
               "captain": false
@@ -2387,19 +2387,19 @@
               "captain": false
             },
             {
-              "id": "66e6e4304589cab32aef69c3",
+              "id": "66e6e42e4589cab32aef6863",
               "card": "b-2",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "66e6e4314589cab32aef6b27",
+              "id": "66e6e42f4589cab32aef6978",
               "card": "b-3",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "66e6e4314589cab32aef6b1d",
+              "id": "66e6e4314589cab32aef6ab0",
               "card": "b-4",
               "slot": "bench",
               "captain": false
@@ -2417,7 +2417,7 @@
               "captain": false
             },
             {
-              "id": "66e6e4314589cab32aef6ab0",
+              "id": "66e6e4314589cab32aef6b1d",
               "card": "i-2",
               "slot": "inactive",
               "captain": false
