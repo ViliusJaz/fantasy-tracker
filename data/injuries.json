@@ -5295,7 +5295,27 @@
       ],
       "name": "Stefano Tonut",
       "club": "Armani Olimpia Milan"
+    },
+    "17903": {
+      "episodes": [
+        {
+          "start": "2026-10-06",
+          "end": null,
+          "lastSeen": "2026-10-06",
+          "updates": [
+            {
+              "date": "2026-10-06",
+              "at": "2026-10-06T15:50+02:00",
+              "status": "game-time",
+              "return": "Round 4",
+              "comment": "New signing"
+            }
+          ]
+        }
+      ],
+      "name": "Cameron Payne",
+      "club": "Anadolu Efes Istanbul"
     }
   },
-  "updatedAt": "2026-10-06T13:32:44"
+  "updatedAt": "2026-10-06T15:50:12"
 }
