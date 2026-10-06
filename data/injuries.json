@@ -2560,6 +2560,13 @@
               "status": "uncertain",
               "return": "Round 4",
               "comment": "DNP in Round 1-3 (hamstring injury)"
+            },
+            {
+              "date": "2026-10-06",
+              "at": "2026-10-06T09:57+02:00",
+              "status": "expected",
+              "return": "Round 4",
+              "comment": "DNP in Round 1-3 (hamstring injury), started practising with team"
             }
           ]
         }
@@ -3533,6 +3540,13 @@
               "status": "uncertain",
               "return": "Round 4",
               "comment": "DNP in Round 1-3 (right thigh biceps tear)"
+            },
+            {
+              "date": "2026-10-06",
+              "at": "2026-10-06T07:15+02:00",
+              "status": "uncertain",
+              "return": "Round 4",
+              "comment": "DNP in Round 1-3 and in the domestic league (10.04) (right thigh biceps tear)"
             }
           ]
         }
@@ -4896,6 +4910,13 @@
               "status": "doubtful",
               "return": "Round 4",
               "comment": "DNP in Round 3 (hand injury)"
+            },
+            {
+              "date": "2026-10-06",
+              "at": "2026-10-06T07:15+02:00",
+              "status": "doubtful",
+              "return": "Round 4",
+              "comment": "DNP in Round 3 and in domestic league (10.05) (hand injury)"
             }
           ]
         }
@@ -5002,7 +5023,7 @@
       "episodes": [
         {
           "start": "2026-10-02",
-          "end": null,
+          "end": "2026-10-06",
           "lastSeen": "2026-10-06",
           "updates": [
             {
@@ -5018,6 +5039,13 @@
               "status": "expected",
               "return": "Round 4",
               "comment": "DNP in Round 3 by personal reasons (birth of his daughter)"
+            },
+            {
+              "date": "2026-10-06",
+              "at": "2026-10-06T07:15+02:00",
+              "status": "ready",
+              "return": "Round 4",
+              "comment": "DNP in Round 3 by personal reasons.Played in the domestic league (10.05)"
             }
           ]
         }
@@ -5262,5 +5290,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-10-06T01:09:18"
+  "updatedAt": "2026-10-06T09:57:04"
 }
