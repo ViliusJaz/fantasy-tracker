@@ -2886,6 +2886,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-10-06",
+              "at": "2026-10-06T13:32+02:00",
+              "status": "out",
+              "return": "Out of team",
+              "comment": "Not included in official Euroleague roster, left the team"
             }
           ]
         }
@@ -5290,5 +5297,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-10-06T09:57:04"
+  "updatedAt": "2026-10-06T13:32:44"
 }
