@@ -4119,6 +4119,13 @@
               "status": "uncertain",
               "return": "Round 4",
               "comment": "DNP in Rounds 1-3 (coach's decision). Played in the domestic league (10.04)"
+            },
+            {
+              "date": "2026-10-07",
+              "at": "2026-10-07T16:38+02:00",
+              "status": "game-time",
+              "return": "Round 4",
+              "comment": "DNP in Rounds 1-3 (coach's decision). Suffered injury in the domestic league (10.04)"
             }
           ]
         }
@@ -5510,5 +5517,5 @@
       "club": "Crvena Zvezda Meridianbet Belgrade"
     }
   },
-  "updatedAt": "2026-10-07T15:52:01"
+  "updatedAt": "2026-10-07T16:38:21"
 }
