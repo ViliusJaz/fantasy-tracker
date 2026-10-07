@@ -5426,7 +5426,27 @@
       ],
       "name": "Ognjen Dobric",
       "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "19168": {
+      "episodes": [
+        {
+          "start": "2026-10-07",
+          "end": null,
+          "lastSeen": "2026-10-07",
+          "updates": [
+            {
+              "date": "2026-10-07",
+              "at": "2026-10-07T13:40+02:00",
+              "status": "out",
+              "return": "Round 4",
+              "comment": "Right shoulder injury"
+            }
+          ]
+        }
+      ],
+      "name": "Gabriel Deck",
+      "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-10-07T13:24:57"
+  "updatedAt": "2026-10-07T13:40:22"
 }
