@@ -4581,6 +4581,13 @@
               "status": "uncertain",
               "return": "Round 4",
               "comment": "Not included in 12-man roster in Rounds 2-3 (coach's decision)"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T16:47+02:00",
+              "status": "out",
+              "return": "Round 4",
+              "comment": "Not included in 12-man roster in Rounds 2-3 (coach's decision)"
             }
           ]
         }
@@ -4592,7 +4599,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-10-08",
           "lastSeen": "2026-10-08",
           "updates": [
             {
@@ -4620,6 +4627,13 @@
               "date": "2026-10-03",
               "at": "2026-10-03T07:15+02:00",
               "status": "uncertain",
+              "return": "Round 4",
+              "comment": "Not included in 12-man roster in Rounds 2-3 (coach's decision)"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T16:47+02:00",
+              "status": "ready",
               "return": "Round 4",
               "comment": "Not included in 12-man roster in Rounds 2-3 (coach's decision)"
             }
@@ -4656,6 +4670,20 @@
               "status": "ready",
               "return": "Round 3",
               "comment": "Not included in 12-man roster in Round 2 (coach's decision)"
+            }
+          ]
+        },
+        {
+          "start": "2026-10-08",
+          "end": null,
+          "lastSeen": "2026-10-08",
+          "updates": [
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T16:47+02:00",
+              "status": "out",
+              "return": "Round 4",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -5819,5 +5847,5 @@
       "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-10-08T16:01:54"
+  "updatedAt": "2026-10-08T16:47:31"
 }
