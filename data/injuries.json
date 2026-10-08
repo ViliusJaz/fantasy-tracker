@@ -2217,6 +2217,20 @@
               "comment": "Not included in 12-man roster in Rounds 1-2 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-10-08",
+          "end": null,
+          "lastSeen": "2026-10-08",
+          "updates": [
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:48+02:00",
+              "status": "out",
+              "return": "Round 4",
+              "comment": "Included in 12-man roster in Round 3. DNP in Rounds 1-2 (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Amit Ebo",
@@ -2314,6 +2328,20 @@
               "date": "2026-10-08",
               "at": "2026-10-08T17:34+02:00",
               "status": "ready",
+              "return": "Round 4",
+              "comment": "Not included in 12-man roster in Rounds 1-3 (undisclosed injury)"
+            }
+          ]
+        },
+        {
+          "start": "2026-10-08",
+          "end": null,
+          "lastSeen": "2026-10-08",
+          "updates": [
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:48+02:00",
+              "status": "out",
               "return": "Round 4",
               "comment": "Not included in 12-man roster in Rounds 1-3 (undisclosed injury)"
             }
@@ -5147,7 +5175,7 @@
       "episodes": [
         {
           "start": "2026-10-01",
-          "end": null,
+          "end": "2026-10-08",
           "lastSeen": "2026-10-08",
           "updates": [
             {
@@ -5196,6 +5224,13 @@
               "date": "2026-10-08",
               "at": "2026-10-08T17:34+02:00",
               "status": "out",
+              "return": "Round 4",
+              "comment": "Completed two full training sessions but still feeling discomfort in his ankle"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:48+02:00",
+              "status": "ready",
               "return": "Round 4",
               "comment": "Completed two full training sessions but still feeling discomfort in his ankle"
             }
@@ -5917,5 +5952,5 @@
       "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-10-08T17:34:56"
+  "updatedAt": "2026-10-08T17:48:42"
 }
