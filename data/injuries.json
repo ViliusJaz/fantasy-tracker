@@ -265,7 +265,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-08",
           "lastSeen": "2026-10-08",
           "updates": [
             {
@@ -320,6 +320,13 @@
               "date": "2026-10-07",
               "at": "2026-10-07T15:52+02:00",
               "status": "game-time",
+              "return": "Round 4",
+              "comment": "Traveled with the team for Round 4 after DNPs in Round 1-3 (back injury)"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:34+02:00",
+              "status": "ready",
               "return": "Round 4",
               "comment": "Traveled with the team for Round 4 after DNPs in Round 1-3 (back injury)"
             }
@@ -430,6 +437,13 @@
               "status": "uncertain",
               "return": "Round 4",
               "comment": "DNP in Round 1-3 (coach's decision)"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:34+02:00",
+              "status": "out",
+              "return": "Round 4",
+              "comment": "DNP in Round 1-3 (coach's decision)"
             }
           ]
         }
@@ -441,7 +455,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-08",
           "lastSeen": "2026-10-08",
           "updates": [
             {
@@ -503,6 +517,13 @@
               "date": "2026-10-07",
               "at": "2026-10-07T15:52+02:00",
               "status": "expected",
+              "return": "Round 4",
+              "comment": "Traveled with the team for Round 4 after playing in the domestic league during the weekend, after a DNP in Rounds 1-3"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:34+02:00",
+              "status": "ready",
               "return": "Round 4",
               "comment": "Traveled with the team for Round 4 after playing in the domestic league during the weekend, after a DNP in Rounds 1-3"
             }
@@ -571,6 +592,13 @@
               "date": "2026-10-07",
               "at": "2026-10-07T15:52+02:00",
               "status": "expected",
+              "return": "Round 4",
+              "comment": "Traveled with the team for Round 4 after playing in the domestic league during the weekend after a DNP in Rounds 2-3 (quad injury)"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:34+02:00",
+              "status": "out",
               "return": "Round 4",
               "comment": "Traveled with the team for Round 4 after playing in the domestic league during the weekend after a DNP in Rounds 2-3 (quad injury)"
             }
@@ -997,6 +1025,13 @@
               "date": "2026-10-03",
               "at": "2026-10-03T07:15+02:00",
               "status": "uncertain",
+              "return": "Round 4",
+              "comment": "Undisclosed"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:34+02:00",
+              "status": "out",
               "return": "Round 4",
               "comment": "Undisclosed"
             }
@@ -2231,7 +2266,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-08",
           "lastSeen": "2026-10-08",
           "updates": [
             {
@@ -2272,6 +2307,13 @@
               "date": "2026-10-03",
               "at": "2026-10-03T07:15+02:00",
               "status": "uncertain",
+              "return": "Round 4",
+              "comment": "Not included in 12-man roster in Rounds 1-3 (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:34+02:00",
+              "status": "ready",
               "return": "Round 4",
               "comment": "Not included in 12-man roster in Rounds 1-3 (undisclosed injury)"
             }
@@ -5055,6 +5097,20 @@
               "comment": "DNP in Rounds 2-3 (personal reasons)"
             }
           ]
+        },
+        {
+          "start": "2026-10-08",
+          "end": null,
+          "lastSeen": "2026-10-08",
+          "updates": [
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:34+02:00",
+              "status": "out",
+              "return": "Round 4",
+              "comment": "DNP in Rounds 2-3 (personal reasons)"
+            }
+          ]
         }
       ],
       "name": "John Dibartolomeo",
@@ -5133,6 +5189,13 @@
               "date": "2026-10-08",
               "at": "2026-10-08T13:30+02:00",
               "status": "game-time",
+              "return": "Round 4",
+              "comment": "Completed two full training sessions but still feeling discomfort in his ankle"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:34+02:00",
+              "status": "out",
               "return": "Round 4",
               "comment": "Completed two full training sessions but still feeling discomfort in his ankle"
             }
@@ -5642,13 +5705,20 @@
       "episodes": [
         {
           "start": "2026-10-07",
-          "end": null,
+          "end": "2026-10-08",
           "lastSeen": "2026-10-08",
           "updates": [
             {
               "date": "2026-10-07",
               "at": "2026-10-07T13:09+02:00",
               "status": "game-time",
+              "return": "Round 4",
+              "comment": "Suffered a problem during practice (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T17:34+02:00",
+              "status": "ready",
               "return": "Round 4",
               "comment": "Suffered a problem during practice (undisclosed injury)"
             }
@@ -5847,5 +5917,5 @@
       "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-10-08T16:47:31"
+  "updatedAt": "2026-10-08T17:34:56"
 }
