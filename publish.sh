@@ -142,6 +142,12 @@ main() {
   fi
   git config merge.ft-history.name "JSON history merge (tools/merge_history.py)"
   git config merge.ft-history.driver "python3 tools/merge_history.py %O %A %B %P"
+  # Uploads: buffer them so git can send one again when GitHub asks (with the 1 MB default a push
+  # failed with "unable to rewind rpc post data" and then hung for 16 hours), and give up on a
+  # transfer that stays under 1 KB/s for a minute: one run fails instead of blocking every later one.
+  git config http.postBuffer 524288000
+  git config http.lowSpeedLimit 1000
+  git config http.lowSpeedTime 60
 
   if [ -z "$DRY_RUN" ]; then
     acquire_lock
