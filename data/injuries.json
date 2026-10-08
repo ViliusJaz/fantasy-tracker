@@ -1185,6 +1185,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Left shoulder injury"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T13:30+02:00",
+              "status": "game-time",
+              "return": "Round 4",
+              "comment": "Joined the team practices (left shoulder injury)"
             }
           ]
         }
@@ -1277,6 +1284,13 @@
               "status": "out",
               "return": "Round 1-5",
               "comment": "Right calf injury"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T13:30+02:00",
+              "status": "game-time",
+              "return": "Round 4",
+              "comment": "Joined the team practices (right calf injury)"
             }
           ]
         }
@@ -5086,6 +5100,13 @@
               "status": "uncertain",
               "return": "Round 4",
               "comment": "DNP In Round 3 and in the domestic cup (10.04) (ankle problem)"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T13:30+02:00",
+              "status": "game-time",
+              "return": "Round 4",
+              "comment": "Completed two full training sessions but still feeling discomfort in his ankle"
             }
           ]
         }
@@ -5453,6 +5474,13 @@
               "status": "uncertain",
               "return": "Round 4",
               "comment": "Skips Sunday's domestic league game due to a virus"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T13:30+02:00",
+              "status": "expected",
+              "return": "Round 4",
+              "comment": "Expected to be available, as Bartzokas confirmed there are no injured players (DNP in domestic league on Sunday due to illness)"
             }
           ]
         }
@@ -5729,13 +5757,40 @@
               "status": "questionable",
               "return": "Round 4",
               "comment": "Left for the United States due to personal reasons, his return is scheduled for Thursday"
+            },
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T13:30+02:00",
+              "status": "expected",
+              "return": "Round 4",
+              "comment": "Expected to be available, as Bartzokas confirmed there are no injured players (left for the US due to personal reasons, his return is scheduled for Thursday)"
             }
           ]
         }
       ],
       "name": "Donta Hall",
       "club": "Olympiacos Piraeus"
+    },
+    "36570": {
+      "episodes": [
+        {
+          "start": "2026-10-08",
+          "end": null,
+          "lastSeen": "2026-10-08",
+          "updates": [
+            {
+              "date": "2026-10-08",
+              "at": "2026-10-08T13:30+02:00",
+              "status": "out",
+              "return": "Round 4-6",
+              "comment": "Right thigh adductor muscle injury"
+            }
+          ]
+        }
+      ],
+      "name": "Justin Minaya",
+      "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-08T10:34:19"
+  "updatedAt": "2026-10-08T13:30:14"
 }
