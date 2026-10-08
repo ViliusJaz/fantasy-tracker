@@ -395,7 +395,7 @@ const I18N = {
     error: "Klaida {s}",
     staticMissing: "Šių duomenų dar nėra. Svetainė atsinaujina kas 15 minučių.",
     pos: { guard: "Gynėjas", forward: "Puolėjas", center: "Centras" },
-    tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", blk: "Blokai", eff: "NB", last3: "Pask. 3 FP", last5: "Pask. 5 FP", dd: "Dvigubi dubliai" },
+    tiles: { avgFp: "Vid. FP", gp: "Rungt.", min: "Min.", pts: "Tšk.", reb: "Atk. kam.", ast: "Rez. perd.", stl: "Perimti", blk: "Blokai", eff: "NB", last3: "Pask. 3 FP", last5: "Pask. 5 FP", dd: "Dvigubi dubliai", tov: "Klaidos", usg: "USG%" },
     resShort: { W: "P", L: "Pr", T: "L" },
   },
   en: {
@@ -773,7 +773,7 @@ const I18N = {
     error: "Error {s}",
     staticMissing: "This data is not available yet. The site refreshes every 15 minutes.",
     pos: { guard: "Guard", forward: "Forward", center: "Center" },
-    tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", blk: "BLK", eff: "PIR", last3: "Last 3 FP", last5: "Last 5 FP", dd: "Double-doubles" },
+    tiles: { avgFp: "Avg FP", gp: "GP", min: "MIN", pts: "PTS", reb: "REB", ast: "AST", stl: "STL", blk: "BLK", eff: "PIR", last3: "Last 3 FP", last5: "Last 5 FP", dd: "Double-doubles", tov: "TOV", usg: "USG%" },
     resShort: { W: "W", L: "L", T: "T" },
   },
 };
@@ -2809,6 +2809,9 @@ function splitStats(data, which) {
   const n = rows.length;
   const sum = (f) => rows.reduce((acc, g) => acc + (f(g) ?? 0), 0);
   const mean = (k) => (n ? sum((g) => g.line[k]) / n : null);
+  // usage % is missing for some games: the average of the games that have it
+  const known = (k) => rows.filter((g) => g.line[k] != null);
+  const meanKnown = (k) => (known(k).length ? known(k).reduce((acc, g) => acc + g.line[k], 0) / known(k).length : null);
   const fpAvg = (list) => (list.length ? list.reduce((acc, g) => acc + (g.fp ?? 0), 0) / list.length : null);
   const pctOf = (made, att) => ({ made, att, pct: att ? Math.round((1000 * made) / att) / 10 : null });
   const shot = (m, a) => pctOf(sum((g) => g.line[m]), sum((g) => g.line[a]));
@@ -2824,7 +2827,8 @@ function splitStats(data, which) {
     games: n, fp: fpAvg(rows), last3: fpAvg(rows.slice(0, 3)), last5: fpAvg(rows.slice(0, 5)),
     dd: single.filter((g) => doubleDouble(g.line)).length,
     defense: { strong: { fp: fpAvg(strong), games: strong.length }, weak: { fp: fpAvg(weak), games: weak.length } },
-    line: Object.fromEntries(["min", "pts", "reb", "dreb", "oreb", "ast", "stl", "blk", "eff"].map((k) => [k, mean(k)])),
+    line: { ...Object.fromEntries(["min", "pts", "reb", "dreb", "oreb", "ast", "stl", "blk", "tov", "eff"].map((k) => [k, mean(k)])),
+      usg: meanKnown("usg") },
     shooting: { fg: pctOf(two.made + three.made, two.att + three.att), two, three, ft, games: n },
   };
 }
@@ -2842,11 +2846,12 @@ function splitBody(data, which) {
   // home vs away: the difference to the other side, when both have games
   const other = which === "all" ? null : splitStats(data, which === "home" ? "away" : "home");
   const cmp = other && st.games && other.games;
-  const diff = (a, b, suffix = "") => {
+  // lower: a smaller number is the better one (turnovers), so the colours swap
+  const diff = (a, b, suffix = "", lower = false) => {
     if (!cmp || a == null || b == null) return "";
     const d = Math.round((a - b) * 10) / 10;
     if (!d) return `<small class="diff">±0${suffix}</small>`;
-    return `<small class="diff ${d > 0 ? "up" : "down"}">${d > 0 ? "+" : "−"}${fmt1(Math.abs(d))}${suffix}</small>`;
+    return `<small class="diff ${(lower ? -d : d) > 0 ? "up" : "down"}">${d > 0 ? "+" : "−"}${fmt1(Math.abs(d))}${suffix}</small>`;
   };
   // Whole season: BasketNews' own averages (the same as in the lists); home / away: from the game log.
   const all = which === "all";
@@ -2861,7 +2866,9 @@ function splitBody(data, which) {
     [`${tl.reb} <span class="split-head">${t("rebSplitHead")}</span>`,
       line.reb == null ? "-" : `${fmt1(line.reb)}${cmp ? diff(line.reb, o.reb) : `<small class="split">${fmt1(line.dreb)}/${fmt1(line.oreb)}</small>`}`, "reb"],
     [tl.ast, fmt1(line.ast) + diff(line.ast, o.ast), "ast"], [tl.stl, fmt1(line.stl) + diff(line.stl, o.stl), "stl"],
-    [tl.blk, fmt1(line.blk) + diff(line.blk, o.blk), "blk"], [tl.eff, fmt1(line.eff) + diff(line.eff, o.eff), "eff"],
+    [tl.blk, fmt1(line.blk) + diff(line.blk, o.blk), "blk"], [tl.tov, fmt1(line.tov) + diff(line.tov, o.tov, "", true), "tov"],
+    [tl.eff, fmt1(line.eff) + diff(line.eff, o.eff), "eff"],
+    [tl.usg, line.usg == null ? "-" : `${fmt1(line.usg)}%${diff(line.usg, o.usg, "%")}`, "usg"],
     [tl.dd, String(st.dd), null, t("ddTip")],
   ];
   const html = tiles.map(([l, v, key, own]) => {

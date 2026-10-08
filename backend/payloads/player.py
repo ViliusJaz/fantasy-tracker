@@ -31,6 +31,12 @@ def player_payload(fid, player_id):
     if not found:
         raise NotFound(L("Žaidėjas nerastas", "Player not found"))
     info, per_round = found
+    # Usage %: BasketNews' own (or a box-score estimate), which the player lists carry
+    usage = {r: ((players(meta, r, r, shared=True).get(player_id) or {}).get("roundLine") or {}).get("usg")
+             for r in rounds}
+    season_view = players(meta, last, meta["currentRound"], shared=True).get(player_id) or {}
+    if info.get("season") and (season_view.get("season") or {}).get("usg") is not None:
+        info["season"] = {**info["season"], "usg": season_view["season"]["usg"]}
 
     game_log = []
     for rr in per_round:
@@ -38,7 +44,8 @@ def player_payload(fid, player_id):
         row = {"round": rr["round"], "games": games, "date": _day(games[0]["at"]) if games else None,
                "fp": rr["fp"], "club": rr["club"]}
         if rr["line"]:
-            row.update(status="played", line=rr["line"])
+            line = rr["line"] if usage.get(rr["round"]) is None else {**rr["line"], "usg": usage[rr["round"]]}
+            row.update(status="played", line=line)
         elif not games:
             row["status"] = "no-game"
         elif all(g["completed"] or g["canceled"] for g in games):
