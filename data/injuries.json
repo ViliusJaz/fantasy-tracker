@@ -4124,7 +4124,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-09",
           "lastSeen": "2026-10-09",
           "updates": [
             {
@@ -4195,6 +4195,13 @@
               "status": "game-time",
               "return": "Round 4",
               "comment": "DNP in Round 1-3 (hamstring strain)"
+            },
+            {
+              "date": "2026-10-09",
+              "at": "2026-10-09T19:38+02:00",
+              "status": "ready",
+              "return": "Round 4",
+              "comment": "DNP in Round 1-3 (hamstring strain), included in 12-man roster for Round 4"
             }
           ]
         }
@@ -4203,7 +4210,22 @@
       "club": "Zalgiris Kaunas"
     },
     "18673": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-10-09",
+          "end": null,
+          "lastSeen": "2026-10-09",
+          "updates": [
+            {
+              "date": "2026-10-09",
+              "at": "2026-10-09T19:38+02:00",
+              "status": "out",
+              "return": "Round 4",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
       "name": "Deividas Sirvydis",
       "club": "Zalgiris Kaunas"
     },
@@ -6372,5 +6394,5 @@
       "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-10-09T18:25:05"
+  "updatedAt": "2026-10-09T19:38:44"
 }
