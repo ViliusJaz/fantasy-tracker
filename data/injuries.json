@@ -3102,6 +3102,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Round 2-4 (discomfort in his groin, muscle spasm)"
+            },
+            {
+              "date": "2026-10-10",
+              "at": "2026-10-10T19:03+02:00",
+              "status": "expected",
+              "return": "Round 5",
+              "comment": "Played in domestic league on Saturday (discomfort in his groin, muscle spasm)"
             }
           ]
         }
@@ -6658,7 +6665,67 @@
       ],
       "name": "Miles Norris",
       "club": "FC Bayern Munich"
+    },
+    "19111": {
+      "episodes": [
+        {
+          "start": "2026-10-10",
+          "end": null,
+          "lastSeen": "2026-10-10",
+          "updates": [
+            {
+              "date": "2026-10-10",
+              "at": "2026-10-10T19:03+02:00",
+              "status": "uncertain",
+              "return": "Round 5",
+              "comment": "DNP in domestic league on Saturday (Undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Rokas Jokubaitis",
+      "club": "FC Bayern Munich"
+    },
+    "6629": {
+      "episodes": [
+        {
+          "start": "2026-10-10",
+          "end": null,
+          "lastSeen": "2026-10-10",
+          "updates": [
+            {
+              "date": "2026-10-10",
+              "at": "2026-10-10T19:03+02:00",
+              "status": "uncertain",
+              "return": "Round 5",
+              "comment": "DNP in domestic league on Saturday (Undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Vladimir Lucic",
+      "club": "FC Bayern Munich"
+    },
+    "14724": {
+      "episodes": [
+        {
+          "start": "2026-10-10",
+          "end": null,
+          "lastSeen": "2026-10-10",
+          "updates": [
+            {
+              "date": "2026-10-10",
+              "at": "2026-10-10T19:03+02:00",
+              "status": "uncertain",
+              "return": "Round 5",
+              "comment": "DNP in domestic league on Saturday (Undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Johannes Thiemann",
+      "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-10-10T00:08:15"
+  "updatedAt": "2026-10-10T19:03:04"
 }
