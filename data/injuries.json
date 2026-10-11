@@ -4325,6 +4325,20 @@
               "comment": "DNP in Rounds 1-4 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-10-11",
+          "end": null,
+          "lastSeen": "2026-10-11",
+          "updates": [
+            {
+              "date": "2026-10-11",
+              "at": "2026-10-11T18:06+02:00",
+              "status": "uncertain",
+              "return": "Round 5",
+              "comment": "DNP in Rounds 1-4 (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Kaodirichi Akobundu-Ehiogu",
@@ -6872,5 +6886,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-10-11T16:35:57"
+  "updatedAt": "2026-10-11T18:06:36"
 }
