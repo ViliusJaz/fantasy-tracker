@@ -6850,7 +6850,27 @@
       ],
       "name": "Carsen Edwards",
       "club": "Zalgiris Kaunas"
+    },
+    "37459": {
+      "episodes": [
+        {
+          "start": "2026-10-11",
+          "end": null,
+          "lastSeen": "2026-10-11",
+          "updates": [
+            {
+              "date": "2026-10-11",
+              "at": "2026-10-11T16:35+02:00",
+              "status": "game-time",
+              "return": "",
+              "comment": ""
+            }
+          ]
+        }
+      ],
+      "name": "Majus Bulanovas",
+      "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-10-11T15:18:46"
+  "updatedAt": "2026-10-11T16:35:57"
 }
