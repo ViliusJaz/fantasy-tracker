@@ -1,0 +1,171 @@
+{
+ "version": 1,
+ "status": "healthy",
+ "lastAttempt": "2026-10-11T04:46:39+02:00",
+ "lastSuccessfulUpdate": "2026-10-11T04:46:39+02:00",
+ "buildDurationSeconds": 13.5,
+ "basketnewsRequests": 56,
+ "failedRequests": 0,
+ "playersProcessed": 331,
+ "pagesGenerated": 1830,
+ "validationWarnings": 0,
+ "validationErrors": 0,
+ "sourceStatus": {
+  "basketnews": "ok",
+  "injuries": "ok",
+  "advancedStats": "ok",
+  "euroleague": "ok"
+ },
+ "lastSuccess": {
+  "at": "2026-10-11T04:46:39+02:00",
+  "startedAt": "2026-10-11T04:46:25+02:00",
+  "status": "healthy",
+  "device": "mac",
+  "version": "e5536e007",
+  "durationSeconds": 13.5,
+  "requests": {
+   "basketnews": {
+    "requests": 56,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 248879
+   },
+   "advanced-stats": {
+    "requests": 3,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 262593
+   },
+   "injury-report": {
+    "requests": 1,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 89075
+   },
+   "euroleague": {
+    "requests": 1,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 38585
+   }
+  },
+  "pages": 1830,
+  "failedPages": 0,
+  "validation": {
+   "warnings": 0,
+   "errors": 0,
+   "fatal": 0,
+   "issues": []
+  },
+  "sourceStatus": {
+   "basketnews": "ok",
+   "injuries": "ok",
+   "advancedStats": "ok",
+   "euroleague": "ok"
+  },
+  "metrics": {
+   "pages": 1830,
+   "leagues": {
+    "6aa7fe67c95ed14589bf170d": {
+     "id": "6aa7fe67c95ed14589bf170d",
+     "title": "HLA 1 Divizionas",
+     "seasonYear": 2026,
+     "currentRound": 4,
+     "shownRound": 3,
+     "teams": 8,
+     "pointsTotal": 5056.5,
+     "players": 331,
+     "playersWithGames": 263
+    },
+    "6aa6bddec90ec6ddaf50d152": {
+     "id": "6aa6bddec90ec6ddaf50d152",
+     "title": "Mūsų Lyga 26-27",
+     "seasonYear": 2026,
+     "currentRound": 4,
+     "shownRound": 3,
+     "teams": 8,
+     "pointsTotal": 4961.25,
+     "players": 331,
+     "playersWithGames": 263
+    }
+   }
+  }
+ },
+ "lastFailure": {
+  "at": "2026-10-01T20:37:08+02:00",
+  "startedAt": "2026-10-01T20:36:57+02:00",
+  "status": "failed",
+  "device": "mac",
+  "version": "430bfe73",
+  "durationSeconds": 10.3,
+  "requests": {
+   "basketnews": {
+    "requests": 39,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 116280
+   },
+   "euroleague": {
+    "requests": 2,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 42624
+   },
+   "euroleague-live": {
+    "requests": 4,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 29015
+   },
+   "advanced-stats": {
+    "requests": 2,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 126884
+   },
+   "injury-report": {
+    "requests": 1,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 85466
+   }
+  },
+  "pages": 0,
+  "failedPages": 0,
+  "validation": {
+   "warnings": 0,
+   "errors": 0,
+   "fatal": 1,
+   "issues": [
+    {
+     "level": "fatal",
+     "source": "league HLA 1 Divizionas",
+     "code": "team-count",
+     "message": "standings list 7 teams, the league has 8"
+    }
+   ]
+  },
+  "sourceStatus": {
+   "basketnews": "ok",
+   "injuries": "ok",
+   "advancedStats": "ok",
+   "euroleague": "ok"
+  },
+  "metrics": {
+   "pages": 0,
+   "leagues": {
+    "6aa7fe67c95ed14589bf170d": {
+     "id": "6aa7fe67c95ed14589bf170d",
+     "title": "HLA 1 Divizionas",
+     "seasonYear": 2026,
+     "currentRound": 2,
+     "shownRound": 2,
+     "teams": 7,
+     "pointsTotal": 2602.0,
+     "players": 331,
+     "playersWithGames": 245
+    }
+   }
+  }
+ }
+}
