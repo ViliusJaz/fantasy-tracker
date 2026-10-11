@@ -4462,6 +4462,20 @@
               "comment": "DNP in Round 4 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-10-11",
+          "end": null,
+          "lastSeen": "2026-10-11",
+          "updates": [
+            {
+              "date": "2026-10-11",
+              "at": "2026-10-11T18:22+02:00",
+              "status": "uncertain",
+              "return": "Round 5",
+              "comment": "DNP in Round 4 (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Deividas Sirvydis",
@@ -4498,6 +4512,13 @@
               "date": "2026-10-11",
               "at": "2026-10-11T15:18+02:00",
               "status": "out",
+              "return": "Round 5",
+              "comment": "Suffered hamstring injury in Round 1 game"
+            },
+            {
+              "date": "2026-10-11",
+              "at": "2026-10-11T18:22+02:00",
+              "status": "uncertain",
               "return": "Round 5",
               "comment": "Suffered hamstring injury in Round 1 game"
             }
@@ -6423,7 +6444,7 @@
         },
         {
           "start": "2026-10-11",
-          "end": null,
+          "end": "2026-10-11",
           "lastSeen": "2026-10-11",
           "updates": [
             {
@@ -6432,6 +6453,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-10-11",
+              "at": "2026-10-11T18:22+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -6849,7 +6877,7 @@
       "episodes": [
         {
           "start": "2026-10-11",
-          "end": null,
+          "end": "2026-10-11",
           "lastSeen": "2026-10-11",
           "updates": [
             {
@@ -6858,6 +6886,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-10-11",
+              "at": "2026-10-11T18:22+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -6869,7 +6904,7 @@
       "episodes": [
         {
           "start": "2026-10-11",
-          "end": null,
+          "end": "2026-10-11",
           "lastSeen": "2026-10-11",
           "updates": [
             {
@@ -6878,6 +6913,13 @@
               "status": "game-time",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-10-11",
+              "at": "2026-10-11T18:22+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -6886,5 +6928,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-10-11T18:06:36"
+  "updatedAt": "2026-10-11T18:22:00"
 }
