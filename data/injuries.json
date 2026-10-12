@@ -6806,6 +6806,13 @@
               "status": "out",
               "return": "Long-term",
               "comment": "Suffered an injury at the beginning of October, expected to be out for 4-5 months (left shoulder injury)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T18:27+02:00",
+              "status": "out",
+              "return": "Long-term",
+              "comment": "Suffered an injury at the beginning of October, set to undergo surgery, expected to be out for 4-5 months (left shoulder injury)"
             }
           ]
         }
@@ -7240,5 +7247,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-12T17:28:38"
+  "updatedAt": "2026-10-12T18:27:34"
 }
