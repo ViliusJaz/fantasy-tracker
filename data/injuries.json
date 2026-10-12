@@ -30,7 +30,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-10-12",
           "lastSeen": "2026-10-12",
           "updates": [
             {
@@ -67,6 +67,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T09:40+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -1681,7 +1688,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-12",
           "lastSeen": "2026-10-12",
           "updates": [
             {
@@ -1689,6 +1696,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Out of the squad"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T09:40+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -1713,7 +1727,7 @@
         },
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-10-12",
           "lastSeen": "2026-10-12",
           "updates": [
             {
@@ -1750,6 +1764,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T09:40+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -1961,7 +1982,7 @@
         },
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-10-12",
           "lastSeen": "2026-10-12",
           "updates": [
             {
@@ -2005,6 +2026,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T09:40+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -2090,7 +2118,7 @@
         },
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-10-12",
           "lastSeen": "2026-10-12",
           "updates": [
             {
@@ -2127,6 +2155,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T09:40+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -2138,7 +2173,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-12",
           "lastSeen": "2026-10-12",
           "updates": [
             {
@@ -2181,6 +2216,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T09:40+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -2471,7 +2513,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-12",
           "lastSeen": "2026-10-12",
           "updates": [
             {
@@ -2500,6 +2542,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T09:40+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -6752,7 +6801,7 @@
       "episodes": [
         {
           "start": "2026-10-07",
-          "end": null,
+          "end": "2026-10-12",
           "lastSeen": "2026-10-12",
           "updates": [
             {
@@ -6768,6 +6817,13 @@
               "status": "expected",
               "return": "Round 5",
               "comment": "DNP in Round 5 (new signing, not injured)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T09:40+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -7033,5 +7089,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-10-12T02:14:30"
+  "updatedAt": "2026-10-12T09:40:35"
 }
