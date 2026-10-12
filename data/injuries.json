@@ -6924,6 +6924,20 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-10-12",
+          "end": null,
+          "lastSeen": "2026-10-12",
+          "updates": [
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T19:30+02:00",
+              "status": "expected",
+              "return": "Round 5",
+              "comment": "DNP in Round 5 (new signing). Played in the domestic league"
+            }
+          ]
         }
       ],
       "name": "Juhann Begarin",
@@ -7247,5 +7261,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-12T18:27:34"
+  "updatedAt": "2026-10-12T19:30:07"
 }
