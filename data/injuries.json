@@ -1865,6 +1865,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Rounds 1-4 (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "game-time",
+              "return": "Round 5",
+              "comment": "Traveled with the team to Sofia after DNP in Rounds 1-4 (undisclosed injury)"
             }
           ]
         }
@@ -1958,6 +1965,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Rounds 1-4 (knee injury)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "out",
+              "return": "Round 5-6",
+              "comment": "Traveled with the team, but won't play in double-round week after DNP in Rounds 1-4 (knee injury)"
             }
           ]
         }
@@ -2718,6 +2732,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Rounds 1-4 (coach's decision)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "out",
+              "return": "Round 5-6",
+              "comment": "Didn't travel with the team to Spain after DNP in Rounds 1-4 (coach's decision)"
             }
           ]
         }
@@ -3280,6 +3301,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Rounds 1-4 (medial right meniscus tear)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "DNP in Rounds 1-4 (medial right meniscus tear)"
             }
           ]
         }
@@ -3304,6 +3332,13 @@
               "date": "2026-10-09",
               "at": "2026-10-09T10:26+02:00",
               "status": "uncertain",
+              "return": "Round 5",
+              "comment": "DNP in Rounds 1-4 (rehab after leg injury)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "out",
               "return": "Round 5",
               "comment": "DNP in Rounds 1-4 (rehab after leg injury)"
             }
@@ -6145,6 +6180,20 @@
               "comment": "DNP in Rounds 3-4 (hand injury). Played in the domestic league (10.11)"
             }
           ]
+        },
+        {
+          "start": "2026-10-12",
+          "end": null,
+          "lastSeen": "2026-10-12",
+          "updates": [
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "expected",
+              "return": "Round 5",
+              "comment": "DNP in Rounds 3-4 (hand injury). Played in the domestic league (10.11)"
+            }
+          ]
         }
       ],
       "name": "Lamar Stevens",
@@ -6648,6 +6697,13 @@
               "status": "expected",
               "return": "Round 5",
               "comment": "Played in the domestic league (10.11)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "expected",
+              "return": "Round 5",
+              "comment": "Played in the domestic league (10.11) after a DNP in Round 4 (left hand contusion)"
             }
           ]
         }
@@ -7122,7 +7178,67 @@
       ],
       "name": "Majus Bulanovas",
       "club": "Zalgiris Kaunas"
+    },
+    "34681": {
+      "episodes": [
+        {
+          "start": "2026-10-12",
+          "end": null,
+          "lastSeen": "2026-10-12",
+          "updates": [
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Didn't travel with the team (undisclosed injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Ebuka Izundu",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "16872": {
+      "episodes": [
+        {
+          "start": "2026-10-12",
+          "end": null,
+          "lastSeen": "2026-10-12",
+          "updates": [
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "out",
+              "return": "Round 5-6",
+              "comment": "Didn't travel with the team for double-round week (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Bar Timor",
+      "club": "Hapoel IBI Tel Aviv"
+    },
+    "34840": {
+      "episodes": [
+        {
+          "start": "2026-10-12",
+          "end": null,
+          "lastSeen": "2026-10-12",
+          "updates": [
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T17:28+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Expected to leave the team"
+            }
+          ]
+        }
+      ],
+      "name": "Markus Howard",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-12T10:57:34"
+  "updatedAt": "2026-10-12T17:28:38"
 }
