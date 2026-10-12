@@ -1972,6 +1972,13 @@
               "status": "out",
               "return": "Round 5-6",
               "comment": "Traveled with the team, but won't play in double-round week after DNP in Rounds 1-4 (knee injury)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T20:31+02:00",
+              "status": "uncertain",
+              "return": "Round 5-6",
+              "comment": "Traveled with the team and participated in full practices after missing Round 1-4 (knee injury)"
             }
           ]
         }
@@ -7233,6 +7240,13 @@
               "status": "out",
               "return": "Round 5-6",
               "comment": "Didn't travel with the team for double-round week (coach's decision)"
+            },
+            {
+              "date": "2026-10-12",
+              "at": "2026-10-12T20:31+02:00",
+              "status": "out",
+              "return": "Round 5-6",
+              "comment": "Didn't travel with the team for double-round week, set to undergo tests (undisclosed sickness)"
             }
           ]
         }
@@ -7261,5 +7275,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-12T19:30:07"
+  "updatedAt": "2026-10-12T20:31:49"
 }
