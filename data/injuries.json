@@ -7139,7 +7139,7 @@
       "episodes": [
         {
           "start": "2026-10-10",
-          "end": null,
+          "end": "2026-10-13",
           "lastSeen": "2026-10-13",
           "updates": [
             {
@@ -7148,6 +7148,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in domestic league on Saturday (Undisclosed)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T14:58+02:00",
+              "status": "ready",
+              "return": "Round 5",
+              "comment": "Cleared to play after a DNP in domestic league on Saturday (rest)"
             }
           ]
         }
@@ -7159,7 +7166,7 @@
       "episodes": [
         {
           "start": "2026-10-10",
-          "end": null,
+          "end": "2026-10-13",
           "lastSeen": "2026-10-13",
           "updates": [
             {
@@ -7168,6 +7175,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in domestic league on Saturday (Undisclosed)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T14:58+02:00",
+              "status": "ready",
+              "return": "Round 5",
+              "comment": "Cleared to play after a DNP in domestic league on Saturday (rest)"
             }
           ]
         }
@@ -7179,7 +7193,7 @@
       "episodes": [
         {
           "start": "2026-10-10",
-          "end": null,
+          "end": "2026-10-13",
           "lastSeen": "2026-10-13",
           "updates": [
             {
@@ -7188,6 +7202,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in domestic league on Saturday (Undisclosed)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T14:58+02:00",
+              "status": "ready",
+              "return": "Round 5",
+              "comment": "Cleared to play after a DNP in domestic league on Saturday (rest)"
             }
           ]
         }
@@ -7324,5 +7345,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-13T12:54:38"
+  "updatedAt": "2026-10-13T14:58:45"
 }
