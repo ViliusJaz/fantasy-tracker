@@ -1085,6 +1085,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "Knee injury"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T12:54+02:00",
+              "status": "out",
+              "return": "Round 5-6",
+              "comment": "Expected to return to the court for individual work next week (knee injury)"
             }
           ]
         }
@@ -1153,6 +1160,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Rounds 1-4 (undisclosed)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T12:54+02:00",
+              "status": "out",
+              "return": "Round 5-6",
+              "comment": "DNP in Rounds 1-4 (back injury)"
             }
           ]
         }
@@ -7310,5 +7324,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-13T11:18:30"
+  "updatedAt": "2026-10-13T12:54:38"
 }
