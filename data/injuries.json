@@ -7283,6 +7283,13 @@
               "status": "out",
               "return": "Round 5",
               "comment": "Didn't travel with the team (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T17:50+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Didn't travel with the team (ankle injury)"
             }
           ]
         }
@@ -7345,5 +7352,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-13T14:58:45"
+  "updatedAt": "2026-10-13T17:50:45"
 }
