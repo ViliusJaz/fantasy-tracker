@@ -4626,13 +4626,20 @@
         },
         {
           "start": "2026-10-11",
-          "end": null,
+          "end": "2026-10-13",
           "lastSeen": "2026-10-13",
           "updates": [
             {
               "date": "2026-10-11",
               "at": "2026-10-11T18:22+02:00",
               "status": "uncertain",
+              "return": "Round 5",
+              "comment": "DNP in Round 4 (coach's decision)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T18:37+02:00",
+              "status": "ready",
               "return": "Round 5",
               "comment": "DNP in Round 4 (coach's decision)"
             }
@@ -6689,13 +6696,20 @@
         },
         {
           "start": "2026-10-12",
-          "end": null,
+          "end": "2026-10-13",
           "lastSeen": "2026-10-13",
           "updates": [
             {
               "date": "2026-10-12",
               "at": "2026-10-12T10:42+02:00",
               "status": "expected",
+              "return": "Round 5",
+              "comment": "Will travel with the team, expected to be ready (knee)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T18:37+02:00",
+              "status": "ready",
               "return": "Round 5",
               "comment": "Will travel with the team, expected to be ready (knee)"
             }
@@ -7350,7 +7364,27 @@
       ],
       "name": "Markus Howard",
       "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "20529": {
+      "episodes": [
+        {
+          "start": "2026-10-13",
+          "end": null,
+          "lastSeen": "2026-10-13",
+          "updates": [
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T18:37+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Dovydas Giedraitis",
+      "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-10-13T17:50:45"
+  "updatedAt": "2026-10-13T18:37:13"
 }
