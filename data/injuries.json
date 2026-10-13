@@ -1616,6 +1616,13 @@
               "status": "game-time",
               "return": "Round 5",
               "comment": "DNP in Round 1-4 (fitness), played in domestic league on Saturday"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T09:10+02:00",
+              "status": "expected",
+              "return": "Round 5",
+              "comment": "DNP in Round 1-4 (fitness), played in domestic league on Saturday"
             }
           ]
         }
@@ -1978,6 +1985,13 @@
               "at": "2026-10-12T20:31+02:00",
               "status": "uncertain",
               "return": "Round 5-6",
+              "comment": "Traveled with the team and participated in full practices after missing Round 1-4 (knee injury)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T09:10+02:00",
+              "status": "out",
+              "return": "Round 5",
               "comment": "Traveled with the team and participated in full practices after missing Round 1-4 (knee injury)"
             }
           ]
@@ -6854,6 +6868,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Round 4 (coach's decision). Played in the domestic league (10.10)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T09:10+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Ruled out for Round 5 after a DNP in Round 4 (coach's decision)"
             }
           ]
         }
@@ -7275,5 +7296,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-13T00:50:30"
+  "updatedAt": "2026-10-13T09:10:03"
 }
