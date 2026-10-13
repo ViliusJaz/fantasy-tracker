@@ -6008,6 +6008,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "Not included in 12-man roster in Rounds 2-4 (coach's decision)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T20:06+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster after DNP in Rounds 2-4 (coach's decision)"
             }
           ]
         }
@@ -6288,7 +6295,7 @@
         },
         {
           "start": "2026-10-12",
-          "end": null,
+          "end": "2026-10-13",
           "lastSeen": "2026-10-13",
           "updates": [
             {
@@ -6297,6 +6304,13 @@
               "status": "expected",
               "return": "Round 5",
               "comment": "DNP in Rounds 3-4 (hand injury). Played in the domestic league (10.11)"
+            },
+            {
+              "date": "2026-10-13",
+              "at": "2026-10-13T20:06+02:00",
+              "status": "ready",
+              "return": "Round 5",
+              "comment": "Included in 12-man roster after DNP in Rounds 3-4 (hand injury)."
             }
           ]
         }
@@ -7509,5 +7523,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-10-13T19:50:51"
+  "updatedAt": "2026-10-13T20:06:24"
 }
