@@ -263,6 +263,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "Not included in 12-man roster in Rounds 1-4 (coach's decision)"
+            },
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T17:28+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-4 (coach's decision)"
             }
           ]
         }
@@ -1869,6 +1876,20 @@
               "comment": "DNP in Round 1, played in the domestic cup (09.26)"
             }
           ]
+        },
+        {
+          "start": "2026-10-14",
+          "end": null,
+          "lastSeen": "2026-10-14",
+          "updates": [
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T17:28+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Khadeen Carrington",
@@ -1878,7 +1899,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-14",
           "lastSeen": "2026-10-14",
           "updates": [
             {
@@ -1949,6 +1970,13 @@
               "status": "game-time",
               "return": "Round 5",
               "comment": "Traveled with the team to Sofia after DNP in Rounds 1-4 (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T17:28+02:00",
+              "status": "ready",
+              "return": "Round 5",
+              "comment": "Cleared to play and included in 12-man roster after DNP in Rounds 1-4 (undisclosed injury)"
             }
           ]
         }
@@ -8018,5 +8046,5 @@
       "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-10-14T14:24:05"
+  "updatedAt": "2026-10-14T17:28:34"
 }
