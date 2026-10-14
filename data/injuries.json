@@ -6649,6 +6649,20 @@
               "comment": "Included in 12-man roster after DNP in Rounds 3-4 (hand injury)."
             }
           ]
+        },
+        {
+          "start": "2026-10-14",
+          "end": null,
+          "lastSeen": "2026-10-14",
+          "updates": [
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T14:24+02:00",
+              "status": "game-time",
+              "return": "Round 6",
+              "comment": "Stomach problems"
+            }
+          ]
         }
       ],
       "name": "Lamar Stevens",
@@ -8004,5 +8018,5 @@
       "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-10-14T12:43:10"
+  "updatedAt": "2026-10-14T14:24:05"
 }
