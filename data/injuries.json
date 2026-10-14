@@ -150,6 +150,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Rounds 1-4 (coach's decision). Played in the domestic league (10.11)"
+            },
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T19:19+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-4 (coach's decision). Played in the domestic league (10.11)"
             }
           ]
         }
@@ -5305,6 +5312,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Rounds 1-4 (coach's decision)"
+            },
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T19:19+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-4 (coach's decision)"
             }
           ]
         }
@@ -5367,6 +5381,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Rounds 1-4 (coach's decision)"
+            },
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T19:19+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-4 (coach's decision)"
             }
           ]
         }
@@ -8135,5 +8156,5 @@
       "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-14T18:32:11"
+  "updatedAt": "2026-10-14T19:19:03"
 }
