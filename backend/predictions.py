@@ -89,7 +89,16 @@ FACTOR_TEXT = {
 
 
 def predict_games(meta, previews, clubs):
-    """{game key: prediction} for upcoming BasketNews games [(key, home abbr, away abbr, ISO time)]."""
+    """{game key: prediction} for upcoming BasketNews games [(key, home abbr, away abbr, ISO time)].
+    Predictions are extra: if they cannot be made, the previews go out without them."""
+    try:
+        return _predict_games(meta, previews, clubs)
+    except Exception as exc:  # noqa: BLE001 - never fail a page (or the build) over a prediction
+        LOG.warning("game predictions skipped: %s: %s", type(exc).__name__, exc)
+        return {}
+
+
+def _predict_games(meta, previews, clubs):
     ready = _state(meta)
     if not ready:
         return {}

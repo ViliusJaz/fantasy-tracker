@@ -131,3 +131,37 @@ def test_previews_carry_a_prediction(replayed):
     for p in picks:
         assert 0.5 <= p["prob"] <= 1 and p["winner"] and p["factors"]
         assert {"homeWin", "winner", "prob", "factors", "accuracy"} == set(p)
+
+
+def test_a_played_game_with_an_empty_box_score(monkeypatch):
+    """Right after a game the feed calls it played while the box score is still empty: the game
+    counts without a box score, and the empty answer is not kept (the next build asks again)."""
+    raw = {"identifier": "E2026_47", "phaseType": {"code": "RS"}, "round": 5, "utcDate": "2026-10-13T18:30:00Z",
+           "played": True, "isNeutralVenue": False, "audience": 9000,
+           "local": {"club": {"code": "PAR", "name": "Partizan"}, "score": 55},
+           "road": {"club": {"code": "PAN", "name": "Panathinaikos"}, "score": 72}}
+    empty = {"local": {"coach": None, "players": [], "team": None, "total": None},
+             "road": {"coach": None, "players": [], "team": None, "total": None}}
+    g = euroleague.normalize(raw, "E2026", empty)
+    assert (g["hs"], g["as"], g["box"], g["players"]) == (55, 72, None, None)
+
+    URL = "https://example.test/stats"
+    stored, answers = {}, [empty, {"local": {"total": {"points": 55}}, "road": {"total": {"points": 72}}}]
+    monkeypatch.setattr(euroleague.cache, "get", lambda key: stored.get(key))
+    monkeypatch.setattr(euroleague.cache, "put", lambda key, source, data, keep: stored.__setitem__(key, data))
+    monkeypatch.setattr(euroleague.net, "fetch", lambda req, source, timeout=30, as_json=False: answers.pop(0))
+    assert euroleague._get(URL, keep=60, complete=euroleague.has_box) is empty and stored == {}
+    full = euroleague._get(URL, keep=60, complete=euroleague.has_box)
+    assert stored == {URL: full} and euroleague._get(URL, keep=60, complete=euroleague.has_box) is full
+    stored[URL] = empty  # one kept before this fix is asked for again
+    monkeypatch.setattr(euroleague.net, "fetch", lambda req, source, timeout=30, as_json=False: full)
+    assert euroleague._get(URL, keep=60, complete=euroleague.has_box) is full
+
+
+def test_predictions_never_fail_a_page(monkeypatch):
+    from backend import predictions
+
+    def broken(meta):
+        raise TypeError("'NoneType' object is not subscriptable")
+    monkeypatch.setattr(predictions, "_state", broken)
+    assert predictions.predict_games({"seasonYear": 2026}, [("g", "AAA", "BBB", "2026-10-15T18:00:00Z")], {}) == {}

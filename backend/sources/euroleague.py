@@ -23,15 +23,27 @@ _flights = SingleFlight()
 _games = {}
 
 
-def _get(url, keep=0):
+def _get(url, keep=0, complete=lambda data: True):
+    """The answer, from the persistent cache when `keep` allows. Only `complete` answers are kept
+    (and a kept one that is not complete is downloaded again)."""
     stored = cache.get(url) if keep else None
-    if stored is not None:
+    if stored is not None and complete(stored):
         return stored
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json", "Accept-Encoding": "gzip"})
     data = net.fetch(req, "euroleague", timeout=30, as_json=True)
-    if keep:
+    if keep and complete(data):
         cache.put(url, "euroleague", data, keep)
     return data
+
+
+def has_box(box):
+    """A box score with the teams' totals. Right after a game the feed can already call it played
+    while the box score is still empty: that one must be asked for again, not kept for a year."""
+    if not box:
+        return False
+    if "local" in box and "road" in box:
+        return bool((box["local"] or {}).get("total") and (box["road"] or {}).get("total"))
+    return bool(box.get("Stats"))
 
 
 def minutes(text):
@@ -65,10 +77,12 @@ def normalize(raw, season, box=None):
             "as": raw["road"]["score"] if raw.get("played") else None, "box": None, "players": None,
             "names": {home: raw["local"]["club"]["name"], away: raw["road"]["club"]["name"]},
             "audience": raw.get("audience") if raw.get("played") else None}
-    if box and "local" in box and "road" in box:
+    if not has_box(box):
+        return game  # not played yet, or its box score is not filled in yet
+    if "local" in box and "road" in box:
         (hb, hp), (ab, ap) = _v3_side(box["local"]), _v3_side(box["road"])
         game["box"], game["players"] = {home: hb, away: ab}, {home: hp, away: ap}
-    elif box:
+    else:
         by_code, players = {}, {}
         for st in box.get("Stats") or []:
             plist = [p for p in st["PlayersStats"] if (p.get("Team") or "").strip()]
@@ -93,7 +107,7 @@ def season_games(season):
             box = None
             if g.get("played"):
                 try:
-                    box = _get(BOX_URL.format(code=g["gameCode"], season=season), keep=YEAR)
+                    box = _get(BOX_URL.format(code=g["gameCode"], season=season), keep=YEAR, complete=has_box)
                 except net.FetchError as exc:
                     LOG.warning("EuroLeague box score %s %s unavailable: %s", season, g["gameCode"], exc)
             games.append(normalize(g, season, box))
