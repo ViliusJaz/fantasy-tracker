@@ -7867,7 +7867,7 @@
       "episodes": [
         {
           "start": "2026-10-12",
-          "end": null,
+          "end": "2026-10-14",
           "lastSeen": "2026-10-14",
           "updates": [
             {
@@ -7876,6 +7876,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Expected to leave the team"
+            },
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T17:44+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -8046,5 +8053,5 @@
       "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-10-14T17:28:34"
+  "updatedAt": "2026-10-14T17:44:04"
 }
