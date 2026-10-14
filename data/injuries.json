@@ -1351,6 +1351,13 @@
               "status": "uncertain",
               "return": "Round 5",
               "comment": "DNP in Rounds 2-4 (coach's decision)"
+            },
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T18:32+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster after DNP in Rounds 2-4 (coach's decision)"
             }
           ]
         }
@@ -1385,6 +1392,20 @@
               "status": "ready",
               "return": "Round 3",
               "comment": "Played in the domestic league during the weekend after a DNP in Round 1, but didn't travel to Istanbul for Round 2, per official injury report"
+            }
+          ]
+        },
+        {
+          "start": "2026-10-14",
+          "end": null,
+          "lastSeen": "2026-10-14",
+          "updates": [
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T18:32+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -5210,6 +5231,20 @@
               "comment": "Didn't travel to Istanbul for Round 2, per official injury report"
             }
           ]
+        },
+        {
+          "start": "2026-10-14",
+          "end": null,
+          "lastSeen": "2026-10-14",
+          "updates": [
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T18:32+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Tobias Jensen",
@@ -6689,6 +6724,13 @@
               "status": "game-time",
               "return": "Round 6",
               "comment": "Stomach problems"
+            },
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T18:32+02:00",
+              "status": "game-time",
+              "return": "Round 6",
+              "comment": "Traveled to Istanbul, will be a game-time decision (illness, stomach bug)"
             }
           ]
         }
@@ -8051,7 +8093,47 @@
       ],
       "name": "Mario Nakic",
       "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "35518": {
+      "episodes": [
+        {
+          "start": "2026-10-14",
+          "end": null,
+          "lastSeen": "2026-10-14",
+          "updates": [
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T18:32+02:00",
+              "status": "out",
+              "return": "Round 5",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Justus Hollatz",
+      "club": "FC Bayern Munich"
+    },
+    "35551": {
+      "episodes": [
+        {
+          "start": "2026-10-14",
+          "end": null,
+          "lastSeen": "2026-10-14",
+          "updates": [
+            {
+              "date": "2026-10-14",
+              "at": "2026-10-14T18:32+02:00",
+              "status": "game-time",
+              "return": "Round 6",
+              "comment": "Practiced ahead of the game, but only partially (tailbone bruise)"
+            }
+          ]
+        }
+      ],
+      "name": "Yam Madar",
+      "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-14T17:44:04"
+  "updatedAt": "2026-10-14T18:32:11"
 }
