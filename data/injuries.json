@@ -5130,6 +5130,13 @@
               "status": "uncertain",
               "return": "Round 6",
               "comment": "DNP in Rounds 2-5 (hamstring injury in Round 1)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T15:07+02:00",
+              "status": "game-time",
+              "return": "Round 6",
+              "comment": "Will practice ahead of Round 6 after DNP in Rounds 2-5 (hamstring injury in Round 1)"
             }
           ]
         }
@@ -8480,5 +8487,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-15T14:26:01"
+  "updatedAt": "2026-10-15T15:07:48"
 }
