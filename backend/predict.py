@@ -87,7 +87,7 @@ class State:
         self.season = None
         self.results = []        # this season: (date, home, away, margin, neutral)
         self.srs_prior = {}      # team -> rating carried over from last season
-        self._srs_cache = (None, {})
+        self._srs_cache = {}     # (date, games so far) -> ratings: the site asks for the same dates a lot
 
     def team(self, code):
         if code not in self.teams:
@@ -104,7 +104,7 @@ class State:
             keep = self.p.get("srs_carry", 0.5)
             self.srs_prior = {code: keep * r for code, r in ratings.items()}
         self.results = []
-        self._srs_cache = (None, {})
+        self._srs_cache = {}
         carry = self.p["elo_carry"]
         for t in self.teams.values():
             if t.games:
@@ -189,8 +189,10 @@ class State:
     def srs(self, when):
         """Team ratings in points per game (home court fitted too): least squares over this
         season's margins weighted by recency, pulled toward last season's rating."""
-        if self._srs_cache[0] == (when, len(self.results)):
-            return self._srs_cache[1]
+        key = (when, len(self.results))
+        hit = self._srs_cache.get(key)
+        if hit is not None:
+            return hit
         codes = sorted(set(self.teams) | set(self.srs_prior))
         idx = {c: i for i, c in enumerate(codes)}
         n = len(codes) + 1  # + home court
@@ -215,7 +217,9 @@ class State:
         sol = _solve(a, b)
         ratings = {c: sol[i] for c, i in idx.items()}
         ratings["_home"] = sol[n - 1]
-        self._srs_cache = ((when, len(self.results)), ratings)
+        if len(self._srs_cache) > 64:
+            self._srs_cache.clear()
+        self._srs_cache[key] = ratings
         return ratings
 
     def roster(self, t, played_ids):

@@ -17,7 +17,7 @@ def transfer_roi(meta, moves):
     if not rounds:
         return False
     fp = {r: {v["id"]: v.get("roundPts") or 0 for v in pm.values()}
-          for r, pm in pool_map(lambda r: (r, players(meta, r, r)), rounds)}
+          for r, pm in pool_map(lambda r: (r, players(meta, r, r, shared=True)), rounds)}
     rosters = {int(r): {tid: {p["id"] for p in team["players"]} for tid, team in (snap.get("teams") or {}).items()}
                for r, snap in history.lineup_rounds(meta["id"]).items() if r.isdigit()}
     moves_in = [{"id": m["id"], "round": m["round"], "kind": m["type"],

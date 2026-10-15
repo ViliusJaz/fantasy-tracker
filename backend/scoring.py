@@ -1,6 +1,7 @@
 """Draft-league scoring (verified against official round totals): the five court players count x1
 and the captain x2, the 6th man (b-1) x1, bench b-2..b-5 x0.5 and inactive players nothing.
 Court formations are centers-forwards-guards."""
+import functools
 import itertools
 
 
@@ -64,6 +65,13 @@ def _fits_formation(group):
 def optimal_score(lineup_players):
     """Best possible total from the same active players (inactive ones stay out)."""
     active = [p for p in lineup_players if p["slot"] != "inactive"]
+    # the same lineups are scored by many pages: remember the answer for the same points and positions
+    return _optimal(tuple(sorted((p.get("roundPts") or 0, tuple(p.get("positions") or ())) for p in active)))
+
+
+@functools.lru_cache(maxsize=4096)
+def _optimal(key):
+    active = [{"roundPts": fp, "positions": list(pos)} for fp, pos in key]
     fp = lambda p: p.get("roundPts") or 0  # noqa: E731
     everyone = sum(fp(p) for p in active)
     best = None

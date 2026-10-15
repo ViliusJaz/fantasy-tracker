@@ -209,7 +209,7 @@ def draft_awards(meta, finished, team_names):
 
     # Best undrafted player (a regular: at least half of the finished rounds played).
     min_games = max(1, (len(finished) + 1) // 2)
-    pool = players(meta, meta["latestRound"], meta["currentRound"])
+    pool = players(meta, meta["latestRound"], meta["currentRound"], shared=True)
     undrafted = [v for v in pool.values() if v["id"] not in drafted and (v["gamesPlayed"] or 0) >= min_games and v["avgPts"]]
     info = L(f"Žaidėjas, kurio drafte niekas nepasirinko. Didžiausi vidutiniai FP tarp sužaidusių bent {min_games} rungt.",
              f"A player nobody picked in the draft. Highest average FP among players with at least {min_games} games.")
@@ -245,7 +245,7 @@ def draft_awards(meta, finished, team_names):
                            "🗑️", player_id=pid, info=drop_info[0]))
         after = {}
         for r in finished:
-            round_pts = {v["id"]: v.get("roundPts") or 0 for v in players(meta, r, r).values()}
+            round_pts = {v["id"]: v.get("roundPts") or 0 for v in players(meta, r, r, shared=True).values()}
             for d in drops:
                 if r >= d[0]:
                     after[d] = after.get(d, 0) + round_pts.get(d[3], 0)

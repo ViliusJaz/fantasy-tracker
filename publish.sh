@@ -129,8 +129,16 @@ publish_health_only() {
   fi
 }
 
+lap() {  # how long each step took, for the summary at the end of a run
+  local now
+  now=$(date +%s)
+  TIMES="$TIMES $1 $((now - LAP))s,"
+  LAP=$now
+}
+
 main() {
-  local log="$HOME/Library/Logs/fantasy-tracker.log" pages_seen tree commit
+  local log="$HOME/Library/Logs/fantasy-tracker.log" pages_seen tree commit fetch_pid=""
+  T0=$(date +%s) LAP=$(date +%s) TIMES=""
   if [ -f "$log" ] && [ "$(wc -c < "$log")" -gt 1000000 ]; then : > "$log"; fi  # keep the log small
   echo "=== $(date '+%Y-%m-%d %H:%M:%S') $(device)${DRY_RUN:+ (dry run)}"
   trap cleanup EXIT
@@ -154,13 +162,23 @@ main() {
     git pull -q --rebase --autostash origin main
   fi
   pages_seen=$(git ls-remote origin refs/heads/gh-pages | cut -f1)
+  # A device that has not seen the site another one published last (the phone, after the Mac)
+  # cannot tell which files GitHub already has, and would upload the whole site (about 6 MB).
+  # Fetching that site while the pages are built lets the push carry only what changed.
+  if [ -z "$DRY_RUN" ] && [ -n "$pages_seen" ] && ! git cat-file -e "$pages_seen^{commit}" 2>/dev/null; then
+    git fetch -q --no-tags origin "+refs/heads/gh-pages:refs/ft/pages-seen" 2>/dev/null &
+    fetch_pid=$!
+  fi
+  lap sync
 
   export FT_DEVICE="${FT_DEVICE:-$(device)}"
   if ! $EXPORT_CMD; then
     say "build failed; the site stays as it was"
+    if [ -n "$fetch_pid" ]; then kill "$fetch_pid" 2>/dev/null || true; wait "$fetch_pid" 2>/dev/null || true; fi
     if [ -z "$DRY_RUN" ]; then publish_health_only "$pages_seen"; fi
     exit 1
   fi
+  lap build
 
   # The site goes up first, the history (data/) right after: the new pages do not wait
   # for the history commit. If that push fails, the commit stays local and goes up with
@@ -180,10 +198,12 @@ main() {
     exit 0
   fi
   commit="$(git commit-tree "$tree" -m "Site $(date '+%Y-%m-%d %H:%M')")"
+  if [ -n "$fetch_pid" ]; then wait "$fetch_pid" || true; fi  # without it the push still works, just bigger
   still_locked
   git push -q --force-with-lease="refs/heads/gh-pages:$pages_seen" origin "$commit:refs/heads/gh-pages"
   git update-ref refs/heads/gh-pages "$commit"
   say "published $commit"
+  lap upload
 
   git add data leagues.json
   if ! git diff --cached --quiet; then
@@ -191,6 +211,8 @@ main() {
   fi
   still_locked
   push_main
+  lap history
+  say "took $(( $(date +%s) - T0 ))s:${TIMES%,}"
 }
 
 # on one line, so bash has read it before `git pull` may rewrite this file

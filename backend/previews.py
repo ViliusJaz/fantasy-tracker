@@ -1,4 +1,5 @@
 """Game previews: form, key players, injuries and generated notes for games not played yet."""
+import copy
 import functools
 
 from backend.i18n import L
@@ -8,11 +9,25 @@ from backend.sources.advanced import team_advanced
 from backend.util import ascii_slug, num, pool_map
 
 
+_results_memo = {}  # (competition, scoring, round) -> (player lists, results): every future round asks
+
+
 def club_results(meta, before_round):
     """Finished games of every club before a round: {abbr: [{at, opp, home, for, against}]} oldest first."""
     rounds = list(range(meta["firstRound"], before_round))
+    lists = [pm for _, pm in pool_map(lambda r: (r, players(meta, r, r, shared=True)), rounds)]
+    key = (meta["leagueId"], meta["pointCalcSystem"], before_round)
+    hit = _results_memo.get(key)
+    if hit and len(hit[0]) == len(lists) and all(a is b for a, b in zip(hit[0], lists)):
+        return copy.deepcopy(hit[1])
+    out = _club_results(lists)
+    _results_memo[key] = (lists, out)
+    return copy.deepcopy(out)
+
+
+def _club_results(lists):
     results = {}
-    for _, pm in pool_map(lambda r: (r, players(meta, r, r)), rounds):
+    for pm in lists:
         for p in pm.values():
             club = (p["club"] or {}).get("abbr")
             for g in (p["games"] if club else []):
