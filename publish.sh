@@ -111,6 +111,18 @@ push_main() {
 
 # The last good site with only api/health.json replaced: visitors keep the previous data,
 # and the failure is visible without hiding when the data was last good.
+# "-p <commit>" for a new site commit: the site now on GitHub, when this device has it and it is
+# from today. A linked commit lets the push carry only the files that changed (about 0.2 MB
+# instead of the whole 3 MB site: unrelated commits make git send everything). The chain starts
+# over every day, so GitHub does not keep every version of every page for good.
+pages_parent() {
+  local seen=$1
+  if [ -n "$seen" ] && git cat-file -e "$seen^{commit}" 2>/dev/null \
+     && [ "$(git log -1 --format=%cd --date=format:%Y-%m-%d "$seen")" = "$(date +%Y-%m-%d)" ]; then
+    printf -- '-p %s' "$seen"
+  fi
+}
+
 publish_health_only() {
   local seen=$1 tree commit
   [ -f var/health.json ] && [ -n "$seen" ] || return 0
@@ -121,7 +133,8 @@ publish_health_only() {
   git update-index --add --cacheinfo "100644,$(git hash-object -w var/health.json),api/health.json"
   tree="$(git write-tree)"
   unset GIT_INDEX_FILE
-  commit="$(git commit-tree "$tree" -m "Site $(date '+%Y-%m-%d %H:%M') (build failed: health only)")"
+  # shellcheck disable=SC2046
+  commit="$(git commit-tree "$tree" $(pages_parent "$seen") -m "Site $(date '+%Y-%m-%d %H:%M') (build failed: health only)")"
   still_locked
   if git push -q --force-with-lease="refs/heads/gh-pages:$seen" origin "$commit:refs/heads/gh-pages"; then
     git update-ref refs/heads/gh-pages "$commit"
@@ -185,8 +198,7 @@ main() {
   # the next run.
 
   # site/ -> gh-pages without touching the working tree: build the commit from a
-  # throwaway index. Keeping the previous commit as a local ref lets git upload
-  # only the files that changed.
+  # throwaway index, linked to the site on GitHub (see pages_parent).
   export GIT_INDEX_FILE="$TMP/index"
   git --work-tree=site add -A
   tree="$(git write-tree)"
@@ -197,8 +209,9 @@ main() {
     git status --short -- data leagues.json
     exit 0
   fi
-  commit="$(git commit-tree "$tree" -m "Site $(date '+%Y-%m-%d %H:%M')")"
   if [ -n "$fetch_pid" ]; then wait "$fetch_pid" || true; fi  # without it the push still works, just bigger
+  # shellcheck disable=SC2046  # "-p <commit>" or nothing, as separate words
+  commit="$(git commit-tree "$tree" $(pages_parent "$pages_seen") -m "Site $(date '+%Y-%m-%d %H:%M')")"
   still_locked
   git push -q --force-with-lease="refs/heads/gh-pages:$pages_seen" origin "$commit:refs/heads/gh-pages"
   git update-ref refs/heads/gh-pages "$commit"

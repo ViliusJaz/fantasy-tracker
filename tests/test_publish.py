@@ -196,3 +196,19 @@ def test_dry_run_changes_nothing(github):
     assert run.returncode == 0 and "would publish site tree" in run.stdout
     assert remote(github, "gh-pages") is None and remote(github, "publish-lock") is None
     assert injured(github) == set()
+
+
+def test_site_commits_are_linked_so_pushes_carry_only_changes(github):
+    """A site commit links to the one on GitHub (from today), also on a device that has not seen
+    it yet (it fetches it while building): unrelated commits make git upload the whole site."""
+    mac, phone = github("mac"), github("phone")
+    assert publish(mac, FAKE_PLAYER="1").returncode == 0
+    first = remote(github, "gh-pages")
+    assert git(github.origin, "log", "-1", "--format=%P", first) == ""  # nothing to link to yet
+    run = publish(phone, FAKE_PLAYER="2")
+    assert run.returncode == 0, run.stdout + run.stderr
+    second = remote(github, "gh-pages")
+    assert git(github.origin, "log", "-1", "--format=%P", second) == first
+    assert publish(mac, FAKE_PLAYER="3").returncode == 0
+    assert git(github.origin, "log", "-1", "--format=%P", "gh-pages") == second
+    assert "took " in run.stdout and "upload" in run.stdout  # the timing summary
