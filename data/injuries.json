@@ -6575,6 +6575,13 @@
               "status": "uncertain",
               "return": "Round 6",
               "comment": "DNP in Rounds 2-5 (coach's decision)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T19:11+02:00",
+              "status": "out",
+              "return": "Round 6",
+              "comment": "Not included in 12-man roster after DNP in Rounds 2-5 (coach's decision)"
             }
           ]
         }
@@ -8332,6 +8339,13 @@
               "status": "uncertain",
               "return": "Round 6",
               "comment": "DNP in Round 5 (undisclosed)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T19:11+02:00",
+              "status": "out",
+              "return": "Round 6",
+              "comment": "Not included in 12-man roster after DNP in Round 5 (undisclosed)"
             }
           ]
         }
@@ -8515,5 +8529,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-15T19:02:52"
+  "updatedAt": "2026-10-15T19:11:45"
 }
