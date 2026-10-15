@@ -7289,6 +7289,20 @@
               "comment": "Practiced with the team, should be fit for Round 4 after a DNP in Round 3"
             }
           ]
+        },
+        {
+          "start": "2026-10-15",
+          "end": null,
+          "lastSeen": "2026-10-15",
+          "updates": [
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T12:37+02:00",
+              "status": "out",
+              "return": "Round 6",
+              "comment": "Hamstring discomfort"
+            }
+          ]
         }
       ],
       "name": "Nikos Rogkavopoulos",
@@ -8395,7 +8409,27 @@
       ],
       "name": "Daniel Hackett",
       "club": "Virtus Bologna"
+    },
+    "22564": {
+      "episodes": [
+        {
+          "start": "2026-10-15",
+          "end": null,
+          "lastSeen": "2026-10-15",
+          "updates": [
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T12:37+02:00",
+              "status": "uncertain",
+              "return": "Round 6",
+              "comment": "New signing"
+            }
+          ]
+        }
+      ],
+      "name": "Lonnie Walker IV",
+      "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-15T09:53:58"
+  "updatedAt": "2026-10-15T12:37:49"
 }
