@@ -3977,6 +3977,13 @@
               "status": "uncertain",
               "return": "Round 6",
               "comment": "DNP in Rounds 3-4 (coach's decision). Out for Round 5 (muscle pain)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T09:53+02:00",
+              "status": "out",
+              "return": "Round 6",
+              "comment": "Out for Rounds 5 and 6 due to muscle pain after DNP in Rounds 3-4 (coach's decision)"
             }
           ]
         }
@@ -8390,5 +8397,5 @@
       "club": "Virtus Bologna"
     }
   },
-  "updatedAt": "2026-10-15T03:57:00"
+  "updatedAt": "2026-10-15T09:53:58"
 }
