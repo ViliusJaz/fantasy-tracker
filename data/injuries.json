@@ -2161,6 +2161,13 @@
               "status": "out",
               "return": "Round 5-6",
               "comment": "Traveled with the team to Sofia but is ruled out for Rounds 5-6 after missing Rounds 1-4 (knee injury)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T14:26+02:00",
+              "status": "out",
+              "return": "Round 6",
+              "comment": "Traveled with the team to Sofia but is ruled out for Rounds 5-6 after missing Rounds 1-4 (knee injury)"
             }
           ]
         }
@@ -3630,6 +3637,13 @@
               "status": "uncertain",
               "return": "Round 6",
               "comment": "DNP in Rounds 1-4 (medial right meniscus tear)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T14:26+02:00",
+              "status": "out",
+              "return": "Round 6",
+              "comment": "DNP in Rounds 1-4 (medial right meniscus tear)"
             }
           ]
         }
@@ -3668,6 +3682,13 @@
               "date": "2026-10-14",
               "at": "2026-10-14T12:43+02:00",
               "status": "uncertain",
+              "return": "Round 6",
+              "comment": "DNP in Rounds 1-4 (rehab after leg injury)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T14:26+02:00",
+              "status": "out",
               "return": "Round 6",
               "comment": "DNP in Rounds 1-4 (rehab after leg injury)"
             }
@@ -7582,6 +7603,13 @@
               "status": "uncertain",
               "return": "Round 6",
               "comment": "DNP in Rounds 4-5 (coach's decision)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T14:26+02:00",
+              "status": "doubtful",
+              "return": "Round 6",
+              "comment": "Didn't practice ahead of Round 6 after DNP in Rounds 4-5 (coach's decision)"
             }
           ]
         }
@@ -8025,6 +8053,13 @@
               "status": "uncertain",
               "return": "Round 6",
               "comment": "DNP in Round 5 (ankle injury)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T14:26+02:00",
+              "status": "game-time",
+              "return": "Round 6",
+              "comment": "Partially practiced after DNP in Round 5 (ankle injury)"
             }
           ]
         }
@@ -8058,6 +8093,13 @@
               "at": "2026-10-13T11:18+02:00",
               "status": "out",
               "return": "Round 5-6",
+              "comment": "Didn't travel with the team for double-round week, set to undergo tests (illness)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T14:26+02:00",
+              "status": "out",
+              "return": "Round 6",
               "comment": "Didn't travel with the team for double-round week, set to undergo tests (illness)"
             }
           ]
@@ -8167,6 +8209,13 @@
               "status": "uncertain",
               "return": "Round 6",
               "comment": "DNP in Round 5 (wrist injury)"
+            },
+            {
+              "date": "2026-10-15",
+              "at": "2026-10-15T14:26+02:00",
+              "status": "game-time",
+              "return": "Round 6",
+              "comment": "Obradovic confirmed Bonga will be a game-time decision after DNP in Round 5 (wrist injury)"
             }
           ]
         }
@@ -8431,5 +8480,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-15T12:37:49"
+  "updatedAt": "2026-10-15T14:26:01"
 }
