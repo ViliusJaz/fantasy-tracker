@@ -8806,7 +8806,7 @@
       "episodes": [
         {
           "start": "2026-10-15",
-          "end": null,
+          "end": "2026-10-16",
           "lastSeen": "2026-10-16",
           "updates": [
             {
@@ -8815,6 +8815,13 @@
               "status": "uncertain",
               "return": "Round 6",
               "comment": "New signing"
+            },
+            {
+              "date": "2026-10-16",
+              "at": "2026-10-16T09:59+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -8848,7 +8855,27 @@
       ],
       "name": "Jae Crowder",
       "club": "LDLC ASVEL Villeurbanne"
+    },
+    "6183": {
+      "episodes": [
+        {
+          "start": "2026-10-16",
+          "end": null,
+          "lastSeen": "2026-10-16",
+          "updates": [
+            {
+              "date": "2026-10-16",
+              "at": "2026-10-16T09:59+02:00",
+              "status": "uncertain",
+              "return": "Round 7",
+              "comment": "DNP in Round 6 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Patrick Mills",
+      "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-10-16T02:19:11"
+  "updatedAt": "2026-10-16T09:59:17"
 }
