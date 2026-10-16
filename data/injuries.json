@@ -8882,7 +8882,27 @@
       ],
       "name": "Patrick Mills",
       "club": "LDLC ASVEL Villeurbanne"
+    },
+    "21217": {
+      "episodes": [
+        {
+          "start": "2026-10-16",
+          "end": null,
+          "lastSeen": "2026-10-16",
+          "updates": [
+            {
+              "date": "2026-10-16",
+              "at": "2026-10-16T14:08+02:00",
+              "status": "uncertain",
+              "return": "Round 7",
+              "comment": "Injury in Round 6"
+            }
+          ]
+        }
+      ],
+      "name": "Tonye Jekiri",
+      "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-10-16T12:05:20"
+  "updatedAt": "2026-10-16T14:08:46"
 }
