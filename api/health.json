@@ -1,9 +1,9 @@
 {
  "version": 1,
  "status": "healthy",
- "lastAttempt": "2026-10-17T10:40:23+02:00",
- "lastSuccessfulUpdate": "2026-10-17T10:40:23+02:00",
- "buildDurationSeconds": 25.6,
+ "lastAttempt": "2026-10-17T10:55:52+02:00",
+ "lastSuccessfulUpdate": "2026-10-17T10:55:52+02:00",
+ "buildDurationSeconds": 19.8,
  "basketnewsRequests": 56,
  "failedRequests": 0,
  "playersProcessed": 331,
@@ -17,18 +17,18 @@
   "euroleague": "ok"
  },
  "lastSuccess": {
-  "at": "2026-10-17T10:40:23+02:00",
-  "startedAt": "2026-10-17T10:39:58+02:00",
+  "at": "2026-10-17T10:55:52+02:00",
+  "startedAt": "2026-10-17T10:55:33+02:00",
   "status": "healthy",
   "device": "mac",
   "version": "13751803a",
-  "durationSeconds": 25.6,
+  "durationSeconds": 19.8,
   "requests": {
    "basketnews": {
     "requests": 56,
     "retries": 0,
     "failures": 0,
-    "bytes": 287713
+    "bytes": 287054
    },
    "advanced-stats": {
     "requests": 3,
@@ -40,7 +40,7 @@
     "requests": 1,
     "retries": 0,
     "failures": 0,
-    "bytes": 86392
+    "bytes": 86336
    },
    "euroleague": {
     "requests": 1,
