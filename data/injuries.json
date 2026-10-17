@@ -9477,6 +9477,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "Injury in Round 6"
+            },
+            {
+              "date": "2026-10-17",
+              "at": "2026-10-17T21:45+02:00",
+              "status": "out",
+              "return": "Round 7-9",
+              "comment": "Will miss two weeks (adductor injury in Round 6)"
             }
           ]
         }
@@ -9687,5 +9694,5 @@
       "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-10-17T16:04:22"
+  "updatedAt": "2026-10-17T21:45:54"
 }
