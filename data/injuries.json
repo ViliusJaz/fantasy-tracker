@@ -8653,6 +8653,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Round 6 (undisclosed)"
+            },
+            {
+              "date": "2026-10-17",
+              "at": "2026-10-17T16:04+02:00",
+              "status": "uncertain",
+              "return": "Round 7",
+              "comment": "DNP in Round 6 (rest)"
             }
           ]
         }
@@ -9658,7 +9665,27 @@
       ],
       "name": "Konstantinos Mitoglou",
       "club": "Panathinaikos AKTOR Athens"
+    },
+    "24406": {
+      "episodes": [
+        {
+          "start": "2026-10-17",
+          "end": null,
+          "lastSeen": "2026-10-17",
+          "updates": [
+            {
+              "date": "2026-10-17",
+              "at": "2026-10-17T16:04+02:00",
+              "status": "uncertain",
+              "return": "Round 7",
+              "comment": "DNP in Round 6 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Tremont Waters",
+      "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-10-17T09:22:25"
+  "updatedAt": "2026-10-17T16:04:22"
 }
