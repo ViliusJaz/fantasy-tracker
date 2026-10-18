@@ -9688,6 +9688,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "Left Round 6 game (back)"
+            },
+            {
+              "date": "2026-10-18",
+              "at": "2026-10-18T19:26+02:00",
+              "status": "out",
+              "return": "Round 7-9",
+              "comment": "Suffered lower back injury in Round 6 (out for 2-3 weeks)"
             }
           ]
         }
@@ -9763,5 +9770,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-18T18:40:28"
+  "updatedAt": "2026-10-18T19:26:42"
 }
