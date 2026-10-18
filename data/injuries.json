@@ -3945,6 +3945,13 @@
               "status": "expected",
               "return": "Round 7",
               "comment": "Expected to return after DNP in Rounds 1-6 (medial right meniscus tear)"
+            },
+            {
+              "date": "2026-10-18",
+              "at": "2026-10-18T13:55+02:00",
+              "status": "expected",
+              "return": "Round 7",
+              "comment": "Played in domestic league after DNP in Rounds 1-6 (medial right meniscus tear)"
             }
           ]
         }
@@ -4006,6 +4013,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (rehab after leg injury)"
+            },
+            {
+              "date": "2026-10-18",
+              "at": "2026-10-18T13:55+02:00",
+              "status": "expected",
+              "return": "Round 7",
+              "comment": "Played in domestic league DNP in Rounds 1-6 (rehab after leg injury)"
             }
           ]
         }
@@ -9694,5 +9708,5 @@
       "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-10-18T01:08:54"
+  "updatedAt": "2026-10-18T13:55:30"
 }
