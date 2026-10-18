@@ -9741,7 +9741,27 @@
       ],
       "name": "Tremont Waters",
       "club": "LDLC ASVEL Villeurbanne"
+    },
+    "21547": {
+      "episodes": [
+        {
+          "start": "2026-10-18",
+          "end": null,
+          "lastSeen": "2026-10-18",
+          "updates": [
+            {
+              "date": "2026-10-18",
+              "at": "2026-10-18T18:40+02:00",
+              "status": "uncertain",
+              "return": "Round 7",
+              "comment": "Missed domestic league game (10.18) due to physical discomfort"
+            }
+          ]
+        }
+      ],
+      "name": "Dario Brizuela",
+      "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-18T15:44:05"
+  "updatedAt": "2026-10-18T18:40:28"
 }
