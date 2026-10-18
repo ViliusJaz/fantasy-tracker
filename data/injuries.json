@@ -8455,6 +8455,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 5-6 (coach's decision). Played in the domestic league (10.17)"
+            },
+            {
+              "date": "2026-10-18",
+              "at": "2026-10-18T15:44+02:00",
+              "status": "game-time",
+              "return": "Round 7",
+              "comment": "DNP in Rounds 5-6 (coach's decision). Played in the domestic league (10.17)"
             }
           ]
         }
@@ -9736,5 +9743,5 @@
       "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-10-18T15:26:08"
+  "updatedAt": "2026-10-18T15:44:05"
 }
