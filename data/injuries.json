@@ -527,7 +527,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-19",
           "lastSeen": "2026-10-19",
           "updates": [
             {
@@ -612,6 +612,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-19",
+              "at": "2026-10-19T05:11+02:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -9964,7 +9971,27 @@
       ],
       "name": "Dario Brizuela",
       "club": "FC Barcelona"
+    },
+    "36365": {
+      "episodes": [
+        {
+          "start": "2026-10-19",
+          "end": null,
+          "lastSeen": "2026-10-19",
+          "updates": [
+            {
+              "date": "2026-10-19",
+              "at": "2026-10-19T05:11+02:00",
+              "status": "uncertain",
+              "return": "Round 7",
+              "comment": "New signing (10.18)"
+            }
+          ]
+        }
+      ],
+      "name": "Christian Koloko",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
     }
   },
-  "updatedAt": "2026-10-19T02:18:48"
+  "updatedAt": "2026-10-19T05:11:09"
 }
