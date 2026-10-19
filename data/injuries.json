@@ -9991,7 +9991,27 @@
       ],
       "name": "Christian Koloko",
       "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "34868": {
+      "episodes": [
+        {
+          "start": "2026-10-19",
+          "end": null,
+          "lastSeen": "2026-10-19",
+          "updates": [
+            {
+              "date": "2026-10-19",
+              "at": "2026-10-19T10:49+02:00",
+              "status": "expected",
+              "return": "Round 7",
+              "comment": "Dislocated his finger during last domestic league game"
+            }
+          ]
+        }
+      ],
+      "name": "Devon Dotson",
+      "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-19T05:11:09"
+  "updatedAt": "2026-10-19T10:49:04"
 }

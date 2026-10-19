@@ -4022,7 +4022,7 @@
       }
     },
     "6": {
-      "savedAt": "2026-10-18T20:51:47",
+      "savedAt": "2026-10-19T10:49:04",
       "locked": false,
       "teams": {
         "6aa9427293bf2e3920b7a42d": {
@@ -4083,7 +4083,7 @@
               "captain": false
             },
             {
-              "id": "67232efcf2df1c0f1c94e68b",
+              "id": "66e6e4314589cab32aef6b2c",
               "card": "b-5",
               "slot": "bench",
               "captain": false
@@ -4101,7 +4101,7 @@
               "captain": false
             },
             {
-              "id": "66e6e4314589cab32aef6b2c",
+              "id": "67232efcf2df1c0f1c94e68b",
               "card": "i-3",
               "slot": "inactive",
               "captain": false
