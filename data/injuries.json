@@ -9999,6 +9999,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "New signing (10.18)"
+            },
+            {
+              "date": "2026-10-20",
+              "at": "2026-10-20T11:53+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "New signing (10.18)"
             }
           ]
         }
@@ -10047,5 +10054,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-10-20T08:59:29"
+  "updatedAt": "2026-10-20T11:53:40"
 }
