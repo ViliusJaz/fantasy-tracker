@@ -8212,6 +8212,20 @@
               "comment": "Will travel with the team, expected to be ready (knee)"
             }
           ]
+        },
+        {
+          "start": "2026-10-20",
+          "end": null,
+          "lastSeen": "2026-10-20",
+          "updates": [
+            {
+              "date": "2026-10-20",
+              "at": "2026-10-20T17:29+02:00",
+              "status": "expected",
+              "return": "Round 7",
+              "comment": "Suffered face injury in last domestic league game"
+            }
+          ]
         }
       ],
       "name": "Ąžuolas Tubelis",
@@ -10059,7 +10073,27 @@
       ],
       "name": "Mathias Lessort",
       "club": "Panathinaikos AKTOR Athens"
+    },
+    "24128": {
+      "episodes": [
+        {
+          "start": "2026-10-20",
+          "end": null,
+          "lastSeen": "2026-10-20",
+          "updates": [
+            {
+              "date": "2026-10-20",
+              "at": "2026-10-20T17:29+02:00",
+              "status": "out",
+              "return": "Round 7-12",
+              "comment": "Expected to miss 6-8 weeks after suffering a partial tear of his quadriceps tendon during a team practice (10.20)"
+            }
+          ]
+        }
+      ],
+      "name": "Gabriel Lundberg",
+      "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-20T14:27:55"
+  "updatedAt": "2026-10-20T17:29:54"
 }
