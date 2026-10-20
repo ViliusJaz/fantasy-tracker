@@ -394,6 +394,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Suffered left wrist fracture in Round 1 vs. Valencia"
+            },
+            {
+              "date": "2026-10-20",
+              "at": "2026-10-20T21:05+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Expected to rejoin the team in around 2-3 weeks (10.20)"
             }
           ]
         }
@@ -10129,5 +10136,5 @@
       "club": "Olympiacos Piraeus"
     }
   },
-  "updatedAt": "2026-10-20T18:31:58"
+  "updatedAt": "2026-10-20T21:05:45"
 }
