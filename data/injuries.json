@@ -4599,6 +4599,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Working back from Achilles surgery"
+            },
+            {
+              "date": "2026-10-20",
+              "at": "2026-10-20T14:27+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Cleared to return to team practices, aiming to return in November (working back from Achilles surgery)"
             }
           ]
         }
@@ -10054,5 +10061,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-10-20T11:53:40"
+  "updatedAt": "2026-10-20T14:27:55"
 }
