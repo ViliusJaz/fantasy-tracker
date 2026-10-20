@@ -8074,6 +8074,20 @@
               "comment": "Expected to be available, as Bartzokas confirmed there are no injured players (DNP in domestic league on Sunday due to illness)"
             }
           ]
+        },
+        {
+          "start": "2026-10-20",
+          "end": null,
+          "lastSeen": "2026-10-20",
+          "updates": [
+            {
+              "date": "2026-10-20",
+              "at": "2026-10-20T18:31+02:00",
+              "status": "doubtful",
+              "return": "Round 7",
+              "comment": "Dealing with ankle and knee injuries"
+            }
+          ]
         }
       ],
       "name": "Jean Montero",
@@ -10093,7 +10107,27 @@
       ],
       "name": "Gabriel Lundberg",
       "club": "Maccabi Rapyd Tel Aviv"
+    },
+    "11165": {
+      "episodes": [
+        {
+          "start": "2026-10-20",
+          "end": null,
+          "lastSeen": "2026-10-20",
+          "updates": [
+            {
+              "date": "2026-10-20",
+              "at": "2026-10-20T18:31+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "To miss approximately three weeks due to shoulder and knee injuries (10.20)"
+            }
+          ]
+        }
+      ],
+      "name": "Evan Fournier",
+      "club": "Olympiacos Piraeus"
     }
   },
-  "updatedAt": "2026-10-20T17:29:54"
+  "updatedAt": "2026-10-20T18:31:58"
 }
