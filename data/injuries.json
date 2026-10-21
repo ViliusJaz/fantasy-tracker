@@ -5774,6 +5774,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "Made his return after hamstring injury in Round 6, but might have picked up another injury. DNP in domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T21:14+02:00",
+              "status": "out",
+              "return": "Round 7-14",
+              "comment": "Aggravated previous hamstring injury in Round 6. Set to miss about 4 weeks."
             }
           ]
         }
@@ -10412,5 +10419,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-10-21T17:48:49"
+  "updatedAt": "2026-10-21T21:14:37"
 }
