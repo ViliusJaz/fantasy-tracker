@@ -347,6 +347,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "uncertain",
+              "return": "Round 7",
+              "comment": "DNP in Rounds 1-6 (coach's decision)"
             }
           ]
         }
@@ -1072,6 +1079,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (hamstring injury)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "DNP in Rounds 1-6 (hamstring injury)"
             }
           ]
         }
@@ -1253,6 +1267,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "Expected to return to the court for individual work next week (knee injury)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Expected to return to the court for individual work next week (knee injury)"
             }
           ]
         }
@@ -1347,6 +1368,13 @@
               "date": "2026-10-17",
               "at": "2026-10-17T09:22+02:00",
               "status": "uncertain",
+              "return": "Round 7",
+              "comment": "DNP in Rounds 1-6 (back injury)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (back injury)"
             }
@@ -1715,6 +1743,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "DNP in Rounds 1-6 (coach's decision)"
             }
           ]
         }
@@ -1739,6 +1774,13 @@
               "date": "2026-10-17",
               "at": "2026-10-17T09:22+02:00",
               "status": "uncertain",
+              "return": "Round 7",
+              "comment": "Left knee injury"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
               "return": "Round 7",
               "comment": "Left knee injury"
             }
@@ -2004,6 +2046,20 @@
               "status": "ready",
               "return": "",
               "comment": "Išbrauktas iš traumų sąrašo"
+            }
+          ]
+        },
+        {
+          "start": "2026-10-21",
+          "end": null,
+          "lastSeen": "2026-10-21",
+          "updates": [
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Out of the squad but expected to return to action next week"
             }
           ]
         }
@@ -2364,6 +2420,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "Traveled with the team for Rounds 5-6 but didn't play after missing Rounds 1-4 (knee injury). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "uncertain",
+              "return": "Round 7",
+              "comment": "DNP in Rounds 1-6 (knee injury). Played in the domestic league (10.18)"
             }
           ]
         }
@@ -3951,7 +4014,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-21",
           "lastSeen": "2026-10-21",
           "updates": [
             {
@@ -4008,6 +4071,13 @@
               "status": "expected",
               "return": "Round 7",
               "comment": "Played in domestic league after DNP in Rounds 1-6 (medial right meniscus tear)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "ready",
+              "return": "Round 7",
+              "comment": "Played in domestic league after DNP in Rounds 1-6 (medial right meniscus tear)"
             }
           ]
         }
@@ -4019,7 +4089,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-21",
           "lastSeen": "2026-10-21",
           "updates": [
             {
@@ -4074,6 +4144,13 @@
               "date": "2026-10-18",
               "at": "2026-10-18T13:55+02:00",
               "status": "expected",
+              "return": "Round 7",
+              "comment": "Played in domestic league DNP in Rounds 1-6 (rehab after leg injury)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "ready",
               "return": "Round 7",
               "comment": "Played in domestic league DNP in Rounds 1-6 (rehab after leg injury)"
             }
@@ -7799,6 +7876,13 @@
               "status": "out",
               "return": "Round 4-8",
               "comment": "Groin injury"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "game-time",
+              "return": "Round 7",
+              "comment": "Groin injury"
             }
           ]
         }
@@ -8162,6 +8246,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Round 6 (hamstring discomfort)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Didn't practice ahead of Round 7 after DNP in Round 6 (hamstring discomfort)"
             }
           ]
         }
@@ -8730,7 +8821,7 @@
       "episodes": [
         {
           "start": "2026-10-08",
-          "end": null,
+          "end": "2026-10-21",
           "lastSeen": "2026-10-21",
           "updates": [
             {
@@ -8746,6 +8837,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "Right thigh adductor muscle injury"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "ready",
+              "return": "Round 7",
+              "comment": "Right thigh adductor muscle injury. Traveling to Milan"
             }
           ]
         }
@@ -9222,7 +9320,7 @@
       "episodes": [
         {
           "start": "2026-10-13",
-          "end": null,
+          "end": "2026-10-21",
           "lastSeen": "2026-10-21",
           "updates": [
             {
@@ -9257,6 +9355,13 @@
               "date": "2026-10-17",
               "at": "2026-10-17T09:22+02:00",
               "status": "uncertain",
+              "return": "Round 7",
+              "comment": "DNP in Rounds 5-6 (wrist injury)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "ready",
               "return": "Round 7",
               "comment": "DNP in Rounds 5-6 (wrist injury)"
             }
@@ -9886,6 +9991,13 @@
               "status": "expected",
               "return": "Round 7",
               "comment": "DNP in Round 6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "uncertain",
+              "return": "Round 7",
+              "comment": "DNP in Round 6 (coach's decision). Played in the domestic league (10.18)"
             }
           ]
         }
@@ -10021,6 +10133,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "Missed domestic league game (10.18) due to physical discomfort"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Missed domestic league game (10.18) due to physical discomfort. Not traveling to Milan"
             }
           ]
         }
@@ -10066,6 +10185,13 @@
               "date": "2026-10-19",
               "at": "2026-10-19T10:49+02:00",
               "status": "expected",
+              "return": "Round 7",
+              "comment": "Dislocated his finger during last domestic league game"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "uncertain",
               "return": "Round 7",
               "comment": "Dislocated his finger during last domestic league game"
             }
@@ -10154,7 +10280,67 @@
       ],
       "name": "Mady Sissoko",
       "club": "Besiktas Istanbul"
+    },
+    "35075": {
+      "episodes": [
+        {
+          "start": "2026-10-21",
+          "end": null,
+          "lastSeen": "2026-10-21",
+          "updates": [
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Muscle injury"
+            }
+          ]
+        }
+      ],
+      "name": "Chris Duarte",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "21589": {
+      "episodes": [
+        {
+          "start": "2026-10-21",
+          "end": null,
+          "lastSeen": "2026-10-21",
+          "updates": [
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Head injury"
+            }
+          ]
+        }
+      ],
+      "name": "Kobi Simmons",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "22745": {
+      "episodes": [
+        {
+          "start": "2026-10-21",
+          "end": null,
+          "lastSeen": "2026-10-21",
+          "updates": [
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T16:03+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Virus"
+            }
+          ]
+        }
+      ],
+      "name": "Eleftherios Mantzoukas",
+      "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-10-21T08:53:01"
+  "updatedAt": "2026-10-21T16:03:18"
 }
