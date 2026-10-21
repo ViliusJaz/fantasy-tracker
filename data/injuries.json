@@ -10134,7 +10134,27 @@
       ],
       "name": "Evan Fournier",
       "club": "Olympiacos Piraeus"
+    },
+    "39046": {
+      "episodes": [
+        {
+          "start": "2026-10-21",
+          "end": null,
+          "lastSeen": "2026-10-21",
+          "updates": [
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T08:53+02:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Began individual strength training after an injury"
+            }
+          ]
+        }
+      ],
+      "name": "Mady Sissoko",
+      "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-21T01:54:54"
+  "updatedAt": "2026-10-21T08:53:01"
 }
