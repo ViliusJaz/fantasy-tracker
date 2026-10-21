@@ -2189,6 +2189,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 5-6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T17:48+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Not included in 12-man roster after DNP in Rounds 5-6 (coach's decision)."
             }
           ]
         }
@@ -2427,6 +2434,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (knee injury). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T17:48+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Not included in 12-man roster (coach's decision) after DNP in Rounds 1-6 (knee injury). Played in the domestic league (10.18)"
             }
           ]
         }
@@ -4735,6 +4749,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "Ankle injury suffered in Round 1"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T17:48+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Ankle injury suffered in Round 1"
             }
           ]
         }
@@ -6733,6 +6754,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T17:48+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-6 (coach's decision)."
             }
           ]
         }
@@ -6837,6 +6865,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Round 6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T17:48+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Not included in 12-man roster after DNP in Round 6 (coach's decision)."
             }
           ]
         }
@@ -9172,6 +9207,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 5-6 (illness). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T17:48+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -9666,6 +9708,20 @@
               "comment": "DNP in Round 5 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-10-21",
+          "end": null,
+          "lastSeen": "2026-10-21",
+          "updates": [
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T17:48+02:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Not included in 12-man roster (coach's decision)."
+            }
+          ]
         }
       ],
       "name": "Francesco Ferrari",
@@ -9767,6 +9823,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Round 6 (new signing). DNP in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T17:48+02:00",
+              "status": "game-time",
+              "return": "Round 7",
+              "comment": "Has been registered to EuroLeague's roster after a DNP in Round 6 (new signing)"
             }
           ]
         }
@@ -9968,7 +10031,7 @@
       "episodes": [
         {
           "start": "2026-10-16",
-          "end": null,
+          "end": "2026-10-21",
           "lastSeen": "2026-10-21",
           "updates": [
             {
@@ -9998,6 +10061,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Round 6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-21",
+              "at": "2026-10-21T17:48+02:00",
+              "status": "ready",
+              "return": "Round 7",
+              "comment": "Included in 12-man roster after DNP in Round 6 (coach's decision)."
             }
           ]
         }
@@ -10342,5 +10412,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-10-21T16:03:18"
+  "updatedAt": "2026-10-21T17:48:49"
 }
