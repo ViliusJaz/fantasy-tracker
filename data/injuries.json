@@ -2196,6 +2196,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Not included in 12-man roster after DNP in Rounds 5-6 (coach's decision)."
+            },
+            {
+              "date": "2026-10-22",
+              "at": "2026-10-22T18:52+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 5-7 (coach's decision)."
             }
           ]
         }
@@ -2441,6 +2448,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Not included in 12-man roster (coach's decision) after DNP in Rounds 1-6 (knee injury). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-22",
+              "at": "2026-10-22T18:52+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 after returning from a knee injury (coach's decision)"
             }
           ]
         }
@@ -6768,6 +6782,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Not included in 12-man roster after DNP in Rounds 1-6 (coach's decision)."
+            },
+            {
+              "date": "2026-10-22",
+              "at": "2026-10-22T18:52+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -6879,6 +6900,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Not included in 12-man roster after DNP in Round 6 (coach's decision)."
+            },
+            {
+              "date": "2026-10-22",
+              "at": "2026-10-22T18:52+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 6-7 (coach's decision)"
             }
           ]
         }
@@ -9221,6 +9249,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Not included in 12-man roster (coach's decision)"
+            },
+            {
+              "date": "2026-10-22",
+              "at": "2026-10-22T18:52+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (coach's decision)"
             }
           ]
         }
@@ -9727,6 +9762,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Not included in 12-man roster (coach's decision)."
+            },
+            {
+              "date": "2026-10-22",
+              "at": "2026-10-22T18:52+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (coach's decision)"
             }
           ]
         }
@@ -9837,6 +9879,13 @@
               "status": "game-time",
               "return": "Round 7",
               "comment": "Has been registered to EuroLeague's roster after a DNP in Round 6 (new signing)"
+            },
+            {
+              "date": "2026-10-22",
+              "at": "2026-10-22T18:52+03:00",
+              "status": "expected",
+              "return": "Round 7",
+              "comment": "Listed as available per official injury report (new signing)"
             }
           ]
         }
@@ -10311,6 +10360,13 @@
               "status": "out",
               "return": "Round 7-12",
               "comment": "Expected to miss 6-8 weeks after suffering a partial tear of his quadriceps tendon during a team practice (10.20)"
+            },
+            {
+              "date": "2026-10-22",
+              "at": "2026-10-22T18:52+03:00",
+              "status": "out",
+              "return": "Round 7-14",
+              "comment": "Expected to miss 6-8 weeks after suffering a partial tear of his quadriceps tendon during a team practice (10.20)"
             }
           ]
         }
@@ -10411,6 +10467,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Virus"
+            },
+            {
+              "date": "2026-10-22",
+              "at": "2026-10-22T18:52+03:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Illness"
             }
           ]
         }
@@ -10419,5 +10482,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-10-22T01:21:52"
+  "updatedAt": "2026-10-22T18:52:28"
 }
