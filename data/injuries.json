@@ -368,6 +368,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -1100,6 +1107,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (hamstring injury)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (hamstring injury)"
             }
           ]
         }
@@ -1288,6 +1302,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Expected to return to the court for individual work next week (knee injury)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "Expected to return to the court for individual work next week (knee injury)"
             }
           ]
         }
@@ -1398,6 +1419,20 @@
               "status": "ready",
               "return": "Round 7",
               "comment": "Included in 12-man roster after DNP in Rounds 1-6, but might not enter the court (back injury)"
+            }
+          ]
+        },
+        {
+          "start": "2026-10-23",
+          "end": null,
+          "lastSeen": "2026-10-23",
+          "updates": [
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "Included in 12-man roster in Round 7 after DNP in Rounds 1-6, but might not enter the court (back injury)"
             }
           ]
         }
@@ -1575,6 +1610,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 2-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "game-time",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 2-7 (coach's decision)"
             }
           ]
         }
@@ -1778,6 +1820,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -1810,6 +1859,13 @@
               "at": "2026-10-21T16:03+02:00",
               "status": "out",
               "return": "Round 7",
+              "comment": "Left knee injury"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "out",
+              "return": "Round 8",
               "comment": "Left knee injury"
             }
           ]
@@ -2844,6 +2900,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 2-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 2-7 (coach's decision)"
             }
           ]
         }
@@ -3139,6 +3202,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 4-6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 4-7 (coach's decision). Played in the domestic league (10.18)"
             }
           ]
         }
@@ -3303,6 +3373,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (undisclosed injury)"
             }
           ]
         }
@@ -4244,6 +4321,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Not included in 12-man roster after returning to action in domestic league (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster after returning to action in domestic league (coach's decision)"
             }
           ]
         }
@@ -4347,6 +4431,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Not included in 12-man roster after DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -4840,6 +4931,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Ankle injury suffered in Round 1"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "Ankle injury suffered in Round 1"
             }
           ]
         }
@@ -5003,6 +5101,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision). Played in the domestic league (10.18)"
             }
           ]
         }
@@ -5112,6 +5217,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -6132,6 +6244,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 5-6 (coach's decision). Played in the domestic cup (10.18)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 5-7 (coach's decision). Played in the domestic cup (10.18)"
             }
           ]
         }
@@ -6243,6 +6362,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -6354,6 +6480,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -6783,6 +6916,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision). Played in the domestic league (10.18)"
             }
           ]
         }
@@ -7123,6 +7263,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 2-6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 2-7 (coach's decision). Played in the domestic league (10.18)"
             }
           ]
         }
@@ -7268,6 +7415,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 2-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 2-7 (coach's decision)"
             }
           ]
         }
@@ -7625,6 +7779,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 2-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 2-7 (coach's decision)"
             }
           ]
         }
@@ -8093,6 +8254,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Groin injury"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 8 (Groin injury)"
             }
           ]
         }
@@ -8477,6 +8645,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Didn't practice ahead of Round 7 after DNP in Round 6 (hamstring discomfort)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (hamstring discomfort)"
             }
           ]
         }
@@ -8629,6 +8804,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Coach's decision"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (Coach's decision)"
             }
           ]
         }
@@ -8814,6 +8996,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "DNP in Rounds 4-6 (ankle injury)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 4-7 (ankle injury)"
             }
           ]
         }
@@ -9144,6 +9333,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Coach's decision"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (Coach's decision)"
             }
           ]
         }
@@ -10497,6 +10693,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Missed domestic league game (10.18) due to physical discomfort. Not traveling to Milan"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (Physical discomfort)"
             }
           ]
         }
@@ -10523,6 +10726,13 @@
               "at": "2026-10-20T11:53+02:00",
               "status": "out",
               "return": "Round 7",
+              "comment": "New signing (10.18)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
               "comment": "New signing (10.18)"
             }
           ]
@@ -10672,6 +10882,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Muscle injury"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (Muscle injury)"
             }
           ]
         }
@@ -10692,6 +10909,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Head injury"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (Head injury)"
             }
           ]
         }
@@ -10719,6 +10943,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Illness"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (Illness)"
             }
           ]
         }
@@ -10739,6 +10970,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Undisclosed"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (Undisclosed)"
             }
           ]
         }
@@ -10759,6 +10997,13 @@
               "status": "out",
               "return": "Round 7",
               "comment": "Back discomfort"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T09:56+03:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 Back discomfort"
             }
           ]
         }
@@ -10767,5 +11012,5 @@
       "club": "Dubai Basketball"
     }
   },
-  "updatedAt": "2026-10-23T02:57:20"
+  "updatedAt": "2026-10-23T09:56:21"
 }
