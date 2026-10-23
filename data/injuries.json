@@ -3410,7 +3410,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-23",
           "lastSeen": "2026-10-23",
           "updates": [
             {
@@ -3495,6 +3495,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T19:11+03:00",
+              "status": "ready",
+              "return": "Round 7",
+              "comment": "Included in 12-man roster after DNP in Rounds 1-6 (coach's decision). Played in the domestic league (10.18)"
             }
           ]
         }
@@ -3554,7 +3561,7 @@
         },
         {
           "start": "2026-10-16",
-          "end": null,
+          "end": "2026-10-23",
           "lastSeen": "2026-10-23",
           "updates": [
             {
@@ -3570,6 +3577,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Round 6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T19:11+03:00",
+              "status": "ready",
+              "return": "Round 7",
+              "comment": "Included in 12-man roster after DNP in Round 6 (coach's decision)"
             }
           ]
         }
@@ -3660,6 +3674,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T19:11+03:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-6 (coach's decision)"
             }
           ]
         }
@@ -3795,7 +3816,7 @@
         },
         {
           "start": "2026-10-17",
-          "end": null,
+          "end": "2026-10-23",
           "lastSeen": "2026-10-23",
           "updates": [
             {
@@ -3804,6 +3825,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "Was included in 12-man roster for Round 6, but didn't play after DNP in Rounds 1-5 (coach's decision)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T19:11+03:00",
+              "status": "ready",
+              "return": "Round 7",
+              "comment": "Included in 12-man roster after DNP in Rounds 1-6 (coach's decision)"
             }
           ]
         }
@@ -3914,6 +3942,13 @@
               "status": "uncertain",
               "return": "Round 7",
               "comment": "DNP in Rounds 1-6 (coach's decision). Played in the domestic league (10.18)"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T19:11+03:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-6 (coach's decision). Played in the domestic league (10.18)"
             }
           ]
         }
@@ -8569,6 +8604,13 @@
               "status": "doubtful",
               "return": "Round 7",
               "comment": "Dealing with ankle and knee injuries"
+            },
+            {
+              "date": "2026-10-23",
+              "at": "2026-10-23T19:11+03:00",
+              "status": "out",
+              "return": "Round 7",
+              "comment": "Not included in 12-man roster. Dealing with ankle and knee injuries."
             }
           ]
         }
@@ -11012,5 +11054,5 @@
       "club": "Dubai Basketball"
     }
   },
-  "updatedAt": "2026-10-23T09:56:21"
+  "updatedAt": "2026-10-23T19:11:20"
 }
