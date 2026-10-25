@@ -8821,6 +8821,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "Not included in 12-man roster in Round 7. Dealing with ankle and knee injuries."
+            },
+            {
+              "date": "2026-10-25",
+              "at": "2026-10-25T11:24+02:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster in Round 7, DNP in domestic action. Dealing with ankle and knee injuries"
             }
           ]
         }
@@ -11594,5 +11601,5 @@
       "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-10-25T09:59:07"
+  "updatedAt": "2026-10-25T11:24:41"
 }
