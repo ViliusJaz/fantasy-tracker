@@ -253,6 +253,20 @@
               "comment": "Cleared to play after a DNP in Round 1 (Muscle issue)"
             }
           ]
+        },
+        {
+          "start": "2026-10-25",
+          "end": null,
+          "lastSeen": "2026-10-25",
+          "updates": [
+            {
+              "date": "2026-10-25",
+              "at": "2026-10-25T20:19+02:00",
+              "status": "uncertain",
+              "return": "Round 8",
+              "comment": "Missed domestic league game (10.25) due to tendon discomfort"
+            }
+          ]
         }
       ],
       "name": "Garrison Mathews",
@@ -5898,6 +5912,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "Not included in 12-man roster in Round 7 after DNP in Rounds 1-6 (coach's decision)"
+            },
+            {
+              "date": "2026-10-25",
+              "at": "2026-10-25T20:19+02:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster in Round 7 after DNP in Rounds 1-6 (coach's decision)"
             }
           ]
         }
@@ -6061,6 +6082,13 @@
               "date": "2026-10-24",
               "at": "2026-10-24T19:38+03:00",
               "status": "uncertain",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster in Round 7 (coach's decision)"
+            },
+            {
+              "date": "2026-10-25",
+              "at": "2026-10-25T20:19+02:00",
+              "status": "doubtful",
               "return": "Round 8",
               "comment": "Not included in 12-man roster in Round 7 (coach's decision)"
             }
@@ -8759,6 +8787,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "Left Round 7 game with injury"
+            },
+            {
+              "date": "2026-10-25",
+              "at": "2026-10-25T20:19+02:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Suffered a right thigh muscle injury in Round 7 (out indefinitely)"
             }
           ]
         }
@@ -11519,6 +11554,13 @@
               "status": "expected",
               "return": "Round 8",
               "comment": "New signing (10.23)"
+            },
+            {
+              "date": "2026-10-25",
+              "at": "2026-10-25T20:19+02:00",
+              "status": "expected",
+              "return": "Round 8",
+              "comment": "New signing . Palyed in the domestic league (10.25)"
             }
           ]
         }
@@ -11599,7 +11641,27 @@
       ],
       "name": "Antonio Reeves",
       "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "36114": {
+      "episodes": [
+        {
+          "start": "2026-10-25",
+          "end": null,
+          "lastSeen": "2026-10-25",
+          "updates": [
+            {
+              "date": "2026-10-25",
+              "at": "2026-10-25T20:19+02:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Suffered foot bone injury ahead of domestic league game (10.25), out indefinitely"
+            }
+          ]
+        }
+      ],
+      "name": "Nate Reuvers",
+      "club": "Valencia Basket"
     }
   },
-  "updatedAt": "2026-10-25T11:24:41"
+  "updatedAt": "2026-10-25T20:19:39"
 }
