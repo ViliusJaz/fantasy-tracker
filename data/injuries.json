@@ -6257,6 +6257,13 @@
               "status": "out",
               "return": "Round 7-14",
               "comment": "Aggravated previous hamstring injury in Round 6. Set to miss about 4 weeks."
+            },
+            {
+              "date": "2026-10-26",
+              "at": "2026-10-26T17:26+01:00",
+              "status": "out",
+              "return": "Round 7-14",
+              "comment": "Aggravated previous hamstring injury in Round 6. Set to miss about 4 weeks. Will undergo further testing."
             }
           ]
         }
@@ -11907,5 +11914,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-26T15:53:53"
+  "updatedAt": "2026-10-26T17:26:14"
 }
