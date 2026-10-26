@@ -9072,6 +9072,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "DNP in Round 7 and in domestic league (hamstring discomfort)."
+            },
+            {
+              "date": "2026-10-26",
+              "at": "2026-10-26T15:53+01:00",
+              "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 and in domestic league (hamstring discomfort)."
             }
           ]
         }
@@ -11580,6 +11587,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "DNP in Round 7 and in domestic league (Illness)"
+            },
+            {
+              "date": "2026-10-26",
+              "at": "2026-10-26T15:53+01:00",
+              "status": "expected",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 and in domestic league (Illness), participated in team's practice on Monday"
             }
           ]
         }
@@ -11893,5 +11907,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-26T10:18:52"
+  "updatedAt": "2026-10-26T15:53:53"
 }
