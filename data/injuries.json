@@ -5462,6 +5462,20 @@
               "comment": "Cleared to play, included in 12-man roster"
             }
           ]
+        },
+        {
+          "start": "2026-10-26",
+          "end": null,
+          "lastSeen": "2026-10-26",
+          "updates": [
+            {
+              "date": "2026-10-26",
+              "at": "2026-10-26T20:08+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Felt discomfort in the sole of his right foot in domestic league game (10.25)"
+            }
+          ]
         }
       ],
       "name": "Nick Smith Jr.",
@@ -11175,6 +11189,20 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-10-26",
+          "end": null,
+          "lastSeen": "2026-10-26",
+          "updates": [
+            {
+              "date": "2026-10-26",
+              "at": "2026-10-26T20:08+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Didn't fly with the team to Munich (illness)"
+            }
+          ]
         }
       ],
       "name": "Joel Parra",
@@ -11914,5 +11942,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-10-26T17:26:14"
+  "updatedAt": "2026-10-26T20:08:46"
 }
