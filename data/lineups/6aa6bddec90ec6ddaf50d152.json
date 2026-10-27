@@ -4692,7 +4692,7 @@
       }
     },
     "7": {
-      "savedAt": "2026-10-27T11:11:43",
+      "savedAt": "2026-10-27T14:08:32",
       "locked": false,
       "teams": {
         "6aafacbe45370a6f96893b34": {
@@ -4848,7 +4848,7 @@
               "captain": false
             },
             {
-              "id": "66e6e42e4589cab32aef6846",
+              "id": "6adb4ba4f0ec0d66ceaac1f2",
               "card": "i-2",
               "slot": "inactive",
               "captain": false
@@ -5002,7 +5002,7 @@
               "captain": false
             },
             {
-              "id": "66e6e4304589cab32aef6a28",
+              "id": "6a8c4950491e10f37dfb69ba",
               "card": "b-5",
               "slot": "bench",
               "captain": false
@@ -5168,7 +5168,7 @@
               "captain": false
             },
             {
-              "id": "68c40846a07be49331fea440",
+              "id": "651306f598a6be433053227d",
               "card": "b-5",
               "slot": "bench",
               "captain": false
@@ -5245,7 +5245,7 @@
               "captain": false
             },
             {
-              "id": "6a8c494d491e10f37dfb6482",
+              "id": "6a8c494f491e10f37dfb6847",
               "card": "b-4",
               "slot": "bench",
               "captain": false
@@ -5340,19 +5340,19 @@
               "captain": false
             },
             {
-              "id": "66e6e4304589cab32aef69d5",
+              "id": "66e6e4314589cab32aef6b60",
               "card": "i-1",
               "slot": "inactive",
               "captain": false
             },
             {
-              "id": "66e6e4304589cab32aef6a80",
+              "id": "68c28d3960b106fdd18d3907",
               "card": "i-2",
               "slot": "inactive",
               "captain": false
             },
             {
-              "id": "68c40847a07be49331fea455",
+              "id": "670bcf343a598d8e5637d06a",
               "card": "i-3",
               "slot": "inactive",
               "captain": false
