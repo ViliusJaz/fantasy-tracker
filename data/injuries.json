@@ -11783,7 +11783,7 @@
       "episodes": [
         {
           "start": "2026-10-23",
-          "end": null,
+          "end": "2026-10-27",
           "lastSeen": "2026-10-27",
           "updates": [
             {
@@ -11820,6 +11820,13 @@
               "status": "expected",
               "return": "Round 8",
               "comment": "New signing . Played in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T11:11+01:00",
+              "status": "ready",
+              "return": "Round 8",
+              "comment": "New signing. Played in the domestic league (10.25), travels with team to Bologna"
             }
           ]
         }
@@ -11947,7 +11954,27 @@
       ],
       "name": "Rodions Kurucs",
       "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "21642": {
+      "episodes": [
+        {
+          "start": "2026-10-27",
+          "end": null,
+          "lastSeen": "2026-10-27",
+          "updates": [
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T11:11+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Left knee contusion"
+            }
+          ]
+        }
+      ],
+      "name": "Alec Peters",
+      "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-10-27T03:21:18"
+  "updatedAt": "2026-10-27T11:11:43"
 }
