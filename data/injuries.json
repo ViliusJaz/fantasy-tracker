@@ -3870,6 +3870,20 @@
               "comment": "Played in domestic league on Sunday after DNP in Round 2-3 (tendinitis)"
             }
           ]
+        },
+        {
+          "start": "2026-10-27",
+          "end": null,
+          "lastSeen": "2026-10-27",
+          "updates": [
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T15:54+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Toe injury"
+            }
+          ]
         }
       ],
       "name": "Nikola Milutinov",
@@ -9101,6 +9115,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "Not included in 12-man roster in Round 7, DNP in domestic league. Dealing with ankle and knee injuries"
+            },
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T15:54+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster in Round 7, DNP in domestic league. Dealing with ankle and knee injuries"
             }
           ]
         }
@@ -12185,5 +12206,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-10-27T14:08:32"
+  "updatedAt": "2026-10-27T15:54:15"
 }

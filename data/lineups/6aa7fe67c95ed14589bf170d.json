@@ -4692,7 +4692,7 @@
       }
     },
     "7": {
-      "savedAt": "2026-10-27T14:08:32",
+      "savedAt": "2026-10-27T15:54:15",
       "locked": false,
       "teams": {
         "6aa834559ce5c03ca196e0da": {
@@ -4978,7 +4978,7 @@
               "captain": false
             },
             {
-              "id": "6a8c494f491e10f37dfb68bf",
+              "id": "66e6e42e4589cab32aef68a1",
               "card": "b-1",
               "slot": "bench",
               "captain": false
@@ -4990,7 +4990,7 @@
               "captain": false
             },
             {
-              "id": "66e6e4314589cab32aef6a9d",
+              "id": "6a8c494f491e10f37dfb68bf",
               "card": "b-3",
               "slot": "bench",
               "captain": false
@@ -5020,7 +5020,7 @@
               "captain": false
             },
             {
-              "id": "66e6e42e4589cab32aef68a1",
+              "id": "66e6e4314589cab32aef6a9d",
               "card": "i-3",
               "slot": "inactive",
               "captain": false
@@ -5049,7 +5049,7 @@
               "captain": false
             },
             {
-              "id": "6a8c494e491e10f37dfb6677",
+              "id": "6513070c98a6be433053457e",
               "card": "g-1",
               "slot": "starter",
               "captain": false
@@ -5061,13 +5061,13 @@
               "captain": false
             },
             {
-              "id": "670bcf343a598d8e5637d06a",
+              "id": "66e6e4314589cab32aef6b7e",
               "card": "b-1",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "66e6e4314589cab32aef6b7e",
+              "id": "670bcf343a598d8e5637d06a",
               "card": "b-2",
               "slot": "bench",
               "captain": false
@@ -5079,7 +5079,7 @@
               "captain": false
             },
             {
-              "id": "6513070c98a6be433053457e",
+              "id": "6a8c494e491e10f37dfb6677",
               "card": "b-4",
               "slot": "bench",
               "captain": false
