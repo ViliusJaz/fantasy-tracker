@@ -1280,7 +1280,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-27",
           "lastSeen": "2026-10-27",
           "updates": [
             {
@@ -1349,6 +1349,13 @@
               "date": "2026-10-25",
               "at": "2026-10-25T09:59+02:00",
               "status": "expected",
+              "return": "Round 8",
+              "comment": "Expected to return to the court (knee injury). Played in the domestic league (10.24)"
+            },
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T16:40+01:00",
+              "status": "ready",
               "return": "Round 8",
               "comment": "Expected to return to the court (knee injury). Played in the domestic league (10.24)"
             }
@@ -1480,6 +1487,13 @@
               "date": "2026-10-27",
               "at": "2026-10-27T14:08+01:00",
               "status": "expected",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (back injury)"
+            },
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T16:40+01:00",
+              "status": "out",
               "return": "Round 8",
               "comment": "DNP in Rounds 1-7 (back injury)"
             }
@@ -4920,6 +4934,13 @@
               "date": "2026-10-27",
               "at": "2026-10-27T12:30+01:00",
               "status": "game-time",
+              "return": "Round 8",
+              "comment": "Traveled with the squad for Round 8 after DNP in Rounds 5-7 and in the domestic league on Sunday (muscle pain)"
+            },
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T16:40+01:00",
+              "status": "out",
               "return": "Round 8",
               "comment": "Traveled with the squad for Round 8 after DNP in Rounds 5-7 and in the domestic league on Sunday (muscle pain)"
             }
@@ -10755,7 +10776,7 @@
       "episodes": [
         {
           "start": "2026-10-14",
-          "end": null,
+          "end": "2026-10-27",
           "lastSeen": "2026-10-27",
           "updates": [
             {
@@ -10825,6 +10846,13 @@
               "date": "2026-10-27",
               "at": "2026-10-27T12:30+01:00",
               "status": "game-time",
+              "return": "Round 8",
+              "comment": "Traveled with the squad for Round 8 after DNP in Rounds 5-7 and in the domestic league on Sunday (ankle injury)"
+            },
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T16:40+01:00",
+              "status": "ready",
               "return": "Round 8",
               "comment": "Traveled with the squad for Round 8 after DNP in Rounds 5-7 and in the domestic league on Sunday (ankle injury)"
             }
@@ -11273,6 +11301,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "Not included in 12-man roster in Round 7 after DNP in Round 6 (undisclosed). DNP in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T16:40+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster in Round 7 after DNP in Round 6 (undisclosed). DNP in the domestic league (10.25)"
             }
           ]
         }
@@ -11321,6 +11356,20 @@
               "status": "ready",
               "return": "Round 7",
               "comment": "Included in 12-man roster after DNP in Round 6 (coach's decision)."
+            }
+          ]
+        },
+        {
+          "start": "2026-10-27",
+          "end": null,
+          "lastSeen": "2026-10-27",
+          "updates": [
+            {
+              "date": "2026-10-27",
+              "at": "2026-10-27T16:40+01:00",
+              "status": "questionable",
+              "return": "Round 8",
+              "comment": "Contusion his leg in the domestic game"
             }
           ]
         }
@@ -12206,5 +12255,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-10-27T15:54:15"
+  "updatedAt": "2026-10-27T16:40:39"
 }
