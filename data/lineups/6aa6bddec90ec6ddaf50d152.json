@@ -4692,7 +4692,7 @@
       }
     },
     "7": {
-      "savedAt": "2026-10-27T15:54:15",
+      "savedAt": "2026-10-27T16:09:48",
       "locked": false,
       "teams": {
         "6aafacbe45370a6f96893b34": {
@@ -5046,7 +5046,7 @@
               "id": "66e342c6381ef3226370269d",
               "card": "g-1",
               "slot": "starter",
-              "captain": true
+              "captain": false
             },
             {
               "id": "66e6e4304589cab32aef6a2d",
@@ -5058,7 +5058,7 @@
               "id": "66e6e4324589cab32aef6b92",
               "card": "g-3",
               "slot": "starter",
-              "captain": false
+              "captain": true
             },
             {
               "id": "68c4080aa07be49331fea077",
