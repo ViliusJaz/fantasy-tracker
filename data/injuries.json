@@ -3782,6 +3782,13 @@
               "status": "expected",
               "return": "Round 8",
               "comment": "Played in Round 7 after DNP in Rounds 1-6 (coach's decision). Played in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:00+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -3869,7 +3876,7 @@
         },
         {
           "start": "2026-10-24",
-          "end": null,
+          "end": "2026-10-28",
           "lastSeen": "2026-10-28",
           "updates": [
             {
@@ -3885,6 +3892,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "Included in 12-man roster in Round 7. DNP in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:00+01:00",
+              "status": "ready",
+              "return": "Round 8",
+              "comment": "Included in 12-man roster"
             }
           ]
         }
@@ -3896,7 +3910,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-10-28",
           "lastSeen": "2026-10-28",
           "updates": [
             {
@@ -4003,6 +4017,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "DNP in Rounds 1-7 (coach's decision). Played in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:00+01:00",
+              "status": "ready",
+              "return": "Round 8",
+              "comment": "Included in 12-man roster after DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -4306,6 +4327,13 @@
               "status": "doubtful",
               "return": "Round 8",
               "comment": "DNP in Rounds 1-7 (coach's decision). Played in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:00+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -12708,6 +12736,13 @@
               "status": "game-time",
               "return": "Round 8",
               "comment": "Traveled with the team for Round 8 (new signing)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:00+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster (new signing)"
             }
           ]
         }
@@ -12932,5 +12967,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-28T11:24:31"
+  "updatedAt": "2026-10-28T18:00:27"
 }
