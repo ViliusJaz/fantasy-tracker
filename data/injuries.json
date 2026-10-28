@@ -6344,7 +6344,7 @@
         },
         {
           "start": "2026-10-11",
-          "end": null,
+          "end": "2026-10-28",
           "lastSeen": "2026-10-28",
           "updates": [
             {
@@ -6407,6 +6407,13 @@
               "date": "2026-10-27",
               "at": "2026-10-27T14:08+01:00",
               "status": "expected",
+              "return": "Round 8",
+              "comment": "Traveled with the team to Italy after DNP in Rounds 1-7 (coach's decision)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T19:33+01:00",
+              "status": "ready",
               "return": "Round 8",
               "comment": "Traveled with the team to Italy after DNP in Rounds 1-7 (coach's decision)"
             }
@@ -13037,5 +13044,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-28T18:31:22"
+  "updatedAt": "2026-10-28T19:33:16"
 }
