@@ -217,7 +217,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-28",
           "lastSeen": "2026-10-28",
           "updates": [
             {
@@ -232,6 +232,13 @@
               "status": "game-time",
               "return": "Round 8",
               "comment": "Left knee ACL injury recovery"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:31+01:00",
+              "status": "ready",
+              "return": "Round 8",
+              "comment": "Included in 12-man roster for Round 8 (left knee ACL injury recovery)"
             }
           ]
         }
@@ -2340,6 +2347,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "Out of the squad but expected to return to action this week"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:31+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Out of the squad but expected to return to action this week"
             }
           ]
         }
@@ -2432,7 +2446,7 @@
         },
         {
           "start": "2026-10-14",
-          "end": null,
+          "end": "2026-10-28",
           "lastSeen": "2026-10-28",
           "updates": [
             {
@@ -2488,6 +2502,13 @@
               "date": "2026-10-26",
               "at": "2026-10-26T10:18+02:00",
               "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 5-7 (coach's decision). Played in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:31+01:00",
+              "status": "ready",
               "return": "Round 8",
               "comment": "DNP in Rounds 5-7 (coach's decision). Played in the domestic league (10.25)"
             }
@@ -2747,6 +2768,13 @@
               "date": "2026-10-26",
               "at": "2026-10-26T10:18+02:00",
               "status": "uncertain",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 after returning from a knee injury (coach's decision). Played in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:31+01:00",
+              "status": "out",
               "return": "Round 8",
               "comment": "DNP in Round 7 after returning from a knee injury (coach's decision). Played in the domestic league (10.25)"
             }
@@ -7076,6 +7104,13 @@
               "status": "doubtful",
               "return": "Round 8",
               "comment": "DNP in Rounds 1-7 (coach's decision)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:31+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -7192,6 +7227,13 @@
               "date": "2026-10-23",
               "at": "2026-10-23T09:56+03:00",
               "status": "doubtful",
+              "return": "Round 8",
+              "comment": "DNP in Rounds 1-7 (coach's decision)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:31+01:00",
+              "status": "out",
               "return": "Round 8",
               "comment": "DNP in Rounds 1-7 (coach's decision)"
             }
@@ -10761,6 +10803,13 @@
               "status": "uncertain",
               "return": "Round 8",
               "comment": "DNP in Round 7 (coach's decision). Played in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:31+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "DNP in Round 7 (coach's decision). Played in the domestic league (10.25)"
             }
           ]
         }
@@ -12988,5 +13037,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-28T18:15:54"
+  "updatedAt": "2026-10-28T18:31:22"
 }
