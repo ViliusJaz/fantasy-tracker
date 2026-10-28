@@ -297,7 +297,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-10-28",
           "lastSeen": "2026-10-28",
           "updates": [
             {
@@ -410,6 +410,13 @@
               "status": "doubtful",
               "return": "Round 8",
               "comment": "DNP in Rounds 1-7 (coach's decision)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:15+01:00",
+              "status": "ready",
+              "return": "Round 8",
+              "comment": "Included in 12-man roster after DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -11545,6 +11552,13 @@
               "status": "game-time",
               "return": "Round 8",
               "comment": "Played in Round 7. Left domestic game limping in 4th quarter. (10.24)"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:15+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster (leg injury)"
             }
           ]
         }
@@ -12959,6 +12973,13 @@
               "status": "game-time",
               "return": "Round 8",
               "comment": "Undisclosed"
+            },
+            {
+              "date": "2026-10-28",
+              "at": "2026-10-28T18:15+01:00",
+              "status": "out",
+              "return": "Round 8",
+              "comment": "Not included in 12-man roster (undisclosed)"
             }
           ]
         }
@@ -12967,5 +12988,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-10-28T18:00:27"
+  "updatedAt": "2026-10-28T18:15:54"
 }
