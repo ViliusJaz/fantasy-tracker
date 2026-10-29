@@ -13384,6 +13384,13 @@
               "status": "questionable",
               "return": "Round 9",
               "comment": "\"Wanted to play after felt a tweak, but we chose to take him out\" said coach Xavi Albert after Round 8 game"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T12:55+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Muscle injury"
             }
           ]
         }
@@ -13439,5 +13446,5 @@
       "club": "Paris Basketball"
     }
   },
-  "updatedAt": "2026-10-29T10:24:08"
+  "updatedAt": "2026-10-29T12:55:13"
 }
