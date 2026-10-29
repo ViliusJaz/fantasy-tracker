@@ -2077,6 +2077,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "Left knee injury"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T16:05+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Left knee injury"
             }
           ]
         }
@@ -4181,6 +4188,13 @@
               "date": "2026-10-29",
               "at": "2026-10-29T07:05+01:00",
               "status": "uncertain",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster in Round 8 (toe injury)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T16:05+01:00",
+              "status": "expected",
               "return": "Round 9",
               "comment": "Not included in 12-man roster in Round 8 (toe injury)"
             }
@@ -9794,6 +9808,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "Not included in 12-man roster in Round 8 (ankle and knee injuries)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T16:05+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster in Round 8 (ankle and knee injuries)"
             }
           ]
         }
@@ -12244,6 +12265,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 8 (illness)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T16:05+01:00",
+              "status": "expected",
+              "return": "Round 9",
+              "comment": "DNP in Round 8 (illness)"
             }
           ]
         }
@@ -13093,6 +13121,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "Not included in 12-man roster in Round 8 (new signing)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T16:05+01:00",
+              "status": "expected",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster in Round 8 (new signing)"
             }
           ]
         }
@@ -13451,7 +13486,47 @@
       ],
       "name": "Daulton Hommes",
       "club": "Paris Basketball"
+    },
+    "39185": {
+      "episodes": [
+        {
+          "start": "2026-10-29",
+          "end": null,
+          "lastSeen": "2026-10-29",
+          "updates": [
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T16:05+01:00",
+              "status": "doubtful",
+              "return": "Round 9",
+              "comment": "Suffered hard hit to his knee in Round 8"
+            }
+          ]
+        }
+      ],
+      "name": "Umoja Gibson",
+      "club": "FC Barcelona"
+    },
+    "35178": {
+      "episodes": [
+        {
+          "start": "2026-10-29",
+          "end": null,
+          "lastSeen": "2026-10-29",
+          "updates": [
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T16:05+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Right ankle sprain, expected to miss around 10 days (10.29)"
+            }
+          ]
+        }
+      ],
+      "name": "Juan Nunez",
+      "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-29T13:10:39"
+  "updatedAt": "2026-10-29T16:05:14"
 }
