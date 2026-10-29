@@ -6509,6 +6509,20 @@
               "comment": "Traveled with the team to Italy after DNP in Rounds 1-7 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-10-29",
+          "end": null,
+          "lastSeen": "2026-10-29",
+          "updates": [
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T09:07+01:00",
+              "status": "uncertain",
+              "return": "Round 9",
+              "comment": "Played in Round 8 after DNP in Rounds 1-7 (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Kaodirichi Akobundu-Ehiogu",
@@ -13355,7 +13369,27 @@
       ],
       "name": "Nikola Mirotic",
       "club": "Valencia Basket"
+    },
+    "14049": {
+      "episodes": [
+        {
+          "start": "2026-10-29",
+          "end": null,
+          "lastSeen": "2026-10-29",
+          "updates": [
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T09:07+01:00",
+              "status": "uncertain",
+              "return": "Round 9",
+              "comment": "DNP in Round 8 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Vasilije Micic",
+      "club": "Hapoel IBI Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-29T07:05:44"
+  "updatedAt": "2026-10-29T09:07:58"
 }
