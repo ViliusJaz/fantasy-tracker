@@ -7648,6 +7648,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Rounds 1-8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T20:32+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "DNP in Rounds 1-8 (coach's decision)"
             }
           ]
         }
@@ -7833,6 +7840,13 @@
               "date": "2026-10-28",
               "at": "2026-10-28T11:24+01:00",
               "status": "uncertain",
+              "return": "Round 9",
+              "comment": "DNP in Rounds 1-8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T20:32+01:00",
+              "status": "out",
               "return": "Round 9",
               "comment": "DNP in Rounds 1-8 (coach's decision)"
             }
@@ -13131,6 +13145,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Rounds 7-8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T20:32+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "DNP in Rounds 7-8 (coach's decision)"
             }
           ]
         }
@@ -13724,5 +13745,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-29T19:49:52"
+  "updatedAt": "2026-10-29T20:32:24"
 }
