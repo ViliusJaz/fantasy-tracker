@@ -12730,6 +12730,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Rounds 7-8 (muscle injury)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T17:54+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "DNP in Rounds 7-8 (muscle injury)"
             }
           ]
         }
@@ -13312,6 +13319,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 8 (left knee contusion)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T17:54+01:00",
+              "status": "game-time",
+              "return": "Round 9",
+              "comment": "DNP in Round 8 (left knee contusion)"
             }
           ]
         }
@@ -13481,6 +13495,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 8 (ankle discomfort)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T17:54+01:00",
+              "status": "expected",
+              "return": "Round 9",
+              "comment": "DNP in Round 8 (ankle discomfort)"
             }
           ]
         }
@@ -13549,5 +13570,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-29T17:06:59"
+  "updatedAt": "2026-10-29T17:54:47"
 }
