@@ -5727,6 +5727,20 @@
               "comment": "Cleared to play, included in 12-man roster (minor undisclosed injury)"
             }
           ]
+        },
+        {
+          "start": "2026-10-29",
+          "end": null,
+          "lastSeen": "2026-10-29",
+          "updates": [
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T23:50+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "Injured in Round 9"
+            }
+          ]
         }
       ],
       "name": "Mikael Jantunen",
@@ -10752,6 +10766,20 @@
               "comment": "Played in the domestic league (10.11) after DNP in Round 4"
             }
           ]
+        },
+        {
+          "start": "2026-10-29",
+          "end": null,
+          "lastSeen": "2026-10-29",
+          "updates": [
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T23:50+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Jared Rhoden",
@@ -13773,5 +13801,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-29T20:57:08"
+  "updatedAt": "2026-10-29T23:50:19"
 }
