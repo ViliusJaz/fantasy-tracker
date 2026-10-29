@@ -13391,6 +13391,13 @@
               "status": "out",
               "return": "Round 9",
               "comment": "Muscle injury"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T13:10+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Muscle injury (10.29)"
             }
           ]
         }
@@ -13446,5 +13453,5 @@
       "club": "Paris Basketball"
     }
   },
-  "updatedAt": "2026-10-29T12:55:13"
+  "updatedAt": "2026-10-29T13:10:39"
 }
