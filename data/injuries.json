@@ -3431,7 +3431,7 @@
         },
         {
           "start": "2026-10-08",
-          "end": null,
+          "end": "2026-10-29",
           "lastSeen": "2026-10-29",
           "updates": [
             {
@@ -3517,6 +3517,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Rounds 4-8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T19:14+01:00",
+              "status": "ready",
+              "return": "Round 9",
+              "comment": "Included in 12-man roster for after DNP in Rounds 4-8 (coach's decision)"
             }
           ]
         }
@@ -3702,6 +3709,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Rounds 1-8 (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T19:14+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Out for Round 9 after DNP in Rounds 1-8 (undisclosed injury)"
             }
           ]
         }
@@ -13570,5 +13584,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-29T17:54:47"
+  "updatedAt": "2026-10-29T19:14:07"
 }
