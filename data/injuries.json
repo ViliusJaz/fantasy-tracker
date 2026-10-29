@@ -5950,6 +5950,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 8 (right foot sole discomfort)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T10:24+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Right foot sole discomfort"
             }
           ]
         }
@@ -9009,6 +9016,20 @@
               "status": "ready",
               "return": "Round 6",
               "comment": "DNP in Round 5 (coach's decision)"
+            }
+          ]
+        },
+        {
+          "start": "2026-10-29",
+          "end": null,
+          "lastSeen": "2026-10-29",
+          "updates": [
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T10:24+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Personal"
             }
           ]
         }
@@ -13383,13 +13404,40 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 8 (undisclosed)"
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T10:24+01:00",
+              "status": "uncertain",
+              "return": "Round 9",
+              "comment": "DNP in Round 8 (ankle discomfort)"
             }
           ]
         }
       ],
       "name": "Vasilije Micic",
       "club": "Hapoel IBI Tel Aviv"
+    },
+    "35500": {
+      "episodes": [
+        {
+          "start": "2026-10-29",
+          "end": null,
+          "lastSeen": "2026-10-29",
+          "updates": [
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T10:24+01:00",
+              "status": "uncertain",
+              "return": "Round 9",
+              "comment": "Left Round 8 with a concussion"
+            }
+          ]
+        }
+      ],
+      "name": "Daulton Hommes",
+      "club": "Paris Basketball"
     }
   },
-  "updatedAt": "2026-10-29T09:07:58"
+  "updatedAt": "2026-10-29T10:24:08"
 }
