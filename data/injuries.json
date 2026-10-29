@@ -4897,6 +4897,20 @@
               "comment": "Not included in 12-man roster in Round 7 (coach's decision). Played in the domestic league (10.18-10.24)"
             }
           ]
+        },
+        {
+          "start": "2026-10-29",
+          "end": null,
+          "lastSeen": "2026-10-29",
+          "updates": [
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T17:06+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Precaution"
+            }
+          ]
         }
       ],
       "name": "Kostas Sloukas",
@@ -9926,6 +9940,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 7-8 (hamstring discomfort)."
+            },
+            {
+              "date": "2026-10-29",
+              "at": "2026-10-29T17:06+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "DNP in Round 7-8 (hamstring discomfort)."
             }
           ]
         }
@@ -13528,5 +13549,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-29T16:05:14"
+  "updatedAt": "2026-10-29T17:06:59"
 }
