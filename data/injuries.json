@@ -12891,7 +12891,7 @@
         },
         {
           "start": "2026-10-27",
-          "end": null,
+          "end": "2026-10-30",
           "lastSeen": "2026-10-30",
           "updates": [
             {
@@ -12914,6 +12914,13 @@
               "status": "game-time",
               "return": "Round 9",
               "comment": "Traveled with the team for Round 9 after DNP in Round 8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T17:40+01:00",
+              "status": "ready",
+              "return": "Round 9",
+              "comment": "Included in 12-man roster after DNP in Round 8 (coach's decision)"
             }
           ]
         }
@@ -13400,6 +13407,13 @@
               "status": "game-time",
               "return": "Round 9",
               "comment": "Traveled with the team for Round 9 after DNP in Rounds 7-8 (illness)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T17:40+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -14213,5 +14227,5 @@
       "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-10-30T16:38:30"
+  "updatedAt": "2026-10-30T17:40:25"
 }
