@@ -5201,6 +5201,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Rounds 1-8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Didn't travel for Round 9 after DNP in Rounds 1-8 (coach's decision)"
             }
           ]
         }
@@ -5851,6 +5858,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Injured in Round 9"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Out indefinitely after a complete rupture of the plantar fascia in left foot (10.30)"
             }
           ]
         }
@@ -10214,6 +10228,13 @@
               "status": "out",
               "return": "Round 9",
               "comment": "Not included in 12-man roster in Round 8 (ankle and knee injuries)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Out indefinitely with knee injury, could miss at least 4 weeks if arthroscopy is required (10.30)"
             }
           ]
         }
@@ -11848,6 +11869,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Didn't travel for Round 9 after DNP in Round 8 (coach's decision)"
             }
           ]
         }
@@ -12357,6 +12385,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "Not included in 12-man roster in Round 8 (leg injury)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "expected",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster in Round 8 (leg injury)"
             }
           ]
         }
@@ -12844,6 +12879,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "game-time",
+              "return": "Round 9",
+              "comment": "Traveled with the team for Round 9 after DNP in Round 8 (coach's decision)"
             }
           ]
         }
@@ -13043,6 +13085,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "Not included in 12-man roster in Round 8 (undisclosed)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Won't play in Round 9 after DNP in Round 8 (undisclosed)"
             }
           ]
         }
@@ -13316,6 +13365,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Rounds 7-8 and in domestic league (Illness), participated in team's practice on Monday"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "game-time",
+              "return": "Round 9",
+              "comment": "Traveled with the team for Round 9 after DNP in Rounds 7-8 (illness)"
             }
           ]
         }
@@ -13809,6 +13865,13 @@
               "status": "game-time",
               "return": "Round 9",
               "comment": "DNP in Round 8 (left knee contusion)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "game-time",
+              "return": "Round 9",
+              "comment": "Traveled with the team for Round 9 after DNP in Round 8 (left knee contusion)"
             }
           ]
         }
@@ -13902,6 +13965,13 @@
               "date": "2026-10-29",
               "at": "2026-10-29T07:05+01:00",
               "status": "uncertain",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster in Round 8 (undisclosed)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "expected",
               "return": "Round 9",
               "comment": "Not included in 12-man roster in Round 8 (undisclosed)"
             }
@@ -14046,6 +14116,13 @@
               "status": "doubtful",
               "return": "Round 9",
               "comment": "Suffered hard hit to his knee in Round 8"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "game-time",
+              "return": "Round 9",
+              "comment": "Suffered hard hit to his knee in Round 8"
             }
           ]
         }
@@ -14072,7 +14149,27 @@
       ],
       "name": "Juan Nunez",
       "club": "FC Barcelona"
+    },
+    "21364": {
+      "episodes": [
+        {
+          "start": "2026-10-30",
+          "end": null,
+          "lastSeen": "2026-10-30",
+          "updates": [
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T13:49+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Out indefinitely due to a right knee sprain (10.30)"
+            }
+          ]
+        }
+      ],
+      "name": "Theo Maledon",
+      "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-10-30T09:28:31"
+  "updatedAt": "2026-10-30T13:49:09"
 }
