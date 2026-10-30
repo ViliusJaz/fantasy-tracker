@@ -6855,7 +6855,7 @@
         },
         {
           "start": "2026-10-29",
-          "end": null,
+          "end": "2026-10-30",
           "lastSeen": "2026-10-30",
           "updates": [
             {
@@ -6864,6 +6864,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "Played in Round 8 after DNP in Rounds 1-7 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T17:55+01:00",
+              "status": "ready",
+              "return": "Round 9",
+              "comment": "Included in 12-man roster after playing in Round 8 after DNP in Rounds 1-7 (coach's decision)"
             }
           ]
         }
@@ -7057,6 +7064,13 @@
               "status": "doubtful",
               "return": "Round 9",
               "comment": "Didn't travel for Round 8 after DNP in Round 7 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T17:55+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster after DNP in Round 7-8 (coach's decision)"
             }
           ]
         }
@@ -10256,6 +10270,13 @@
               "status": "out",
               "return": "Round 9",
               "comment": "Out indefinitely with knee injury, could miss at least 4 weeks if arthroscopy is required (10.30)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T17:55+01:00",
+              "status": "out",
+              "return": "Long-term",
+              "comment": "Underwent a left knee meniscus injury, expected to be sidelined until the end of April."
             }
           ]
         }
@@ -11704,6 +11725,13 @@
               "status": "doubtful",
               "return": "Round 9",
               "comment": "Didn't travel for Round 8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T17:55+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster after DNP in Round 8 (coach's decision)"
             }
           ]
         }
@@ -13673,7 +13701,7 @@
         },
         {
           "start": "2026-10-29",
-          "end": null,
+          "end": "2026-10-30",
           "lastSeen": "2026-10-30",
           "updates": [
             {
@@ -13682,6 +13710,13 @@
               "status": "expected",
               "return": "Round 9",
               "comment": "Played in Round 8 (new signing)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T17:55+01:00",
+              "status": "ready",
+              "return": "Round 9",
+              "comment": "Included in 12-man roster after playing in Round 8 (new signing)"
             }
           ]
         }
@@ -13941,6 +13976,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "Didn't travel for Round 8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T17:55+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster after DNP in Round 8 (coach's decision)"
             }
           ]
         }
@@ -14227,5 +14269,5 @@
       "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-10-30T17:40:25"
+  "updatedAt": "2026-10-30T17:55:59"
 }
