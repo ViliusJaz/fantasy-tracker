@@ -595,6 +595,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 9",
+              "comment": "DNP in Round 9 (coach's decision)"
             }
           ]
         }
@@ -972,6 +979,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Round 9 (coach's decision)"
             }
           ]
         }
@@ -1717,6 +1731,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster after DNP in Round 9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Round 9 (coach's decision)"
             }
           ]
         }
@@ -1848,6 +1869,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "Not included in 12-man roster after DNP in Rounds 2-9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 2-9 (coach's decision)"
             }
           ]
         }
@@ -3606,7 +3634,7 @@
         },
         {
           "start": "2026-10-30",
-          "end": null,
+          "end": "2026-10-30",
           "lastSeen": "2026-10-30",
           "updates": [
             {
@@ -3615,6 +3643,13 @@
               "status": "expected",
               "return": "Round 10",
               "comment": "Included in 12-man roster in Round 9 for after DNP in Rounds 4-8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -3828,6 +3863,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "Out for Round 9 after DNP in Rounds 1-8 (undisclosed injury)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 1-9 (undisclosed injury)"
             }
           ]
         }
@@ -5315,6 +5357,13 @@
               "status": "out",
               "return": "Round 9",
               "comment": "Not included in 12-man roster (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Round 9 (coach's decision)"
             }
           ]
         }
@@ -5969,6 +6018,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Included in 12-man roster for Round 9 after DNP in Rounds 1-8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "Was included in 12-man roster for Round 9 but DNP after DNP in Rounds 1-8 (coach's decision)"
             }
           ]
         }
@@ -6125,6 +6181,13 @@
               "date": "2026-10-30",
               "at": "2026-10-30T08:26+01:00",
               "status": "doubtful",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Round 9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (coach's decision)"
             }
@@ -7788,6 +7851,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -7987,6 +8057,13 @@
               "date": "2026-10-30",
               "at": "2026-10-30T08:26+01:00",
               "status": "doubtful",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision)"
             }
@@ -8195,6 +8272,13 @@
               "date": "2026-10-30",
               "at": "2026-10-30T08:26+01:00",
               "status": "doubtful",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision)"
             }
@@ -9799,6 +9883,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Round 9 (coach's decision)"
             }
           ]
         }
@@ -10641,6 +10732,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "Not included in 12-man roster after DNP in Rounds 4-9 (ankle injury)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Round 9 (coach's decision) after DNP in Rounds 4-9 (ankle injury)"
             }
           ]
         }
@@ -11343,6 +11441,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T09:28+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Round 9 (coach's decision)"
             }
           ]
         }
@@ -13969,5 +14074,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-10-30T08:26:53"
+  "updatedAt": "2026-10-30T09:28:31"
 }
