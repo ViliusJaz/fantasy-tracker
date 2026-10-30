@@ -7601,6 +7601,13 @@
               "status": "doubtful",
               "return": "Round 9",
               "comment": "DNP in Rounds 1-8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T18:11+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-8 (coach's decision)"
             }
           ]
         }
@@ -7733,6 +7740,13 @@
               "status": "doubtful",
               "return": "Round 9",
               "comment": "DNP in Rounds 1-8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T18:11+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-8 (coach's decision)"
             }
           ]
         }
@@ -14269,5 +14283,5 @@
       "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-10-30T17:55:59"
+  "updatedAt": "2026-10-30T18:11:26"
 }
