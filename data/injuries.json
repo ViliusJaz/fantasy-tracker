@@ -1608,6 +1608,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 8 (coach's decision) after DNP in Rounds 1-7 (back injury)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T16:38+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster after DNP in Round 8 (coach's decision)"
             }
           ]
         }
@@ -2487,6 +2494,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "Out of the squad but expected to return to action this week. Not included in 12-man roster in Round 8"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T16:38+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-8 (coach's decision)"
             }
           ]
         }
@@ -2917,6 +2931,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Rounds 7-8. Played in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T16:38+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster after DNP in Rounds 7-8 (coach's decision)"
             }
           ]
         }
@@ -11559,6 +11580,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Rounds 7-8 (coach's decision). Played in the domestic league (10.25)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T16:38+01:00",
+              "status": "out",
+              "return": "Round 9",
+              "comment": "Not included in 12-man roster after DNP in Rounds 7-8 (coach's decision)"
             }
           ]
         }
@@ -13985,7 +14013,7 @@
       "episodes": [
         {
           "start": "2026-10-29",
-          "end": null,
+          "end": "2026-10-30",
           "lastSeen": "2026-10-30",
           "updates": [
             {
@@ -13994,6 +14022,13 @@
               "status": "uncertain",
               "return": "Round 9",
               "comment": "DNP in Round 8 (coach's decision)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T16:38+01:00",
+              "status": "ready",
+              "return": "Round 9",
+              "comment": "Included in 12-man roster after DNP in Round 8 (coach's decision)"
             }
           ]
         }
@@ -14039,7 +14074,7 @@
       "episodes": [
         {
           "start": "2026-10-29",
-          "end": null,
+          "end": "2026-10-30",
           "lastSeen": "2026-10-30",
           "updates": [
             {
@@ -14062,6 +14097,13 @@
               "status": "expected",
               "return": "Round 9",
               "comment": "DNP in Round 8 (ankle discomfort)"
+            },
+            {
+              "date": "2026-10-30",
+              "at": "2026-10-30T16:38+01:00",
+              "status": "ready",
+              "return": "Round 9",
+              "comment": "Included in 12-man roster after DNP in Round 8 (ankle discomfort)"
             }
           ]
         }
@@ -14171,5 +14213,5 @@
       "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-10-30T13:49:09"
+  "updatedAt": "2026-10-30T16:38:30"
 }
