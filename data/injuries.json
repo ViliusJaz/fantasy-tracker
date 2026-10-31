@@ -5992,6 +5992,13 @@
               "status": "out",
               "return": "Indefinitely",
               "comment": "Cleared to return to team practices, aiming to return in November (working back from Achilles surgery)"
+            },
+            {
+              "date": "2026-10-31",
+              "at": "2026-10-31T12:57+01:00",
+              "status": "expected",
+              "return": "Round 10",
+              "comment": "Fully rejoined training process, available for domestic game (working back from Achilles surgery)"
             }
           ]
         }
@@ -6079,6 +6086,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Ankle injury suffered in Round 1"
+            },
+            {
+              "date": "2026-10-31",
+              "at": "2026-10-31T12:57+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Ankle injury suffered in Round 1, Willis will be able to rejoin the team during the second week of November"
             }
           ]
         }
@@ -13096,6 +13110,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Will miss two weeks (adductor injury in Round 6)"
+            },
+            {
+              "date": "2026-10-31",
+              "at": "2026-10-31T12:57+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Adductor injury in Round 6, approximate estimated time until full recovery is about two weeks (as of Oct. 31)"
             }
           ]
         }
@@ -15043,5 +15064,5 @@
       "club": "Hapoel IBI Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-31T11:10:17"
+  "updatedAt": "2026-10-31T12:57:51"
 }
