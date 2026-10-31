@@ -7541,7 +7541,7 @@
         },
         {
           "start": "2026-10-31",
-          "end": null,
+          "end": "2026-10-31",
           "lastSeen": "2026-10-31",
           "updates": [
             {
@@ -7550,6 +7550,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-10-31",
+              "at": "2026-10-31T22:49+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -15078,5 +15085,5 @@
       "club": "Hapoel IBI Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-31T16:45:54"
+  "updatedAt": "2026-10-31T22:49:30"
 }
