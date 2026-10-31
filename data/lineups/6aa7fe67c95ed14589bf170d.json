@@ -6030,6 +6030,344 @@
           ]
         }
       }
+    },
+    "9": {
+      "savedAt": "2026-10-31T00:46:14",
+      "locked": false,
+      "teams": {
+        "6aa834559ce5c03ca196e0da": {
+          "formation": "1-1-3",
+          "players": [
+            {
+              "id": "66e6e4324589cab32aef6bee",
+              "card": "c-1",
+              "slot": "starter",
+              "captain": true
+            },
+            {
+              "id": "6a8c494c491e10f37dfb638b",
+              "card": "f-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "69c26d8874f75a7efd626925",
+              "card": "g-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e4314589cab32aef6aa2",
+              "card": "g-2",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e42f4589cab32aef6978",
+              "card": "g-3",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "651306f498a6be4330532056",
+              "card": "b-1",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "66e6e4314589cab32aef6adf",
+              "card": "b-2",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "66e6e4324589cab32aef6c2d",
+              "card": "b-3",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "669b67ba69eb071c0f3b7ed7",
+              "card": "b-4",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "651306f498a6be43305321a7",
+              "card": "b-5",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "679462c2ebbc1243b6c8da26",
+              "card": "i-1",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "66e6e42e4589cab32aef67e9",
+              "card": "i-2",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "66e6e42f4589cab32aef696b",
+              "card": "i-3",
+              "slot": "inactive",
+              "captain": false
+            }
+          ]
+        },
+        "6aafd54a349148cc9eff62ab": {
+          "formation": "1-1-3",
+          "players": [
+            {
+              "id": "68c40842a07be49331fea3f6",
+              "card": "c-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e4324589cab32aef6bcb",
+              "card": "f-1",
+              "slot": "starter",
+              "captain": true
+            },
+            {
+              "id": "66e6e4304589cab32aef6a1a",
+              "card": "g-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e4324589cab32aef6b88",
+              "card": "g-2",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "64e4a5ab0ef7f59c5945f78c",
+              "card": "g-3",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "64e4a5a20ef7f59c5945effd",
+              "card": "b-1",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "66e6e4324589cab32aef6c37",
+              "card": "b-2",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "693abdc09703341eeb011ffb",
+              "card": "b-3",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "68fdccc5b6dbf6190bbb937d",
+              "card": "b-4",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "66e6e4324589cab32aef6bbd",
+              "card": "b-5",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "68c4083fa07be49331fea3ca",
+              "card": "i-1",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "66e6e42e4589cab32aef6863",
+              "card": "i-2",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "68c40826a07be49331fea232",
+              "card": "i-3",
+              "slot": "inactive",
+              "captain": false
+            }
+          ]
+        },
+        "6aa804e109a9c51e40240da6": {
+          "formation": "1-2-2",
+          "players": [
+            {
+              "id": "66e6e4324589cab32aef6b8d",
+              "card": "c-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e4304589cab32aef6a71",
+              "card": "f-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "68c4082ba07be49331fea28a",
+              "card": "f-2",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e4324589cab32aef6be9",
+              "card": "g-1",
+              "slot": "starter",
+              "captain": true
+            },
+            {
+              "id": "66e6e4324589cab32aef6c32",
+              "card": "g-2",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "68c4084ba07be49331fea49b",
+              "card": "b-1",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "66e6e42f4589cab32aef6987",
+              "card": "b-2",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "66e6e4314589cab32aef6a8f",
+              "card": "b-3",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "68c4082ba07be49331fea292",
+              "card": "b-4",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "68c40811a07be49331fea0ee",
+              "card": "b-5",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "695bb2e6105e892154f7da37",
+              "card": "i-1",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "68c40843a07be49331fea404",
+              "card": "i-2",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "69c26d8774f75a7efd625e8e",
+              "card": "i-3",
+              "slot": "inactive",
+              "captain": false
+            }
+          ]
+        },
+        "6aa9487893bf2e3920b8b39c": {
+          "formation": "1-2-2",
+          "players": [
+            {
+              "id": "66e6e4314589cab32aef6b7e",
+              "card": "c-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "68c40821a07be49331fea1ea",
+              "card": "f-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e342c6381ef32263702686",
+              "card": "f-2",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e4334589cab32aef6c7c",
+              "card": "g-1",
+              "slot": "starter",
+              "captain": true
+            },
+            {
+              "id": "670bcf343a598d8e5637d06a",
+              "card": "g-2",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e4324589cab32aef6c4b",
+              "card": "b-1",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "69070261ad21a0df4d1fea56",
+              "card": "b-2",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "68c4081ca07be49331fea198",
+              "card": "b-3",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "68c4082ca07be49331fea2a7",
+              "card": "b-4",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "68c40846a07be49331fea438",
+              "card": "b-5",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "64e4a5a70ef7f59c5945f3f4",
+              "card": "i-1",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "6a8c494f491e10f37dfb6847",
+              "card": "i-2",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "6513070c98a6be433053457e",
+              "card": "i-3",
+              "slot": "inactive",
+              "captain": false
+            }
+          ]
+        }
+      }
     }
   }
 }
