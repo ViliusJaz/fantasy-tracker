@@ -7538,6 +7538,20 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-10-31",
+          "end": null,
+          "lastSeen": "2026-10-31",
+          "updates": [
+            {
+              "date": "2026-10-31",
+              "at": "2026-10-31T16:45+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
         }
       ],
       "name": "Bandja Sy",
@@ -15064,5 +15078,5 @@
       "club": "Hapoel IBI Tel Aviv"
     }
   },
-  "updatedAt": "2026-10-31T12:57:51"
+  "updatedAt": "2026-10-31T16:45:54"
 }
