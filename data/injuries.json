@@ -7580,6 +7580,20 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-11-01",
+          "end": null,
+          "lastSeen": "2026-11-01",
+          "updates": [
+            {
+              "date": "2026-11-01",
+              "at": "2026-11-01T16:45+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
         }
       ],
       "name": "Bandja Sy",
@@ -15126,5 +15140,5 @@
       "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-01T14:53:36"
+  "updatedAt": "2026-11-01T16:45:51"
 }
