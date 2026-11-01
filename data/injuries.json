@@ -7562,7 +7562,7 @@
         },
         {
           "start": "2026-11-01",
-          "end": null,
+          "end": "2026-11-01",
           "lastSeen": "2026-11-01",
           "updates": [
             {
@@ -7571,6 +7571,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-01",
+              "at": "2026-11-01T14:53+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -15119,5 +15126,5 @@
       "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-01T07:23:44"
+  "updatedAt": "2026-11-01T14:53:36"
 }
