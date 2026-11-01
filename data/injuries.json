@@ -15097,7 +15097,27 @@
       ],
       "name": "Tomas Satoransky",
       "club": "Hapoel IBI Tel Aviv"
+    },
+    "17059": {
+      "episodes": [
+        {
+          "start": "2026-11-01",
+          "end": null,
+          "lastSeen": "2026-11-01",
+          "updates": [
+            {
+              "date": "2026-11-01",
+              "at": "2026-11-01T07:23+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "New signing (10.30)"
+            }
+          ]
+        }
+      ],
+      "name": "Dwight Powell",
+      "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-01T01:36:47"
+  "updatedAt": "2026-11-01T07:23:44"
 }
