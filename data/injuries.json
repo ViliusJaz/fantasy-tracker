@@ -13908,6 +13908,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "To miss approximately three weeks due to shoulder and knee injuries (10.20)"
+            },
+            {
+              "date": "2026-11-01",
+              "at": "2026-11-01T19:41+01:00",
+              "status": "expected",
+              "return": "Round 10",
+              "comment": "To miss approximately three weeks due to shoulder and knee injuries (10.20)"
             }
           ]
         }
@@ -15140,5 +15147,5 @@
       "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-01T16:45:51"
+  "updatedAt": "2026-11-01T19:41:43"
 }
