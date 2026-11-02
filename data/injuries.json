@@ -7468,7 +7468,7 @@
         },
         {
           "start": "2026-10-23",
-          "end": null,
+          "end": "2026-11-02",
           "lastSeen": "2026-11-02",
           "updates": [
             {
@@ -7524,6 +7524,13 @@
               "date": "2026-10-31",
               "at": "2026-10-31T11:10+01:00",
               "status": "uncertain",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Rounds 8-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-02",
+              "at": "2026-11-02T15:00+01:00",
+              "status": "ready",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Rounds 8-9 (coach's decision)"
             }
@@ -12486,7 +12493,7 @@
         },
         {
           "start": "2026-10-27",
-          "end": null,
+          "end": "2026-11-02",
           "lastSeen": "2026-11-02",
           "updates": [
             {
@@ -12514,6 +12521,13 @@
               "date": "2026-10-31",
               "at": "2026-10-31T11:10+01:00",
               "status": "uncertain",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Rounds 8-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-02",
+              "at": "2026-11-02T15:00+01:00",
+              "status": "ready",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Rounds 8-9 (coach's decision)"
             }
@@ -15524,5 +15538,5 @@
       "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-11-02T14:45:32"
+  "updatedAt": "2026-11-02T15:00:57"
 }
