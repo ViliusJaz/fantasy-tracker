@@ -15578,7 +15578,27 @@
       ],
       "name": "Facundo Campazzo",
       "club": "Real Madrid"
+    },
+    "19549": {
+      "episodes": [
+        {
+          "start": "2026-11-02",
+          "end": null,
+          "lastSeen": "2026-11-02",
+          "updates": [
+            {
+              "date": "2026-11-02",
+              "at": "2026-11-02T19:45+01:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "Injury"
+            }
+          ]
+        }
+      ],
+      "name": "Devin Booker",
+      "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-11-02T15:16:23"
+  "updatedAt": "2026-11-02T19:45:24"
 }
