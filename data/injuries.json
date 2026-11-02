@@ -15474,7 +15474,27 @@
       ],
       "name": "Dwight Powell",
       "club": "Fenerbahce Beko Istanbul"
+    },
+    "11192": {
+      "episodes": [
+        {
+          "start": "2026-11-02",
+          "end": null,
+          "lastSeen": "2026-11-02",
+          "updates": [
+            {
+              "date": "2026-11-02",
+              "at": "2026-11-02T14:30+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "Suffered muscle injury in domestic league game (11.01), awaiting medical test results"
+            }
+          ]
+        }
+      ],
+      "name": "Facundo Campazzo",
+      "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-11-02T13:59:15"
+  "updatedAt": "2026-11-02T14:30:05"
 }
