@@ -14235,6 +14235,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Rounds 7-9 (muscle injury). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-02",
+              "at": "2026-11-02T13:59+01:00",
+              "status": "expected",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 7-9 (muscle injury). Rejoined training on Monday, expected to play in Round 10, per club announcement"
             }
           ]
         }
@@ -15469,5 +15476,5 @@
       "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-02T02:49:26"
+  "updatedAt": "2026-11-02T13:59:15"
 }
