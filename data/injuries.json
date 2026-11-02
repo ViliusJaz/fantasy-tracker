@@ -7303,13 +7303,20 @@
         },
         {
           "start": "2026-10-31",
-          "end": null,
+          "end": "2026-11-02",
           "lastSeen": "2026-11-02",
           "updates": [
             {
               "date": "2026-10-31",
               "at": "2026-10-31T11:10+01:00",
               "status": "expected",
+              "return": "Round 10",
+              "comment": "Played in Rounds 8-9 after DNP in Rounds 1-7 (coach's decision)"
+            },
+            {
+              "date": "2026-11-02",
+              "at": "2026-11-02T14:45+01:00",
+              "status": "ready",
               "return": "Round 10",
               "comment": "Played in Rounds 8-9 after DNP in Rounds 1-7 (coach's decision)"
             }
@@ -11166,6 +11173,20 @@
               "comment": "Cleared to play after suffering face injury in last domestic league game"
             }
           ]
+        },
+        {
+          "start": "2026-11-02",
+          "end": null,
+          "lastSeen": "2026-11-02",
+          "updates": [
+            {
+              "date": "2026-11-02",
+              "at": "2026-11-02T14:45+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
         }
       ],
       "name": "Ąžuolas Tubelis",
@@ -15012,6 +15033,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Rounds 8-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-02",
+              "at": "2026-11-02T14:45+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Rounds 8-9 (coach's decision)"
             }
           ]
         }
@@ -15496,5 +15524,5 @@
       "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-11-02T14:30:05"
+  "updatedAt": "2026-11-02T14:45:32"
 }
