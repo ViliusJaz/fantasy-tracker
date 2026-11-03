@@ -6387,6 +6387,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Ankle injury suffered in Round 1, Willis will be able to rejoin the team during the second week of November"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T18:16+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Ankle injury suffered in Round 1, Willis will rejoin the team during the second week of November"
             }
           ]
         }
@@ -16027,6 +16034,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Out indefinitely after suffering a leg muscle injury in domestic league game (11.01)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T18:16+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Out indefinitely after suffering a left hamstring injury in a domestic league game (11.01)"
             }
           ]
         }
@@ -16096,5 +16110,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-11-03T17:18:41"
+  "updatedAt": "2026-11-03T18:16:50"
 }
