@@ -7979,6 +7979,20 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-11-03",
+          "end": null,
+          "lastSeen": "2026-11-03",
+          "updates": [
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T17:18+01:00",
+              "status": "expected",
+              "return": "",
+              "comment": ""
+            }
+          ]
         }
       ],
       "name": "Bandja Sy",
@@ -16082,5 +16096,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-11-03T15:36:22"
+  "updatedAt": "2026-11-03T17:18:41"
 }
