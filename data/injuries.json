@@ -11649,6 +11649,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Round 9 (coach's decision) after DNP in Rounds 4-9 (ankle injury)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T08:12+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Round 9 (coach's decision) after DNP in Rounds 4-8 (ankle injury)"
             }
           ]
         }
@@ -15085,6 +15092,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "Suffered foot bone injury ahead of domestic league game (10.25). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T08:12+01:00",
+              "status": "doubtful",
+              "return": "Round 10",
+              "comment": "Suffered foot bone injury (10.25). DNP in Rounds 8-9 and in the domestic league (11.01)"
             }
           ]
         }
@@ -15761,5 +15775,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-11-03T05:45:06"
+  "updatedAt": "2026-11-03T08:12:41"
 }
