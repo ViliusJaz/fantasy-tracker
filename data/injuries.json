@@ -5595,6 +5595,13 @@
               "status": "expected",
               "return": "Round 10",
               "comment": "DNP in Round 9, after played in Round 8 (precaution). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T15:36+01:00",
+              "status": "expected",
+              "return": "Round 10",
+              "comment": "Traveled for Round 10 after DNP in Round 9 (rest)"
             }
           ]
         }
@@ -5740,6 +5747,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T15:36+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Didn't travel for Round 10 after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -11368,6 +11382,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 7-9 (hamstring discomfort). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T15:36+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Didn't travel for Round 10 after DNP in Rounds 7-9 (hamstring discomfort)"
             }
           ]
         }
@@ -13073,6 +13094,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 8-9 (coach's decision). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T15:36+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Didn't travel for Round 10 after DNP in Rounds 8-9 (coach's decision)"
             }
           ]
         }
@@ -14821,6 +14849,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (coach's decision). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T15:36+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Didn't travel for Round 10 after DNP in Round 9 (coach's decision)"
             }
           ]
         }
@@ -16047,5 +16082,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-11-03T15:20:55"
+  "updatedAt": "2026-11-03T15:36:22"
 }
