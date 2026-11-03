@@ -6867,6 +6867,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Right foot sole discomfort. DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T14:50+01:00",
+              "status": "expected",
+              "return": "Round 10",
+              "comment": "Will travel for Round 10 after DNP in Rounds 8-9 (right foot sole discomfort)"
             }
           ]
         }
@@ -15936,6 +15943,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Suffered muscle injury in domestic league game (11.01), awaiting medical test results"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T14:50+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Out indefinitely after suffering a leg muscle injury in domestic league game (11.01)"
             }
           ]
         }
@@ -16005,5 +16019,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-11-03T13:02:47"
+  "updatedAt": "2026-11-03T14:50:01"
 }
