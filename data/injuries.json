@@ -15970,13 +15970,40 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in the domestic league (injured)(11.02)"
+            },
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T13:02+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "DNP in the domestic league (injured)(11.02)"
             }
           ]
         }
       ],
       "name": "Devin Booker",
       "club": "Armani Olimpia Milan"
+    },
+    "22918": {
+      "episodes": [
+        {
+          "start": "2026-11-03",
+          "end": null,
+          "lastSeen": "2026-11-03",
+          "updates": [
+            {
+              "date": "2026-11-03",
+              "at": "2026-11-03T13:02+01:00",
+              "status": "questionable",
+              "return": "Round 10",
+              "comment": "Muscle strain"
+            }
+          ]
+        }
+      ],
+      "name": "Leandro Bolmaro",
+      "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-11-03T10:51:38"
+  "updatedAt": "2026-11-03T13:02:47"
 }
