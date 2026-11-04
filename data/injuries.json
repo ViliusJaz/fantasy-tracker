@@ -5600,7 +5600,7 @@
         },
         {
           "start": "2026-10-29",
-          "end": null,
+          "end": "2026-11-04",
           "lastSeen": "2026-11-04",
           "updates": [
             {
@@ -5630,6 +5630,13 @@
               "status": "expected",
               "return": "Round 10",
               "comment": "Traveled for Round 10 after DNP in Round 9 (rest)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T19:57+01:00",
+              "status": "ready",
+              "return": "Round 10",
+              "comment": "Included in 12-man roster after DNP in Round 9 (rest)"
             }
           ]
         }
@@ -16345,7 +16352,27 @@
       ],
       "name": "Aleksander Balcerowski",
       "club": "FC Barcelona"
+    },
+    "21239": {
+      "episodes": [
+        {
+          "start": "2026-11-04",
+          "end": null,
+          "lastSeen": "2026-11-04",
+          "updates": [
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T19:57+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Panagiotis Kalaitzakis",
+      "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-04T16:45:36"
+  "updatedAt": "2026-11-04T19:57:20"
 }
