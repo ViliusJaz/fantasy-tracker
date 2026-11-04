@@ -16161,6 +16161,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "New signing (10.30). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T12:54+01:00",
+              "status": "game-time",
+              "return": "Round 10",
+              "comment": "Registered to the EuroLeague roster, DNP in the domestic league on Sunday (new signing)"
             }
           ]
         }
@@ -16298,5 +16305,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-11-04T12:23:12"
+  "updatedAt": "2026-11-04T12:54:08"
 }
