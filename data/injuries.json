@@ -11957,6 +11957,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Round 9 (coach's decision) after DNP in Rounds 4-8 (ankle injury)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T13:24+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Ruled out for Round 10 after DNP in Rounds 4-9 (ankle injury)"
             }
           ]
         }
@@ -16305,5 +16312,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-11-04T12:54:08"
+  "updatedAt": "2026-11-04T13:24:57"
 }
