@@ -6667,7 +6667,7 @@
         },
         {
           "start": "2026-10-30",
-          "end": null,
+          "end": "2026-11-04",
           "lastSeen": "2026-11-04",
           "updates": [
             {
@@ -6690,6 +6690,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Was included in 12-man roster for Round 9 but DNP after DNP in Rounds 1-8 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T20:30+01:00",
+              "status": "ready",
+              "return": "Round 10",
+              "comment": "Included in 12-man roster after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -6832,7 +6839,7 @@
         },
         {
           "start": "2026-10-29",
-          "end": null,
+          "end": "2026-11-04",
           "lastSeen": "2026-11-04",
           "updates": [
             {
@@ -6862,6 +6869,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T20:30+01:00",
+              "status": "ready",
+              "return": "Round 10",
+              "comment": "Included in 12-man roster after DNP in Round 9 (coach's decision)"
             }
           ]
         }
@@ -6900,7 +6914,7 @@
         },
         {
           "start": "2026-10-26",
-          "end": null,
+          "end": "2026-11-04",
           "lastSeen": "2026-11-04",
           "updates": [
             {
@@ -6944,6 +6958,13 @@
               "status": "expected",
               "return": "Round 10",
               "comment": "Will travel for Round 10 after DNP in Rounds 8-9 (right foot sole discomfort)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T20:30+01:00",
+              "status": "ready",
+              "return": "Round 10",
+              "comment": "Included in 12-man roster after DNP in Rounds 8-9 (right foot sole discomfort)"
             }
           ]
         }
@@ -8052,7 +8073,7 @@
         },
         {
           "start": "2026-11-04",
-          "end": null,
+          "end": "2026-11-04",
           "lastSeen": "2026-11-04",
           "updates": [
             {
@@ -8061,6 +8082,13 @@
               "status": "expected",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T20:30+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -9091,7 +9119,7 @@
       "episodes": [
         {
           "start": "2026-09-29",
-          "end": null,
+          "end": "2026-11-04",
           "lastSeen": "2026-11-04",
           "updates": [
             {
@@ -9261,6 +9289,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T20:30+01:00",
+              "status": "ready",
+              "return": "Round 10",
+              "comment": "Included in 12-man roster after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -11168,6 +11203,20 @@
               "status": "ready",
               "return": "Round 8",
               "comment": "DNP in Rounds 1-7 (coach's decision). Played in the domestic league (10.25)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-04",
+          "end": null,
+          "lastSeen": "2026-11-04",
+          "updates": [
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T20:30+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Undisclosed"
             }
           ]
         }
@@ -16374,5 +16423,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-04T19:57:20"
+  "updatedAt": "2026-11-04T20:30:39"
 }
