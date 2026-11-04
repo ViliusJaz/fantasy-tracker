@@ -2427,6 +2427,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Left knee injury"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T12:23+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Left knee injury"
             }
           ]
         }
@@ -8080,6 +8087,27 @@
               "status": "ready",
               "return": "Round 3",
               "comment": "Practiced ahead of Round 3, expected to be available (new signing, not injured)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-04",
+          "end": null,
+          "lastSeen": "2026-11-04",
+          "updates": [
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T12:06+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "Suffered muscle fiber tear in his left calf during training. Working on recovery with no definitive return timetable"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T12:23+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Out indefinitely (left calf tear)"
             }
           ]
         }
@@ -15936,6 +15964,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Round 9 after hard hit to his knee in Round 8. DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T12:23+01:00",
+              "status": "doubtful",
+              "return": "Round 10",
+              "comment": "Travels with the team, but doubtful about playing after DNP in Rounds 8-9 (knee soreness)"
             }
           ]
         }
@@ -15968,6 +16003,13 @@
               "date": "2026-11-02",
               "at": "2026-11-02T02:49+01:00",
               "status": "doubtful",
+              "return": "Round 10",
+              "comment": "Right ankle sprain, expected to miss around 10 days (10.29). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T12:23+01:00",
+              "status": "out",
               "return": "Round 10",
               "comment": "Right ankle sprain, expected to miss around 10 days (10.29). DNP in the domestic league (11.01)"
             }
@@ -16201,6 +16243,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in the domestic league (injured)(11.02). Might miss a couple of months of action."
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T12:06+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Coach Poetta confirmed on November 2 that Booker suffered a serious injury and could miss months of action."
             }
           ]
         }
@@ -16227,7 +16276,27 @@
       ],
       "name": "Leandro Bolmaro",
       "club": "Armani Olimpia Milan"
+    },
+    "21362": {
+      "episodes": [
+        {
+          "start": "2026-11-04",
+          "end": "2026-11-04",
+          "lastSeen": "2026-11-04",
+          "updates": [
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T12:23+01:00",
+              "status": "ready",
+              "return": "Round 10",
+              "comment": "Travels with the team, expected to play"
+            }
+          ]
+        }
+      ],
+      "name": "Aleksander Balcerowski",
+      "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-11-04T09:52:09"
+  "updatedAt": "2026-11-04T12:23:12"
 }
