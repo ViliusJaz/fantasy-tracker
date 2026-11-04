@@ -1941,6 +1941,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Round 9 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T06:55+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 8-9 (coach's decision). Played in the domestic league (11.01-03)"
             }
           ]
         }
@@ -2086,6 +2093,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Rounds 2-9 (coach's decision).DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T06:55+01:00",
+              "status": "doubtful",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 2-9 (coach's decision).DNP in the domestic league (11.01-03)"
             }
           ]
         }
@@ -5908,7 +5922,7 @@
         },
         {
           "start": "2026-10-29",
-          "end": null,
+          "end": "2026-11-04",
           "lastSeen": "2026-11-04",
           "updates": [
             {
@@ -5931,6 +5945,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Round 9 (coach's decision). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T06:55+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -7989,7 +8010,7 @@
         },
         {
           "start": "2026-11-03",
-          "end": null,
+          "end": "2026-11-04",
           "lastSeen": "2026-11-04",
           "updates": [
             {
@@ -7998,6 +8019,13 @@
               "status": "expected",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T06:55+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -10912,6 +10940,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Round 9 (coach's decision). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T06:55+01:00",
+              "status": "expected",
+              "return": "Round 10",
+              "comment": "DNP in Round 9 (coach's decision). Played in the domestic league (11.03)"
             }
           ]
         }
@@ -12192,6 +12227,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (undisclosed). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T06:55+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Round 9 (undisclosed). DNP in the domestic league (11.01-03)"
             }
           ]
         }
@@ -14003,6 +14045,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "Not included in 12-man roster after DNP in Rounds 6-9 (undisclosed). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T06:55+01:00",
+              "status": "expected",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 6-9 (undisclosed). Played in the domestic league (11.03)"
             }
           ]
         }
@@ -15797,6 +15846,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 after leaving Round 8 with a concussion. DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-04",
+              "at": "2026-11-04T06:55+01:00",
+              "status": "uncertain",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Round 9 after leaving Round 8 with a concussion. DNP in the domestic league (11.01-03)"
             }
           ]
         }
@@ -16110,5 +16166,5 @@
       "club": "Armani Olimpia Milan"
     }
   },
-  "updatedAt": "2026-11-04T01:33:16"
+  "updatedAt": "2026-11-04T06:55:30"
 }
