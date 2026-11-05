@@ -248,6 +248,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster for Round 10 after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -8637,6 +8644,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster for Round 10 after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -8797,6 +8811,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster for Round 10 after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -8976,6 +8997,13 @@
               "date": "2026-11-02",
               "at": "2026-11-02T02:49+01:00",
               "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.01)"
             }
@@ -9191,6 +9219,13 @@
               "date": "2026-11-02",
               "at": "2026-11-02T02:49+01:00",
               "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.01)"
             }
@@ -13385,6 +13420,20 @@
               "comment": "Included in 12-man roster in Round 7 after DNP in Rounds 5-6 (coach's decision). Played in the domestic league (10.25)"
             }
           ]
+        },
+        {
+          "start": "2026-11-05",
+          "end": null,
+          "lastSeen": "2026-11-05",
+          "updates": [
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not in 12-man roster for Round 10 (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Chris Silva",
@@ -15460,7 +15509,7 @@
       "episodes": [
         {
           "start": "2026-10-23",
-          "end": null,
+          "end": "2026-11-05",
           "lastSeen": "2026-11-05",
           "updates": [
             {
@@ -15516,6 +15565,13 @@
               "date": "2026-11-02",
               "at": "2026-11-02T02:49+01:00",
               "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 7-9 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "ready",
               "return": "Round 10",
               "comment": "DNP in Rounds 7-9 (coach's decision). Played in the domestic league (11.01)"
             }
@@ -16315,6 +16371,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 after leaving Round 8 with a concussion. DNP in the domestic league (11.01-03)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster for Round 10 after DNP in Round 9 (concussion)"
             }
           ]
         }
@@ -16551,7 +16614,7 @@
       "episodes": [
         {
           "start": "2026-11-01",
-          "end": null,
+          "end": "2026-11-05",
           "lastSeen": "2026-11-05",
           "updates": [
             {
@@ -16572,6 +16635,13 @@
               "date": "2026-11-04",
               "at": "2026-11-04T12:54+01:00",
               "status": "game-time",
+              "return": "Round 10",
+              "comment": "Registered to the EuroLeague roster, DNP in the domestic league on Sunday (new signing)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "ready",
               "return": "Round 10",
               "comment": "Registered to the EuroLeague roster, DNP in the domestic league on Sunday (new signing)"
             }
@@ -16750,7 +16820,27 @@
       ],
       "name": "Panagiotis Kalaitzakis",
       "club": "Panathinaikos AKTOR Athens"
+    },
+    "8327": {
+      "episodes": [
+        {
+          "start": "2026-11-05",
+          "end": null,
+          "lastSeen": "2026-11-05",
+          "updates": [
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T18:23+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not in 12-man roster for Round 10 (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Sertac Sanli",
+      "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-05T17:47:00"
+  "updatedAt": "2026-11-05T18:23:39"
 }
