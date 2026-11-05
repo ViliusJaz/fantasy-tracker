@@ -241,6 +241,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T17:47+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.02)"
             }
           ]
         }
@@ -279,7 +286,7 @@
         },
         {
           "start": "2026-10-31",
-          "end": null,
+          "end": "2026-11-05",
           "lastSeen": "2026-11-05",
           "updates": [
             {
@@ -293,6 +300,13 @@
               "date": "2026-11-03",
               "at": "2026-11-03T05:45+01:00",
               "status": "expected",
+              "return": "Round 10",
+              "comment": "Made debut in Round 8. Included in 12-man roster but DNP in Round 9 (coach's decision). DNP in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T17:47+01:00",
+              "status": "ready",
               "return": "Round 10",
               "comment": "Made debut in Round 8. Included in 12-man roster but DNP in Round 9 (coach's decision). DNP in the domestic league (11.02)"
             }
@@ -6142,6 +6156,20 @@
               "comment": "Included in 12-man roster after DNP in Rounds 5-7 (muscle pain)"
             }
           ]
+        },
+        {
+          "start": "2026-11-05",
+          "end": null,
+          "lastSeen": "2026-11-05",
+          "updates": [
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T17:47+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Round 10 (undisclosed)"
+            }
+          ]
         }
       ],
       "name": "Frank Ntilikina",
@@ -8602,6 +8630,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T17:47+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -8753,6 +8788,13 @@
               "date": "2026-11-03",
               "at": "2026-11-03T05:45+01:00",
               "status": "doubtful",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T17:47+01:00",
+              "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.02)"
             }
@@ -10959,6 +11001,20 @@
               "comment": "DNP in Round 3 (undisclosed).Played in the domestic league (10.04)"
             }
           ]
+        },
+        {
+          "start": "2026-11-05",
+          "end": null,
+          "lastSeen": "2026-11-05",
+          "updates": [
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T17:47+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Round 10 (undisclosed)"
+            }
+          ]
         }
       ],
       "name": "Terry Tarpey",
@@ -12491,7 +12547,7 @@
         },
         {
           "start": "2026-10-29",
-          "end": null,
+          "end": "2026-11-05",
           "lastSeen": "2026-11-05",
           "updates": [
             {
@@ -12519,6 +12575,13 @@
               "date": "2026-11-04",
               "at": "2026-11-04T06:55+01:00",
               "status": "uncertain",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Round 9 (undisclosed). DNP in the domestic league (11.01-03)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T17:47+01:00",
+              "status": "ready",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (undisclosed). DNP in the domestic league (11.01-03)"
             }
@@ -14281,7 +14344,7 @@
       "episodes": [
         {
           "start": "2026-10-16",
-          "end": null,
+          "end": "2026-11-05",
           "lastSeen": "2026-11-05",
           "updates": [
             {
@@ -14365,6 +14428,13 @@
               "date": "2026-11-04",
               "at": "2026-11-04T06:55+01:00",
               "status": "expected",
+              "return": "Round 10",
+              "comment": "DNP in Rounds 6-9 (undisclosed). Played in the domestic league (11.03)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T17:47+01:00",
+              "status": "ready",
               "return": "Round 10",
               "comment": "DNP in Rounds 6-9 (undisclosed). Played in the domestic league (11.03)"
             }
@@ -16238,6 +16308,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 after leaving Round 8 with a concussion. DNP in the domestic league (11.01-03)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T17:47+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster in Round 9 after leaving Round 8 with a concussion. DNP in the domestic league (11.01-03)"
             }
           ]
         }
@@ -16675,5 +16752,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-05T15:42:58"
+  "updatedAt": "2026-11-05T17:47:00"
 }
