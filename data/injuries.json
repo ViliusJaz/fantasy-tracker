@@ -6946,6 +6946,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Played 4 minutes in Round 10 after DNP in Round 9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T15:00+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Played 4 minutes in Round 10 after DNP in Round 9 (coach's decision)"
             }
           ]
         }
@@ -7883,6 +7890,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Rounds 8-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T15:42+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Didn't travel for Round 10 after DNP in Rounds 8-9 (coach's decision)"
             }
           ]
         }
@@ -11028,6 +11042,20 @@
               "comment": "Included in 12-man roster after DNP in Round 8 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-11-05",
+          "end": null,
+          "lastSeen": "2026-11-05",
+          "updates": [
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T15:00+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Did not travel to Piraeus (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Johnathan Motley",
@@ -12902,7 +12930,7 @@
         },
         {
           "start": "2026-10-29",
-          "end": null,
+          "end": "2026-11-05",
           "lastSeen": "2026-11-05",
           "updates": [
             {
@@ -12930,6 +12958,13 @@
               "date": "2026-11-01",
               "at": "2026-11-01T23:43+01:00",
               "status": "uncertain",
+              "return": "Round 10",
+              "comment": "DNP in Round 9 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T15:00+01:00",
+              "status": "ready",
               "return": "Round 10",
               "comment": "DNP in Round 9 (coach's decision). Played in the domestic league (11.01)"
             }
@@ -13195,6 +13230,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Rounds 8-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T15:42+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Didn't travel for Round 10 after DNP in Rounds 8-9 (coach's decision)"
             }
           ]
         }
@@ -15613,6 +15655,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Included in 12-man roster but DNP in Round 9 (new signing). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T15:00+01:00",
+              "status": "expected",
+              "return": "Round 10",
+              "comment": "Bartzokas said he expects Konchar to play in Round 10 after DNP in Round 9 (new signing)"
             }
           ]
         }
@@ -15915,6 +15964,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Rounds 8-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T15:42+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Didn't travel for Round 10 after DNP in Rounds 8-9 (coach's decision)"
             }
           ]
         }
@@ -16619,5 +16675,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-05T13:42:15"
+  "updatedAt": "2026-11-05T15:42:58"
 }
