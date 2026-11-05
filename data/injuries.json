@@ -6457,6 +6457,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Ankle injury suffered in Round 1, Willis will rejoin the team during the second week of November"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T13:42+01:00",
+              "status": "game-time",
+              "return": "Round 10",
+              "comment": "Ankle injury suffered in Round 1, Willis was expected to rejoin the team during the second week of November"
             }
           ]
         }
@@ -14132,6 +14139,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Adductor injury in Round 6, estimated time until recovery is about two weeks (as of Oct. 31). DNP in domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-05",
+              "at": "2026-11-05T13:42+01:00",
+              "status": "game-time",
+              "return": "Round 10",
+              "comment": "Adductor injury in Round 6"
             }
           ]
         }
@@ -16605,5 +16619,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-05T10:21:30"
+  "updatedAt": "2026-11-05T13:42:15"
 }
