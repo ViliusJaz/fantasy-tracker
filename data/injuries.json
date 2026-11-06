@@ -26,6 +26,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Out indefinitely (rehab after surgery)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely (rehab after surgery)"
             }
           ]
         }
@@ -254,6 +261,13 @@
               "at": "2026-11-05T18:23+01:00",
               "status": "out",
               "return": "Round 10",
+              "comment": "Not included in 12-man roster for Round 10 after DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
               "comment": "Not included in 12-man roster for Round 10 after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
@@ -1429,6 +1443,13 @@
               "status": "doubtful",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (hamstring injury)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Out indefinitely after DNP in Rounds 1-9 (hamstring injury)"
             }
           ]
         }
@@ -2135,6 +2156,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 2-9 (coach's decision).DNP in the domestic league (11.01-03)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 2-10 (coach's decision)"
             }
           ]
         }
@@ -2239,6 +2267,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not in 12-man roster in Round 10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (coach's decision)"
             }
           ]
         }
@@ -2259,6 +2294,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not in 12-man roster in Round 10 (undisclosed)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (undisclosed)"
             }
           ]
         }
@@ -2437,6 +2479,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 1-10 (coach's decision)"
             }
           ]
         }
@@ -2504,6 +2553,13 @@
               "at": "2026-11-04T12:23+01:00",
               "status": "out",
               "return": "Round 10",
+              "comment": "Left knee injury"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 11",
               "comment": "Left knee injury"
             }
           ]
@@ -2749,6 +2805,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely, as he's not included in official Euroleague roster"
             }
           ]
         }
@@ -2852,6 +2915,20 @@
               "status": "ready",
               "return": "Round 10",
               "comment": "Expected to be included in 12-man roster for Round 10 after playing in the domestic league on Sunday"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-06",
+          "end": null,
+          "lastSeen": "2026-11-06",
+          "updates": [
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Was included in 12-man squad in Round 10, but DNP (coach's decision)"
             }
           ]
         }
@@ -3124,6 +3201,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Long-term injury suffered in January 2026 (torn Achilles)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Long-term injury suffered in January 2026 (torn Achilles)"
             }
           ]
         }
@@ -3317,6 +3401,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 after DNP in Rounds 7-8 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 7-10 (coach's decision)"
             }
           ]
         }
@@ -3459,6 +3550,13 @@
               "at": "2026-11-03T10:51+01:00",
               "status": "out",
               "return": "Round 10",
+              "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 11",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
             }
           ]
@@ -3795,6 +3893,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Adductor muscle injury (out until November). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 1-10 (adductor muscle injury"
             }
           ]
         }
@@ -6004,6 +6109,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely, as he's not included in official Euroleague roster"
             }
           ]
         }
@@ -6260,6 +6372,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 10 (undisclosed)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (undisclosed)"
             }
           ]
         }
@@ -6474,6 +6593,13 @@
               "date": "2026-11-03",
               "at": "2026-11-03T05:45+01:00",
               "status": "expected",
+              "return": "Round 10",
+              "comment": "Played in the domestic league (11.02) (back from Achilles surgery)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "game-time",
               "return": "Round 10",
               "comment": "Played in the domestic league (11.02) (back from Achilles surgery)"
             }
@@ -8368,6 +8494,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Out indefinitely (left calf tear)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely (left calf tear)"
             }
           ]
         }
@@ -8743,6 +8876,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster for Round 10 after DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "Not included in 12-man roster for Round 10 after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -8909,6 +9049,13 @@
               "at": "2026-11-05T18:23+01:00",
               "status": "out",
               "return": "Round 10",
+              "comment": "Not included in 12-man roster for Round 10 after DNP in Rounds 1-9 (coach's decision)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
               "comment": "Not included in 12-man roster for Round 10 after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
@@ -9098,6 +9245,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 1-10 (coach's decision)"
             }
           ]
         }
@@ -9320,6 +9474,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 1-10 (coach's decision)"
             }
           ]
         }
@@ -10057,6 +10218,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 2-9 (coach's decision). Played in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 2-10 (coach's decision)"
             }
           ]
         }
@@ -10265,6 +10433,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 2-9 (coach's decision). Played in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 2-10 (coach's decision)"
             }
           ]
         }
@@ -11161,6 +11336,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 10 (undisclosed)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (undisclosed)"
             }
           ]
         }
@@ -11437,6 +11619,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not in 12-man roster in Round 10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (coach's decision)"
             }
           ]
         }
@@ -11582,6 +11771,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Undisclosed"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (Undisclosed)"
             }
           ]
         }
@@ -11650,6 +11846,13 @@
               "at": "2026-11-04T09:52+01:00",
               "status": "out",
               "return": "Round 10",
+              "comment": "Out after suffering a right thigh muscle injury in Round 7. Expected return in late November."
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 11",
               "comment": "Out after suffering a right thigh muscle injury in Round 7. Expected return in late November."
             }
           ]
@@ -12670,6 +12873,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "DNP in Rounds 8-9 (undisclosed injury). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 8-10 (undisclosed injury)"
             }
           ]
         }
@@ -13331,6 +13541,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 after DNP in Rounds 7-8 (coach's decision). Played in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 7-10 (coach's decision)"
             }
           ]
         }
@@ -13587,6 +13804,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not in 12-man roster for Round 10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (coach's decision)"
             }
           ]
         }
@@ -14738,6 +14962,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Rounds 8-9 (leg contusion). DNP in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Ruled out for Round 10 after DNP in Rounds 8-9 (leg contusion)"
             }
           ]
         }
@@ -14854,6 +15085,13 @@
               "at": "2026-11-05T10:21+01:00",
               "status": "out",
               "return": "Round 10",
+              "comment": "Ruled out for Round 10 after a back injury in Round 6"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
               "comment": "Ruled out for Round 10 after a back injury in Round 6"
             }
           ]
@@ -15660,6 +15898,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP in Rounds 7-9 (back discomfort). DNP in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Out indefinitely after DNP in Rounds 7-9 (back injury)"
             }
           ]
         }
@@ -16087,6 +16332,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Ruled out for Round 10 after DNP in Rounds 8-9 but might be in contention to play in Round 11 (foot bone injury)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 8-10, but might be in contention to play in Round 11 (foot bone injury)"
             }
           ]
         }
@@ -16149,6 +16401,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Ruled out for Round 10 after DNP in Rounds 8-9 (hip injury)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 8-10 (hip injury)"
             }
           ]
         }
@@ -16437,6 +16696,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Ruled out for Round 10 after DNP in Round 9, but might be in contention to play in Round 11 (muscle injury)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 9-10, but might be in contention to play in Round 11 (muscle injury)"
             }
           ]
         }
@@ -16540,6 +16806,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster for Round 10 after DNP in Round 9 (concussion)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 9-10 (concussion)"
             }
           ]
         }
@@ -16595,6 +16868,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Didn't travel with the team (knee soreness)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (knee soreness)"
             }
           ]
         }
@@ -16636,6 +16916,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Right ankle sprain, expected to miss around 10 days (10.29). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 9-10 (right ankle sprain), expected to miss around 10 days (10.29)"
             }
           ]
         }
@@ -16704,6 +16991,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (coach's decision). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (coach's decision)"
             }
           ]
         }
@@ -16752,6 +17046,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not included in 12-man roster in Round 9 (coach's decision). DNP in the domestic league (11.01)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (coach's decision)"
             }
           ]
         }
@@ -16779,6 +17080,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Ruled out for Round 10 after a concussion in Round 9"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (concussion)"
             }
           ]
         }
@@ -16916,6 +17224,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Coach Poetta confirmed on November 2 that Booker suffered a serious injury and could miss months of action."
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Coach Poetta confirmed on November 2 that Booker suffered a serious injury and could miss months of action."
             }
           ]
         }
@@ -17017,13 +17332,40 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Not in 12-man roster for Round 10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (coach's decision)"
             }
           ]
         }
       ],
       "name": "Sertac Sanli",
       "club": "Fenerbahce Beko Istanbul"
+    },
+    "6492": {
+      "episodes": [
+        {
+          "start": "2026-11-06",
+          "end": null,
+          "lastSeen": "2026-11-06",
+          "updates": [
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T08:40+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Out indefinitely (hamstring injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Davis Bertans",
+      "club": "Dubai Basketball"
     }
   },
-  "updatedAt": "2026-11-06T01:49:47"
+  "updatedAt": "2026-11-06T08:40:01"
 }
