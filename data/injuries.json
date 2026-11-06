@@ -17372,7 +17372,27 @@
       ],
       "name": "Davis Bertans",
       "club": "Dubai Basketball"
+    },
+    "24711": {
+      "episodes": [
+        {
+          "start": "2026-11-06",
+          "end": null,
+          "lastSeen": "2026-11-06",
+          "updates": [
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T13:21+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Minor shoulder injury"
+            }
+          ]
+        }
+      ],
+      "name": "Kevarrius Hayes",
+      "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-11-06T09:10:52"
+  "updatedAt": "2026-11-06T13:21:29"
 }
