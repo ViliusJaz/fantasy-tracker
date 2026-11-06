@@ -550,6 +550,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Included in 12-man roster in Round 8. DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T17:24+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-9 (coach's decision)"
             }
           ]
         }
@@ -625,6 +632,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Expected to rejoin the team at the beginning of November. DNP in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T17:24+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Out indefinitely after injury in Round 1 (wrist fracture), expected to rejoin the team at the beginning of November"
             }
           ]
         }
@@ -15352,7 +15366,7 @@
         },
         {
           "start": "2026-10-28",
-          "end": null,
+          "end": "2026-11-06",
           "lastSeen": "2026-11-06",
           "updates": [
             {
@@ -15389,6 +15403,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "DNP ir Rounds 8-9 (undisclosed). DNP in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T17:24+01:00",
+              "status": "ready",
+              "return": "Round 10",
+              "comment": "Included in 12-man roster after DNP in Rounds 8-9 (undisclosed)"
             }
           ]
         }
@@ -16628,6 +16649,13 @@
               "status": "expected",
               "return": "Round 10",
               "comment": "DNP in Rounds 8-9 (undisclosed). Played in the domestic league (11.02)"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T17:24+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Not included in 12-man roster after DNP in Rounds 8-9 (undisclosed). Played in the domestic league (11.02)"
             }
           ]
         }
@@ -17415,5 +17443,5 @@
       "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-11-06T15:51:58"
+  "updatedAt": "2026-11-06T17:24:49"
 }
