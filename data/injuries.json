@@ -6710,6 +6710,13 @@
               "status": "game-time",
               "return": "Round 10",
               "comment": "Ankle injury suffered in Round 1, Willis was expected to rejoin the team during the second week of November"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T15:51+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Ankle injury suffered in Round 1, Willis was expected to rejoin the team during the second week of November"
             }
           ]
         }
@@ -14679,6 +14686,13 @@
               "status": "game-time",
               "return": "Round 10",
               "comment": "Adductor injury in Round 6"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T15:51+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Adductor injury in Round 6"
             }
           ]
         }
@@ -17386,6 +17400,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Minor shoulder injury"
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T15:51+01:00",
+              "status": "out",
+              "return": "Round 10",
+              "comment": "Minor shoulder injury"
             }
           ]
         }
@@ -17394,5 +17415,5 @@
       "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-11-06T13:21:29"
+  "updatedAt": "2026-11-06T15:51:58"
 }
