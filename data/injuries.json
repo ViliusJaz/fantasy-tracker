@@ -17231,6 +17231,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Coach Poetta confirmed on November 2 that Booker suffered a serious injury and could miss months of action."
+            },
+            {
+              "date": "2026-11-06",
+              "at": "2026-11-06T09:10+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out for up to three months (11.06)."
             }
           ]
         }
@@ -17367,5 +17374,5 @@
       "club": "Dubai Basketball"
     }
   },
-  "updatedAt": "2026-11-06T08:40:01"
+  "updatedAt": "2026-11-06T09:10:52"
 }
