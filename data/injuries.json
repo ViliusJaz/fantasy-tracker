@@ -8407,7 +8407,7 @@
         },
         {
           "start": "2026-11-02",
-          "end": null,
+          "end": "2026-11-08",
           "lastSeen": "2026-11-08",
           "updates": [
             {
@@ -8428,6 +8428,13 @@
               "date": "2026-11-07",
               "at": "2026-11-07T15:45+01:00",
               "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T15:09+01:00",
+              "status": "ready",
               "return": "Round 11",
               "comment": "DNP in Rounds 8-10 (coach's decision)"
             }
@@ -12609,6 +12616,20 @@
               "comment": "Missed domestic game on Monday (rest)"
             }
           ]
+        },
+        {
+          "start": "2026-11-08",
+          "end": null,
+          "lastSeen": "2026-11-08",
+          "updates": [
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T15:09+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
         }
       ],
       "name": "Ąžuolas Tubelis",
@@ -13658,6 +13679,20 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-11-08",
+          "end": null,
+          "lastSeen": "2026-11-08",
+          "updates": [
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T15:09+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
         }
       ],
       "name": "Carsen Edwards",
@@ -14062,7 +14097,7 @@
         },
         {
           "start": "2026-11-02",
-          "end": null,
+          "end": "2026-11-08",
           "lastSeen": "2026-11-08",
           "updates": [
             {
@@ -14083,6 +14118,13 @@
               "date": "2026-11-07",
               "at": "2026-11-07T15:45+01:00",
               "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T15:09+01:00",
+              "status": "ready",
               "return": "Round 11",
               "comment": "DNP in Rounds 8-10 (coach's decision)"
             }
@@ -16922,7 +16964,7 @@
       "episodes": [
         {
           "start": "2026-10-27",
-          "end": null,
+          "end": "2026-11-08",
           "lastSeen": "2026-11-08",
           "updates": [
             {
@@ -16978,6 +17020,13 @@
               "date": "2026-11-07",
               "at": "2026-11-07T15:45+01:00",
               "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T15:09+01:00",
+              "status": "ready",
               "return": "Round 11",
               "comment": "DNP in Rounds 8-10 (coach's decision)"
             }
@@ -18003,7 +18052,27 @@
       ],
       "name": "Kostas Papanikolaou",
       "club": "Olympiacos Piraeus"
+    },
+    "6504": {
+      "episodes": [
+        {
+          "start": "2026-11-08",
+          "end": null,
+          "lastSeen": "2026-11-08",
+          "updates": [
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T15:09+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
+        }
+      ],
+      "name": "Jonas Valančiūnas",
+      "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-08T14:37:08"
+  "updatedAt": "2026-11-08T15:09:43"
 }
