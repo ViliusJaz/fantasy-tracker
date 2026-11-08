@@ -8439,6 +8439,20 @@
               "comment": "DNP in Rounds 8-10 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-11-08",
+          "end": null,
+          "lastSeen": "2026-11-08",
+          "updates": [
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T16:11+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 8-10 (coach's decision), played in domestic league (11.08)"
+            }
+          ]
         }
       ],
       "name": "Deividas Sirvydis",
@@ -12619,7 +12633,7 @@
         },
         {
           "start": "2026-11-08",
-          "end": null,
+          "end": "2026-11-08",
           "lastSeen": "2026-11-08",
           "updates": [
             {
@@ -12628,6 +12642,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T16:11+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -13682,7 +13703,7 @@
         },
         {
           "start": "2026-11-08",
-          "end": null,
+          "end": "2026-11-08",
           "lastSeen": "2026-11-08",
           "updates": [
             {
@@ -13691,6 +13712,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T16:11+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -14127,6 +14155,20 @@
               "status": "ready",
               "return": "Round 11",
               "comment": "DNP in Rounds 8-10 (coach's decision)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-08",
+          "end": null,
+          "lastSeen": "2026-11-08",
+          "updates": [
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T16:11+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 8-10 (coach's decision), played in domestic league (11.08)"
             }
           ]
         }
@@ -17031,6 +17073,20 @@
               "comment": "DNP in Rounds 8-10 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-11-08",
+          "end": null,
+          "lastSeen": "2026-11-08",
+          "updates": [
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T16:11+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 8-10 (coach's decision), played in domestic league (11.08)"
+            }
+          ]
         }
       ],
       "name": "Marek Blaževič",
@@ -18057,7 +18113,7 @@
       "episodes": [
         {
           "start": "2026-11-08",
-          "end": null,
+          "end": "2026-11-08",
           "lastSeen": "2026-11-08",
           "updates": [
             {
@@ -18066,6 +18122,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T16:11+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -18074,5 +18137,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-08T15:09:43"
+  "updatedAt": "2026-11-08T16:11:23"
 }
