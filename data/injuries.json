@@ -17963,7 +17963,47 @@
       ],
       "name": "Luca Vildoza",
       "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "21591": {
+      "episodes": [
+        {
+          "start": "2026-11-08",
+          "end": null,
+          "lastSeen": "2026-11-08",
+          "updates": [
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T14:37+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Left domestic game early due to an ankle injury (11.08), set to undergo tests on Monday"
+            }
+          ]
+        }
+      ],
+      "name": "Kevin Punter",
+      "club": "FC Barcelona"
+    },
+    "6639": {
+      "episodes": [
+        {
+          "start": "2026-11-08",
+          "end": null,
+          "lastSeen": "2026-11-08",
+          "updates": [
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T14:37+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Missed domestic league game due to tendonitis (11.08)"
+            }
+          ]
+        }
+      ],
+      "name": "Kostas Papanikolaou",
+      "club": "Olympiacos Piraeus"
     }
   },
-  "updatedAt": "2026-11-08T10:10:28"
+  "updatedAt": "2026-11-08T14:37:08"
 }
