@@ -18102,6 +18102,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "Missed domestic league game due to tendonitis (11.08)"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T21:35+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "Missed domestic league game due to tendonitis (11.08), likely to be out for a week"
             }
           ]
         }
@@ -18137,5 +18144,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-08T16:11:23"
+  "updatedAt": "2026-11-08T21:35:12"
 }
