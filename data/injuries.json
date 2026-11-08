@@ -845,6 +845,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T10:10+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely, as he's not included in official Euroleague roster"
             }
           ]
         }
@@ -1257,6 +1264,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T10:10+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely, as he's not included in official Euroleague roster"
             }
           ]
         }
@@ -1337,6 +1351,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T10:10+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely, as he's not included in official Euroleague roster"
             }
           ]
         }
@@ -1397,6 +1418,13 @@
               "at": "2026-11-03T10:51+01:00",
               "status": "out",
               "return": "Round 10",
+              "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T10:10+01:00",
+              "status": "out",
+              "return": "Round 11",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
             }
           ]
@@ -1944,6 +1972,13 @@
               "status": "uncertain",
               "return": "Round 10",
               "comment": "Was included in 12-man roster but DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T10:10+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Was included in 12-man roster but DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -2004,6 +2039,13 @@
               "at": "2026-11-03T10:51+01:00",
               "status": "out",
               "return": "Round 10",
+              "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-08",
+              "at": "2026-11-08T10:10+01:00",
+              "status": "out",
+              "return": "Round 11",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
             }
           ]
@@ -17923,5 +17965,5 @@
       "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-11-08T00:34:34"
+  "updatedAt": "2026-11-08T10:10:28"
 }
