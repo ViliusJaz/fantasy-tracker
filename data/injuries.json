@@ -10415,6 +10415,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Round 9-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-09",
+              "at": "2026-11-09T23:26+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 9-10 (coach's decision), sprained left knee in domestic league game (11.09)"
             }
           ]
         }
@@ -18193,5 +18200,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-09T21:07:29"
+  "updatedAt": "2026-11-09T23:26:53"
 }
