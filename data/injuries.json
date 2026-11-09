@@ -18082,6 +18082,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "Left domestic game early due to an ankle injury (11.08), set to undergo tests on Monday"
+            },
+            {
+              "date": "2026-11-09",
+              "at": "2026-11-09T15:51+01:00",
+              "status": "out",
+              "return": "Rounds 11-14",
+              "comment": "Suffered ankle injury in domestic league game (11.08), set to be out for three weeks"
             }
           ]
         }
@@ -18144,5 +18151,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-09T01:17:44"
+  "updatedAt": "2026-11-09T15:51:27"
 }
