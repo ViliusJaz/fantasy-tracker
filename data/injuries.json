@@ -16954,6 +16954,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 8-10 (hip injury)"
+            },
+            {
+              "date": "2026-11-09",
+              "at": "2026-11-09T18:47+01:00",
+              "status": "expected",
+              "return": "Round 11",
+              "comment": "Returned to practice and expected to return for Round 11 after DNP in Rounds 8-10 (hip injury)"
             }
           ]
         }
@@ -18158,5 +18165,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-09T16:27:59"
+  "updatedAt": "2026-11-09T18:47:26"
 }
