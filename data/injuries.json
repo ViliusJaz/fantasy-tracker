@@ -1470,7 +1470,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-11-09",
           "lastSeen": "2026-11-09",
           "updates": [
             {
@@ -1548,6 +1548,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "Out indefinitely after DNP in Rounds 1-9 (hamstring injury)"
+            },
+            {
+              "date": "2026-11-09",
+              "at": "2026-11-09T21:07+01:00",
+              "status": "ready",
+              "return": "Round 11",
+              "comment": "Played in domestic league (11-09) after DNP in Rounds 1-9 (hamstring injury)"
             }
           ]
         }
@@ -18186,5 +18193,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-09T20:21:15"
+  "updatedAt": "2026-11-09T21:07:29"
 }
