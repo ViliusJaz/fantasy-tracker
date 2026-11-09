@@ -16437,6 +16437,13 @@
               "status": "out",
               "return": "Round 10",
               "comment": "Out indefinitely after DNP in Rounds 7-9 (back injury)"
+            },
+            {
+              "date": "2026-11-09",
+              "at": "2026-11-09T16:27+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely after DNP in Rounds 7-10 (back injury)"
             }
           ]
         }
@@ -18151,5 +18158,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-09T15:51:27"
+  "updatedAt": "2026-11-09T16:27:59"
 }
