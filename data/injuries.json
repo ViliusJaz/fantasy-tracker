@@ -2483,6 +2483,20 @@
               "comment": "Cleared to play (left shoulder injury)"
             }
           ]
+        },
+        {
+          "start": "2026-11-09",
+          "end": null,
+          "lastSeen": "2026-11-09",
+          "updates": [
+            {
+              "date": "2026-11-09",
+              "at": "2026-11-09T20:21+01:00",
+              "status": "out",
+              "return": "Round 11-14",
+              "comment": "Suffered oblique muscle tear (11.09), set to be out around three weeks"
+            }
+          ]
         }
       ],
       "name": "Tosan Evbuomwan",
@@ -18103,6 +18117,13 @@
               "status": "out",
               "return": "Rounds 11-14",
               "comment": "Suffered ankle injury in domestic league game (11.08), set to be out for three weeks"
+            },
+            {
+              "date": "2026-11-09",
+              "at": "2026-11-09T20:21+01:00",
+              "status": "out",
+              "return": "Round 11-16",
+              "comment": "Suffered ankle sprain in domestic league game (11.08), set to be out for six weeks"
             }
           ]
         }
@@ -18165,5 +18186,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-09T18:47:26"
+  "updatedAt": "2026-11-09T20:21:15"
 }
