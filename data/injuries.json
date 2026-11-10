@@ -18597,7 +18597,27 @@
       ],
       "name": "Jonas Valančiūnas",
       "club": "Zalgiris Kaunas"
+    },
+    "24298": {
+      "episodes": [
+        {
+          "start": "2026-11-10",
+          "end": null,
+          "lastSeen": "2026-11-10",
+          "updates": [
+            {
+              "date": "2026-11-10",
+              "at": "2026-11-10T16:01+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely after undergoing surgery on his broken nose (11.10)"
+            }
+          ]
+        }
+      ],
+      "name": "Jaylen Nowell",
+      "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-11-10T13:27:28"
+  "updatedAt": "2026-11-10T16:01:39"
 }
