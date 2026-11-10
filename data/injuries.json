@@ -17656,6 +17656,20 @@
               "comment": "Included in 12-man roster after DNP in Round 8 (ankle discomfort)"
             }
           ]
+        },
+        {
+          "start": "2026-11-10",
+          "end": null,
+          "lastSeen": "2026-11-10",
+          "updates": [
+            {
+              "date": "2026-11-10",
+              "at": "2026-11-10T10:49+01:00",
+              "status": "expected",
+              "return": "Round 11",
+              "comment": "Expected to play in Round 11 after DNP in domestic cup vs. Hapoel"
+            }
+          ]
         }
       ],
       "name": "Vasilije Micic",
@@ -18578,5 +18592,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-10T10:34:13"
+  "updatedAt": "2026-11-10T10:49:44"
 }
