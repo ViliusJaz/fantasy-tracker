@@ -13281,6 +13281,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 4-9 (ankle injury)"
+            },
+            {
+              "date": "2026-11-10",
+              "at": "2026-11-10T13:27+01:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "DNP in Rounds 4-9 (ankle injury); underwent ankle surgery on Nov. 10"
             }
           ]
         }
@@ -18592,5 +18599,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-10T10:49:44"
+  "updatedAt": "2026-11-10T13:27:28"
 }
