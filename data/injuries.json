@@ -1578,6 +1578,20 @@
               "comment": "Played in domestic league (11-09) after DNP in Rounds 1-9 (hamstring injury)"
             }
           ]
+        },
+        {
+          "start": "2026-11-10",
+          "end": null,
+          "lastSeen": "2026-11-10",
+          "updates": [
+            {
+              "date": "2026-11-10",
+              "at": "2026-11-10T10:34+01:00",
+              "status": "expected",
+              "return": "Round 11",
+              "comment": "Played in domestic league on Monday after DNP in Rounds 1-9 (hamstring injury)"
+            }
+          ]
         }
       ],
       "name": "Justin Anderson",
@@ -2014,6 +2028,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "Was included in 12-man roster but DNP in Rounds 8-10 (coach's decision). Played in the domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-10",
+              "at": "2026-11-10T10:34+01:00",
+              "status": "game-time",
+              "return": "Round 11",
+              "comment": "Played in the domestic league on Monday after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -7088,6 +7109,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "Ankle injury suffered in Round 1, Willis was expected to rejoin the team during the second week of November"
+            },
+            {
+              "date": "2026-11-10",
+              "at": "2026-11-10T10:34+01:00",
+              "status": "game-time",
+              "return": "Round 11",
+              "comment": "Will practice with the team ahead of Round 11 after suffering an ankle injury in Round 1"
             }
           ]
         }
@@ -15421,6 +15449,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "Suffered an adductor injury in Round 6. DNP in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-10",
+              "at": "2026-11-10T10:34+01:00",
+              "status": "game-time",
+              "return": "Round 11",
+              "comment": "Will practice with the team ahead of Round 11 after suffering an adductor injury in Round 6"
             }
           ]
         }
@@ -18345,6 +18380,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Round 10 (minor shoulder injury). DNP in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-10",
+              "at": "2026-11-10T10:34+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (minor shoulder injury). DNP in the domestic league (11.08)"
             }
           ]
         }
@@ -18433,6 +18475,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "Suffered a hand injury in Round 10, ruled out for domestic league game on Sunday"
+            },
+            {
+              "date": "2026-11-10",
+              "at": "2026-11-10T10:34+01:00",
+              "status": "game-time",
+              "return": "Round 11",
+              "comment": "Will practice with the team ahead of Round 11 after suffering a hand injury in Round 10"
             }
           ]
         }
@@ -18529,5 +18578,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-10T08:49:23"
+  "updatedAt": "2026-11-10T10:34:13"
 }
