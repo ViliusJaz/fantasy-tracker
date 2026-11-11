@@ -11992,6 +11992,20 @@
               "comment": "Traveled to Istanbul, cleared to play (illness, stomach bug)"
             }
           ]
+        },
+        {
+          "start": "2026-11-11",
+          "end": null,
+          "lastSeen": "2026-11-11",
+          "updates": [
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T20:22+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Not in 12-man roster in Round 11 (Illness)"
+            }
+          ]
         }
       ],
       "name": "Lamar Stevens",
@@ -19031,5 +19045,5 @@
       "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-11T20:07:21"
+  "updatedAt": "2026-11-11T20:22:48"
 }
