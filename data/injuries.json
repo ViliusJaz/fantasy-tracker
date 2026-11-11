@@ -3181,6 +3181,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "Was included in 12-man squad in Round 10, but DNP (coach's decision).Played in the domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T07:19+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Was included in 12-man squad in Round 10, but DNP (coach's decision).Played in the domestic cup (11.09)"
             }
           ]
         }
@@ -3667,6 +3674,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 7-10 (coach's decision).Played in the domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T07:19+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 7-10 (coach's decision).Played in the domestic cup (11.09)"
             }
           ]
         }
@@ -14262,6 +14276,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 7-10 (coach's decision).Played im the domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T07:19+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 7-10 (coach's decision).Played in the domestic cup (11.09)"
             }
           ]
         }
@@ -14558,6 +14579,13 @@
               "date": "2026-11-10",
               "at": "2026-11-10T08:49+01:00",
               "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 (coach's decision). DNP in the domestic league (11.07)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T07:19+01:00",
+              "status": "doubtful",
               "return": "Round 11",
               "comment": "DNP in Round 10 (coach's decision). DNP in the domestic league (11.07)"
             }
@@ -17221,6 +17249,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Round 8-10, but might be in contention to play in Round 11 (foot bone injury)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T07:19+01:00",
+              "status": "questionable",
+              "return": "Round 11",
+              "comment": "DNP in Round 8-10, but might be in contention to play in Round 11 (foot bone injury)"
             }
           ]
         }
@@ -17639,6 +17674,13 @@
               "date": "2026-11-06",
               "at": "2026-11-06T08:40+01:00",
               "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 9-10, but might be in contention to play in Round 11 (muscle injury)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T07:19+01:00",
+              "status": "questionable",
               "return": "Round 11",
               "comment": "DNP in Round 9-10, but might be in contention to play in Round 11 (muscle injury)"
             }
@@ -18640,5 +18682,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-11-11T05:58:02"
+  "updatedAt": "2026-11-11T07:19:00"
 }
