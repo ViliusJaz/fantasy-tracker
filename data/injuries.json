@@ -1224,6 +1224,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Round 9-10 (coach's decision).Played in the domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Round 9-10 (coach's decision). Played in the domestic league (11.09)"
             }
           ]
         }
@@ -1750,7 +1757,7 @@
         }
       ],
       "name": "Kenan Kamenjas",
-      "club": "Dubai Basketball"
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
     },
     "18643": {
       "episodes": [
@@ -2212,7 +2219,7 @@
         },
         {
           "start": "2026-11-11",
-          "end": null,
+          "end": "2026-11-11",
           "lastSeen": "2026-11-11",
           "updates": [
             {
@@ -2221,6 +2228,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "New signing from Bayern Munich (11.10)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -2586,6 +2600,13 @@
               "status": "out",
               "return": "Round 11-14",
               "comment": "Suffered oblique muscle tear (11.09), set to be out around three weeks"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Suffered oblique muscle tear (11.09), set to be out for around three weeks until Round 14"
             }
           ]
         }
@@ -7455,7 +7476,22 @@
       "club": "Real Madrid"
     },
     "34860": {
-      "episodes": [],
+      "episodes": [
+        {
+          "start": "2026-11-11",
+          "end": null,
+          "lastSeen": "2026-11-11",
+          "updates": [
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "expected",
+              "return": "Round 11",
+              "comment": "Expected to play after DNP in domestic league on Sunday (undisclosed)"
+            }
+          ]
+        }
+      ],
       "name": "Chuma Okeke",
       "club": "Real Madrid"
     },
@@ -8640,6 +8676,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Didn't travel for Round 12 after DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Didn't travel for Round 11 after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -10632,6 +10675,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Round 9-10 (coach's decision), sprained left knee in domestic league game (11.09)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out for eight weeks with an intraspongious fracture (11.09)"
             }
           ]
         }
@@ -12084,6 +12134,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Round 10 (coach's decision).Played in the domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Carries an illness ahead of Round 11 after DNP in Round 10 (coach's decision). Played in the domestic league (11.09)"
             }
           ]
         }
@@ -12436,6 +12493,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Round 10 (Undisclosed). DNP in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "game-time",
+              "return": "Round 11",
+              "comment": "DNP in Round 10 and domestic league on Sunday (right foot injury)"
             }
           ]
         }
@@ -14491,6 +14555,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Didn't travel for Round 12 after DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Didn't travel for Round 11 after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -17291,6 +17362,13 @@
               "status": "questionable",
               "return": "Round 11",
               "comment": "DNP in Round 8-10, but might be in contention to play in Round 11 (foot bone injury)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Ruled out for Round 11 after DNP in Round 8-10 (foot bone injury)"
             }
           ]
         }
@@ -17512,6 +17590,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Didn't travel for Round 12 after DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Didn't travel for Round 11 after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -17725,6 +17810,13 @@
               "status": "questionable",
               "return": "Round 11",
               "comment": "DNP in Round 9-10, but might be in contention to play in Round 11 (muscle injury)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Ruled out for Round 11 after DNP in Round 9-10 (muscle injury)"
             }
           ]
         }
@@ -18670,6 +18762,13 @@
               "status": "out",
               "return": "Round 11-16",
               "comment": "Suffered ankle sprain in domestic league game (11.08), set to be out for six weeks"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T16:33+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Suffered ankle sprain in domestic league game (11.08), set to be out for six weeks until Round 16"
             }
           ]
         }
@@ -18779,5 +18878,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-11-11T14:28:35"
+  "updatedAt": "2026-11-11T16:33:43"
 }
