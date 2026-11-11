@@ -8633,6 +8633,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 8-10 (coach's decision), played in domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T14:28+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Didn't travel for Round 12 after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -14477,6 +14484,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 8-10 (coach's decision), played in domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T14:28+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Didn't travel for Round 12 after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -17491,6 +17505,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 8-10 (coach's decision), played in domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T14:28+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Didn't travel for Round 12 after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -18758,5 +18779,5 @@
       "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-11-11T13:11:32"
+  "updatedAt": "2026-11-11T14:28:35"
 }
