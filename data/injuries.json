@@ -2202,10 +2202,24 @@
               "comment": "DNP in Rounds 8-9 (coach's decision). Played in the domestic league (11.01-03)"
             }
           ]
+        },
+        {
+          "start": "2026-11-11",
+          "end": null,
+          "lastSeen": "2026-11-11",
+          "updates": [
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T05:58+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "New signing from Bayern Munich (11.10)"
+            }
+          ]
         }
       ],
       "name": "Kamar Baldwin",
-      "club": "FC Bayern Munich"
+      "club": "Maccabi Rapyd Tel Aviv"
     },
     "39698": {
       "episodes": [
@@ -10395,6 +10409,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 1-10 (coach's decision). Played in teh domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T05:58+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 1-10 (coach's decision). Played in the domestic league (11.09)"
             }
           ]
         }
@@ -18619,5 +18640,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-11-11T00:26:27"
+  "updatedAt": "2026-11-11T05:58:02"
 }
