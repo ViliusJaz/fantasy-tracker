@@ -1738,6 +1738,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T13:11+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out indefinitely, as he's on his way to Baskonia and not included in official Dubai's Euroleague roster"
             }
           ]
         }
@@ -14588,6 +14595,13 @@
               "status": "doubtful",
               "return": "Round 11",
               "comment": "DNP in Round 10 (coach's decision). DNP in the domestic league (11.07)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T13:11+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Finalizes agreement to join Partizan after DNP in Round 10 and the domestic league (coach's decision)"
             }
           ]
         }
@@ -14987,6 +15001,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Expected to be out until Round 14 after receiving one-month suspension by the club (10.22)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T13:11+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Expected to be out until Round 12 after receiving one-month suspension by the club"
             }
           ]
         }
@@ -18526,6 +18547,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Round 10 (coach's decision). DNP in the domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T13:11+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Ruled out for Round 11 after DNP in Round 10 (hip/psoas muscle injury)"
             }
           ]
         }
@@ -18648,6 +18676,13 @@
               "status": "doubtful",
               "return": "Round 11",
               "comment": "Missed domestic league game due to tendonitis (11.08), likely to be out for a week"
+            },
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T13:11+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Missed domestic league game due to tendonitis (11.08), likely to be out for a week"
             }
           ]
         }
@@ -18701,7 +18736,27 @@
       ],
       "name": "Jaylen Nowell",
       "club": "Besiktas Istanbul"
+    },
+    "19569": {
+      "episodes": [
+        {
+          "start": "2026-11-11",
+          "end": null,
+          "lastSeen": "2026-11-11",
+          "updates": [
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T13:11+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "New signing"
+            }
+          ]
+        }
+      ],
+      "name": "Rolands Smits",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
     }
   },
-  "updatedAt": "2026-11-11T10:55:43"
+  "updatedAt": "2026-11-11T13:11:32"
 }
