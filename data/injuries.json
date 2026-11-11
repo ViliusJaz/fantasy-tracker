@@ -16261,6 +16261,20 @@
               "comment": "Registered to the EuroLeague roster, DNP in the domestic league on Saturday (new signing)"
             }
           ]
+        },
+        {
+          "start": "2026-11-11",
+          "end": null,
+          "lastSeen": "2026-11-11",
+          "updates": [
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T19:51+01:00",
+              "status": "expected",
+              "return": "Round 11",
+              "comment": "Didn't travel with the team to Madrid, expected to join on game day (visa issues)"
+            }
+          ]
         }
       ],
       "name": "Christian Koloko",
@@ -18876,7 +18890,27 @@
       ],
       "name": "Rolands Smits",
       "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "7240": {
+      "episodes": [
+        {
+          "start": "2026-11-11",
+          "end": null,
+          "lastSeen": "2026-11-11",
+          "updates": [
+            {
+              "date": "2026-11-11",
+              "at": "2026-11-11T19:51+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Undisclosed injury"
+            }
+          ]
+        }
+      ],
+      "name": "Nicolo Melli",
+      "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-11T16:33:43"
+  "updatedAt": "2026-11-11T19:51:53"
 }
