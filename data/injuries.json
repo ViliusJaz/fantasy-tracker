@@ -2056,6 +2056,13 @@
               "status": "game-time",
               "return": "Round 11",
               "comment": "Played in the domestic league on Monday after DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T16:23+01:00",
+              "status": "game-time",
+              "return": "Round 11",
+              "comment": "Healthy and played in the domestic league on Monday after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -2067,7 +2074,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-11-12",
           "lastSeen": "2026-11-12",
           "updates": [
             {
@@ -2124,6 +2131,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T16:23+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -19295,5 +19309,5 @@
       "club": "Hapoel IBI Tel Aviv"
     }
   },
-  "updatedAt": "2026-11-12T15:06:40"
+  "updatedAt": "2026-11-12T16:23:03"
 }
