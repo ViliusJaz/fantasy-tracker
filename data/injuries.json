@@ -13057,6 +13057,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 7-10 (hamstring injury). DNP in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T13:46+01:00",
+              "status": "game-time",
+              "return": "Round 11",
+              "comment": "Practiced ahead of Round 11 after DNP in Rounds 7-10 (hamstring injury) and DNP in the domestic league (11.08)"
             }
           ]
         }
@@ -15519,6 +15526,20 @@
               "comment": "DNP in Round 5 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-11-12",
+          "end": null,
+          "lastSeen": "2026-11-12",
+          "updates": [
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T13:46+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Ruled out for Round 11 (undisclosed)"
+            }
+          ]
         }
       ],
       "name": "Daniel Hackett",
@@ -16125,6 +16146,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 8-10 (leg contusion). DNP in the domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T13:46+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Ruled out for Round 11 after DNP in Rounds 8-10 (leg contusion)"
             }
           ]
         }
@@ -17000,6 +17028,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 9-10 (coach's decision). DNP in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T13:46+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "Didn't practice ahead of Round 11 after DNP in Rounds 9-10 (coach's decision) and DNP in the domestic league (11.08)"
             }
           ]
         }
@@ -19226,5 +19261,5 @@
       "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-11-12T10:18:33"
+  "updatedAt": "2026-11-12T13:46:40"
 }
