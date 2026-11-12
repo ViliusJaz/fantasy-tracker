@@ -10801,6 +10801,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Out for eight weeks with an intraspongious fracture (11.09)"
+            },
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T10:18+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "Out for eight weeks and at least until Round 21 (bone bruise, 11.09)"
             }
           ]
         }
@@ -19219,5 +19226,5 @@
       "club": "Partizan Mozzart Bet Belgrade"
     }
   },
-  "updatedAt": "2026-11-12T09:16:52"
+  "updatedAt": "2026-11-12T10:18:33"
 }
