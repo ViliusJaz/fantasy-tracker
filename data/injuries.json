@@ -14557,6 +14557,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Rounds 7-10 (coach's decision).Played in the domestic cup (11.09)"
+            },
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T15:06+01:00",
+              "status": "expected",
+              "return": "Round 11",
+              "comment": "Expected to return after DNP in Rounds 7-10 (coach's decision). Also played in the domestic cup (11.09)"
             }
           ]
         }
@@ -18530,6 +18537,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "DNP in Round 10 (concussion)"
+            },
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T15:06+01:00",
+              "status": "expected",
+              "return": "Round 11",
+              "comment": "Expected to return after DNP in Round 10 (concussion)"
             }
           ]
         }
@@ -19259,7 +19273,27 @@
       ],
       "name": "Ethan Thompson",
       "club": "Partizan Mozzart Bet Belgrade"
+    },
+    "17121": {
+      "episodes": [
+        {
+          "start": "2026-11-12",
+          "end": null,
+          "lastSeen": "2026-11-12",
+          "updates": [
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T15:06+01:00",
+              "status": "game-time",
+              "return": "Round 11",
+              "comment": "Might not make the 12-man roster (coach's decision)"
+            }
+          ]
+        }
+      ],
+      "name": "Bruno Caboclo",
+      "club": "Hapoel IBI Tel Aviv"
     }
   },
-  "updatedAt": "2026-11-12T13:46:40"
+  "updatedAt": "2026-11-12T15:06:40"
 }
