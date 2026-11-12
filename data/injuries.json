@@ -19024,6 +19024,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "New signing"
+            },
+            {
+              "date": "2026-11-12",
+              "at": "2026-11-12T06:18+01:00",
+              "status": "out",
+              "return": "Round 11",
+              "comment": "New signing (11.11)"
             }
           ]
         }
@@ -19052,5 +19059,5 @@
       "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-12T03:23:02"
+  "updatedAt": "2026-11-12T06:18:31"
 }
