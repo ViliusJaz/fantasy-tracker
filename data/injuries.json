@@ -8928,6 +8928,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Didn't travel for Round 11 after DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T08:43+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Didn't travel for Round 11 after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -15003,6 +15010,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Didn't travel for Round 11 after DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T08:43+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Didn't travel for Round 11 after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -18108,6 +18122,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Didn't travel for Round 11 after DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T08:43+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "Didn't travel for Round 11 after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -19602,5 +19623,5 @@
       "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-11-13T01:04:22"
+  "updatedAt": "2026-11-13T08:43:39"
 }
