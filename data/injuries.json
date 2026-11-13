@@ -33,6 +33,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Out indefinitely (rehab after surgery)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T22:41+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Out indefinitely (rehab after surgery)"
             }
           ]
         }
@@ -283,6 +290,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Not included in 12-man roster for Round 11 after DNP in Rounds 1-10 (coach's decision). Played in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T22:41+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision). Played in the domestic league (11.08)"
             }
           ]
         }
@@ -9969,6 +9983,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Not included in 12-man roster for Round 11 after DNP in Rounds 1-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T22:41+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision)"
             }
           ]
         }
@@ -10157,6 +10178,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Not included in 12-man roster for Round 11 after DNP in Rounds 1-10 (coach's decision). Played oin the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T22:41+01:00",
+              "status": "doubtful",
+              "return": "Round 11",
+              "comment": "DNP in Rounds 1-11 (coach's decision). Played oin the domestic league (11.08)"
             }
           ]
         }
@@ -11091,6 +11119,20 @@
               "comment": "Included in 12-man lineup for Round 11 after DNP in Rounds 1-10 (coach's decision). Played in the domestic league (11.09)"
             }
           ]
+        },
+        {
+          "start": "2026-11-13",
+          "end": null,
+          "lastSeen": "2026-11-13",
+          "updates": [
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T22:41+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Included in 12-man lineup for Round 11 but did not play. DNP in Rounds 1-10 (coach's decision). Played in the domestic league (11.09)"
+            }
+          ]
         }
       ],
       "name": "Matteo Baiocchi",
@@ -11290,6 +11332,13 @@
               "at": "2026-11-12T10:18+01:00",
               "status": "out",
               "return": "Round 11",
+              "comment": "Out for eight weeks and at least until Round 21 (bone bruise, 11.09)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T22:41+01:00",
+              "status": "out",
+              "return": "Round 12",
               "comment": "Out for eight weeks and at least until Round 21 (bone bruise, 11.09)"
             }
           ]
@@ -16224,6 +16273,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Ruled out for Round 11 (undisclosed)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T22:41+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Ruled out for Round 11 (undisclosed)"
             }
           ]
         }
@@ -16839,6 +16895,13 @@
               "status": "out",
               "return": "Round 11",
               "comment": "Ruled out for Round 11 after DNP in Rounds 8-10 (leg contusion)"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T22:41+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (leg contusion)"
             }
           ]
         }
@@ -20235,7 +20298,27 @@
       ],
       "name": "Oshae Brissett",
       "club": "Maccabi Rapyd Tel Aviv"
+    },
+    "23503": {
+      "episodes": [
+        {
+          "start": "2026-11-13",
+          "end": null,
+          "lastSeen": "2026-11-13",
+          "updates": [
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T22:41+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Calf injury in Round 11"
+            }
+          ]
+        }
+      ],
+      "name": "Bruno Fernando",
+      "club": "Anadolu Efes Istanbul"
     }
   },
-  "updatedAt": "2026-11-13T20:16:16"
+  "updatedAt": "2026-11-13T22:41:56"
 }
