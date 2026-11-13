@@ -6702,7 +6702,7 @@
       }
     },
     "10": {
-      "savedAt": "2026-11-13T01:04:22",
+      "savedAt": "2026-11-13T06:35:14",
       "locked": true,
       "teams": {
         "6aa6bddec90ec6ddaf50d155": {
@@ -6789,7 +6789,7 @@
           ]
         },
         "6aaeb33dccef480cb35f405f": {
-          "formation": "2-2-1",
+          "formation": "2-1-2",
           "players": [
             {
               "id": "669b6a1069eb071c0f3bfef1",
@@ -6810,14 +6810,14 @@
               "captain": false
             },
             {
-              "id": "66e6e4324589cab32aef6bcb",
-              "card": "f-2",
+              "id": "69c26d8874f75a7efd626925",
+              "card": "g-1",
               "slot": "starter",
               "captain": false
             },
             {
-              "id": "66e6e4334589cab32aef6c7c",
-              "card": "g-1",
+              "id": "66e6e42f4589cab32aef6978",
+              "card": "g-2",
               "slot": "starter",
               "captain": false
             },
@@ -6828,13 +6828,13 @@
               "captain": false
             },
             {
-              "id": "69c26d8874f75a7efd626925",
+              "id": "66e6e4324589cab32aef6bcb",
               "card": "b-2",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "66e6e42f4589cab32aef6978",
+              "id": "66e6e4334589cab32aef6c7c",
               "card": "b-3",
               "slot": "bench",
               "captain": false
@@ -6988,7 +6988,7 @@
               "captain": true
             },
             {
-              "id": "6513070c98a6be433053457e",
+              "id": "679462c2ebbc1243b6c8da26",
               "card": "b-1",
               "slot": "bench",
               "captain": false
@@ -7000,7 +7000,7 @@
               "captain": false
             },
             {
-              "id": "679462c2ebbc1243b6c8da26",
+              "id": "6513070c98a6be433053457e",
               "card": "b-3",
               "slot": "bench",
               "captain": false
