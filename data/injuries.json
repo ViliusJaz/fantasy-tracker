@@ -15810,6 +15810,20 @@
               "comment": "Practiced ahead of the game, but only partially (tailbone bruise)"
             }
           ]
+        },
+        {
+          "start": "2026-11-13",
+          "end": null,
+          "lastSeen": "2026-11-13",
+          "updates": [
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T15:38+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Broken nose in Round 11"
+            }
+          ]
         }
       ],
       "name": "Yam Madar",
@@ -15875,6 +15889,13 @@
               "date": "2026-11-13",
               "at": "2026-11-13T12:53+01:00",
               "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 6-11 (suspension), TBD if he'll play after suspension"
+            },
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T15:38+01:00",
+              "status": "out",
               "return": "Round 12",
               "comment": "DNP in Rounds 6-11 (suspension), TBD if he'll play after suspension"
             }
@@ -20054,7 +20075,27 @@
       ],
       "name": "Berk Ugurlu",
       "club": "Besiktas Istanbul"
+    },
+    "23518": {
+      "episodes": [
+        {
+          "start": "2026-11-13",
+          "end": null,
+          "lastSeen": "2026-11-13",
+          "updates": [
+            {
+              "date": "2026-11-13",
+              "at": "2026-11-13T15:38+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Back injury in Round 11"
+            }
+          ]
+        }
+      ],
+      "name": "Oshae Brissett",
+      "club": "Maccabi Rapyd Tel Aviv"
     }
   },
-  "updatedAt": "2026-11-13T13:52:29"
+  "updatedAt": "2026-11-13T15:38:42"
 }
