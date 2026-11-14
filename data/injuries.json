@@ -20487,6 +20487,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Calf injury in Round 11"
+            },
+            {
+              "date": "2026-11-14",
+              "at": "2026-11-14T13:48+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "To miss 3-4 weeks with calf injury (11.14)"
             }
           ]
         }
@@ -20495,5 +20502,5 @@
       "club": "Anadolu Efes Istanbul"
     }
   },
-  "updatedAt": "2026-11-14T08:25:31"
+  "updatedAt": "2026-11-14T13:48:29"
 }
