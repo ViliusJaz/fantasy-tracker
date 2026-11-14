@@ -20224,6 +20224,13 @@
               "status": "expected",
               "return": "Round 12",
               "comment": "Played in domestic league (11.14) after DNP in Round 11 (tendonitis)"
+            },
+            {
+              "date": "2026-11-14",
+              "at": "2026-11-14T17:15+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Set to play in domestic league (11.15) after DNP in Round 11 (tendonitis)"
             }
           ]
         }
@@ -20523,5 +20530,5 @@
       "club": "Anadolu Efes Istanbul"
     }
   },
-  "updatedAt": "2026-11-14T14:53:48"
+  "updatedAt": "2026-11-14T17:15:27"
 }
