@@ -5894,6 +5894,20 @@
               "comment": "Included in 12-man roster after playing 5 minutes in Round 9"
             }
           ]
+        },
+        {
+          "start": "2026-11-14",
+          "end": null,
+          "lastSeen": "2026-11-14",
+          "updates": [
+            {
+              "date": "2026-11-14",
+              "at": "2026-11-14T14:53+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Fractured distal phalanx of the index finger (11.14)"
+            }
+          ]
         }
       ],
       "name": "Nikola Milutinov",
@@ -20203,6 +20217,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 11 (tendonitis)"
+            },
+            {
+              "date": "2026-11-14",
+              "at": "2026-11-14T14:53+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Played in domestic league (11.14) after DNP in Round 11 (tendonitis)"
             }
           ]
         }
@@ -20502,5 +20523,5 @@
       "club": "Anadolu Efes Istanbul"
     }
   },
-  "updatedAt": "2026-11-14T13:48:29"
+  "updatedAt": "2026-11-14T14:53:48"
 }
