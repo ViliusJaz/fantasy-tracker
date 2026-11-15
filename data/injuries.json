@@ -13727,7 +13727,7 @@
         },
         {
           "start": "2026-10-15",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -13855,6 +13855,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Practiced ahead of Round 11, but DNP in Rounds 7-11 (hamstring injury).DNP in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T11:27+01:00",
+              "status": "ready",
+              "return": "Round 12",
+              "comment": "Practiced ahead of Round 11, but DNP in Rounds 7-11 (hamstring injury). Returned to action in the domestic league (11.15)"
             }
           ]
         }
@@ -20691,5 +20698,5 @@
       "club": "Anadolu Efes Istanbul"
     }
   },
-  "updatedAt": "2026-11-15T10:49:58"
+  "updatedAt": "2026-11-15T11:27:32"
 }
