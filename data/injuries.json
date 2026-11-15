@@ -9336,6 +9336,20 @@
               "comment": "DNP in Rounds 8-11 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-11-15",
+          "end": null,
+          "lastSeen": "2026-11-15",
+          "updates": [
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T16:03+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (coach's decision). Played in the domestic league (11.15)"
+            }
+          ]
         }
       ],
       "name": "Deividas Sirvydis",
@@ -15663,6 +15677,20 @@
               "comment": "DNP in Rounds 8-11 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-11-15",
+          "end": null,
+          "lastSeen": "2026-11-15",
+          "updates": [
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T16:03+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (coach's decision). Played in the domestic league (11.15)"
+            }
+          ]
         }
       ],
       "name": "Dovydas Giedraitis",
@@ -18414,7 +18442,7 @@
         },
         {
           "start": "2026-11-15",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -18423,6 +18451,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T16:03+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -18948,6 +18983,20 @@
               "status": "ready",
               "return": "Round 12",
               "comment": "DNP in Rounds 8-11 (coach's decision)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-15",
+          "end": null,
+          "lastSeen": "2026-11-15",
+          "updates": [
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T16:03+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (coach's decision).Played in the domestic league (11.15)"
             }
           ]
         }
@@ -20445,7 +20494,7 @@
         },
         {
           "start": "2026-11-15",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -20454,6 +20503,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T16:03+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -20750,7 +20806,7 @@
       "episodes": [
         {
           "start": "2026-11-15",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -20759,6 +20815,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T16:03+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -20770,7 +20833,7 @@
       "episodes": [
         {
           "start": "2026-11-15",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -20779,6 +20842,13 @@
               "status": "out",
               "return": "",
               "comment": ""
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T16:03+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -20787,5 +20857,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-15T15:26:18"
+  "updatedAt": "2026-11-15T16:03:12"
 }
