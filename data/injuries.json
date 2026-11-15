@@ -9290,7 +9290,7 @@
         },
         {
           "start": "2026-11-08",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -9325,6 +9325,13 @@
               "date": "2026-11-13",
               "at": "2026-11-13T12:53+01:00",
               "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T14:39+01:00",
+              "status": "ready",
               "return": "Round 12",
               "comment": "DNP in Rounds 8-11 (coach's decision)"
             }
@@ -15610,7 +15617,7 @@
         },
         {
           "start": "2026-11-08",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -15645,6 +15652,13 @@
               "date": "2026-11-13",
               "at": "2026-11-13T12:53+01:00",
               "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T14:39+01:00",
+              "status": "ready",
               "return": "Round 12",
               "comment": "DNP in Rounds 8-11 (coach's decision)"
             }
@@ -18876,7 +18890,7 @@
         },
         {
           "start": "2026-11-08",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -18911,6 +18925,13 @@
               "date": "2026-11-13",
               "at": "2026-11-13T12:53+01:00",
               "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T14:39+01:00",
+              "status": "ready",
               "return": "Round 12",
               "comment": "DNP in Rounds 8-11 (coach's decision)"
             }
@@ -20407,6 +20428,20 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-11-15",
+          "end": null,
+          "lastSeen": "2026-11-15",
+          "updates": [
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T14:39+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
         }
       ],
       "name": "Jonas Valančiūnas",
@@ -20696,7 +20731,27 @@
       ],
       "name": "Bruno Fernando",
       "club": "Anadolu Efes Istanbul"
+    },
+    "6943": {
+      "episodes": [
+        {
+          "start": "2026-11-15",
+          "end": null,
+          "lastSeen": "2026-11-15",
+          "updates": [
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T14:39+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
+        }
+      ],
+      "name": "Arnas Butkevičius",
+      "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-15T11:27:32"
+  "updatedAt": "2026-11-15T14:39:45"
 }
