@@ -19588,7 +19588,7 @@
       "episodes": [
         {
           "start": "2026-10-30",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -19611,6 +19611,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Out indefinitely due to a right knee sprain (10.30)"
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T21:06+01:00",
+              "status": "ready",
+              "return": "Round 12",
+              "comment": "Played in domestic league (11.15) after being out due to a right knee sprain (10.30)"
             }
           ]
         }
@@ -20878,5 +20885,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-15T16:34:27"
+  "updatedAt": "2026-11-15T21:06:52"
 }
