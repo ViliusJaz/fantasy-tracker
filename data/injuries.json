@@ -18411,6 +18411,20 @@
               "comment": "Included in 12-man roster after playing in Round 8 (new signing)"
             }
           ]
+        },
+        {
+          "start": "2026-11-15",
+          "end": null,
+          "lastSeen": "2026-11-15",
+          "updates": [
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T15:26+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
         }
       ],
       "name": "Keenan Evans",
@@ -20751,7 +20765,27 @@
       ],
       "name": "Arnas Butkevičius",
       "club": "Zalgiris Kaunas"
+    },
+    "6826": {
+      "episodes": [
+        {
+          "start": "2026-11-15",
+          "end": null,
+          "lastSeen": "2026-11-15",
+          "updates": [
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T15:26+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
+        }
+      ],
+      "name": "Marius Grigonis",
+      "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-15T14:39:45"
+  "updatedAt": "2026-11-15T15:26:18"
 }
