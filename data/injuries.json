@@ -19482,6 +19482,20 @@
               "comment": "Included in 12-man roster for Round 11 despite DNP in Round 10 (knee soreness)"
             }
           ]
+        },
+        {
+          "start": "2026-11-15",
+          "end": null,
+          "lastSeen": "2026-11-15",
+          "updates": [
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T16:34+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Suffered muscle strain of his left abdominal wall in Round 11. Out for around three weeks"
+            }
+          ]
         }
       ],
       "name": "Umoja Gibson",
@@ -19556,6 +19570,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 9-11 (right ankle sprain), expected to miss around 10 days (10.29). DNP in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T16:34+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Played in domestic league game (11.15) after DNP in Rounds 9-11 (right ankle sprain)"
             }
           ]
         }
@@ -20857,5 +20878,5 @@
       "club": "Zalgiris Kaunas"
     }
   },
-  "updatedAt": "2026-11-15T16:03:12"
+  "updatedAt": "2026-11-15T16:34:27"
 }
