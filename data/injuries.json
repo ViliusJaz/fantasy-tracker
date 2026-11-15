@@ -1709,6 +1709,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 but played in domestic league on November 9 (hamstring)"
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T10:49+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 but played in domestic league on November 9 (hamstring). Was not registered for ABA League game (11.15)"
             }
           ]
         }
@@ -2203,6 +2210,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Was included in 12-man roster in Round 11 but DNP after DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T10:49+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Was included in 12-man roster in Round 11 but did not play after DNP in Rounds 8-10 (coach's decision)"
             }
           ]
         }
@@ -18095,7 +18109,7 @@
       "episodes": [
         {
           "start": "2026-10-22",
-          "end": null,
+          "end": "2026-11-15",
           "lastSeen": "2026-11-15",
           "updates": [
             {
@@ -18174,6 +18188,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Out indefinitely after DNP in Rounds 7-11 (back injury)"
+            },
+            {
+              "date": "2026-11-15",
+              "at": "2026-11-15T10:49+01:00",
+              "status": "ready",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 7-11 (back injury); returned to action in ABA League on Sunday (11.15)"
             }
           ]
         }
@@ -20670,5 +20691,5 @@
       "club": "Anadolu Efes Istanbul"
     }
   },
-  "updatedAt": "2026-11-15T03:40:39"
+  "updatedAt": "2026-11-15T10:49:58"
 }
