@@ -1737,6 +1737,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 but played in domestic league on November 9 (hamstring). Was not registered for ABA League game (11.15)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T20:08+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 but played in domestic league on November 9 (hamstring). Was not registered for ABA League game (11.15)"
             }
           ]
         }
@@ -18526,6 +18533,20 @@
               "comment": "DNP in Rounds 7-11 (back injury); returned to action in ABA League on Sunday (11.15)"
             }
           ]
+        },
+        {
+          "start": "2026-11-16",
+          "end": null,
+          "lastSeen": "2026-11-16",
+          "updates": [
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T20:08+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 7-11 (back injury); returned to action in ABA League on Sunday (11.15)"
+            }
+          ]
         }
       ],
       "name": "Thomas Walkup",
@@ -20676,6 +20697,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 10-11 (hip/psoas muscle injury). DNP in the domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T20:08+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "DNP in Round 10-11 (hip/psoas muscle injury). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -21392,7 +21420,27 @@
       ],
       "name": "Joel Bolomboy",
       "club": "LDLC ASVEL Villeurbanne"
+    },
+    "4756": {
+      "episodes": [
+        {
+          "start": "2026-11-16",
+          "end": null,
+          "lastSeen": "2026-11-16",
+          "updates": [
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T20:08+01:00",
+              "status": "game-time",
+              "return": "Round 12",
+              "comment": "New signing"
+            }
+          ]
+        }
+      ],
+      "name": "Marcelinho Huertas",
+      "club": "Dubai Basketball"
     }
   },
-  "updatedAt": "2026-11-16T17:03:29"
+  "updatedAt": "2026-11-16T20:08:28"
 }
