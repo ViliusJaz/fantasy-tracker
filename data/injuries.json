@@ -18760,6 +18760,20 @@
               "comment": "Included in 12-man roster, set to make season debut"
             }
           ]
+        },
+        {
+          "start": "2026-11-16",
+          "end": null,
+          "lastSeen": "2026-11-16",
+          "updates": [
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T13:11+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Does not travel to Cyprus to face Maccabi (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "John Konchar",
@@ -21212,5 +21226,5 @@
       "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-11-16T12:24:16"
+  "updatedAt": "2026-11-16T13:11:36"
 }
