@@ -5,7 +5,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -233,7 +233,7 @@
         {
           "start": "2026-10-30",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-30",
@@ -297,6 +297,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 (coach's decision). Played in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -549,7 +556,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-29",
@@ -606,6 +613,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -859,7 +873,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1230,7 +1244,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-29",
@@ -1301,6 +1315,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 9-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Round 9-11 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -1313,7 +1334,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1414,7 +1435,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1482,7 +1503,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1557,7 +1578,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1687,7 +1708,7 @@
         {
           "start": "2026-11-10",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-10",
@@ -1775,7 +1796,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1815,7 +1836,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1885,6 +1906,13 @@
               "status": "expected",
               "return": "Round 12",
               "comment": "DNP in Round 11 (new signing)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "DNP in Round 11 (new signing). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -2202,7 +2230,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-13",
@@ -2217,6 +2245,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Was included in 12-man roster in Round 11 but did not play after DNP in Rounds 8-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Was included in 12-man roster in Round 11 but DNP, after DNP in Rounds 8-10 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -2422,7 +2457,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -2590,6 +2625,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 2-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 2-11 (coach's decision)"
             }
           ]
         }
@@ -2686,7 +2728,7 @@
         {
           "start": "2026-11-05",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-05",
@@ -2722,6 +2764,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 10-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Round 10-11 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -2802,7 +2851,7 @@
         {
           "start": "2026-11-09",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-09",
@@ -2989,7 +3038,7 @@
         {
           "start": "2026-11-14",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-14",
@@ -2997,6 +3046,13 @@
               "status": "expected",
               "return": "Round 12",
               "comment": "Only included in 12-man roster for Round 11. DNP in Rounds 1-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Only included in 12-man roster for Round 11. DNP in Rounds 1-10 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -3009,7 +3065,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -3280,7 +3336,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-29",
@@ -3446,7 +3502,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-06",
@@ -3652,7 +3708,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-12",
@@ -3775,7 +3831,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -4138,7 +4194,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-29",
@@ -4924,7 +4980,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-06",
@@ -5006,7 +5062,7 @@
         {
           "start": "2026-10-30",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-30",
@@ -5102,7 +5158,7 @@
         {
           "start": "2026-10-08",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-08",
@@ -5364,7 +5420,7 @@
         {
           "start": "2026-10-24",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-24",
@@ -5442,6 +5498,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -5579,7 +5642,7 @@
         {
           "start": "2026-10-31",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-31",
@@ -5636,6 +5699,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 9-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Round 9-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -5767,7 +5837,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-29",
@@ -5831,6 +5901,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -5940,7 +6017,7 @@
         {
           "start": "2026-11-14",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-14",
@@ -6071,7 +6148,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -6260,6 +6337,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -6482,7 +6566,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -6770,7 +6854,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -6971,7 +7055,7 @@
         {
           "start": "2026-11-11",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-11",
@@ -7005,7 +7089,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -7433,7 +7517,7 @@
         {
           "start": "2026-11-11",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-11",
@@ -7634,7 +7718,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -7758,7 +7842,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-28",
@@ -7818,7 +7902,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-29",
@@ -8580,7 +8664,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-12",
@@ -8595,6 +8679,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Round 11 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -9340,7 +9431,7 @@
         {
           "start": "2026-11-15",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-15",
@@ -9429,7 +9520,7 @@
         {
           "start": "2026-10-17",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-17",
@@ -9691,7 +9782,7 @@
         {
           "start": "2026-11-04",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-04",
@@ -9720,6 +9811,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Out indefinitely (left calf tear)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Out indefinitely (left calf tear). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -9941,7 +10039,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-12",
@@ -9956,6 +10054,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Round 11 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -9968,7 +10073,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-29",
@@ -10149,7 +10254,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-29",
@@ -10339,6 +10444,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 (coach's decision). Played oin the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -10554,7 +10666,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-12",
@@ -10562,6 +10674,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -10622,7 +10741,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-29",
@@ -10812,6 +10931,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 1-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -11277,7 +11403,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-13",
@@ -11285,6 +11411,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Included in 12-man lineup for Round 11 but did not play. DNP in Rounds 1-10 (coach's decision). Played in the domestic league (11.09)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Included in 12-man lineup for Round 11 but DNP. DNP in Rounds 1-10 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -11437,7 +11570,7 @@
         {
           "start": "2026-10-31",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-31",
@@ -11681,7 +11814,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-13",
@@ -11689,6 +11822,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Played 1 minute in Round 12 after DNP in Rounds 2-10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Played 1 minute in Round 12 after DNP in Rounds 2-10 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -11777,7 +11917,7 @@
         {
           "start": "2026-10-08",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-08",
@@ -11925,6 +12065,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 2-11 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 2-11 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -12028,7 +12175,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-13",
@@ -12076,7 +12223,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-13",
@@ -12219,7 +12366,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-29",
@@ -12281,7 +12428,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-09-29",
@@ -12843,7 +12990,7 @@
         {
           "start": "2026-11-11",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-11",
@@ -12877,7 +13024,7 @@
         {
           "start": "2026-10-01",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-01",
@@ -13057,7 +13204,7 @@
         {
           "start": "2026-11-05",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-05",
@@ -13100,6 +13247,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 11 (illness) after DNP in Round 10 (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Round 11 (illness) after DNP in Round 10 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -13506,7 +13660,7 @@
         {
           "start": "2026-10-23",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-23",
@@ -13596,7 +13750,7 @@
         {
           "start": "2026-10-20",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-20",
@@ -14153,7 +14307,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-12",
@@ -14168,6 +14322,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 11 (undisclosed)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Round 11 (undisclosed). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -14234,7 +14395,7 @@
         {
           "start": "2026-10-07",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-07",
@@ -14310,7 +14471,7 @@
         {
           "start": "2026-10-07",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-07",
@@ -14567,7 +14728,7 @@
         {
           "start": "2026-10-12",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-12",
@@ -14722,6 +14883,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "DNP in Rounds 8-11 (undisclosed injury). DNP in the domestic league (11.07)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (undisclosed injury). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -15445,7 +15613,7 @@
         {
           "start": "2026-11-15",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-15",
@@ -15681,7 +15849,7 @@
         {
           "start": "2026-11-15",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-15",
@@ -15827,7 +15995,7 @@
         {
           "start": "2026-11-14",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-14",
@@ -15937,7 +16105,7 @@
         {
           "start": "2026-10-27",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-27",
@@ -16015,6 +16183,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "DNP in Rounds 8-11 (coach's decision). Played in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -16206,7 +16381,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-13",
@@ -16233,7 +16408,7 @@
         {
           "start": "2026-10-14",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-14",
@@ -16531,7 +16706,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-12",
@@ -16546,6 +16721,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Ruled out for Round 11 (undisclosed)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Ruled out for Round 11 (undisclosed). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -17090,7 +17272,7 @@
         {
           "start": "2026-10-27",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-27",
@@ -17168,6 +17350,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 8-11 (leg contusion)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (leg contusion). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -17662,7 +17851,7 @@
         {
           "start": "2026-10-20",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-20",
@@ -17793,7 +17982,7 @@
         {
           "start": "2026-10-21",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-21",
@@ -17972,7 +18161,7 @@
         {
           "start": "2026-10-21",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-21",
@@ -18099,6 +18288,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 9-11 (coach's decision). DNP in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 9-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -18649,7 +18845,7 @@
         {
           "start": "2026-10-25",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-25",
@@ -18727,6 +18923,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 8-11 (foot bone injury)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 8-11 (foot bone injury). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -18989,7 +19192,7 @@
         {
           "start": "2026-11-15",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-15",
@@ -19160,7 +19363,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-29",
@@ -19231,6 +19434,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 9-11 (muscle injury)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 9-11.DNP in the domestic league (11.15) (muscle injury)"
             }
           ]
         }
@@ -19312,7 +19522,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-29",
@@ -19486,7 +19696,7 @@
         {
           "start": "2026-11-15",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-15",
@@ -19506,7 +19716,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-29",
@@ -19577,6 +19787,13 @@
               "status": "expected",
               "return": "Round 12",
               "comment": "Played in domestic league game (11.15) after DNP in Rounds 9-11 (right ankle sprain)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 9-11 (right ankle sprain). Only registered in the domestic league game (11.15)"
             }
           ]
         }
@@ -19630,7 +19847,7 @@
         {
           "start": "2026-10-30",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-30",
@@ -19687,6 +19904,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 10-11 (coach's decision). DNP in the domestic league (11.07)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 10-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -19699,7 +19923,7 @@
         {
           "start": "2026-10-30",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-10-30",
@@ -19763,6 +19987,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "DNP in Rounds 10-11 (coach's decision). Played in the domestic league (11.07)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "doubtful",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 10-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -19864,7 +20095,7 @@
         {
           "start": "2026-11-02",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-02",
@@ -19912,7 +20143,7 @@
         {
           "start": "2026-11-02",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-02",
@@ -20042,7 +20273,7 @@
         {
           "start": "2026-11-04",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-04",
@@ -20078,6 +20309,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 10-11 (coach's decision). Played in the domestic league (11.08)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 10-11 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -20090,7 +20328,7 @@
         {
           "start": "2026-11-05",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-05",
@@ -20133,6 +20371,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 10-11 (ankle injury)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Rounds 10-11 (ankle injury). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -20145,7 +20390,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-06",
@@ -20193,7 +20438,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-06",
@@ -20255,7 +20500,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-06",
@@ -20291,6 +20536,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 10-11 (hip/psoas muscle injury)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "DNP in Round 10-11 (hip/psoas muscle injury). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -20303,7 +20555,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-06",
@@ -20392,7 +20644,7 @@
         {
           "start": "2026-11-08",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-08",
@@ -20440,7 +20692,7 @@
         {
           "start": "2026-11-08",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-08",
@@ -20490,6 +20742,13 @@
               "status": "expected",
               "return": "Round 12",
               "comment": "Set to play in domestic league (11.15) after DNP in Round 11 (tendonitis)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Played in domestic league (11.15) after DNP in Round 11 (tendonitis)"
             }
           ]
         }
@@ -20550,7 +20809,7 @@
         {
           "start": "2026-11-10",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-10",
@@ -20577,7 +20836,7 @@
         {
           "start": "2026-11-11",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-11",
@@ -20606,6 +20865,13 @@
               "status": "expected",
               "return": "Round 12",
               "comment": "DNP in Round 11 (new signing)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "DNP in Round 11 (new signing). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -20618,7 +20884,7 @@
         {
           "start": "2026-11-11",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-11",
@@ -20633,6 +20899,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 11 (undisclosed injury)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "out",
+              "return": "Indefinitely",
+              "comment": "DNP in Round 11 and in the domestic league (11.15). Meniscus injury, which needs additional tests"
             }
           ]
         }
@@ -20645,7 +20918,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-12",
@@ -20672,7 +20945,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-12",
@@ -20734,7 +21007,7 @@
         {
           "start": "2026-11-14",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-14",
@@ -20742,6 +21015,13 @@
               "status": "expected",
               "return": "Round 12",
               "comment": "Only included in 12-man roster for Round 11 (back discomfort)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Only included in 12-man roster for Round 11 (back discomfort). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -20754,7 +21034,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-13",
@@ -20769,6 +21049,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Ruled out for Round 11 (undisclosed)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Ruled out for Round 11 (undisclosed). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -20781,7 +21068,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-13",
@@ -20808,7 +21095,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-15",
+          "lastSeen": "2026-11-16",
           "updates": [
             {
               "date": "2026-11-13",
@@ -20883,7 +21170,27 @@
       ],
       "name": "Marius Grigonis",
       "club": "Zalgiris Kaunas"
+    },
+    "35726": {
+      "episodes": [
+        {
+          "start": "2026-11-16",
+          "end": null,
+          "lastSeen": "2026-11-16",
+          "updates": [
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T07:47+01:00",
+              "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Dislocated finger suffered in Istanbul derby (11.15)"
+            }
+          ]
+        }
+      ],
+      "name": "Braxton Key",
+      "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-15T21:06:52"
+  "updatedAt": "2026-11-16T07:47:17"
 }
