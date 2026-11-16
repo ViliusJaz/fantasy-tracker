@@ -1437,6 +1437,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "Reportedly did not travel with the team to Milan for Round 12"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T21:23+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Reportedly did not travel with the team to Milan for Round 12 (coach's decision)"
             }
           ]
         }
@@ -21512,5 +21519,5 @@
       "club": "Dubai Basketball"
     }
   },
-  "updatedAt": "2026-11-16T21:07:33"
+  "updatedAt": "2026-11-16T21:23:02"
 }
