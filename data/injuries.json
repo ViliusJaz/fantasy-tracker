@@ -21303,6 +21303,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "Suffered a dislocated finger and a tear in domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T14:47+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Ruled out for Round 12 after suffering a dislocated finger and a tear in domestic league (11.15)"
             }
           ]
         }
@@ -21338,5 +21345,5 @@
       "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-11-16T14:31:50"
+  "updatedAt": "2026-11-16T14:47:52"
 }
