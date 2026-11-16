@@ -21190,7 +21190,27 @@
       ],
       "name": "Braxton Key",
       "club": "Fenerbahce Beko Istanbul"
+    },
+    "20049": {
+      "episodes": [
+        {
+          "start": "2026-11-16",
+          "end": null,
+          "lastSeen": "2026-11-16",
+          "updates": [
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T12:24+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Broken nose in Round 11. Will miss at least 10 days"
+            }
+          ]
+        }
+      ],
+      "name": "Joel Bolomboy",
+      "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-11-16T07:47:17"
+  "updatedAt": "2026-11-16T12:24:16"
 }
