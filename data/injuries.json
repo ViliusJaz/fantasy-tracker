@@ -7656,6 +7656,20 @@
               "comment": "Listed as available per official injury report (calf injury). DNP in Rounds 1-2"
             }
           ]
+        },
+        {
+          "start": "2026-11-16",
+          "end": null,
+          "lastSeen": "2026-11-16",
+          "updates": [
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T15:38+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Out indefinitely, as he has been deregistered from EuroLeague roster"
+            }
+          ]
         }
       ],
       "name": "Joffrey Lauvergne",
@@ -13296,6 +13310,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Round 11 (illness) after DNP in Round 10 (coach's decision). DNP in the domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T15:38+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Ruled out for Round 12 after DNP in Round 11 (illness)"
             }
           ]
         }
@@ -18821,6 +18842,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Does not travel to Cyprus to face Maccabi (coach's decision)"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T15:38+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Officially left the team"
             }
           ]
         }
@@ -21345,5 +21373,5 @@
       "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-11-16T14:47:52"
+  "updatedAt": "2026-11-16T15:38:05"
 }
