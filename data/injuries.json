@@ -2447,6 +2447,20 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-11-16",
+          "end": null,
+          "lastSeen": "2026-11-16",
+          "updates": [
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T17:03+01:00",
+              "status": "uncertain",
+              "return": "Round 11",
+              "comment": "New signing from Bayern Munich (11.10)"
+            }
+          ]
         }
       ],
       "name": "Kamar Baldwin",
@@ -21380,5 +21394,5 @@
       "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-11-16T16:10:02"
+  "updatedAt": "2026-11-16T17:03:29"
 }
