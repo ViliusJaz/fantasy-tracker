@@ -18833,7 +18833,7 @@
         },
         {
           "start": "2026-11-16",
-          "end": null,
+          "end": "2026-11-16",
           "lastSeen": "2026-11-16",
           "updates": [
             {
@@ -18849,6 +18849,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Officially left the team"
+            },
+            {
+              "date": "2026-11-16",
+              "at": "2026-11-16T16:10+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -21373,5 +21380,5 @@
       "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-11-16T15:38:05"
+  "updatedAt": "2026-11-16T16:10:02"
 }
