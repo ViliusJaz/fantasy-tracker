@@ -15390,6 +15390,20 @@
               "comment": "Cleared to play after a DNP in domestic league on Saturday (rest)"
             }
           ]
+        },
+        {
+          "start": "2026-11-17",
+          "end": null,
+          "lastSeen": "2026-11-17",
+          "updates": [
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T15:29+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Ruled out for Round 12 (undisclosed)"
+            }
+          ]
         }
       ],
       "name": "Vladimir Lucic",
@@ -16502,6 +16516,20 @@
               "status": "ready",
               "return": "Round 6",
               "comment": "Included in 12-man roster after DNP in Round 5"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-17",
+          "end": null,
+          "lastSeen": "2026-11-17",
+          "updates": [
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T15:29+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Ruled out for Round 12 (undisclosed)"
             }
           ]
         }
@@ -21642,5 +21670,5 @@
       "club": "Real Madrid"
     }
   },
-  "updatedAt": "2026-11-17T15:13:37"
+  "updatedAt": "2026-11-17T15:29:09"
 }
