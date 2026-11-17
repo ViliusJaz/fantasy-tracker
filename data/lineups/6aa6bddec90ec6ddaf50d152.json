@@ -7372,8 +7372,8 @@
       }
     },
     "11": {
-      "savedAt": "2026-11-17T16:44:50",
-      "locked": false,
+      "savedAt": "2026-11-17T17:00:25",
+      "locked": true,
       "teams": {
         "6aad020218d3307fab854196": {
           "formation": "1-1-3",
