@@ -16611,7 +16611,7 @@
         },
         {
           "start": "2026-11-13",
-          "end": null,
+          "end": "2026-11-17",
           "lastSeen": "2026-11-17",
           "updates": [
             {
@@ -16625,6 +16625,13 @@
               "date": "2026-11-15",
               "at": "2026-11-15T03:40+01:00",
               "status": "expected",
+              "return": "Round 12",
+              "comment": "Broken nose in Round 11. Played in the domestic league (11.14)"
+            },
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T17:16+01:00",
+              "status": "ready",
               "return": "Round 12",
               "comment": "Broken nose in Round 11. Played in the domestic league (11.14)"
             }
@@ -21787,5 +21794,5 @@
       "club": "Dubai Basketball"
     }
   },
-  "updatedAt": "2026-11-17T16:15:49"
+  "updatedAt": "2026-11-17T17:16:03"
 }
