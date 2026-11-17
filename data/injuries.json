@@ -21097,6 +21097,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Out indefinitely after undergoing surgery on his broken nose (11.10)"
+            },
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T14:42+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Out indefinitely after undergoing surgery on his broken nose (11.10)"
             }
           ]
         }
@@ -21601,5 +21608,5 @@
       "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-11-17T10:44:27"
+  "updatedAt": "2026-11-17T14:42:30"
 }
