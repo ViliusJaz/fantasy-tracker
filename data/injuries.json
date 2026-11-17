@@ -11934,6 +11934,13 @@
               "status": "expected",
               "return": "Round 12",
               "comment": "Played 1 minute in Round 12 after DNP in Rounds 2-10 (coach's decision). Played in the domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T07:31+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Played 1 minute in Round 11 after DNP in Rounds 2-10 (coach's decision). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -21519,5 +21526,5 @@
       "club": "Dubai Basketball"
     }
   },
-  "updatedAt": "2026-11-17T02:15:04"
+  "updatedAt": "2026-11-17T07:31:40"
 }
