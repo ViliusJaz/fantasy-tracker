@@ -2487,6 +2487,13 @@
               "status": "uncertain",
               "return": "Round 11",
               "comment": "New signing from Bayern Munich (11.10)"
+            },
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T10:28+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Expected to make his Maccabi debut in Round 12"
             }
           ]
         }
@@ -3182,6 +3189,13 @@
               "date": "2026-11-14",
               "at": "2026-11-14T08:25+01:00",
               "status": "uncertain",
+              "return": "Round 12",
+              "comment": "Left knee injury"
+            },
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T10:28+01:00",
+              "status": "out",
               "return": "Round 12",
               "comment": "Left knee injury"
             }
@@ -15016,6 +15030,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "DNP in Rounds 8-11 (undisclosed injury). DNP in the domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T10:28+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Didn't travel for Round 12 and 13 after DNP in Rounds 8-11 (undisclosed injury)"
             }
           ]
         }
@@ -20128,6 +20149,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "DNP in Rounds 10-11 (coach's decision). DNP in the domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T10:28+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Didn't travel for Round 12 and 13 after DNP in Rounds 10-11 (coach's decision)"
             }
           ]
         }
@@ -21349,6 +21377,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Back injury in Round 11. DNP in the domestic league (11.14)"
+            },
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T10:28+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Expected to be ready for Round 12 (back injury in Round 11). DNP in the domestic league (11.14)"
             }
           ]
         }
@@ -21524,7 +21559,27 @@
       ],
       "name": "Marcelinho Huertas",
       "club": "Dubai Basketball"
+    },
+    "35594": {
+      "episodes": [
+        {
+          "start": "2026-11-17",
+          "end": null,
+          "lastSeen": "2026-11-17",
+          "updates": [
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T10:28+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Didn't travel for Round 12 and 13 (undisclosed injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Yves Pons",
+      "club": "LDLC ASVEL Villeurbanne"
     }
   },
-  "updatedAt": "2026-11-17T07:31:40"
+  "updatedAt": "2026-11-17T10:28:57"
 }
