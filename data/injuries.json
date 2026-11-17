@@ -21579,7 +21579,27 @@
       ],
       "name": "Yves Pons",
       "club": "LDLC ASVEL Villeurbanne"
+    },
+    "35882": {
+      "episodes": [
+        {
+          "start": "2026-11-17",
+          "end": null,
+          "lastSeen": "2026-11-17",
+          "updates": [
+            {
+              "date": "2026-11-17",
+              "at": "2026-11-17T10:44+01:00",
+              "status": "expected",
+              "return": "Round 12",
+              "comment": "Traveled for Round 12 after playing only 10 seconds in domestic league"
+            }
+          ]
+        }
+      ],
+      "name": "Austin Wiley",
+      "club": "FC Bayern Munich"
     }
   },
-  "updatedAt": "2026-11-17T10:28:57"
+  "updatedAt": "2026-11-17T10:44:27"
 }
