@@ -648,6 +648,13 @@
               "status": "doubtful",
               "return": "Round 12",
               "comment": "DNP in Rounds 1-11 (coach's decision). DNP in the domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-18",
+              "at": "2026-11-18T17:57+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Not included in 12-man roster after DNP in Rounds 1-11 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -8644,6 +8651,20 @@
               "status": "ready",
               "return": "Round 11",
               "comment": "Made EuroLeague season debut after DNP in Rounds 1-9 (coach's decision). Played in the domestic league (11.08)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-18",
+          "end": null,
+          "lastSeen": "2026-11-18",
+          "updates": [
+            {
+              "date": "2026-11-18",
+              "at": "2026-11-18T17:57+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -20925,7 +20946,7 @@
         },
         {
           "start": "2026-11-17",
-          "end": null,
+          "end": "2026-11-18",
           "lastSeen": "2026-11-18",
           "updates": [
             {
@@ -20934,6 +20955,13 @@
               "status": "expected",
               "return": "Round 12",
               "comment": "Played in domestic league (11.15) after being out due to a right knee sprain (10.30)"
+            },
+            {
+              "date": "2026-11-18",
+              "at": "2026-11-18T17:57+01:00",
+              "status": "ready",
+              "return": "Round 12",
+              "comment": "Included in 12-man roster after being out due to a right knee sprain (10.30)"
             }
           ]
         }
@@ -22351,6 +22379,13 @@
               "status": "uncertain",
               "return": "Round 12",
               "comment": "Ruled out for Round 11 (undisclosed). Played in the domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-18",
+              "at": "2026-11-18T17:57+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Not included in 12-man roster after being ruled out for Round 11 (undisclosed). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -22670,6 +22705,13 @@
               "status": "game-time",
               "return": "Round 12",
               "comment": "Recently returned from a loan at Badalona Joventut"
+            },
+            {
+              "date": "2026-11-18",
+              "at": "2026-11-18T17:57+01:00",
+              "status": "out",
+              "return": "Round 12",
+              "comment": "Not included in 12-man roster as he recently returned from a loan at Badalona Joventut"
             }
           ]
         }
@@ -22779,5 +22821,5 @@
       "club": "Olympiacos Piraeus"
     }
   },
-  "updatedAt": "2026-11-18T11:25:55"
+  "updatedAt": "2026-11-18T17:57:38"
 }
