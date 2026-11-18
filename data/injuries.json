@@ -22113,7 +22113,27 @@
       ],
       "name": "Will Rayman",
       "club": "Maccabi Rapyd Tel Aviv"
+    },
+    "35908": {
+      "episodes": [
+        {
+          "start": "2026-11-18",
+          "end": null,
+          "lastSeen": "2026-11-18",
+          "updates": [
+            {
+              "date": "2026-11-18",
+              "at": "2026-11-18T09:09+01:00",
+              "status": "uncertain",
+              "return": "Round 13",
+              "comment": "Knee discomfort suffered in Round 12"
+            }
+          ]
+        }
+      ],
+      "name": "Tyrique Jones",
+      "club": "Olympiacos Piraeus"
     }
   },
-  "updatedAt": "2026-11-18T01:55:30"
+  "updatedAt": "2026-11-18T09:09:05"
 }
