@@ -655,6 +655,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Not included in 12-man roster after DNP in Rounds 1-11 (coach's decision). DNP in the domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "doubtful",
+              "return": "Round 13",
+              "comment": "DNP in Rounds 1-12 (coach's decision). DNP in the domestic league (11.15)"
             }
           ]
         }
@@ -8010,6 +8017,20 @@
               "comment": "DNP in Round 11 (coach's decision). DNP in the domestic league (11.14)"
             }
           ]
+        },
+        {
+          "start": "2026-11-19",
+          "end": null,
+          "lastSeen": "2026-11-19",
+          "updates": [
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "expected",
+              "return": "Round 13",
+              "comment": "Played 1 minute in Round 12 after DNP in Round 11 (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Maozinha Pereira",
@@ -8374,6 +8395,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Out indefinitely with a torn ACL"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Out indefinitely with a torn ACL"
             }
           ]
         }
@@ -8434,6 +8462,13 @@
               "at": "2026-11-13T12:53+01:00",
               "status": "out",
               "return": "Round 12",
+              "comment": "Out indefinitely after a complete rupture of the plantar fascia in left foot (10.30)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "out",
+              "return": "Round 13",
               "comment": "Out indefinitely after a complete rupture of the plantar fascia in left foot (10.30)"
             }
           ]
@@ -8665,6 +8700,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Not included in 12-man roster (coach's decision)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "uncertain",
+              "return": "Round 13",
+              "comment": "Not included in 12-man roster in Round 12 (coach's decision)"
             }
           ]
         }
@@ -15236,6 +15278,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Underwent left shoulder surgery on October 14, expected to be out until mid-February/mid-March."
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Underwent left shoulder surgery on October 14, expected to be out until mid-February/mid-March."
             }
           ]
         }
@@ -18956,6 +19005,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Out indefinitely but began individual strength training after an injury"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Out indefinitely but began individual strength training after an injury"
             }
           ]
         }
@@ -21286,6 +21342,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Out indefinitely after suffering a left hamstring injury in a domestic league game (11.01)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Out indefinitely after suffering a left hamstring injury in a domestic league game (11.01)"
             }
           ]
         }
@@ -22091,6 +22154,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Out indefinitely after undergoing surgery on his broken nose (11.10)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Out indefinitely after undergoing surgery on his broken nose (11.10)"
             }
           ]
         }
@@ -22386,6 +22456,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Not included in 12-man roster after being ruled out for Round 11 (undisclosed). Played in the domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "uncertain",
+              "return": "Round 13",
+              "comment": "Not included in 12-man roster in Round 12 after being ruled out for Round 11 (undisclosed). Played in the domestic league (11.15)"
             }
           ]
         }
@@ -22712,6 +22789,13 @@
               "status": "out",
               "return": "Round 12",
               "comment": "Not included in 12-man roster as he recently returned from a loan at Badalona Joventut"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "uncertain",
+              "return": "Round 13",
+              "comment": "Not included in 12-man roster as he recently returned from a loan at Badalona Joventut"
             }
           ]
         }
@@ -22839,7 +22923,27 @@
       ],
       "name": "Killian Hayes",
       "club": "FC Barcelona"
+    },
+    "35498": {
+      "episodes": [
+        {
+          "start": "2026-11-19",
+          "end": null,
+          "lastSeen": "2026-11-19",
+          "updates": [
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T07:25+01:00",
+              "status": "uncertain",
+              "return": "Round 13",
+              "comment": "DNP in Round 12 (illness)"
+            }
+          ]
+        }
+      ],
+      "name": "Jared Butler",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
     }
   },
-  "updatedAt": "2026-11-19T01:47:27"
+  "updatedAt": "2026-11-19T07:25:22"
 }
