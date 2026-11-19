@@ -8042,8 +8042,8 @@
       }
     },
     "12": {
-      "savedAt": "2026-11-19T13:06:52",
-      "locked": false,
+      "savedAt": "2026-11-19T18:36:27",
+      "locked": true,
       "teams": {
         "6aa9427293bf2e3920b7a42d": {
           "formation": "1-2-2",
@@ -8067,7 +8067,7 @@
               "captain": false
             },
             {
-              "id": "69070261ad21a0df4d1fea56",
+              "id": "66e6e4324589cab32aef6b92",
               "card": "g-1",
               "slot": "starter",
               "captain": false
@@ -8097,13 +8097,13 @@
               "captain": false
             },
             {
-              "id": "66e6e4324589cab32aef6b92",
+              "id": "6a8c494e491e10f37dfb6688",
               "card": "b-4",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "68c4080aa07be49331fea077",
+              "id": "66e6e4304589cab32aef6a28",
               "card": "b-5",
               "slot": "bench",
               "captain": false
@@ -8162,7 +8162,7 @@
               "captain": false
             },
             {
-              "id": "66e6e4324589cab32aef6ba0",
+              "id": "64e4a5a70ef7f59c5945f3fe",
               "card": "b-1",
               "slot": "bench",
               "captain": false
@@ -8192,7 +8192,7 @@
               "captain": false
             },
             {
-              "id": "66e6e4314589cab32aef6b4d",
+              "id": "66e6e4324589cab32aef6ba0",
               "card": "i-1",
               "slot": "inactive",
               "captain": false
@@ -8230,13 +8230,13 @@
               "id": "68ce62fa652e18d3d6694c5a",
               "card": "g-1",
               "slot": "starter",
-              "captain": false
+              "captain": true
             },
             {
               "id": "66e6e4324589cab32aef6be9",
               "card": "g-2",
               "slot": "starter",
-              "captain": true
+              "captain": false
             },
             {
               "id": "6513070c98a6be433053457e",
@@ -8245,7 +8245,7 @@
               "captain": false
             },
             {
-              "id": "66e6e4314589cab32aef6adf",
+              "id": "66e6e4304589cab32aef69b1",
               "card": "b-1",
               "slot": "bench",
               "captain": false
@@ -8269,7 +8269,7 @@
               "captain": false
             },
             {
-              "id": "66e6e4324589cab32aef6c14",
+              "id": "66e6e4314589cab32aef6adf",
               "card": "b-5",
               "slot": "bench",
               "captain": false
@@ -8352,7 +8352,7 @@
               "captain": false
             },
             {
-              "id": "66e6e42e4589cab32aef6804",
+              "id": "6afc44ae32803b08e6c8c903",
               "card": "b-5",
               "slot": "bench",
               "captain": false
@@ -8384,10 +8384,10 @@
               "id": "68c4084ba07be49331fea49b",
               "card": "c-1",
               "slot": "starter",
-              "captain": true
+              "captain": false
             },
             {
-              "id": "66e6e4324589cab32aef6c2d",
+              "id": "64e4a5a60ef7f59c5945f2d7",
               "card": "f-1",
               "slot": "starter",
               "captain": false
@@ -8405,37 +8405,37 @@
               "captain": false
             },
             {
-              "id": "64e4a5a60ef7f59c5945f2c3",
+              "id": "66e6e42f4589cab32aef696b",
               "card": "g-2",
               "slot": "starter",
-              "captain": false
+              "captain": true
             },
             {
-              "id": "694a658e876363a272686f8e",
+              "id": "68c4081ca07be49331fea198",
               "card": "b-1",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "693abdc09703341eeb011ffb",
+              "id": "689b55cd2f216d09c5245807",
               "card": "b-2",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "66e6e42f4589cab32aef696b",
+              "id": "64e4a5a60ef7f59c5945f2c3",
               "card": "b-3",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "64e4a5a60ef7f59c5945f2d7",
+              "id": "66e6e4324589cab32aef6c2d",
               "card": "b-4",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "68c4081ca07be49331fea198",
+              "id": "694a658e876363a272686f8e",
               "card": "b-5",
               "slot": "bench",
               "captain": false
@@ -8537,6 +8537,89 @@
             },
             {
               "id": "68c40811a07be49331fea0ee",
+              "card": "i-3",
+              "slot": "inactive",
+              "captain": false
+            }
+          ]
+        },
+        "6aafa05d45370a6f968705fb": {
+          "formation": "1-1-3",
+          "players": [
+            {
+              "id": "66e6e4314589cab32aef6b6a",
+              "card": "c-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e42f4589cab32aef69a3",
+              "card": "f-1",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e4314589cab32aef6ad1",
+              "card": "g-1",
+              "slot": "starter",
+              "captain": true
+            },
+            {
+              "id": "66e6e4314589cab32aef6b3f",
+              "card": "g-2",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "66e6e4314589cab32aef6aa2",
+              "card": "g-3",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "64e4a5a60ef7f59c5945f36d",
+              "card": "b-1",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "66e6e4324589cab32aef6c37",
+              "card": "b-2",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "66e6e4304589cab32aef6a32",
+              "card": "b-3",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "64e4a5a70ef7f59c5945f3f4",
+              "card": "b-4",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "6a8c494c491e10f37dfb638b",
+              "card": "b-5",
+              "slot": "bench",
+              "captain": false
+            },
+            {
+              "id": "64e4a5a90ef7f59c5945f58e",
+              "card": "i-1",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "68c28d3960b106fdd18d3907",
+              "card": "i-2",
+              "slot": "inactive",
+              "captain": false
+            },
+            {
+              "id": "6a8dec7504f87d16d37d6f17",
               "card": "i-3",
               "slot": "inactive",
               "captain": false
