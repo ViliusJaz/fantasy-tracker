@@ -1514,6 +1514,13 @@
               "status": "uncertain",
               "return": "Round 13",
               "comment": "DNP in Round 12 (coach's decision)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Ruled out for Round 13 after DNP in Round 12 (coach's decision). Navarro says he expects Moneke to join the team soon."
             }
           ]
         }
@@ -6436,6 +6443,13 @@
               "date": "2026-11-18",
               "at": "2026-11-18T11:25+01:00",
               "status": "uncertain",
+              "return": "Round 13",
+              "comment": "DNP in Round 12 (fractured index finger, 11.14)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "game-time",
               "return": "Round 13",
               "comment": "DNP in Round 12 (fractured index finger, 11.14)"
             }
@@ -12966,6 +12980,13 @@
               "status": "uncertain",
               "return": "Round 13",
               "comment": "Out indefinitely with a left thigh injury"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Out indefinitely with a left thigh injury"
             }
           ]
         }
@@ -16109,6 +16130,13 @@
               "status": "uncertain",
               "return": "Round 13",
               "comment": "DNP in Round 12 (undisclosed)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "game-time",
+              "return": "Round 13",
+              "comment": "Practiced with the team ahead of Round 13 after DNP in Round 12 (undisclosed)"
             }
           ]
         }
@@ -17279,6 +17307,13 @@
               "status": "uncertain",
               "return": "Round 13",
               "comment": "DNP in Round 12 (undisclosed)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "game-time",
+              "return": "Round 13",
+              "comment": "Practiced with the team ahead of Round 13 after DNP in Round 12 (undisclosed)"
             }
           ]
         }
@@ -17424,6 +17459,13 @@
               "status": "uncertain",
               "return": "Round 13",
               "comment": "DNP in Round 12 (fitness) after DNP in Rounds 6-11 (suspension)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Ruled out for Round 13 after DNP in Round 12 (fitness) and DNP in Rounds 6-11 (suspension)"
             }
           ]
         }
@@ -20008,6 +20050,13 @@
               "status": "uncertain",
               "return": "Round 13",
               "comment": "DNP in Rounds 8-12 (foot bone injury)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Ruled out for Round 13 after DNP in Rounds 8-12 (foot bone injury)"
             }
           ]
         }
@@ -20547,6 +20596,13 @@
               "status": "uncertain",
               "return": "Round 13",
               "comment": "DNP in Rounds 9-12 (muscle injury)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "game-time",
+              "return": "Round 13",
+              "comment": "Returned to team practices ahead of Round 13 after DNP in Rounds 9-12 (muscle injury)"
             }
           ]
         }
@@ -21679,6 +21735,13 @@
               "status": "out",
               "return": "Round 13",
               "comment": "DNP in Round 10-12 and is out indefinitely (hamstring injury)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Ruled out for Round 13 after DNP in Rounds 10-12 and is out indefinitely (hamstring injury)"
             }
           ]
         }
@@ -21831,6 +21894,13 @@
               "status": "out",
               "return": "Round 13",
               "comment": "DNP in Rounds 10-12 (hip/psoas muscle injury)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "DNP in Rounds 10-12, out indefinitely (hip/psoas muscle injury)"
             }
           ]
         }
@@ -22218,6 +22288,20 @@
               "comment": "DNP in Round 11 (new signing). Played in the domestic league (11.15)"
             }
           ]
+        },
+        {
+          "start": "2026-11-19",
+          "end": null,
+          "lastSeen": "2026-11-19",
+          "updates": [
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Illness"
+            }
+          ]
         }
       ],
       "name": "Rolands Smits",
@@ -22264,6 +22348,13 @@
               "status": "out",
               "return": "Round 13",
               "comment": "Out indefinitely after DNP in Round 11 (meniscus injury). Might require surgery, the extent of the injury will be confirmed after additional tests"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Expected to be out for 6-8 weeks after undergoing surgery because of a meniscus. Estimated return is Round 19-21"
             }
           ]
         }
@@ -22640,6 +22731,13 @@
               "status": "out",
               "return": "Round 13",
               "comment": "Ruled out for Round 12 after suffering a dislocated finger and a tear in domestic league (11.15)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Expected to be out for 6-8 weeks after undergoing surgery because of a dislocated finger and a tear. Estimated return is Round 19-21"
             }
           ]
         }
@@ -22762,6 +22860,13 @@
               "status": "uncertain",
               "return": "Round 13",
               "comment": "DNP in Round 12 (undisclosed injury)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "game-time",
+              "return": "Round 13",
+              "comment": "Practiced with the team ahead of Round 13 after DNP in Round 12 (undisclosed injury)"
             }
           ]
         }
@@ -22937,13 +23042,40 @@
               "status": "uncertain",
               "return": "Round 13",
               "comment": "DNP in Round 12 (illness)"
+            },
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "game-time",
+              "return": "Round 13",
+              "comment": "Navarro said he expects Butler to be ready for Round 13 after DNP in Round 12 (illness)"
             }
           ]
         }
       ],
       "name": "Jared Butler",
       "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "34931": {
+      "episodes": [
+        {
+          "start": "2026-11-19",
+          "end": null,
+          "lastSeen": "2026-11-19",
+          "updates": [
+            {
+              "date": "2026-11-19",
+              "at": "2026-11-19T13:06+01:00",
+              "status": "game-time",
+              "return": "Round 13",
+              "comment": "Face injury"
+            }
+          ]
+        }
+      ],
+      "name": "David Kramer",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
     }
   },
-  "updatedAt": "2026-11-19T07:25:22"
+  "updatedAt": "2026-11-19T13:06:52"
 }
