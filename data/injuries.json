@@ -1689,7 +1689,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-11-20",
           "lastSeen": "2026-11-20",
           "updates": [
             {
@@ -1732,6 +1732,13 @@
               "status": "out",
               "return": "Round 14",
               "comment": "Out indefinitely, as he's not included in official Euroleague roster"
+            },
+            {
+              "date": "2026-11-20",
+              "at": "2026-11-20T17:13+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -23775,5 +23782,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-20T14:35:03"
+  "updatedAt": "2026-11-20T17:13:58"
 }
