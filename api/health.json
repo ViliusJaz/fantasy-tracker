@@ -1,10 +1,10 @@
 {
  "version": 1,
  "status": "healthy",
- "lastAttempt": "2026-11-21T07:43:38+01:00",
- "lastSuccessfulUpdate": "2026-11-21T07:43:38+01:00",
- "buildDurationSeconds": 520.7,
- "basketnewsRequests": 107,
+ "lastAttempt": "2026-11-21T10:30:52+01:00",
+ "lastSuccessfulUpdate": "2026-11-21T10:30:52+01:00",
+ "buildDurationSeconds": 25.4,
+ "basketnewsRequests": 67,
  "failedRequests": 0,
  "playersProcessed": 337,
  "pagesGenerated": 2232,
@@ -17,42 +17,36 @@
   "euroleague": "ok"
  },
  "lastSuccess": {
-  "at": "2026-11-21T07:43:38+01:00",
-  "startedAt": "2026-11-21T07:34:57+01:00",
+  "at": "2026-11-21T10:30:52+01:00",
+  "startedAt": "2026-11-21T10:30:27+01:00",
   "status": "healthy",
   "device": "mac",
-  "version": "8bb9ed4e9",
-  "durationSeconds": 520.7,
+  "version": "bf945fc31",
+  "durationSeconds": 25.4,
   "requests": {
    "basketnews": {
-    "requests": 107,
+    "requests": 67,
     "retries": 0,
     "failures": 0,
-    "bytes": 1303036
+    "bytes": 467028
    },
    "advanced-stats": {
-    "requests": 3,
+    "requests": 4,
     "retries": 0,
     "failures": 0,
-    "bytes": 289314
+    "bytes": 383133
    },
    "injury-report": {
     "requests": 1,
     "retries": 0,
     "failures": 0,
-    "bytes": 101305
-   },
-   "rosters": {
-    "requests": 1,
-    "retries": 0,
-    "failures": 0,
-    "bytes": 120411
+    "bytes": 101017
    },
    "euroleague": {
     "requests": 1,
     "retries": 0,
     "failures": 0,
-    "bytes": 48921
+    "bytes": 48801
    }
   },
   "pages": 2232,
@@ -79,7 +73,7 @@
      "currentRound": 13,
      "shownRound": 12,
      "teams": 8,
-     "pointsTotal": 16274.0,
+     "pointsTotal": 16269.0,
      "players": 337,
      "playersWithGames": 305
     },
@@ -90,7 +84,7 @@
      "currentRound": 13,
      "shownRound": 12,
      "teams": 8,
-     "pointsTotal": 16365.25,
+     "pointsTotal": 16355.25,
      "players": 337,
      "playersWithGames": 305
     }
