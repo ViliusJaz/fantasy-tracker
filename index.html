@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta name="ft-static" content="1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fantasy tracker</title>
+  <link rel="icon" href="euroleague.svg" type="image/svg+xml">
+  <meta name="description" content="Lygos lentelės, sudėtys, rungtynių statistika ir traumos BasketNews Fantasy draft lygoms.">
+  <meta name="theme-color" content="#0c0f14">
+  <script>
+    // Apply the saved theme before the first paint so the page never flashes the other one.
+    try { if (localStorage.getItem("ft-theme") === "light") document.documentElement.dataset.theme = "light"; } catch (e) {}
+  </script>
+  <link rel="preload" href="fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts/fonts.css?v=f0e55b0e10">
+  <link rel="stylesheet" href="style.css?v=8bfd87482b">
+</head>
+<body>
+  <button type="button" class="skip" id="skip">Pereiti prie turinio</button>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#/">
+        <img class="brand-mark" src="euroleague.svg" alt="" width="22" height="22">
+        <span id="brand-text">Fantasy tracker</span>
+      </a>
+      <nav class="league-switch" id="league-switch" aria-label="Lygos"></nav>
+      <button type="button" class="theme-toggle" id="theme-toggle"></button>
+      <div class="lang-switch" id="lang-switch" role="group" aria-label="Kalba / Language"></div>
+    </div>
+  </header>
+  <main id="app" class="container" tabindex="-1"></main>
+  <dialog id="player-modal" class="modal">
+    <div id="player-modal-body" class="modal-body"></div>
+  </dialog>
+  <dialog id="chart-modal" class="modal chart-modal">
+    <div id="chart-modal-body" class="modal-body"></div>
+  </dialog>
+  <script src="app.js?v=79650e93d7"></script>
+</body>
+</html>
