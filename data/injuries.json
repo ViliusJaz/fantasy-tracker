@@ -1835,7 +1835,7 @@
         },
         {
           "start": "2026-11-21",
-          "end": null,
+          "end": "2026-11-21",
           "lastSeen": "2026-11-21",
           "updates": [
             {
@@ -1844,6 +1844,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "New signing from Dubai (11.20)"
+            },
+            {
+              "date": "2026-11-21",
+              "at": "2026-11-21T19:11+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -24335,5 +24342,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-21T07:35:02"
+  "updatedAt": "2026-11-21T19:11:56"
 }
