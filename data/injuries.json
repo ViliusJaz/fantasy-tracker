@@ -3709,6 +3709,20 @@
               "comment": "Cleared to play (right calf injury)"
             }
           ]
+        },
+        {
+          "start": "2026-11-22",
+          "end": null,
+          "lastSeen": "2026-11-22",
+          "updates": [
+            {
+              "date": "2026-11-22",
+              "at": "2026-11-22T18:05+01:00",
+              "status": "out",
+              "return": "Out 3 to 4 months",
+              "comment": "Suffered a partial avulsion of the patellar tendon in his right knee (out 3 to 4 months, 11.22)"
+            }
+          ]
         }
       ],
       "name": "Josh Nebo",
@@ -24636,5 +24650,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-22T17:18:28"
+  "updatedAt": "2026-11-22T18:05:02"
 }
