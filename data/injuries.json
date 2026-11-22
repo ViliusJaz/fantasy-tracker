@@ -14468,6 +14468,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "Calf strain"
+            },
+            {
+              "date": "2026-11-22",
+              "at": "2026-11-22T12:18+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Calf strain"
             }
           ]
         }
@@ -24342,5 +24349,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-22T00:53:44"
+  "updatedAt": "2026-11-22T12:18:32"
 }
