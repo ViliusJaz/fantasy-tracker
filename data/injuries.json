@@ -1561,7 +1561,7 @@
         },
         {
           "start": "2026-11-16",
-          "end": null,
+          "end": "2026-11-22",
           "lastSeen": "2026-11-22",
           "updates": [
             {
@@ -1598,6 +1598,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "DNP in Rounds 12-13 (coach's decision). Navarro says he expects Moneke to join the team soon."
+            },
+            {
+              "date": "2026-11-22",
+              "at": "2026-11-22T15:12+01:00",
+              "status": "ready",
+              "return": "Round 14",
+              "comment": "Returned to domestic action (11.22) after DNP in Rounds 12-13 (coach's decision)"
             }
           ]
         }
@@ -10214,6 +10221,20 @@
               "comment": "Played in Rounds 8-9 after DNP in Rounds 1-7 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-11-22",
+          "end": null,
+          "lastSeen": "2026-11-22",
+          "updates": [
+            {
+              "date": "2026-11-22",
+              "at": "2026-11-22T15:12+01:00",
+              "status": "out",
+              "return": "",
+              "comment": ""
+            }
+          ]
         }
       ],
       "name": "Kaodirichi Akobundu-Ehiogu",
@@ -10515,7 +10536,7 @@
         },
         {
           "start": "2026-11-15",
-          "end": null,
+          "end": "2026-11-22",
           "lastSeen": "2026-11-22",
           "updates": [
             {
@@ -10550,6 +10571,13 @@
               "date": "2026-11-20",
               "at": "2026-11-20T08:47+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "DNP in Rounds 8-13 (coach's decision)"
+            },
+            {
+              "date": "2026-11-22",
+              "at": "2026-11-22T15:12+01:00",
+              "status": "ready",
               "return": "Round 14",
               "comment": "DNP in Rounds 8-13 (coach's decision)"
             }
@@ -10695,6 +10723,13 @@
               "date": "2026-11-20",
               "at": "2026-11-20T08:47+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "Aggravated previous hamstring injury in Round 6. Expected to be out until Round 14."
+            },
+            {
+              "date": "2026-11-22",
+              "at": "2026-11-22T15:12+01:00",
+              "status": "out",
               "return": "Round 14",
               "comment": "Aggravated previous hamstring injury in Round 6. Expected to be out until Round 14."
             }
@@ -17574,6 +17609,20 @@
               "comment": "Included in 12-man roster after DNP in Rounds 8-11 (coach's decision)"
             }
           ]
+        },
+        {
+          "start": "2026-11-22",
+          "end": null,
+          "lastSeen": "2026-11-22",
+          "updates": [
+            {
+              "date": "2026-11-22",
+              "at": "2026-11-22T15:12+01:00",
+              "status": "out",
+              "return": "Round 13",
+              "comment": "Included in 12-man roster after playing 1 minute in Round 12 after DNP in Rounds 8-11 (coach's decision)"
+            }
+          ]
         }
       ],
       "name": "Dovydas Giedraitis",
@@ -18988,6 +19037,13 @@
               "date": "2026-11-20",
               "at": "2026-11-20T08:47+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "DNP in Rounds 12-13 (coach's decision)"
+            },
+            {
+              "date": "2026-11-22",
+              "at": "2026-11-22T15:12+01:00",
+              "status": "out",
               "return": "Round 14",
               "comment": "DNP in Rounds 12-13 (coach's decision)"
             }
@@ -21221,7 +21277,7 @@
         },
         {
           "start": "2026-11-15",
-          "end": null,
+          "end": "2026-11-22",
           "lastSeen": "2026-11-22",
           "updates": [
             {
@@ -21263,6 +21319,13 @@
               "date": "2026-11-21",
               "at": "2026-11-21T07:35+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "DNP in Rounds 8-13 (coach's decision)"
+            },
+            {
+              "date": "2026-11-22",
+              "at": "2026-11-22T15:12+01:00",
+              "status": "ready",
               "return": "Round 14",
               "comment": "DNP in Rounds 8-13 (coach's decision)"
             }
@@ -24349,5 +24412,5 @@
       "club": "Panathinaikos AKTOR Athens"
     }
   },
-  "updatedAt": "2026-11-22T12:18:32"
+  "updatedAt": "2026-11-22T15:12:22"
 }
