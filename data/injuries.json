@@ -18670,6 +18670,13 @@
               "status": "out",
               "return": "Round 14",
               "comment": "DNP in Rounds 6-13 (suspension). Out with the national team."
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T14:45+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Ruled out for Round 14 (national team duties) after DNP in Rounds 6-13."
             }
           ]
         }
@@ -22868,6 +22875,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "Out indefinitely after suffering a left hamstring injury in a domestic league game (11.01). DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T14:45+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Ruled out for Round 14 but is reportedly expected to return for Round 15 (left hamstring injury)"
             }
           ]
         }
@@ -24942,13 +24956,40 @@
               "status": "out",
               "return": "Round 14",
               "comment": "Out with undisclosed longterm injury (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T14:45+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Out indefinitely with undisclosed longterm injury (11.22)"
             }
           ]
         }
       ],
       "name": "Wenyen Gabriel",
       "club": "Besiktas Istanbul"
+    },
+    "24698": {
+      "episodes": [
+        {
+          "start": "2026-11-23",
+          "end": null,
+          "lastSeen": "2026-11-23",
+          "updates": [
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T14:45+01:00",
+              "status": "game-time",
+              "return": "Round 14",
+              "comment": "DNP in domestic league, Navarro said he's not 100% (undisclosed injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Chris Jones",
+      "club": "Crvena Zvezda Meridianbet Belgrade"
     }
   },
-  "updatedAt": "2026-11-23T13:21:10"
+  "updatedAt": "2026-11-23T14:45:48"
 }
