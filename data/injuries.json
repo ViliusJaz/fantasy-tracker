@@ -7845,6 +7845,20 @@
               "comment": "Included in 12-man roster after DNP in Round 9 (rest)"
             }
           ]
+        },
+        {
+          "start": "2026-11-23",
+          "end": null,
+          "lastSeen": "2026-11-23",
+          "updates": [
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T23:34+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Knee swelling"
+            }
+          ]
         }
       ],
       "name": "Kostas Sloukas",
@@ -14304,6 +14318,20 @@
               "status": "ready",
               "return": "",
               "comment": "Išbrauktas iš traumų sąrašo"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-23",
+          "end": null,
+          "lastSeen": "2026-11-23",
+          "updates": [
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T23:34+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Left foot injury"
             }
           ]
         }
@@ -21394,6 +21422,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "DNP in Rounds 8-13 (foot bone injury). DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T23:34+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Ruled out for Round 14 after DNP in Rounds 8-13 (left foot bone injury)"
             }
           ]
         }
@@ -21525,6 +21560,20 @@
               "status": "ready",
               "return": "Round 9",
               "comment": "Included in 12-man roster after DNP in Round 8 (left knee contusion)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-23",
+          "end": null,
+          "lastSeen": "2026-11-23",
+          "updates": [
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T23:34+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Didn't travel for Round 14 (hip/psoas muscle injury)"
             }
           ]
         }
@@ -21996,6 +22045,20 @@
               "status": "ready",
               "return": "Round 13",
               "comment": "Included in 12-man roster after DNP in Rounds 9-12 (muscle injury)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-23",
+          "end": null,
+          "lastSeen": "2026-11-23",
+          "updates": [
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T23:34+01:00",
+              "status": "expected",
+              "return": "Round 14",
+              "comment": "Played in Round 13 after DNP in Rounds 9-12 (muscle injury)"
             }
           ]
         }
@@ -23006,6 +23069,20 @@
               "status": "ready",
               "return": "Round 10",
               "comment": "Not included in official injury report (muscle strain)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-23",
+          "end": null,
+          "lastSeen": "2026-11-23",
+          "updates": [
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T23:34+01:00",
+              "status": "game-time",
+              "return": "Round 14",
+              "comment": "Traveled with the team, game-time decision for Round 14 (adductor discomfort)"
             }
           ]
         }
@@ -24870,6 +24947,13 @@
               "status": "expected",
               "return": "Round 14",
               "comment": "Practiced with the team. DNP in Round 13 (new signing). DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T23:34+01:00",
+              "status": "doubtful",
+              "return": "Round 14",
+              "comment": "Practiced with the team, but is not expected to make his debut yet (new signing)"
             }
           ]
         }
@@ -24989,7 +25073,27 @@
       ],
       "name": "Chris Jones",
       "club": "Crvena Zvezda Meridianbet Belgrade"
+    },
+    "36340": {
+      "episodes": [
+        {
+          "start": "2026-11-23",
+          "end": null,
+          "lastSeen": "2026-11-23",
+          "updates": [
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T23:34+01:00",
+              "status": "game-time",
+              "return": "Round 14",
+              "comment": "Practiced with the team ahead of Round 14 (ankle injury)"
+            }
+          ]
+        }
+      ],
+      "name": "Tyrese Martin",
+      "club": "FC Barcelona"
     }
   },
-  "updatedAt": "2026-11-23T14:45:48"
+  "updatedAt": "2026-11-23T23:34:48"
 }
