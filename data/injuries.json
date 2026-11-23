@@ -10769,6 +10769,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "DNP in Rounds 8-13 (coach's decision). Played in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T09:51+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Ruled out for Round 14 (national team duties) after DNP in Rounds 8-13 (coach's decision)"
             }
           ]
         }
@@ -17908,6 +17915,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "Only included in 12-man roster in Round 13 after playing 1 minute in Round 12 after DNP in Rounds 8-11 (coach's decision). DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T09:51+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Ruled out for Round 14 (national team duties) after DNP in Rounds 8-13 (coach's decision)"
             }
           ]
         }
@@ -21678,6 +21692,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "DNP in Rounds 8-13 (coach's decision). Played in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T09:51+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Ruled out for Round 14 (national team duties) after DNP in Rounds 8-13 (coach's decision)"
             }
           ]
         }
@@ -24872,7 +24893,27 @@
       "episodes": [],
       "name": "Jerian Grant",
       "club": "Panathinaikos AKTOR Athens"
+    },
+    "23011": {
+      "episodes": [
+        {
+          "start": "2026-11-23",
+          "end": null,
+          "lastSeen": "2026-11-23",
+          "updates": [
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T09:51+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Out with undisclosed longterm injury (11.22)"
+            }
+          ]
+        }
+      ],
+      "name": "Wenyen Gabriel",
+      "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-11-23T04:09:50"
+  "updatedAt": "2026-11-23T09:51:47"
 }
