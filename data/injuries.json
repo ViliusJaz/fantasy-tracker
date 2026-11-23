@@ -18663,6 +18663,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "DNP in Rounds 6-13 (suspension). DNP in the domesic league (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T13:21+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "DNP in Rounds 6-13 (suspension). Out with the national team."
             }
           ]
         }
@@ -24943,5 +24950,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-11-23T11:21:38"
+  "updatedAt": "2026-11-23T13:21:10"
 }
