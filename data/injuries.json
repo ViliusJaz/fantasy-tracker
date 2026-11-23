@@ -8999,6 +8999,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "DNP in Rounds 1-13 (ankle injury). DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T11:21+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "DNP in Rounds 1-13 (ankle injury). DNP in the domestic league (11.22)"
             }
           ]
         }
@@ -14753,6 +14760,13 @@
               "date": "2026-11-23",
               "at": "2026-11-23T04:09+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "DNP in Round 13 and in the domestic league (11.22) (calf strain)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T11:21+01:00",
+              "status": "out",
               "return": "Round 14",
               "comment": "DNP in Round 13 and in the domestic league (11.22) (calf strain)"
             }
@@ -23544,6 +23558,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "DNP in Round 13 and in the domestic league (11.22) (ankle issue)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T11:21+01:00",
+              "status": "expected",
+              "return": "Round 14",
+              "comment": "DNP in Round 13 and in the domestic league (11.22) (ankle issue), but traveled with the team."
             }
           ]
         }
@@ -23990,6 +24011,13 @@
               "date": "2026-11-23",
               "at": "2026-11-23T04:09+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "DNP in Rounds 12-13 (hip injury). DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-23",
+              "at": "2026-11-23T11:21+01:00",
+              "status": "out",
               "return": "Round 14",
               "comment": "DNP in Rounds 12-13 (hip injury). DNP in the domestic league (11.22)"
             }
@@ -24915,5 +24943,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-11-23T09:51:47"
+  "updatedAt": "2026-11-23T11:21:38"
 }
