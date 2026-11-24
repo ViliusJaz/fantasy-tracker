@@ -961,6 +961,20 @@
               "comment": "DNP in Round 9-10 (coach's decision). Played in the domestic league (11.09)"
             }
           ]
+        },
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T19:12+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Undisclosed"
+            }
+          ]
         }
       ],
       "name": "Patrick Baldwin Jr.",
@@ -1469,6 +1483,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "Not included in 12-man lineup for Round 13 (coach's decision). Played in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T19:12+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Not included in 12-man lineup for Round 13 (coach's decision). Played in the domestic league (11.22)"
             }
           ]
         }
@@ -1891,7 +1912,7 @@
         },
         {
           "start": "2026-11-24",
-          "end": null,
+          "end": "2026-11-24",
           "lastSeen": "2026-11-24",
           "updates": [
             {
@@ -1905,6 +1926,13 @@
               "date": "2026-11-24",
               "at": "2026-11-24T06:15+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "New signing from Dubai (11.20). Played in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T19:12+01:00",
+              "status": "ready",
               "return": "Round 14",
               "comment": "New signing from Dubai (11.20). Played in the domestic league (11.22)"
             }
@@ -13028,6 +13056,13 @@
               "status": "doubtful",
               "return": "Round 14",
               "comment": "DNP in Rounds 1-13 (coach's decision). Played in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T19:12+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "DNP in Rounds 1-13 (coach's decision). Played in the domestic league (11.22)"
             }
           ]
         }
@@ -15072,7 +15107,7 @@
         },
         {
           "start": "2026-11-05",
-          "end": null,
+          "end": "2026-11-24",
           "lastSeen": "2026-11-24",
           "updates": [
             {
@@ -15156,6 +15191,13 @@
               "date": "2026-11-22",
               "at": "2026-11-22T17:02+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "DNP in Rounds 11-13 (illness). Played in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T19:12+01:00",
+              "status": "ready",
               "return": "Round 14",
               "comment": "DNP in Rounds 11-13 (illness). Played in the domestic league (11.22)"
             }
@@ -17598,6 +17640,20 @@
               "comment": "DNP in Round 9 (coach's decision). Played in the domestic league (11.01)"
             }
           ]
+        },
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T19:12+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Undisclosed"
+            }
+          ]
         }
       ],
       "name": "Ebuka Izundu",
@@ -19682,6 +19738,20 @@
               "status": "ready",
               "return": "Round 10",
               "comment": "DNP in Rounds 6-9 (undisclosed). Played in the domestic league (11.03)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T19:12+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Undisclosed"
             }
           ]
         }
@@ -25261,7 +25331,7 @@
       "episodes": [
         {
           "start": "2026-11-23",
-          "end": null,
+          "end": "2026-11-24",
           "lastSeen": "2026-11-24",
           "updates": [
             {
@@ -25270,6 +25340,13 @@
               "status": "game-time",
               "return": "Round 14",
               "comment": "DNP in domestic league, Navarro said he's not 100% (undisclosed injury)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T19:12+01:00",
+              "status": "ready",
+              "return": "Round 14",
+              "comment": "Included in 12-man roster for Round 14 after DNP in domestic league, Navarro said he's not 100% (undisclosed injury)"
             }
           ]
         }
@@ -25365,5 +25442,5 @@
       "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-11-24T17:58:17"
+  "updatedAt": "2026-11-24T19:12:53"
 }
