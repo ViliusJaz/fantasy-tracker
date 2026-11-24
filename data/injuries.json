@@ -3687,7 +3687,7 @@
       "episodes": [
         {
           "start": "2026-09-28",
-          "end": null,
+          "end": "2026-11-24",
           "lastSeen": "2026-11-24",
           "updates": [
             {
@@ -3793,6 +3793,13 @@
               "status": "out",
               "return": "Round 14",
               "comment": "Left knee injury"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T20:50+01:00",
+              "status": "ready",
+              "return": "Round 14",
+              "comment": "Included in 12-man roster for Round 14 after left knee injury"
             }
           ]
         }
@@ -25416,6 +25423,13 @@
               "status": "doubtful",
               "return": "Round 14",
               "comment": "Practiced with the team, but is not expected to make his debut yet (new signing)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T20:50+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Dealing with discomfort, new signing"
             }
           ]
         }
@@ -25547,13 +25561,20 @@
       "episodes": [
         {
           "start": "2026-11-23",
-          "end": null,
+          "end": "2026-11-24",
           "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-23",
               "at": "2026-11-23T23:34+01:00",
               "status": "game-time",
+              "return": "Round 14",
+              "comment": "Practiced with the team ahead of Round 14 (ankle injury)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T20:50+01:00",
+              "status": "ready",
               "return": "Round 14",
               "comment": "Practiced with the team ahead of Round 14 (ankle injury)"
             }
@@ -25651,5 +25672,5 @@
       "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-24T20:35:16"
+  "updatedAt": "2026-11-24T20:50:55"
 }
