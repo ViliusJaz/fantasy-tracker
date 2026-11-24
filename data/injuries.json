@@ -10991,6 +10991,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "Aggravated previous hamstring injury in Round 6. Expected to be out until Round 14."
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T10:27+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Ruled out for Round 14 (Aggravated previous hamstring injury in Round 6)"
             }
           ]
         }
@@ -19487,6 +19494,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "DNP in Rounds 12-13 (coach's decision). DNP in the domestic league (ankle injury)(11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T10:27+01:00",
+              "status": "expected",
+              "return": "Round 14",
+              "comment": "Expected to be ready for Round 14 after DNP in Rounds 12-13 (coach's decision). DNP in the domestic league (ankle injury)(11.22)"
             }
           ]
         }
@@ -25226,5 +25240,5 @@
       "club": "Virtus Bologna"
     }
   },
-  "updatedAt": "2026-11-24T09:26:54"
+  "updatedAt": "2026-11-24T10:27:13"
 }
