@@ -12275,7 +12275,7 @@
         },
         {
           "start": "2026-11-12",
-          "end": null,
+          "end": "2026-11-24",
           "lastSeen": "2026-11-24",
           "updates": [
             {
@@ -12326,6 +12326,13 @@
               "status": "doubtful",
               "return": "Round 14",
               "comment": "DNP in Rounds 1-13 (coach's decision). Played in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T20:35+01:00",
+              "status": "ready",
+              "return": "Round 14",
+              "comment": "Included in 12-man roster for Round 14 after DNP in Rounds 1-13 (coach's decision). Played in the domestic league (11.22)"
             }
           ]
         }
@@ -12590,6 +12597,20 @@
               "status": "ready",
               "return": "Round 12",
               "comment": "Included in 12-man roster after DNP in Rounds 1-11 (coach's decision)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T20:35+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Not included in 12-man roster (coach's decision)"
             }
           ]
         }
@@ -25608,7 +25629,27 @@
       ],
       "name": "Eugene Omoruyi",
       "club": "Besiktas Istanbul"
+    },
+    "34854": {
+      "episodes": [
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T20:35+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Undisclosed"
+            }
+          ]
+        }
+      ],
+      "name": "Trent Forrest",
+      "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-24T20:19:35"
+  "updatedAt": "2026-11-24T20:35:16"
 }
