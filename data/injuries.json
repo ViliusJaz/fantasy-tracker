@@ -5,7 +5,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -331,7 +331,7 @@
         {
           "start": "2026-11-18",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-18",
@@ -612,7 +612,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-29",
@@ -964,7 +964,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1440,7 +1440,7 @@
         {
           "start": "2026-11-20",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-20",
@@ -1474,7 +1474,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1638,7 +1638,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1720,7 +1720,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -1881,6 +1881,27 @@
               "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
+        },
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T02:43+01:00",
+              "status": "uncertain",
+              "return": "Round 14",
+              "comment": "New signing from Dubai (11.20)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "uncertain",
+              "return": "Round 14",
+              "comment": "New signing from Dubai (11.20). Played in the domestic league (11.22)"
+            }
+          ]
         }
       ],
       "name": "Awudu Abass",
@@ -1981,7 +2002,7 @@
         {
           "start": "2026-11-10",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-10",
@@ -2118,7 +2139,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -2351,7 +2372,7 @@
         {
           "start": "2026-11-21",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-21",
@@ -2594,7 +2615,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-13",
@@ -2884,7 +2905,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -3334,7 +3355,7 @@
         {
           "start": "2026-11-09",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-09",
@@ -3375,6 +3396,13 @@
               "date": "2026-11-23",
               "at": "2026-11-23T01:23+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "Suffered oblique muscle tear (11.09), set to be out for around three weeks until Round 14. DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "out",
               "return": "Round 14",
               "comment": "Suffered oblique muscle tear (11.09), set to be out for around three weeks until Round 14. DNP in the domestic league (11.22)"
             }
@@ -3611,7 +3639,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -3709,6 +3737,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "Left knee injury"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Left knee injury"
             }
           ]
         }
@@ -3748,7 +3783,7 @@
         {
           "start": "2026-11-22",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-22",
@@ -3931,7 +3966,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-29",
@@ -4111,7 +4146,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-06",
@@ -4359,7 +4394,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-12",
@@ -4524,7 +4559,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -4915,7 +4950,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-29",
@@ -5715,7 +5750,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-06",
@@ -5832,7 +5867,7 @@
         {
           "start": "2026-10-30",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-30",
@@ -5942,7 +5977,7 @@
         {
           "start": "2026-10-08",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-08",
@@ -6239,7 +6274,7 @@
         {
           "start": "2026-10-24",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-24",
@@ -6573,7 +6608,7 @@
         {
           "start": "2026-11-22",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-22",
@@ -6712,7 +6747,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-29",
@@ -6927,7 +6962,7 @@
         {
           "start": "2026-11-14",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-14",
@@ -7107,7 +7142,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -7553,7 +7588,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -7849,7 +7884,7 @@
         {
           "start": "2026-11-23",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-23",
@@ -7869,7 +7904,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -8153,7 +8188,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -8630,7 +8665,7 @@
         {
           "start": "2026-11-19",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-19",
@@ -8752,7 +8787,7 @@
         {
           "start": "2026-11-16",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-16",
@@ -8866,7 +8901,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -9032,7 +9067,7 @@
         {
           "start": "2026-09-28",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-28",
@@ -9106,7 +9141,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-29",
@@ -9910,7 +9945,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-12",
@@ -10414,7 +10449,7 @@
         {
           "start": "2026-11-22",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-22",
@@ -10782,7 +10817,7 @@
         {
           "start": "2026-11-22",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-22",
@@ -10878,7 +10913,7 @@
         {
           "start": "2026-10-17",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-17",
@@ -11168,7 +11203,7 @@
         {
           "start": "2026-11-04",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-04",
@@ -11487,7 +11522,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-29",
@@ -11696,7 +11731,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-29",
@@ -12136,7 +12171,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-12",
@@ -12915,7 +12950,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-13",
@@ -13117,7 +13152,7 @@
         {
           "start": "2026-10-31",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-31",
@@ -13375,7 +13410,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-13",
@@ -13520,7 +13555,7 @@
         {
           "start": "2026-10-08",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-08",
@@ -13868,7 +13903,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-13",
@@ -14032,7 +14067,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-29",
@@ -14108,7 +14143,7 @@
         {
           "start": "2026-09-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-09-29",
@@ -14324,7 +14359,7 @@
         {
           "start": "2026-11-23",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-23",
@@ -14761,7 +14796,7 @@
         {
           "start": "2026-11-20",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-20",
@@ -14809,7 +14844,7 @@
         {
           "start": "2026-10-01",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-01",
@@ -14902,6 +14937,20 @@
               "comment": "DNP in Round 10 (undisclosed). Played in the domestic league (11.08)"
             }
           ]
+        },
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "uncertain",
+              "return": "Round 14",
+              "comment": "DNP in Round 13 and in the domestic league (11.22)"
+            }
+          ]
         }
       ],
       "name": "Terry Tarpey",
@@ -14989,7 +15038,7 @@
         {
           "start": "2026-11-05",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-05",
@@ -15480,7 +15529,7 @@
         {
           "start": "2026-10-23",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-23",
@@ -15591,7 +15640,7 @@
         {
           "start": "2026-10-20",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-20",
@@ -15898,7 +15947,7 @@
         {
           "start": "2026-11-19",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-19",
@@ -15920,6 +15969,13 @@
               "status": "expected",
               "return": "Round 14",
               "comment": "DNP in Rounds 7-13 (hamstring injury). Played in the domestic league (11.21)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "expected",
+              "return": "Round 14",
+              "comment": "Played 6min in Round 12. DNP in Round 13 (coach's decision). Played in the domestic league (11.21)"
             }
           ]
         }
@@ -16306,7 +16362,7 @@
         {
           "start": "2026-10-07",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-07",
@@ -16396,7 +16452,7 @@
         {
           "start": "2026-10-07",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-07",
@@ -16667,7 +16723,7 @@
         {
           "start": "2026-10-12",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-12",
@@ -17118,7 +17174,7 @@
         {
           "start": "2026-11-19",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-19",
@@ -17643,7 +17699,7 @@
         {
           "start": "2026-11-15",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-15",
@@ -17942,7 +17998,7 @@
         {
           "start": "2026-11-22",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-22",
@@ -18219,7 +18275,7 @@
         {
           "start": "2026-10-27",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-27",
@@ -18592,7 +18648,7 @@
         {
           "start": "2026-10-14",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-14",
@@ -18905,7 +18961,7 @@
         {
           "start": "2026-11-19",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-19",
@@ -19388,7 +19444,7 @@
         {
           "start": "2026-11-18",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-18",
@@ -20175,7 +20231,7 @@
         {
           "start": "2026-10-20",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-20",
@@ -20320,7 +20376,7 @@
         {
           "start": "2026-10-21",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-21",
@@ -20361,6 +20417,13 @@
               "date": "2026-11-21",
               "at": "2026-11-21T07:35+01:00",
               "status": "out",
+              "return": "Round 14",
+              "comment": "Out indefinitely but began individual strength training after an injury"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "uncertain",
               "return": "Round 14",
               "comment": "Out indefinitely but began individual strength training after an injury"
             }
@@ -20513,7 +20576,7 @@
         {
           "start": "2026-10-21",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-21",
@@ -20673,6 +20736,13 @@
               "date": "2026-11-22",
               "at": "2026-11-22T16:47+01:00",
               "status": "doubtful",
+              "return": "Round 14",
+              "comment": "DNP in Rounds 9-13 (coach's decision). DNP in the domestic league (11.21)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "out",
               "return": "Round 14",
               "comment": "DNP in Rounds 9-13 (coach's decision). DNP in the domestic league (11.21)"
             }
@@ -20964,7 +21034,7 @@
         {
           "start": "2026-11-19",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-19",
@@ -21302,7 +21372,7 @@
         {
           "start": "2026-10-25",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-25",
@@ -21566,7 +21636,7 @@
         {
           "start": "2026-11-23",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-23",
@@ -21761,7 +21831,7 @@
         {
           "start": "2026-11-22",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-22",
@@ -22051,7 +22121,7 @@
         {
           "start": "2026-11-23",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-23",
@@ -22140,7 +22210,7 @@
         {
           "start": "2026-10-29",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-29",
@@ -22349,7 +22419,7 @@
         {
           "start": "2026-11-15",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-15",
@@ -22576,8 +22646,8 @@
       "episodes": [
         {
           "start": "2026-10-30",
-          "end": null,
-          "lastSeen": "2026-11-23",
+          "end": "2026-11-24",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-30",
@@ -22669,6 +22739,13 @@
               "status": "doubtful",
               "return": "Round 14",
               "comment": "DNP in Rounds 10-13 (coach's decision). DNP in the domestic league (11.22) Can leave the team"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "ready",
+              "return": "",
+              "comment": "Išbrauktas iš traumų sąrašo"
             }
           ]
         }
@@ -22681,7 +22758,7 @@
         {
           "start": "2026-10-30",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-10-30",
@@ -22881,7 +22958,7 @@
         {
           "start": "2026-11-02",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-02",
@@ -22957,7 +23034,7 @@
         {
           "start": "2026-11-02",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-02",
@@ -23075,7 +23152,7 @@
         {
           "start": "2026-11-23",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-23",
@@ -23178,7 +23255,7 @@
         {
           "start": "2026-11-19",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-19",
@@ -23281,7 +23358,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-06",
@@ -23440,7 +23517,7 @@
         {
           "start": "2026-11-06",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-06",
@@ -23634,7 +23711,7 @@
         {
           "start": "2026-11-20",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-20",
@@ -23675,7 +23752,7 @@
         {
           "start": "2026-11-08",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-08",
@@ -23868,7 +23945,7 @@
         {
           "start": "2026-11-10",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-10",
@@ -23902,6 +23979,13 @@
               "date": "2026-11-21",
               "at": "2026-11-21T07:35+01:00",
               "status": "uncertain",
+              "return": "Round 14",
+              "comment": "Out indefinitely after undergoing surgery on his broken nose (11.10)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "out",
               "return": "Round 14",
               "comment": "Out indefinitely after undergoing surgery on his broken nose (11.10)"
             }
@@ -23999,7 +24083,7 @@
         {
           "start": "2026-11-11",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-11",
@@ -24061,7 +24145,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-12",
@@ -24130,7 +24214,7 @@
         {
           "start": "2026-11-12",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-12",
@@ -24261,7 +24345,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-13",
@@ -24371,7 +24455,7 @@
         {
           "start": "2026-11-13",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-13",
@@ -24473,7 +24557,7 @@
         {
           "start": "2026-11-16",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-16",
@@ -24528,7 +24612,7 @@
         {
           "start": "2026-11-16",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-16",
@@ -24603,7 +24687,7 @@
         {
           "start": "2026-11-17",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-17",
@@ -24644,7 +24728,7 @@
         {
           "start": "2026-11-17",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-17",
@@ -24788,7 +24872,7 @@
         {
           "start": "2026-11-17",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-17",
@@ -24836,7 +24920,7 @@
         {
           "start": "2026-11-17",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-17",
@@ -24911,7 +24995,7 @@
         {
           "start": "2026-11-19",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-19",
@@ -25032,7 +25116,7 @@
         {
           "start": "2026-11-23",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-23",
@@ -25059,7 +25143,7 @@
         {
           "start": "2026-11-23",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-23",
@@ -25079,7 +25163,7 @@
         {
           "start": "2026-11-23",
           "end": null,
-          "lastSeen": "2026-11-23",
+          "lastSeen": "2026-11-24",
           "updates": [
             {
               "date": "2026-11-23",
@@ -25093,7 +25177,47 @@
       ],
       "name": "Tyrese Martin",
       "club": "FC Barcelona"
+    },
+    "38905": {
+      "episodes": [
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "uncertain",
+              "return": "Round 14",
+              "comment": "New signing (11.23)"
+            }
+          ]
+        }
+      ],
+      "name": "Zacharie Perrin",
+      "club": "Kosner Baskonia Vitoria-Gasteiz"
+    },
+    "37449": {
+      "episodes": [
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T06:15+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Out for Round 14 (undisclosed)"
+            }
+          ]
+        }
+      ],
+      "name": "Bobi Klintman",
+      "club": "Virtus Bologna"
     }
   },
-  "updatedAt": "2026-11-23T23:34:48"
+  "updatedAt": "2026-11-24T06:15:53"
 }
