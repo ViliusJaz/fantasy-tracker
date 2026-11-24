@@ -8712,7 +8712,7 @@
       }
     },
     "13": {
-      "savedAt": "2026-11-24T15:05:58",
+      "savedAt": "2026-11-24T15:21:43",
       "locked": false,
       "teams": {
         "6aa804e109a9c51e40240da6": {
@@ -9048,13 +9048,13 @@
           ]
         },
         "6aafd54a349148cc9eff62ab": {
-          "formation": "1-1-3",
+          "formation": "1-3-1",
           "players": [
             {
               "id": "6ad4b3ef16f8030eda89f4c9",
               "card": "c-1",
               "slot": "starter",
-              "captain": false
+              "captain": true
             },
             {
               "id": "66e6e4324589cab32aef6c37",
@@ -9063,55 +9063,55 @@
               "captain": false
             },
             {
-              "id": "64e4a5ab0ef7f59c5945f78c",
+              "id": "6a8c494f491e10f37dfb6859",
+              "card": "f-2",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "689b55cd2f216d09c52457d9",
+              "card": "f-3",
+              "slot": "starter",
+              "captain": false
+            },
+            {
+              "id": "64e4a5a20ef7f59c5945effd",
               "card": "g-1",
               "slot": "starter",
-              "captain": true
-            },
-            {
-              "id": "694a658e876363a272686f8e",
-              "card": "g-2",
-              "slot": "starter",
               "captain": false
             },
             {
-              "id": "66e6e4304589cab32aef6a1a",
-              "card": "g-3",
-              "slot": "starter",
-              "captain": false
-            },
-            {
-              "id": "66e6e4324589cab32aef6b88",
+              "id": "693abdc09703341eeb011ffb",
               "card": "b-1",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "689b55cd2f216d09c52457d9",
+              "id": "66e6e4304589cab32aef6a1a",
               "card": "b-2",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "68c40842a07be49331fea3f6",
+              "id": "64e4a5ab0ef7f59c5945f78c",
               "card": "b-3",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "68c4082ba07be49331fea28a",
+              "id": "694a658e876363a272686f8e",
               "card": "b-4",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "6a8c494f491e10f37dfb6859",
+              "id": "68c4082ba07be49331fea28a",
               "card": "b-5",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "693abdc09703341eeb011ffb",
+              "id": "68c40842a07be49331fea3f6",
               "card": "i-1",
               "slot": "inactive",
               "captain": false
@@ -9123,7 +9123,7 @@
               "captain": false
             },
             {
-              "id": "64e4a5a20ef7f59c5945effd",
+              "id": "66e6e4324589cab32aef6b88",
               "card": "i-3",
               "slot": "inactive",
               "captain": false
@@ -9312,13 +9312,13 @@
               "captain": false
             },
             {
-              "id": "6a8c494e491e10f37dfb6688",
+              "id": "68c4081ca07be49331fea198",
               "card": "f-2",
               "slot": "starter",
               "captain": false
             },
             {
-              "id": "68c4082ca07be49331fea2a7",
+              "id": "66e6e4324589cab32aef6bd5",
               "card": "g-1",
               "slot": "starter",
               "captain": false
@@ -9330,7 +9330,7 @@
               "captain": true
             },
             {
-              "id": "66e342c6381ef32263702686",
+              "id": "68c4082ca07be49331fea2a7",
               "card": "b-1",
               "slot": "bench",
               "captain": false
@@ -9348,7 +9348,7 @@
               "captain": false
             },
             {
-              "id": "6513070c98a6be433053457e",
+              "id": "66e342c6381ef32263702686",
               "card": "b-4",
               "slot": "bench",
               "captain": false
@@ -9366,13 +9366,13 @@
               "captain": false
             },
             {
-              "id": "68c4081ca07be49331fea198",
+              "id": "6a8c494e491e10f37dfb6688",
               "card": "i-2",
               "slot": "inactive",
               "captain": false
             },
             {
-              "id": "66e6e4324589cab32aef6bd5",
+              "id": "6513070c98a6be433053457e",
               "card": "i-3",
               "slot": "inactive",
               "captain": false
