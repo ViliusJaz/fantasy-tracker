@@ -6961,7 +6961,7 @@
         },
         {
           "start": "2026-11-14",
-          "end": null,
+          "end": "2026-11-24",
           "lastSeen": "2026-11-24",
           "updates": [
             {
@@ -7017,6 +7017,13 @@
               "date": "2026-11-22",
               "at": "2026-11-22T17:18+01:00",
               "status": "expected",
+              "return": "Round 14",
+              "comment": "Expected to return in Round 14 after DNP in Rounds 12-13 (fractured index finger, 11.14) DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T14:50+01:00",
+              "status": "ready",
               "return": "Round 14",
               "comment": "Expected to return in Round 14 after DNP in Rounds 12-13 (fractured index finger, 11.14) DNP in the domestic league (11.22)"
             }
@@ -25275,5 +25282,5 @@
       "club": "Virtus Bologna"
     }
   },
-  "updatedAt": "2026-11-24T12:00:19"
+  "updatedAt": "2026-11-24T14:50:22"
 }
