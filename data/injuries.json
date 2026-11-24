@@ -15332,6 +15332,20 @@
               "comment": "DNP in Round 10 (coach's decision). Played in the domestic league (11.08)"
             }
           ]
+        },
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T12:00+01:00",
+              "status": "game-time",
+              "return": "Round 14",
+              "comment": "Illness"
+            }
+          ]
         }
       ],
       "name": "Oscar da Silva",
@@ -17203,6 +17217,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "DNP in Round 13 (coach's decision). DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T12:00+01:00",
+              "status": "game-time",
+              "return": "Round 14",
+              "comment": "DNP in Round 13 (coach's decision)"
             }
           ]
         }
@@ -18588,6 +18609,20 @@
               "status": "ready",
               "return": "Round 13",
               "comment": "Included in 12-man roster after DNP in Round 12 (undisclosed)"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T12:00+01:00",
+              "status": "game-time",
+              "return": "Round 14",
+              "comment": "Practiced ahead of Round 14 after DNP in Rounds 12-13 (undisclosed)"
             }
           ]
         }
@@ -25240,5 +25275,5 @@
       "club": "Virtus Bologna"
     }
   },
-  "updatedAt": "2026-11-24T10:27:13"
+  "updatedAt": "2026-11-24T12:00:19"
 }
