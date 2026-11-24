@@ -19060,6 +19060,13 @@
               "status": "out",
               "return": "Round 14",
               "comment": "Will miss Round 14 (national team duties) after DNP in Round 13 (coach's decision). Played in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T17:58+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Out for Round 14 (national team duties) after DNP in Round 13 (coach's decision). Played in the domestic league (11.22)"
             }
           ]
         }
@@ -25323,13 +25330,40 @@
               "status": "out",
               "return": "Round 14",
               "comment": "Out for Round 14 (undisclosed)"
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T17:58+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Out for Round 14 (left ankle sprain)"
             }
           ]
         }
       ],
       "name": "Bobi Klintman",
       "club": "Virtus Bologna"
+    },
+    "23599": {
+      "episodes": [
+        {
+          "start": "2026-11-24",
+          "end": null,
+          "lastSeen": "2026-11-24",
+          "updates": [
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T17:58+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Undisclosed"
+            }
+          ]
+        }
+      ],
+      "name": "Eugene Omoruyi",
+      "club": "Besiktas Istanbul"
     }
   },
-  "updatedAt": "2026-11-24T17:42:45"
+  "updatedAt": "2026-11-24T17:58:17"
 }
