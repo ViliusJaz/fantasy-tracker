@@ -23740,6 +23740,13 @@
               "status": "expected",
               "return": "Round 14",
               "comment": "DNP in Round 13 and in the domestic league (11.22) (ankle issue), but traveled with the team."
+            },
+            {
+              "date": "2026-11-24",
+              "at": "2026-11-24T09:26+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "DNP in Round 13 and in the domestic league (11.22) (ankle issue), didn't travel with the team."
             }
           ]
         }
@@ -25219,5 +25226,5 @@
       "club": "Virtus Bologna"
     }
   },
-  "updatedAt": "2026-11-24T06:15:53"
+  "updatedAt": "2026-11-24T09:26:54"
 }
