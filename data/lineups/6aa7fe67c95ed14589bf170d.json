@@ -8712,7 +8712,7 @@
       }
     },
     "13": {
-      "savedAt": "2026-11-25T09:13:14",
+      "savedAt": "2026-11-25T11:27:06",
       "locked": true,
       "teams": {
         "6aa804e109a9c51e40240da6": {
@@ -9217,13 +9217,13 @@
           "formation": "1-2-2",
           "players": [
             {
-              "id": "64e4a5a60ef7f59c5945f2cd",
+              "id": "669b6a1069eb071c0f3bfef1",
               "card": "c-1",
               "slot": "starter",
               "captain": true
             },
             {
-              "id": "66e6e42f4589cab32aef69a3",
+              "id": "64e4a5a30ef7f59c5945f106",
               "card": "f-1",
               "slot": "starter",
               "captain": false
@@ -9247,25 +9247,25 @@
               "captain": false
             },
             {
-              "id": "64e4a5a30ef7f59c5945f106",
+              "id": "64e4a5a60ef7f59c5945f2cd",
               "card": "b-1",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "669b6a1069eb071c0f3bfef1",
+              "id": "64e4a5a60ef7f59c5945f36d",
               "card": "b-2",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "64e4a5a60ef7f59c5945f36d",
+              "id": "66e6e4314589cab32aef6ab5",
               "card": "b-3",
               "slot": "bench",
               "captain": false
             },
             {
-              "id": "66e6e4314589cab32aef6ab5",
+              "id": "66e6e42f4589cab32aef69a3",
               "card": "b-4",
               "slot": "bench",
               "captain": false

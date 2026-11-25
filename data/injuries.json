@@ -2164,6 +2164,13 @@
               "status": "doubtful",
               "return": "Round 14",
               "comment": "DNP in Rounds 1-13 (hamstring). DNP in he domestic league (11.22) Can leave the team."
+            },
+            {
+              "date": "2026-11-25",
+              "at": "2026-11-25T11:27+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Ruled out for Round 14 after DNP in Rounds 1-13 (hamstring, might leave the team)"
             }
           ]
         }
@@ -2471,6 +2478,13 @@
               "status": "uncertain",
               "return": "Round 14",
               "comment": "Eye injury in Round 13. DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-25",
+              "at": "2026-11-25T11:27+01:00",
+              "status": "expected",
+              "return": "Round 14",
+              "comment": "Expected to play in Round 14 (eye injury in Round 13)"
             }
           ]
         }
@@ -2756,6 +2770,13 @@
               "status": "doubtful",
               "return": "Round 14",
               "comment": "DNP in Rounds 8-13 (coach's decision). DNP in the domestic league (11.22)"
+            },
+            {
+              "date": "2026-11-25",
+              "at": "2026-11-25T11:27+01:00",
+              "status": "out",
+              "return": "Round 14",
+              "comment": "Ruled out for Round 14 (national team duties) after DNP in Rounds 8-13 (coach's decision)"
             }
           ]
         }
@@ -24302,6 +24323,13 @@
               "status": "doubtful",
               "return": "Round 14",
               "comment": "DNP in Rounds 10-13, out indefinitely (hip/psoas muscle injury)"
+            },
+            {
+              "date": "2026-11-25",
+              "at": "2026-11-25T11:27+01:00",
+              "status": "game-time",
+              "return": "Round 14",
+              "comment": "Recovered after the injury and is available for selection after DNP in Rounds 10-13 (hip/psoas muscle injury)"
             }
           ]
         }
@@ -26127,5 +26155,5 @@
       "club": "Fenerbahce Beko Istanbul"
     }
   },
-  "updatedAt": "2026-11-25T10:19:22"
+  "updatedAt": "2026-11-25T11:27:06"
 }
