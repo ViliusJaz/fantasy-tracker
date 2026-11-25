@@ -1,0 +1,147 @@
+{
+ "version": 1,
+ "status": "healthy",
+ "lastAttempt": "2026-11-26T00:11:57+01:00",
+ "lastSuccessfulUpdate": "2026-11-26T00:11:57+01:00",
+ "buildDurationSeconds": 264.5,
+ "basketnewsRequests": 185,
+ "failedRequests": 0,
+ "playersProcessed": 338,
+ "pagesGenerated": 2278,
+ "validationWarnings": 0,
+ "validationErrors": 0,
+ "sourceStatus": {
+  "basketnews": "ok",
+  "injuries": "ok",
+  "advancedStats": "ok",
+  "euroleague": "ok"
+ },
+ "lastSuccess": {
+  "at": "2026-11-26T00:11:57+01:00",
+  "startedAt": "2026-11-26T00:07:33+01:00",
+  "status": "healthy",
+  "device": "phone",
+  "version": "0950be1ca",
+  "durationSeconds": 264.5,
+  "requests": {
+   "basketnews": {
+    "requests": 185,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 1924638
+   },
+   "advanced-stats": {
+    "requests": 16,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 1487541
+   },
+   "injury-report": {
+    "requests": 1,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 101486
+   },
+   "rosters": {
+    "requests": 1,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 119953
+   },
+   "euroleague": {
+    "requests": 22,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 170630
+   }
+  },
+  "pages": 2278,
+  "failedPages": 0,
+  "validation": {
+   "warnings": 0,
+   "errors": 0,
+   "fatal": 0,
+   "issues": []
+  },
+  "sourceStatus": {
+   "basketnews": "ok",
+   "injuries": "ok",
+   "advancedStats": "ok",
+   "euroleague": "ok"
+  },
+  "metrics": {
+   "pages": 2278,
+   "leagues": {
+    "6aa7fe67c95ed14589bf170d": {
+     "id": "6aa7fe67c95ed14589bf170d",
+     "title": "HLA 1 Divizionas",
+     "seasonYear": 2026,
+     "currentRound": 14,
+     "shownRound": 13,
+     "teams": 8,
+     "pointsTotal": 17403.75,
+     "players": 338,
+     "playersWithGames": 309
+    },
+    "6aa6bddec90ec6ddaf50d152": {
+     "id": "6aa6bddec90ec6ddaf50d152",
+     "title": "Mūsų Lyga 26-27",
+     "seasonYear": 2026,
+     "currentRound": 14,
+     "shownRound": 13,
+     "teams": 8,
+     "pointsTotal": 17507.0,
+     "players": 338,
+     "playersWithGames": 309
+    }
+   }
+  }
+ },
+ "lastFailure": {
+  "at": "2026-11-06T23:13:16+01:00",
+  "startedAt": "2026-11-06T23:12:24+01:00",
+  "status": "failed",
+  "device": "phone",
+  "version": "9ef95e515",
+  "durationSeconds": 51.4,
+  "requests": {
+   "basketnews": {
+    "requests": 5,
+    "retries": 0,
+    "failures": 1,
+    "bytes": 42108
+   },
+   "advanced-stats": {
+    "requests": 2,
+    "retries": 0,
+    "failures": 0,
+    "bytes": 211817
+   }
+  },
+  "pages": 0,
+  "failedPages": 0,
+  "validation": {
+   "warnings": 0,
+   "errors": 0,
+   "fatal": 1,
+   "issues": [
+    {
+     "level": "fatal",
+     "source": "league HLA 1 Divizionas",
+     "code": "unavailable",
+     "message": "BasketNews nepasiekiamas: HTTP 520"
+    }
+   ]
+  },
+  "sourceStatus": {
+   "basketnews": "degraded",
+   "injuries": "unused",
+   "advancedStats": "ok",
+   "euroleague": "unused"
+  },
+  "metrics": {
+   "pages": 0,
+   "leagues": {}
+  }
+ }
+}
